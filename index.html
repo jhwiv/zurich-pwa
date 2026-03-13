@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D1929">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Zürich">
+<meta name="description" content="Zürich March 2026 itinerary for Charlotte & parent">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<title>Zürich · March 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;--navy2:#0D1929;--gold:#C8A84B;--gold2:#E8C96B;
+  --cream:#FAF6EE;--cream2:#F0EBE1;--steel:#5A6A7A;--divider:#D4C9B0;
+  --body:#2A2A2A;--green:#1A6B35;--blue:#3A5A8A;--red:#B91C1C;
+  --amber:#92400E;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Crimson Pro',Georgia,serif;background:#111;color:var(--body);line-height:1.65}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--navy2);display:flex;flex-direction:column;
+  justify-content:center;align-items:center;position:relative;overflow:hidden;padding:60px 24px 80px;text-align:center}
+.hero-grid{position:absolute;inset:0;
+  background-image:linear-gradient(rgba(200,168,75,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(200,168,75,.06) 1px,transparent 1px);
+  background-size:70px 70px}
+.hero-vignette{position:absolute;inset:0;
+  background:radial-gradient(ellipse 90% 80% at 50% 50%,transparent 20%,var(--navy2) 100%)}
+.hero-inner{position:relative;z-index:2;max-width:900px}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.35em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:24px;
+  opacity:0;animation:fadeUp .7s ease .3s forwards}
+.hero-title{font-family:'Playfair Display',serif;font-weight:900;
+  font-size:clamp(80px,15vw,170px);line-height:.88;letter-spacing:-.02em;
+  color:var(--gold2);text-shadow:0 0 80px rgba(200,168,75,.3);
+  opacity:0;animation:fadeUp .8s ease .5s forwards}
+.hero-sub{font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(16px,2.5vw,26px);color:rgba(200,212,224,.6);
+  margin-top:14px;letter-spacing:.05em;
+  opacity:0;animation:fadeUp .7s ease .8s forwards}
+.hero-rule{width:60px;height:1px;background:var(--gold);margin:24px auto;
+  opacity:0;animation:fadeUp .7s ease 1s forwards}
+.hero-meta{display:flex;justify-content:center;gap:32px;flex-wrap:wrap;
+  opacity:0;animation:fadeUp .7s ease 1.1s forwards}
+.hero-meta-item{text-align:center}
+.hml{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);opacity:.65;display:block;margin-bottom:2px}
+.hmv{font-family:'Crimson Pro',serif;font-size:14px;color:rgba(255,255,255,.8)}
+.hero-scroll{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+  z-index:2;opacity:0;animation:fadeUp .7s ease 1.5s forwards;
+  display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none}
+.hero-scroll span{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(200,168,75,.4)}
+.scroll-line{width:1px;height:36px;
+  background:linear-gradient(to bottom,rgba(200,168,75,.5),transparent);
+  animation:pulse 2s ease-in-out infinite}
+
+/* STICKY FLIGHT ALERT */
+.flight-bar{background:linear-gradient(135deg,#7B1C1C,#B91C1C);
+  padding:8px 24px;text-align:center;position:sticky;top:0;z-index:100;
+  border-bottom:1px solid rgba(255,255,255,.1)}
+.flight-bar-text{font-family:'DM Mono',monospace;font-size:10.5px;
+  letter-spacing:.14em;color:rgba(255,255,255,.88);text-transform:uppercase}
+.flight-bar-text strong{color:#FFB3B3}
+
+/* MAIN CARD */
+.wrap{background:var(--cream);max-width:1080px;margin:0 auto;
+  box-shadow:0 0 100px rgba(0,0,0,.6)}
+
+/* ESSENTIALS */
+.essentials{background:var(--navy);padding:24px 36px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px 28px}
+.ess-label{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--gold);opacity:.75;margin-bottom:3px}
+.ess-value{font-family:'Crimson Pro',serif;font-size:13.5px;color:rgba(255,255,255,.82);line-height:1.4}
+.ess-badge{display:inline-block;background:rgba(26,107,53,.35);
+  border:1px solid rgba(26,107,53,.6);padding:1px 8px;border-radius:3px;
+  font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.1em;
+  color:#86efac;margin-top:3px;width:fit-content}
+
+/* TABS */
+.tabs{background:var(--navy2);display:flex;border-bottom:4px solid var(--gold);
+  position:sticky;top:0;z-index:90;overflow-x:auto;gap:0}
+.tab{flex:1;min-width:120px;padding:18px 12px;text-align:center;cursor:pointer;
+  border:none;background:rgba(255,255,255,.04);
+  border-right:1px solid rgba(255,255,255,.1);
+  transition:all .25s;position:relative}
+.tab:last-child{border-right:none}
+.tab-label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);display:block;
+  margin-bottom:5px;transition:color .2s}
+.tab-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;
+  color:rgba(255,255,255,.9);transition:color .2s;display:block;line-height:1.2}
+.tab.active{background:var(--gold);border-bottom:none}
+.tab.active .tab-label{color:var(--navy2)}
+.tab.active .tab-name{color:var(--navy2)}
+.tab:hover:not(.active){background:rgba(200,168,75,.15)}
+.tab:hover:not(.active) .tab-label{color:var(--gold2)}
+.tab:hover:not(.active) .tab-name{color:#fff}
+
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+
+/* DAY HEADER */
+.day-hdr{padding:36px 36px 24px;border-bottom:3px solid var(--gold);
+  display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;
+  background:linear-gradient(to bottom,rgba(200,168,75,.04),transparent)}
+.day-num{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-weight:700}
+.day-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,42px);
+  font-weight:700;color:var(--navy);line-height:1.1;margin-bottom:10px}
+.day-intro{font-family:'Crimson Pro',serif;font-style:italic;font-size:16px;
+  color:var(--steel);max-width:560px;line-height:1.65}
+
+/* WEATHER WIDGET */
+.wx{background:#fff;border:1px solid var(--divider);border-radius:9px;
+  padding:18px 20px;width:190px;text-align:center;cursor:pointer;
+  text-decoration:none;display:block;position:relative;overflow:hidden;
+  transition:box-shadow .2s,transform .2s;flex-shrink:0}
+.wx::before{content:'';position:absolute;left:0;top:0;bottom:0;
+  width:3px;background:var(--gold);border-radius:3px 0 0 3px}
+.wx:hover{box-shadow:0 4px 22px rgba(0,0,0,.08);transform:translateY(-1px)}
+.wx-hi{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;
+  color:var(--navy);line-height:1}
+.wx-lo{font-size:13px;color:var(--steel);margin-left:3px}
+.wx-cond{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin-top:4px}
+.wx-stats{display:flex;justify-content:center;gap:8px;margin-top:8px;
+  padding-top:8px;border-top:1px solid var(--divider);flex-wrap:wrap}
+.wx-stat{font-family:'DM Mono',monospace;font-size:8px;color:var(--steel)}
+
+/* TIMELINE */
+.timeline{padding:8px 36px 28px;position:relative}
+.timeline::before{content:'';position:absolute;left:64px;top:0;bottom:0;
+  width:1px;background:linear-gradient(to bottom,transparent,var(--divider) 5%,var(--divider) 95%,transparent)}
+.entry{display:grid;grid-template-columns:44px 1fr;gap:0 22px;
+  padding:16px 0;border-bottom:1px solid rgba(212,201,176,.35);position:relative}
+.entry:last-child{border-bottom:none}
+.etime{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--gold);
+  font-weight:500;text-align:right;padding-top:4px;line-height:1.25}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--gold);
+  border:2px solid var(--cream);position:absolute;left:61px;top:22px;
+  box-shadow:0 0 0 2px var(--gold)}
+.entry.alt .dot{background:var(--blue);box-shadow:0 0 0 2px var(--blue)}
+.entry.bonus .dot{background:var(--gold);opacity:.45;box-shadow:none}
+.entry.depart .dot{background:var(--red);box-shadow:0 0 0 2px var(--red)}
+
+/* CARDS */
+.card{background:#fff;border:1px solid rgba(180,170,150,.3);border-radius:9px;
+  padding:16px 20px;position:relative;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  transition:box-shadow .2s,transform .2s}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;
+  width:4px;background:var(--gold);border-radius:3px 0 0 3px}
+.card:hover{box-shadow:0 6px 28px rgba(0,0,0,.12);transform:translateY(-2px)}
+.entry.alt .card::before{background:var(--blue)}
+.entry.bonus .card::before{background:var(--gold);opacity:.35}
+.entry.depart .card{background:#fff8f8;border-color:#fecaca}
+.entry.depart .card::before{background:var(--red)}
+
+.badge{display:inline-flex;align-items:center;gap:3px;
+  font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;
+  text-transform:uppercase;padding:2px 7px;border-radius:3px;margin-bottom:6px;font-weight:500}
+.badge-bonus{background:#FEF3C7;color:#92400E}
+.badge-alt{background:#EFF6FF;color:#1e40af}
+.badge-conf{background:#DCFCE7;color:#166534}
+.badge-dep{background:#FEE2E2;color:#991b1b}
+
+.ctitle{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;
+  color:var(--navy);line-height:1.2;margin-bottom:6px;letter-spacing:-.01em}
+.entry.alt .ctitle{color:var(--blue)}
+.entry.depart .ctitle{color:var(--red)}
+.cbody{font-family:'Crimson Pro',serif;font-size:14.5px;color:var(--body);
+  line-height:1.65;margin-bottom:8px}
+.cnote{font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;
+  color:var(--steel);border-top:1px solid var(--divider);padding-top:7px;line-height:1.5}
+.cactions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.btn{display:inline-flex;align-items:center;gap:4px;background:var(--green);color:#fff;
+  text-decoration:none;font-family:'DM Mono',monospace;font-size:9.5px;
+  letter-spacing:.07em;text-transform:uppercase;padding:6px 13px;border-radius:4px;
+  transition:background .2s,transform .15s;font-weight:500;border:none;cursor:pointer}
+.btn:hover{background:#145928;transform:translateY(-1px)}
+.btn-alt{background:transparent;color:var(--blue);border:1px solid rgba(58,90,138,.35)}
+.btn-alt:hover{background:rgba(58,90,138,.07);transform:none}
+
+/* COLLAPSIBLE ALT */
+.alt-body{display:none;margin-top:10px;padding-top:10px;
+  border-top:1px solid rgba(58,90,138,.18);
+  font-family:'Crimson Pro',serif;font-size:14px;color:var(--steel);line-height:1.6}
+.alt-body.open{display:block}
+.alt-section{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(58,90,138,.1)}
+.alt-section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.alt-section b{color:var(--navy);font-weight:600}
+
+/* EXTRAS / TIP */
+.extras{margin:0 36px 24px;background:var(--cream2);
+  border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:12px 18px}
+.extras-lbl{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.extras-txt{font-family:'Crimson Pro',serif;font-size:13.5px;color:var(--steel);line-height:1.6}
+.tipbox{margin:0 36px 28px;background:var(--navy);border-radius:9px;
+  padding:16px 22px;display:flex;gap:12px;align-items:flex-start}
+.tip-orn{color:var(--gold);font-size:18px;flex-shrink:0;margin-top:1px}
+.tip-txt{font-family:'Crimson Pro',serif;font-style:italic;font-size:14px;
+  color:rgba(255,255,255,.7);line-height:1.6}
+
+/* REFERENCE TABLES */
+.ref-wrap{padding:32px 36px}
+.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.ref-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);
+  margin-bottom:12px;padding-bottom:7px;border-bottom:2px solid var(--gold)}
+table.rtbl{width:100%;border-collapse:collapse;font-size:13px}
+table.rtbl th{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--steel);padding:5px 9px;
+  border-bottom:1px solid var(--divider);text-align:left}
+table.rtbl td{padding:7px 9px;border-bottom:1px solid rgba(212,201,176,.4);
+  font-family:'Crimson Pro',serif;vertical-align:top;line-height:1.4;color:var(--body)}
+table.rtbl tr:last-child td{border-bottom:none}
+table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
+.td-ok{color:var(--green);font-weight:600}
+.td-warn{color:#92400E;font-weight:600}
+
+/* SURVIVAL */
+.surv-wrap{background:var(--navy2);padding:36px 36px 44px}
+.surv-head{text-align:center;margin-bottom:28px}
+.surv-eyebrow{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.25em;
+  text-transform:uppercase;color:#E05252;margin-bottom:8px}
+.surv-title{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;
+  color:#fff;margin-bottom:6px}
+.surv-rule{width:44px;height:1px;background:#E05252;margin:12px auto 0}
+
+/* Emergency numbers */
+.emerg{display:flex;justify-content:center;gap:10px;margin-bottom:28px;flex-wrap:wrap}
+.emerg-card{background:rgba(185,28,28,.22);border:1px solid rgba(185,28,28,.38);
+  border-radius:7px;padding:12px 20px;text-align:center;min-width:100px}
+.emerg-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;
+  color:#FCA5A5;line-height:1}
+.emerg-lbl{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.42);margin-top:3px}
+
+/* Accordion blocks */
+.surv-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px}
+.sblock{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:7px;overflow:hidden}
+.sblock-hdr{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:rgba(200,168,75,.75);padding:11px 15px 9px;
+  border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;user-select:none}
+.sblock-hdr:hover{background:rgba(255,255,255,.03)}
+.schev{transition:transform .25s;opacity:.45;font-size:10px}
+.sblock.open .schev{transform:rotate(180deg)}
+.sblock-body{display:none;padding:10px 15px}
+.sblock.open .sblock-body{display:block}
+.sitem{font-family:'Crimson Pro',serif;font-size:13.5px;color:rgba(255,255,255,.62);
+  line-height:1.6;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.sitem:last-child{border-bottom:none}
+.sitem b{color:rgba(255,255,255,.86)}
+
+/* Pron tables */
+.pron-sec{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+  border-radius:7px;overflow:hidden;margin-bottom:12px}
+.pron-hdr{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:rgba(200,168,75,.75);padding:11px 15px 9px;
+  border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;user-select:none}
+.pron-hdr:hover{background:rgba(255,255,255,.03)}
+.pron-body{display:none;overflow-x:auto}
+.pron-sec.open .pron-body{display:block}
+table.ptbl{width:100%;border-collapse:collapse;font-size:13px}
+table.ptbl th{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:rgba(200,168,75,.5);padding:7px 13px;
+  border-bottom:1px solid rgba(255,255,255,.05);text-align:left}
+table.ptbl td{padding:8px 13px;border-bottom:1px solid rgba(255,255,255,.04);
+  font-family:'Crimson Pro',serif;color:rgba(255,255,255,.65);vertical-align:top;line-height:1.4}
+table.ptbl tr:last-child td{border-bottom:none}
+table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+.pron-link{color:var(--gold);text-decoration:none;margin-right:5px;font-size:13px}
+.pron-link:hover{opacity:.65}
+.phon{font-family:'DM Mono',monospace;font-size:10.5px;color:rgba(200,168,75,.8);white-space:nowrap}
+.pron-hint{padding:8px 15px 4px;font-family:'Crimson Pro',serif;font-style:italic;
+  font-size:12.5px;color:rgba(255,255,255,.32)}
+
+/* CLOSING */
+.closing{background:var(--navy);padding:44px 36px;text-align:center;
+  border-top:2px solid var(--gold)}
+.closing-quote{font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(16px,2.5vw,22px);color:rgba(255,255,255,.7);
+  line-height:1.6;max-width:480px;margin:0 auto 14px}
+.closing-foot{font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(200,168,75,.35)}
+
+
+.ctitle-ext{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);
+  opacity:0;transition:opacity .15s;flex-shrink:0;margin-left:4px}
+.card[data-url]:hover .ctitle-ext{opacity:1}
+.card[data-url]:hover{box-shadow:0 6px 28px rgba(0,0,0,.13);transform:translateY(-2px)}
+.card[data-url]:active{transform:translateY(0);box-shadow:none}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+
+/* RESPONSIVE */
+@media(max-width:700px){
+  .day-hdr{grid-template-columns:1fr;padding:24px 20px 18px}
+  .wx{display:block;margin-top:16px;width:100%;box-sizing:border-box}
+  .timeline{padding:6px 20px 20px}
+  .timeline::before{left:46px}
+  .dot{left:43px}
+  .entry{grid-template-columns:36px 1fr;gap:0 14px}
+  .etime{font-size:8.5px}
+  .extras,.tipbox{margin-left:20px;margin-right:20px}
+  .ref-wrap{padding:22px 20px}
+  .ref-grid{grid-template-columns:1fr}
+  .surv-wrap{padding:24px 20px 36px}
+  .surv-grid{grid-template-columns:1fr}
+  .essentials{padding:18px 20px}
+  .closing{padding:32px 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">A Curated Weekend · Copenhagen → Switzerland</div>
+    <div class="hero-title">ZÜRICH</div>
+    <div class="hero-sub">27 – 29 March 2026</div>
+    <div class="hero-rule"></div>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><span class="hml">Hotel</span><span class="hmv">Zürich Marriott</span></div>
+      <div class="hero-meta-item"><span class="hml">Saturday</span><span class="hmv">Mountain + Art</span></div>
+      <div class="hero-meta-item"><span class="hml">Flight Home</span><span class="hmv">ZRH 8:25 PM Sunday</span></div>
+      <div class="hero-meta-item"><span class="hml">Rating</span><span class="hmv">9.2 / 10 ✦</span></div>
+    </div>
+  </div>
+  <a class="hero-scroll" href="#main">
+    <span>scroll</span><div class="scroll-line"></div>
+  </a>
+</div>
+
+<!-- STICKY FLIGHT BAR -->
+<div class="flight-bar" id="flight-bar">
+  <div class="flight-bar-text">
+    🛫 Flight ZRH 8:25 PM · Sunday 29 March &nbsp;·&nbsp;
+    <strong>Leave hotel 6:00 PM sharp</strong> &nbsp;·&nbsp;
+    Airport Express 25 min → ZRH 6:30 PM
+  </div>
+</div>
+
+<div class="wrap" id="main">
+
+<!-- ESSENTIALS -->
+<div class="essentials">
+  <div><div class="ess-label">Hotel</div>
+    <div class="ess-value">Zürich Marriott Hotel<br>Neumühlequai 42 · +41 44 360 70 70</div></div>
+  <div><div class="ess-label">Zürich Card (48 hr)</div>
+    <div class="ess-value">CHF 53 pp · all trams, boats + 43 museums<br>Activate in Zürich City Guide app at airport</div></div>
+  <div><div class="ess-label">Saturday Dinner</div>
+    <div class="ess-value">Zeughauskeller · Bahnhofstrasse 28A</div>
+    <div class="ess-badge">✓ Confirmed · 7:30 PM</div></div>
+  <div><div class="ess-label">Weather Forecast</div>
+    <div class="ess-value">47–49°F highs · 35–37°F lows<br>10–20% rain · Layers + compact umbrella</div></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab active" onclick="show('fri',this)" data-tab-id="fri">
+    <span class="tab-label">Fri 27 Mar</span><span class="tab-name">Arrival</span></button>
+  <button class="tab" onclick="show('sat',this)" data-tab-id="sat">
+    <span class="tab-label">Sat 28 Mar</span><span class="tab-name">Mountain + Art</span></button>
+  <button class="tab" onclick="show('sun',this)" data-tab-id="sun">
+    <span class="tab-label">Sun 29 Mar</span><span class="tab-name">Slow Farewell</span></button>
+  <button class="tab" onclick="show('ref',this)" data-tab-id="ref">
+    <span class="tab-label">Reference</span><span class="tab-name">Transport · Food</span></button>
+  <button class="tab" onclick="show('surv',this)" data-tab-id="surv">
+    <span class="tab-label">Survival</span><span class="tab-name">Emergency · Language</span></button>
+</div>
+
+<!-- ══════════════ FRIDAY ══════════════ -->
+<div class="panel active" id="panel-fri">
+  <div class="day-hdr">
+    <div>
+      <div class="day-num">Day 1 · Friday 27 March</div>
+      <div class="day-title">Arrival &amp;<br>White Elephant</div>
+      <div class="day-intro">A gentle landing. Activate your Zürich Card in the app at the airport. The hotel's Michelin-listed Thai restaurant is waiting — nothing to prove on the first night.</div>
+    </div>
+    <a class="wx" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" title="Tap for live Zürich forecast">
+      <div><span class="wx-hi">47°F</span><span class="wx-lo">/ 37°F</span></div>
+      <div style="font-size:11px;color:rgba(200,212,224,.4);margin-top:1px">8°C / 3°C</div>
+      <div class="wx-cond">Partly Cloudy</div>
+      <div class="wx-stats">
+        <span class="wx-stat">🌧 15%</span><span class="wx-stat">💨 9 mph</span>
+        <span class="wx-stat">🌅 6:48</span><span class="wx-stat">🌇 7:32</span>
+      </div>
+      <div style="font-size:8px;color:var(--gold);margin-top:6px;letter-spacing:.08em;font-family:'DM Mono',monospace">TAP FOR LIVE FORECAST ↗</div>
+    </a>
+  </div>
+
+  <div class="timeline">
+
+    <div class="entry">
+      <div class="etime">7:40<br>PM</div>
+      <div class="dot"></div>
+      <div class="card">
+        <div class="ctitle">Airport → Zürich Marriott Hotel</div>
+        <div class="cbody">Collect bags. Activate Zürich Card in the app. Airport Express to HB every 10 min — 10-min ride, fully covered. Tram 13 one stop → Sihlquai/HB. Hotel is 3 min walk.</div>
+        <div class="cnote">Airport Express → HB 10 min · Zürich Card ✓ | Tram 13 → Sihlquai/HB 2 min | 3 min walk | <strong>Realistic door-to-door with bags: 30–40 min → Hotel ~8:30–8:45 PM</strong></div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3812,8.5387&dirflg=r" target="_blank">🗺 Transit Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">9:00<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://whiteelephant.ch" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Dinner: White Elephant </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">The hotel's own Michelin-listed Thai restaurant — one of Zürich's best Thai tables since 1991. Staffed entirely by Thai chefs. Rich curries, aromatic soups, exceptional hospitality. 🌿 Extensive vegetarian &amp; vegan menu.</div>
+        <div class="cnote">On-site — no travel needed · +41 44 360 73 22 · Dinner daily 6–10 PM</div>
+      </div>
+    </div>
+
+    <div class="entry bonus">
+      <div class="etime">10:30<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.marriott.com/en-us/hotels/zrhmc-zurich-marriott-hotel/dining/" style="cursor:pointer">
+        <div class="badge badge-bonus">Optional</div>
+        <div class="ctitle"><span class="ctitle-text">Lenox Bar Nightcap </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">The hotel's New York-inspired bar — rare whiskies, craft cocktails, cigar lounge. One drink, then bed. Saturday is a full day.</div>
+        <div class="cnote">On-site · Ground floor · Open late</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="extras">
+    <div class="extras-lbl">If you have extra time Friday</div>
+    <div class="extras-txt">Short riverfront walk along the Limmat before bed — the lit bridges at night are beautiful, 5 min from the hotel. Or decompress on the balcony.</div>
+  </div>
+  <div class="tipbox">
+    <div class="tip-orn">✦</div>
+    <div class="tip-txt">Friday is a travel day — arrival, check-in, White Elephant dinner, optional Lenox Bar nightcap. Nothing to prove on the first evening. White Elephant does room service if needed.</div>
+  </div>
+</div>
+
+<!-- ══════════════ SATURDAY ══════════════ -->
+<div class="panel" id="panel-sat">
+  <div class="day-hdr">
+    <div>
+      <div class="day-num">Day 2 · Saturday 28 March — The Big Day</div>
+      <div class="day-title">Mountain, Art<br>&amp; Old Town</div>
+      <div class="day-intro">Opens above the clouds on Zürich's own mountain, descends through great art, medieval lanes, and a legendary dinner. No hotel return before dinner — flow Lindenhof → drinks → Zeughauskeller. Leave hotel at 10:00 AM.</div>
+    </div>
+    <a class="wx" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" title="Tap for live Zürich forecast">
+      <div><span class="wx-hi">49°F</span><span class="wx-lo">/ 36°F</span></div>
+      <div style="font-size:11px;color:rgba(200,212,224,.4);margin-top:1px">9°C / 2°C</div>
+      <div class="wx-cond">Mostly Cloudy</div>
+      <div class="wx-stats">
+        <span class="wx-stat">🌧 10%</span><span class="wx-stat">💨 6 mph</span>
+        <span class="wx-stat">🌅 6:46</span><span class="wx-stat">🌇 7:34</span>
+      </div>
+      <div style="font-size:8px;color:var(--gold);margin-top:6px;letter-spacing:.08em;font-family:'DM Mono',monospace">TAP FOR LIVE FORECAST ↗</div>
+    </a>
+  </div>
+
+  <div class="timeline">
+
+    <div class="entry">
+      <div class="etime">10:00<br>AM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.zvv.ch/en/" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Uetliberg Summit · 871 m </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Zürich's local mountain — a 20-min S10 train from HB takes you above the city. Walk 10 min from the station to the summit tower: Alps panorama, Lake Zürich, and the rooftops below. Perfect sketchbook moment.<br><br><strong>⚠️ Zürich Card does NOT cover Uetliberg.</strong> Buy a round-trip supplement at any ZVV machine at HB: CHF 18.40 pp / CHF 36.80 for two. Buy before boarding.</div>
+        <div class="cnote">S10 from HB underground (tracks 21/22) · Depart 10:00 AM · Arrive 10:20 AM · 40 min at summit · Return train 11:10 AM · Back at HB 11:30 AM · ⚠️ Felsenegg cable car CLOSED 2 Mar–10 Apr 2026</div>
+        <div class="cactions">
+          <a class="btn" href="https://maps.google.com/maps?daddr=47.3497,8.4916&dirflg=r" target="_blank">🗺 Directions to Uetliberg</a>
+          <button class="btn btn-alt" onclick="toggleAlt(this)">☁️ If foggy or rainy ▾</button>
+        </div>
+        <div class="alt-body">
+          <div class="alt-section">
+            <div class="badge badge-alt" style="margin-bottom:6px">☁️ If summit is in cloud</div>
+            <b>Polybahn + ETH Terrace:</b> Take the historic Polybahn funicular instead — a 90-second ride from Central up to ETH Zürich. The ETH terrace gives one of the best rooftop city views with no altitude fog risk. Free with Zürich Card. Lower station: Rämistrasse 101, near Central.
+          </div>
+          <div class="alt-section">
+            <div class="badge badge-alt" style="margin-bottom:6px">🌧 Full rain Saturday</div>
+            <b>Skip Uetliberg, add Landesmuseum:</b> Drop the mountain entirely and start at 11:45 AM with Sprüngli. Add the Schweizerisches Landesmuseum (Swiss National Museum) — directly behind HB, free with Zürich Card, Sat 10 AM–5 PM. Then Kunsthaus at 1:30 PM. Everything after is unchanged.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">12:45<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.confiserie-spruengli.ch/en" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Café Sprüngli </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Zürich's legendary confiserie since 1836. Order the hot chocolate — locals consider it legendary. And the Luxemburgerli macarons: bite-sized, seasonal, unlike anything from Copenhagen. Sit by the window on Bahnhofstrasse and sketch the morning crowds. 🌿 Fully vegetarian.</div>
+        <div class="cnote">From HB: Walk 12 min S · OR Tram 13 → Paradeplatz 5 min · Bahnhofstrasse 21 · Sat 7:30 AM–6:30 PM</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3692,8.5378&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">1:30<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.kunsthaus.ch/en/" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Kunsthaus Zürich </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Switzerland's largest art museum. Must-see: the Bührle Collection (Monet, Cézanne, Renoir), Munch (largest collection outside Norway), Giacometti, and Pipilotti Rist. Plan two hours. Free with Zürich Card. Rich sketchbook territory throughout.</div>
+        <div class="cnote">From Sprüngli: Walk 15 min E · OR Tram 3 Paradeplatz → Kunsthaus 6 min · Heimplatz 1 · Sat–Sun 10 AM–6 PM · Zürich Card ✓</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3703,8.5489&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">3:00<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.kunsthaus.ch/en/visit/restaurant/" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Lunch: Kunsthaus Café </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Light lunches in the bright Moser Building café — soups, salads, open sandwiches. Take your time; this is part of the museum experience. 🌿 Good vegetarian options.</div>
+        <div class="cnote">On-site · Open Sat 9 AM–9 PM</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">4:15<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.grossmuenster.ch/en/" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Augustinergasse, Grossmünster &amp; Old Town </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Zürich's most photographed medieval lane — painted buildings and ornate hanging signs. Cross the Limmat to <strong>Grossmünster</strong>, the iconic twin-towered Romanesque cathedral (begun 1100s). Then <strong>Fraumünster</strong> and Marc Chagall's magnificent stained glass windows. The Münsterhof square beyond is car-free and beautiful — this is where you'll have drinks tonight.</div>
+        <div class="cnote">From Kunsthaus: Walk 18 min W (1.4 km) — the route is the experience · Grossmünster: Sat 10 AM–5 PM · Fraumünster: Münsterhof 2 · Both free entry</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3700,8.5413&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">5:45<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.zuerich.com/en/visit/attractions/lindenhof-hill" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Lindenhof Hill — Best Panorama </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Former Roman fort hilltop park. Panoramic views over the Limmat and Old Town rooftops. A large public chessboard. Stone benches — ideal for the sketchbook. Late afternoon March light is warm and low.</div>
+        <div class="cnote">From Fraumünster: Walk 5 min N (350 m) · Lindenhofplatz · Always open · Free</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3727,8.5400&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">6:30<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.zeughauskeller.ch/en/" style="cursor:pointer">
+        <div class="ctitle">Pre-Dinner Drinks: Café Bar Münsterhof</div>
+        <div class="cbody">Walk 5 min down from Lindenhof directly to the Münsterhof square — no hotel return needed. Order a Spritz or local wine. Watch the square settle into evening. Zeughauskeller is a lively beer hall — smart-casual is perfect, no need to change.</div>
+        <div class="cnote">Walk 5 min S from Lindenhof · Münsterhof 6 · Then walk 3 min direct to Zeughauskeller on Bahnhofstrasse</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3700,8.5413&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">7:30<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.zeughauskeller.ch" style="cursor:pointer">
+        <div class="badge badge-conf">✓ Reservation Confirmed · 7:30 PM</div>
+        <div class="ctitle"><span class="ctitle-text">Dinner: Zeughauskeller </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Zürich's most famous beer-hall restaurant, in a 15th-century former armory right on Bahnhofstrasse. High ceilings, oak beams, long tables, and the buzz of locals and travellers on a Saturday night. Excellent Zürcher Geschnetzeltes, generous portions, house-brewed beer. 🌿 Älplermagronen (Alpine macaroni with cheese) — the vegetarian option. After dinner, Tram 13 back or a 15-min evening walk along Bahnhofstrasse.</div>
+        <div class="cnote">Walk 3 min N from Münsterhof · Bahnhofstrasse 28A · +41 44 220 15 15 · zeughauskeller.ch · CHF 35–55 pp · After dinner: Tram 13 → Sihlquai/HB</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3699,8.5378&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="extras">
+    <div class="extras-lbl">If you have extra time Saturday</div>
+    <div class="extras-txt">Niederdorf lanes (just north of Grossmünster) — painted facades and narrow alleys. Cabaret Voltaire on Spiegelgasse — birthplace of Dada, 15-min detour. Beyer Watch Museum on Bahnhofstrasse (free, basement level) — extraordinary historic timepieces. Or linger longer in the Giacometti room at Kunsthaus.</div>
+  </div>
+  <div class="tipbox">
+    <div class="tip-orn">✦</div>
+    <div class="tip-txt">Saturday arc: mountain → hot chocolate → great art → medieval city → hilltop panorama → aperitivo → legendary dinner. No hotel return before dinner. Reservation confirmed at 7:30 PM · +41 44 220 15 15. Buy Uetliberg supplement (CHF 18.40 pp) at any ZVV machine at HB.</div>
+  </div>
+</div>
+
+<!-- ══════════════ SUNDAY ══════════════ -->
+<div class="panel" id="panel-sun">
+  <div class="day-hdr">
+    <div>
+      <div class="day-num">Day 3 · Sunday 29 March · Palm Sunday</div>
+      <div class="day-title">Slow Morning<br>&amp; Farewell</div>
+      <div class="day-intro">The breathing day — unhurried and beautiful. Old Town processions add local colour. <strong style="color:var(--red)">Leave hotel by 6:00 PM sharp.</strong> Full city window: 10 AM–4:30 PM.</div>
+    </div>
+    <a class="wx" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" title="Tap for live Zürich forecast">
+      <div><span class="wx-hi">48°F</span><span class="wx-lo">/ 35°F</span></div>
+      <div style="font-size:11px;color:rgba(200,212,224,.4);margin-top:1px">9°C / 2°C</div>
+      <div class="wx-cond">Partly Cloudy</div>
+      <div class="wx-stats">
+        <span class="wx-stat">🌧 20%</span><span class="wx-stat">💨 11 mph</span>
+        <span class="wx-stat">🌅 6:44</span><span class="wx-stat">🌇 7:35</span>
+      </div>
+      <div style="font-size:8px;color:var(--gold);margin-top:6px;letter-spacing:.08em;font-family:'DM Mono',monospace">TAP FOR LIVE FORECAST ↗</div>
+    </a>
+  </div>
+
+  <div class="timeline">
+
+    <div class="entry">
+      <div class="etime">10:00<br>AM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.hiltl.ch/en/" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Breakfast: Hiltl </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">World's oldest vegetarian restaurant (est. 1898). Legendary Sunday brunch buffet with 100+ dishes: Indian curries, Middle Eastern mezze, Swiss cheese boards, fresh pastries, fresh juices. Arrive by 10 AM before the big rush. 🌿 Fully vegetarian &amp; vegan. CHF 57 pp all-inclusive.</div>
+        <div class="cnote">From hotel: Walk 8 min S (600 m) · OR Tram 13 → Paradeplatz + 3 min walk · Sihlstrasse 28 · Sun brunch 9:30 AM–2:30 PM</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3744,8.5370&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">11:15<br>AM</div>
+      <div class="dot"></div>
+      <div class="card">
+        <div class="ctitle">Lake Zürich Promenade</div>
+        <div class="cbody">Quaianlagen park from Bürkliplatz: swans, sailboats, Alps views on clear days. Pure unscheduled downtime. Find a bench. Draw the water. March light on the lake is extraordinary.</div>
+        <div class="cnote">From Hiltl: Walk 12 min S (900 m) to Bürkliplatz · OR Tram 7 → Bürkliplatz 4 min · Zürich Card ✓ · Free</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w" target="_blank">🗺 Walking Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry bonus">
+      <div class="etime">11:45<br>AM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.zsg.ch/en/" style="cursor:pointer">
+        <div class="badge badge-bonus">⛵ If weather is nice — add this</div>
+        <div class="ctitle"><span class="ctitle-text">Lake Zürich Boat Cruise </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">From Bürkliplatz pier, ZSG runs short Rundfahrt (round-trip) cruises — about 30–40 min, a completely different view of the city from the water. Zürich Card covers short cruises in the city zone. On a sunny March morning this is genuinely spectacular — the Alps appear behind the city on clear days. Sketchbook on the upper deck.</div>
+        <div class="cnote">Bürkliplatz pier · ZSG boat line · Zürich Card ✓ (zone 110 short trips) · ~30–40 min · Departs approx every 30 min · Check ZSG app for schedule</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w" target="_blank">🗺 Bürkliplatz Pier</a></div>
+      </div>
+    </div>
+
+    <div class="entry bonus">
+      <div class="etime">Bonus<br>opt.</div>
+      <div class="dot"></div>
+      <div class="card">
+        <div class="badge badge-bonus">🚠 10-min detour — worth it</div>
+        <div class="ctitle"><span class="ctitle-text">Polybahn Funicular </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Zürich's tiny historic funicular — a 90-second ride from Central up to ETH Zürich. At the top: one of the best rooftop views in the city, completely different from Lindenhof. The ETH terrace looks out over the lake and the old town roofline. Free with Zürich Card, adds 15–20 minutes total.</div>
+        <div class="cnote">Lower station: Rämistrasse 101 (near Central) · Zürich Card ✓ · 90-sec ride · Walk back down or ride again</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3744,8.5449&dirflg=w" target="_blank">🗺 Directions to Polybahn</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">1:00<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.fischerstuben.ch" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Lunch: Fischerstube Zürihorn </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Lakeside terrace directly over the water. Seasonal Swiss fish from Lake Zürich: smoked trout, tagliolini in saffron sauce, perch fillets with lemon butter. Sitting on the terrace above the lake is one of Zürich's great pleasures. 🌿 Vegetarian &amp; vegan on menu.</div>
+        <div class="cnote">From Bürkliplatz: Tram 2 → Zürichhorn (5 stops, 10 min) · Zürich Card ✓ · Bellerivestrasse 160 · +41 44 422 25 20 · Recommended: book ahead</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3537,8.5562&dirflg=r" target="_blank">🗺 Transit Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">2:30<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.rietberg.ch/en/" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Museum Rietberg — World Art in a Secret Park </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">Asian, African &amp; Oceanic art in historic villas in Rieter Park. Wagner wrote Tristan here. The underground Emerald extension is architecturally stunning. Rich sketching territory — unusual forms from every continent. Free with Zürich Card.</div>
+        <div class="cnote">From Fischerstube: Uber ~10 min recommended · OR Tram 7 from Bellevue → Museum Rietberg · Gablerstrasse 15 · Sun 10 AM–5 PM · Zürich Card ✓</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3598,8.5293&dirflg=r" target="_blank">🗺 Transit Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">4:00<br>PM</div>
+      <div class="dot"></div>
+      <div class="card">
+        <div class="ctitle">Rieter Park — Final Sketches</div>
+        <div class="cbody">Slow circuit of the park after the museum. City and lake views. Spring crocuses in late March. Free, quiet, and perfect. Last sketches of the trip.</div>
+        <div class="cnote">On-site · Always open · Free · <strong>Leave by 4:30 PM</strong></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">4:45<br>PM</div>
+      <div class="dot"></div>
+      <div class="card">
+        <div class="ctitle">Return to Hotel — Bags &amp; Freshen Up</div>
+        <div class="cbody">Back to the Marriott. Collect bags from storage, freshen up. A comfortable hour before the farewell dinner.</div>
+        <div class="cnote">From Rietberg: Uber ~12 min recommended · OR Tram 7 reverse → city centre</div>
+        <div class="cactions"><a class="btn" href="https://maps.google.com/maps?daddr=47.3812,8.5387&dirflg=r" target="_blank">🗺 Directions</a></div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="etime">5:15<br>PM</div>
+      <div class="dot"></div>
+      <div class="card" data-url="https://www.marriott.com/en-us/hotels/zrhmc-zurich-marriott-hotel/dining/" style="cursor:pointer">
+        <div class="ctitle"><span class="ctitle-text">Farewell Dinner: eCHo </span><span class="ctitle-ext">↗</span></div>
+        <div class="cbody">The hotel's own Swiss restaurant — authentic Züri Gschnätzlets, cheese fondue, regional produce, and the house Marriott Cuvée wine. Your last proper Swiss meal, steps from the lobby. Finish by 6:00 PM sharp. 🌿 Vegetarian &amp; vegan options.</div>
+        <div class="cnote">On-site · +41 44 360 73 18 · Ask hotel to seat you at 5:15 PM as departing guests for an 8:25 PM flight · CHF 45–70 pp</div>
+      </div>
+    </div>
+
+    <div class="entry depart">
+      <div class="etime">6:00<br>PM</div>
+      <div class="dot"></div>
+      <div class="card">
+        <div class="badge badge-dep">🛫 Do Not Be Late</div>
+        <div class="ctitle">Depart for ZRH Airport</div>
+        <div class="cbody">Leave hotel by 6:00 PM. Walk 5 min to Zürich HB → Airport Express (every 10 min, 25 min ride) → ZRH Terminal. Zürich Card covers the Airport Express. Arrive ZRH by 6:30 PM — a full 2 hrs before your 8:25 PM flight.</div>
+        <div class="cnote">Walk 5 min to HB · Airport Express HB → ZRH 25 min · Zürich Card ✓ · Arrive ZRH 6:30 PM · <strong>Flight departs 8:25 PM</strong></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="extras">
+    <div class="extras-lbl">If you have extra time Sunday</div>
+    <div class="extras-txt">Boat cruise and Polybahn are the best additions if the morning runs ahead. Linger in Rieterpark for a last sketch if dry. <strong>Do NOT add stops after 3:30 PM</strong> — the flight window is fixed.</div>
+  </div>
+  <div class="tipbox">
+    <div class="tip-orn">✦</div>
+    <div class="tip-txt">Flight ZRH 8:25 PM. Leave hotel no later than 6:00 PM → 5 min walk to HB → Airport Express 25 min → ZRH 6:30 PM → 2 hrs to spare. Sightseeing window: 10 AM–4:30 PM. Dinner at eCHo 5:15–6:00 PM. Do not add stops after 3:30 PM.</div>
+  </div>
+</div>
+
+<!-- ══════════════ REFERENCE ══════════════ -->
+<div class="panel" id="panel-ref">
+  <div class="ref-wrap">
+    <div class="ref-grid">
+
+      <div>
+        <div class="ref-title">Transport Quick Reference</div>
+        <table class="rtbl">
+          <thead><tr><th>Destination</th><th>Via</th><th>Time</th></tr></thead>
+          <tbody>
+            <tr><td>Hotel from Airport</td><td>Airport Express + Tram 13</td><td>30–40 min</td></tr>
+            <tr><td>Uetliberg Summit</td><td>S10 from HB tracks 21/22<br><span class="td-warn">⚠️ CHF 18.40 pp supplement</span></td><td>20 min</td></tr>
+            <tr><td>Café Sprüngli</td><td>Walk from HB · OR Tram 13 → Paradeplatz</td><td>12/5 min</td></tr>
+            <tr><td>Kunsthaus</td><td>Tram 3 Paradeplatz → Kunsthaus</td><td>11 min</td></tr>
+            <tr><td>Old Town / Fraumünster</td><td>Walk south via Grossmünster</td><td>15 min</td></tr>
+            <tr><td>Lindenhof Hill</td><td>Walk 5 min N from Fraumünster</td><td>5 min</td></tr>
+            <tr><td>Münsterhof (drinks)</td><td>Walk 5 min S from Lindenhof — no hotel return</td><td>5 min</td></tr>
+            <tr><td>Zeughauskeller</td><td>Walk 3 min N from Münsterhof</td><td>3 min</td></tr>
+            <tr><td>Hotel (after dinner)</td><td>Tram 13 Paradeplatz → Sihlquai/HB</td><td>5 min</td></tr>
+            <tr><td>Polybahn (Sunday opt.)</td><td>Walk to Central · Rämistrasse 101 · Zürich Card ✓</td><td>15 min</td></tr>
+            <tr><td>Boat cruise (Sunday opt.)</td><td>Bürkliplatz pier · ZSG · Zürich Card ✓</td><td>30–40 min</td></tr>
+            <tr><td>Hiltl</td><td>Walk 8 min S from hotel</td><td>8 min</td></tr>
+            <tr><td>Bürkliplatz / Lake</td><td>Tram 7 Paradeplatz → Bürkliplatz</td><td>9 min</td></tr>
+            <tr><td>Fischerstube Zürihorn</td><td>Tram 2 Bürkliplatz → Zürichhorn</td><td>10 min</td></tr>
+            <tr><td>Museum Rietberg</td><td>Tram 7 → Museum Rietberg · OR Uber</td><td>16 min</td></tr>
+          </tbody>
+        </table>
+        <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:12.5px;color:var(--steel);margin-top:9px">Home stop: <strong>Sihlquai/HB</strong> — 3 min walk from hotel. Bahnhofquai/HB stop closed until Dec 2026.</div>
+      </div>
+
+      <div>
+        <div class="ref-title">Dining &amp; Reservations</div>
+        <table class="rtbl">
+          <thead><tr><th>Time</th><th>Venue</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Fri 9 PM</td><td>White Elephant</td><td>Recommended — +41 44 360 73 22</td></tr>
+            <tr><td>Sat 11:45 AM</td><td>Café Sprüngli</td><td>Walk-in</td></tr>
+            <tr><td>Sat 3:00 PM</td><td>Kunsthaus Café</td><td>Walk-in</td></tr>
+            <tr><td>Sat 6:30 PM</td><td>Café Bar Münsterhof</td><td>Walk-in</td></tr>
+            <tr><td>Sat 7:30 PM</td><td><strong>Zeughauskeller ★</strong></td><td><span class="td-ok">✓ Confirmed · 7:30 PM</span></td></tr>
+            <tr><td>Sun 10 AM</td><td>Hiltl</td><td>Walk-in — arrive early</td></tr>
+            <tr><td>Sun 1 PM</td><td>Fischerstube Zürihorn</td><td>Recommended — +41 44 422 25 20</td></tr>
+            <tr><td>Sun 5:15 PM</td><td>eCHo (farewell dinner)</td><td>Book via hotel — mention 8:25 PM flight, early seating</td></tr>
+          </tbody>
+        </table>
+
+        <div style="margin-top:28px">
+          <div class="ref-title">Budget Estimate</div>
+          <table class="rtbl">
+            <thead><tr><th>Item</th><th>Per Person</th></tr></thead>
+            <tbody>
+              <tr><td>Zürich Card (48 hr)</td><td>CHF 53</td></tr>
+              <tr><td>Uetliberg supplement</td><td class="td-warn">CHF 18.40</td></tr>
+              <tr><td>Sprüngli (coffee + macarons)</td><td>CHF 15–20</td></tr>
+              <tr><td>Zeughauskeller dinner</td><td>CHF 35–55</td></tr>
+              <tr><td>Hiltl Sunday brunch</td><td>CHF 57</td></tr>
+              <tr><td>Fischerstube lunch</td><td>CHF 35–50</td></tr>
+              <tr><td>eCHo farewell dinner</td><td>CHF 45–70</td></tr>
+              <tr><td><strong>Estimated total</strong></td><td><strong>CHF 260–325 pp</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ SURVIVAL ══════════════ -->
+<div class="panel" id="panel-surv">
+  <div class="surv-wrap">
+    <div class="surv-head">
+      <div class="surv-eyebrow">Switzerland · March 2026</div>
+      <div class="surv-title">Survival &amp; Navigation Guide</div>
+      <div class="surv-rule"></div>
+    </div>
+
+    <div class="emerg">
+      <div class="emerg-card"><div class="emerg-num">112</div><div class="emerg-lbl">Any Emergency</div></div>
+      <div class="emerg-card"><div class="emerg-num">144</div><div class="emerg-lbl">Ambulance</div></div>
+      <div class="emerg-card"><div class="emerg-num">117</div><div class="emerg-lbl">Police</div></div>
+      <div class="emerg-card"><div class="emerg-num">118</div><div class="emerg-lbl">Fire</div></div>
+      <div class="emerg-card"><div class="emerg-num">111</div><div class="emerg-lbl">Out-of-hours Doctor</div></div>
+    </div>
+
+    <div class="surv-grid">
+      <div class="sblock open">
+        <div class="sblock-hdr" onclick="toggleS(this)">Tram &amp; Ticket Rules <span class="schev">▾</span></div>
+        <div class="sblock-body">
+          <div class="sitem"><b>Activate Zürich Card</b> in the Zürich City Guide app before your first journey. Tap your 48 hr card and press Activate. Show QR code to inspectors.</div>
+          <div class="sitem"><b>Fine: CHF 90</b> if caught without a valid ticket. No barriers — plain-clothes inspectors board at both ends, wait for doors to close, then produce badges.</div>
+          <div class="sitem"><b>Trams leave on the exact second</b> shown in the timetable. If you're on the platform as it departs, it's gone.</div>
+          <div class="sitem"><b>Keep voices low on trams.</b> Phone calls are frowned upon. Swiss public transport is noticeably hushed.</div>
+          <div class="sitem"><b>Lost &amp; found:</b> sbb.ch → Help &amp; Contact → Lost property. Items from trams go to ZVV at Zürich HB.</div>
+        </div>
+      </div>
+
+      <div class="sblock">
+        <div class="sblock-hdr" onclick="toggleS(this)">Sunday in Zürich <span class="schev">▾</span></div>
+        <div class="sblock-body">
+          <div class="sitem"><b>Almost all shops are closed.</b> Supermarkets, pharmacies, clothing — shut all day. Buy anything you need Saturday before 6 PM.</div>
+          <div class="sitem"><b>Open Sunday:</b> Zürich HB shopping mall, airport shops, bakeries, all restaurants, museums, and parks.</div>
+          <div class="sitem"><b>Noise is respected.</b> Keep voices down in residential areas.</div>
+          <div class="sitem">March 29 is Palm Sunday — Old Town processions and Grossmünster services add local colour.</div>
+        </div>
+      </div>
+
+      <div class="sblock">
+        <div class="sblock-hdr" onclick="toggleS(this)">Essential Apps <span class="schev">▾</span></div>
+        <div class="sblock-body">
+          <div class="sitem"><b>SBB Mobile</b> — real-time tram and train departures, live delay alerts. Set home stop to Sihlquai/HB.</div>
+          <div class="sitem"><b>Google Maps</b> — download Zürich offline map before leaving Copenhagen. Works without data.</div>
+          <div class="sitem"><b>Google Translate</b> — download German pack for offline use. Camera feature reads menus in real-time.</div>
+          <div class="sitem"><b>Uber</b> — works normally in Zürich. Pre-load payment. Useful for Fischerstube → Rietberg on Sunday.</div>
+        </div>
+      </div>
+
+      <div class="sblock">
+        <div class="sblock-hdr" onclick="toggleS(this)">Money &amp; Cards <span class="schev">▾</span></div>
+        <div class="sblock-body">
+          <div class="sitem"><b>Cards accepted almost everywhere</b> — Visa and Mastercard work at all restaurants and museums. Amex is hit or miss.</div>
+          <div class="sitem"><b>Carry CHF 50–80 cash</b> as backup. ATMs are called Bancomats — one inside HB, one near Paradeplatz.</div>
+          <div class="sitem"><b>Switzerland is not in the EU.</b> Currency: Swiss Franc (CHF). 1 CHF ≈ 1.05 EUR. Euros sometimes accepted at a poor rate.</div>
+          <div class="sitem"><b>Tell your bank before you travel.</b> Danish cards abroad can trigger fraud blocks.</div>
+        </div>
+      </div>
+
+      <div class="sblock">
+        <div class="sblock-hdr" onclick="toggleS(this)">Local Knowledge <span class="schev">▾</span></div>
+        <div class="sblock-body">
+          <div class="sitem"><b>Crossing on red:</b> Swiss pedestrians don't. Jaywalking is technically illegal.</div>
+          <div class="sitem"><b>Carry ID.</b> A photo of your passport on your phone is generally sufficient.</div>
+          <div class="sitem"><b>Tap water and public fountains are safe</b> — exceptional quality. No need for bottled water.</div>
+          <div class="sitem"><b>Lost passport:</b> Danish Embassy Bern +41 31 360 76 76 · 24-hr emergency: +45 33 92 11 12.</div>
+          <div class="sitem">Nearest hospital: <b>UniversitätsSpital Zürich</b> — Rämistrasse 100 · Tram 9 → Rämistrasse.</div>
+        </div>
+      </div>
+
+      <div class="sblock">
+        <div class="sblock-hdr" onclick="toggleS(this)">Bahnhofstrasse &amp; Extras <span class="schev">▾</span></div>
+        <div class="sblock-body">
+          <div class="sitem"><b>Beyer Watch Museum</b> — basement level, Bahnhofstrasse 31. Free. Extraordinary collection of historic timepieces from the 15th century onward.</div>
+          <div class="sitem"><b>Sprüngli flagship</b> at Paradeplatz — larger than the café. Luxemburgerli boxes keep well for the flight home. Good edible souvenir.</div>
+          <div class="sitem"><b>Cabaret Voltaire</b> — Spiegelgasse 1. Birthplace of the Dada movement in 1916. Small, free to browse outside, 15-min detour from Old Town.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pronunciation Tables -->
+    <div class="pron-sec open">
+      <div class="pron-hdr" onclick="toggleP(this)">
+        Swiss German Cheat Sheet — Züritüütsch
+        <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap for audio &nbsp;▾</span>
+      </div>
+      <div class="pron-body">
+        <div class="pron-hint">🔊 Tap any word to search Google for its pronunciation — Google reads it aloud. Free, no account needed. Opening with "Grüezi" and closing with "Merci" transforms how locals respond to you.</div>
+        <table class="ptbl">
+          <thead><tr><th>Phrase</th><th>Say It</th><th>Usage</th></tr></thead>
+          <tbody>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Gr%C3%BCezi+Swiss+German" target="_blank" class="pron-link">🔊</a> Grüezi</td><td class="phon">GREW-tsee</td><td>Hello / Good day (formal). Use entering any shop or restaurant.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Merci+Swiss+German" target="_blank" class="pron-link">🔊</a> Merci</td><td class="phon">MER-see</td><td>Thank you. Swiss German borrows from French — locals use this far more than "Danke".</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Merci+vielmal+Swiss+German" target="_blank" class="pron-link">🔊</a> Merci vielmal</td><td class="phon">MER-see FEEL-maal</td><td>Thank you very much.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Bitte+German" target="_blank" class="pron-link">🔊</a> Bitte</td><td class="phon">BIT-tuh</td><td>Please / You're welcome. Use constantly.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Entschuldigung+German" target="_blank" class="pron-link">🔊</a> Entschuldigung</td><td class="phon">ent-SHOOL-dee-goong</td><td>Excuse me / Sorry.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+En+Guete+Swiss+German" target="_blank" class="pron-link">🔊</a> En Guete!</td><td class="phon">en GOO-tuh</td><td>Enjoy your meal! Say it to fellow diners; they'll say it back.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+D%27Rechnig+bitte+Swiss+German" target="_blank" class="pron-link">🔊</a> D'Rechnig bitte</td><td class="phon">d'REKH-nig BIT-tuh</td><td>The bill, please.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Uf+Widerluege+Swiss+German" target="_blank" class="pron-link">🔊</a> Uf Widerluege</td><td class="phon">oof VEE-der-loo-guh</td><td>Goodbye (formal). A warm closer at restaurants.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Proscht+German" target="_blank" class="pron-link">🔊</a> Proscht!</td><td class="phon">PRAWSHT</td><td>Cheers! Make eye contact when clinking — avoiding it is considered bad luck.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pron-sec">
+      <div class="pron-hdr" onclick="toggleP(this)">
+        Place Names &amp; Food Terms
+        <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap for audio &nbsp;▾</span>
+      </div>
+      <div class="pron-body">
+        <table class="ptbl">
+          <thead><tr><th>Word</th><th>Say It</th><th>What It Is</th></tr></thead>
+          <tbody>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Z%C3%BCrich" target="_blank" class="pron-link">🔊</a> Zürich</td><td class="phon">TSOO-rikh</td><td>The city. Not "ZOO-rick" — ü is rounded, ch is guttural.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Bahnhofstrasse+German" target="_blank" class="pron-link">🔊</a> Bahnhofstrasse</td><td class="phon">BAHN-hof-stras-uh</td><td>The main shopping boulevard. "Railway station street."</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Grossm%C3%BCnster+German" target="_blank" class="pron-link">🔊</a> Grossmünster</td><td class="phon">GROSS-moon-ster</td><td>The twin-towered cathedral.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Fraum%C3%BCnster+German" target="_blank" class="pron-link">🔊</a> Fraumünster</td><td class="phon">FROW-moon-ster</td><td>The Chagall windows church.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Kunsthaus+German" target="_blank" class="pron-link">🔊</a> Kunsthaus</td><td class="phon">KOONST-howss</td><td>The art museum. Kunst = art, Haus = house.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Z%C3%BCrcher+Geschnetzeltes" target="_blank" class="pron-link">🔊</a> Zürcher Geschnetzeltes</td><td class="phon">TSOOR-kher geh-SHNET-tsel-tes</td><td>The classic Zürich dish — veal in cream sauce with rösti. Order it as "Züri Gschnätzlets" and locals will love you.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+R%C3%B6sti+Swiss" target="_blank" class="pron-link">🔊</a> Rösti</td><td class="phon">RURR-shti</td><td>The Swiss potato cake. Not "ROH-stee".</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Zeughauskeller+German" target="_blank" class="pron-link">🔊</a> Zeughauskeller</td><td class="phon">TSOYG-howss-kel-er</td><td>Your Saturday dinner. Zeughaus = armory, Keller = cellar.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Hiltl+Zurich" target="_blank" class="pron-link">🔊</a> Hiltl</td><td class="phon">HILT-ul</td><td>World's oldest vegetarian restaurant. Sunday brunch.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Spr%C3%BCngli+Swiss" target="_blank" class="pron-link">🔊</a> Sprüngli</td><td class="phon">SHPRUNG-lee</td><td>The legendary confiserie. Saturday morning coffee stop.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+Luxemburgerli+Swiss" target="_blank" class="pron-link">🔊</a> Luxemburgerli</td><td class="phon">lux-em-BOOR-ger-lee</td><td>Sprüngli's famous bite-size macarons. The thing to order.</td></tr>
+            <tr><td><a href="https://www.google.com/search?q=how+to+pronounce+%C3%84lplermagronen+Swiss" target="_blank" class="pron-link">🔊</a> Älplermagronen</td><td class="phon">ELP-ler-mag-ROH-nen</td><td>Alpine macaroni with cheese — vegetarian option at Zeughauskeller.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</div>
+  <div style="font-family:'Crimson Pro',serif;font-style:italic;font-size:15px;color:rgba(200,168,75,.6);margin-bottom:16px">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</div>
+  <div class="closing-foot">Zürich · March 2026 · v2.1 (Hike) · Updated 9 March 2026</div>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  btn.classList.add('active');
+  document.getElementById('main').scrollIntoView({behavior:'smooth'});
+}
+
+function toggleAlt(btn) {
+  const body = btn.closest('.card').querySelector('.alt-body');
+  body.classList.toggle('open');
+  btn.textContent = body.classList.contains('open')
+    ? '☁️ Hide alternates ▲'
+    : '☁️ If foggy or rainy ▾';
+}
+
+function toggleS(hdr) {
+  hdr.closest('.sblock').classList.toggle('open');
+}
+
+function toggleP(hdr) {
+  hdr.closest('.pron-sec').classList.toggle('open');
+}
+
+// Card click → open website
+document.querySelectorAll('.card[data-url]').forEach(card => {
+  card.addEventListener('click', function(e) {
+    // Don't fire if clicking a button or link inside the card
+    if (e.target.closest('a,button')) return;
+    window.open(this.dataset.url, '_blank');
+  });
+});
+</script>
+
+
+<script>
+function fixTabsPosition() {
+  var bar = document.getElementById('flight-bar');
+  var tabs = document.querySelector('.tabs');
+  if (bar && tabs) {
+    tabs.style.top = bar.offsetHeight + 'px';
+  }
+}
+fixTabsPosition();
+window.addEventListener('resize', fixTabsPosition);
+window.addEventListener('orientationchange', function() {
+  setTimeout(fixTabsPosition, 100);
+});
+
+// Auto-advance tabs when scrolling to bottom of a panel
+(function() {
+  var tabOrder = ['fri','sat','sun','ref','surv'];
+
+  // Add a sentinel div at the bottom of each panel
+  tabOrder.forEach(function(id) {
+    var panel = document.getElementById('panel-' + id);
+    if (!panel) return;
+    var sentinel = document.createElement('div');
+    sentinel.className = 'scroll-sentinel';
+    sentinel.dataset.tab = id;
+    sentinel.style.cssText = 'height:1px;margin-top:-1px;pointer-events:none';
+    panel.appendChild(sentinel);
+  });
+
+  var advancing = false;
+
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (!entry.isIntersecting) return;
+      var currentId = entry.target.dataset.tab;
+      var idx = tabOrder.indexOf(currentId);
+      if (idx === -1 || idx >= tabOrder.length - 1) return;
+
+      // Only fire if this panel is the active one
+      var panel = document.getElementById('panel-' + currentId);
+      if (!panel || !panel.classList.contains('active')) return;
+
+      if (advancing) return;
+      advancing = true;
+
+      var nextId = tabOrder[idx + 1];
+      var nextBtn = document.querySelector('.tab[data-tab-id="' + nextId + '"]');
+      if (nextBtn) {
+        show(nextId, nextBtn);
+        // Scroll to top of content smoothly
+        var main = document.getElementById('main');
+        if (main) main.scrollIntoView({behavior:'smooth'});
+      }
+
+      setTimeout(function() { advancing = false; }, 1200);
+    });
+  }, { threshold: 1.0 });
+
+  document.querySelectorAll('.scroll-sentinel').forEach(function(el) {
+    observer.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
