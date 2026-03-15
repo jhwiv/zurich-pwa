@@ -49,6 +49,7 @@ self.addEventListener('fetch', e => {
       })
     );
   } else {
+    // Network-first for external (fonts etc), fall back to cache
     e.respondWith(
       fetch(e.request)
         .then(response => {
