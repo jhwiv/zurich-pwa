@@ -1021,9 +1021,9 @@ window.addEventListener('orientationchange', function() {
   var overlay = document.createElement('div');
   overlay.id = 'day-fade';
   overlay.style.cssText = [
-    'position:fixed','inset:0','background:var(--cream)',
+    'position:fixed','inset:0','background:var(--navy2)',
     'opacity:0','pointer-events:none',
-    'transition:opacity .35s ease','z-index:9999'
+    'transition:opacity .6s ease','z-index:9999'
   ].join(';');
   document.body.appendChild(overlay);
 
@@ -1056,24 +1056,26 @@ window.addEventListener('orientationchange', function() {
       var nextBtn = document.querySelector('.tab[data-tab-id="' + nextId + '"]');
       if (!nextBtn) { advancing = false; return; }
 
-      // Step 1 — fade to cream
+      // Step 1 — fade to navy (slow, no white flash)
       overlay.style.pointerEvents = 'all';
-      overlay.style.opacity = '1';
+      overlay.style.transition = 'opacity .55s ease';
+      overlay.style.opacity = '0.92';
 
       setTimeout(function() {
-        // Step 2 — switch tab + jump to top (invisible under overlay)
+        // Step 2 — switch tab + jump to top while dark
         show(nextId, nextBtn);
         window.scrollTo(0, 0);
 
-        // Step 3 — fade back in
+        // Step 3 — pause at peak, then fade out slowly
         setTimeout(function() {
+          overlay.style.transition = 'opacity .7s ease';
           overlay.style.opacity = '0';
           setTimeout(function() {
             overlay.style.pointerEvents = 'none';
             advancing = false;
-          }, 380);
-        }, 80);
-      }, 370);
+          }, 750);
+        }, 120);
+      }, 580);
     });
   }, { threshold: 1.0 });
 
