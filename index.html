@@ -47,7 +47,7 @@
   --r6:6px;--r9:9px;--r12:12px;
   --hdr:56px;
 }
-html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%}
 body{
   font-family:'Crimson Pro',Georgia,serif;
   background:var(--navy2);
@@ -270,8 +270,7 @@ img{display:block;max-width:100%}
 /* ── SECTION ANCHORS ────────────────────────────── */
 .section-anchor{
   display:block;
-  height:calc(var(--hdr) + 12px);
-  margin-top:calc(-1 * (var(--hdr) + 12px));
+  height:0;
   visibility:hidden;
   pointer-events:none;
 }
@@ -1624,18 +1623,24 @@ function navTo(sectionId, btn) {
     document.querySelectorAll('.nav-chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
   }
-  // Use the anchor element for precise offset, fall back to section itself
-  const target = document.getElementById(sectionId + '-anchor') || document.getElementById(sectionId);
-  if (!target) return;
-  // Measure actual sticky elements height at moment of click
+
+  // Find the real section element (not anchor)
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  // Measure actual sticky header height right now
   const hdr = document.getElementById('site-header');
-  const fb  = document.getElementById('flight-bar');
-  const hdrH = hdr ? hdr.offsetHeight : 56;
-  // Flight bar only adds to offset when visible (not hidden class)
-  const fbH = (fb && !fb.classList.contains('hidden')) ? fb.offsetHeight : 0;
-  const totalOffset = hdrH + fbH + 12;
-  const top = target.getBoundingClientRect().top + window.scrollY - totalOffset;
-  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  const hdrH = hdr ? hdr.getBoundingClientRect().height : 56;
+
+  // Flight bar: only count height if it's currently visible on screen
+  const fb = document.getElementById('flight-bar');
+  const fbVisible = fb && !fb.classList.contains('hidden');
+  const fbH = fbVisible ? fb.getBoundingClientRect().height : 0;
+
+  const gap = 16; // breathing room below sticky bar
+  const targetTop = section.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
+
+  window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
 }
 
 // ── SCROLL BEHAVIORS ───────────────────────────────────
