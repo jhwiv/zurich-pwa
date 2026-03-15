@@ -65,11 +65,11 @@ img{display:block;max-width:100%}
   background:rgba(13,25,41,.92);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(200,168,75,.18);
-  transition:padding .25s ease,box-shadow .25s ease;
+  transition:box-shadow .25s ease;
   padding:0 var(--sp16);
   height:var(--hdr);
-  display:flex;align-items:center;justify-content:space-between;
-  gap:var(--sp16);
+  display:flex;align-items:center;
+  gap:0;
 }
 #site-header.scrolled{
   box-shadow:0 2px 20px rgba(0,0,0,.35);
@@ -80,6 +80,9 @@ img{display:block;max-width:100%}
   color:var(--gold2);
   white-space:nowrap;
   flex-shrink:0;
+  padding-right:var(--sp16);
+  border-right:1px solid rgba(200,168,75,.15);
+  margin-right:var(--sp12);
 }
 .hdr-brand span{
   font-family:'DM Mono',monospace;
@@ -90,47 +93,44 @@ img{display:block;max-width:100%}
 }
 .hdr-nav{
   display:flex;align-items:center;
-  gap:var(--sp4);
+  gap:var(--sp8);
   overflow-x:auto;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
   flex:1;
-  justify-content:flex-end;
+  padding:0 var(--sp4);
 }
 .hdr-nav::-webkit-scrollbar{display:none}
 .nav-chip{
   font-family:'DM Mono',monospace;
-  font-size:9.5px;letter-spacing:.1em;
+  font-size:10px;letter-spacing:.08em;
   text-transform:uppercase;
-  padding:6px 12px;
+  padding:8px 14px;
+  min-height:36px;
   border-radius:20px;
   white-space:nowrap;
-  color:rgba(255,255,255,.55);
-  border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.5);
+  border:1px solid transparent;
   background:transparent;
-  transition:all .2s;
+  transition:color .18s,background .18s,border-color .18s;
   flex-shrink:0;
+  cursor:pointer;
+  display:inline-flex;align-items:center;
 }
 .nav-chip:hover{
-  color:rgba(255,255,255,.85);
-  border-color:rgba(200,168,75,.35);
-  background:rgba(200,168,75,.07);
+  color:rgba(255,255,255,.82);
+  background:rgba(255,255,255,.07);
 }
 .nav-chip.active{
   color:var(--navy2);
   background:var(--gold);
   border-color:var(--gold);
-  font-weight:500;
+  font-weight:700;
 }
-.hdr-section-label{
-  font-family:'DM Mono',monospace;
-  font-size:8px;letter-spacing:.15em;
-  text-transform:uppercase;
-  color:rgba(200,168,75,.45);
-  white-space:nowrap;
-  flex-shrink:0;
-  display:none;
+.nav-chip.active:hover{
+  background:var(--gold2);
 }
+.hdr-section-label{display:none!important}
 
 /* ── FLIGHT ALERT BAR ───────────────────────────── */
 #flight-bar{
@@ -1620,17 +1620,22 @@ function togglePron(btn) {
 
 // ── NAVIGATION ─────────────────────────────────────────
 function navTo(sectionId, btn) {
-  // Update active chip
   if (btn) {
     document.querySelectorAll('.nav-chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
   }
+  // Use the anchor element for precise offset, fall back to section itself
   const target = document.getElementById(sectionId + '-anchor') || document.getElementById(sectionId);
-  if (target) {
-    const offset = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 56;
-    const top = target.getBoundingClientRect().top + window.scrollY - offset - 8;
-    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-  }
+  if (!target) return;
+  // Measure actual sticky elements height at moment of click
+  const hdr = document.getElementById('site-header');
+  const fb  = document.getElementById('flight-bar');
+  const hdrH = hdr ? hdr.offsetHeight : 56;
+  // Flight bar only adds to offset when visible (not hidden class)
+  const fbH = (fb && !fb.classList.contains('hidden')) ? fb.offsetHeight : 0;
+  const totalOffset = hdrH + fbH + 12;
+  const top = target.getBoundingClientRect().top + window.scrollY - totalOffset;
+  window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
 }
 
 // ── SCROLL BEHAVIORS ───────────────────────────────────
