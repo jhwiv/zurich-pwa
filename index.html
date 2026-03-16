@@ -14,6 +14,7 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon-192.png">
 <title>Zürich · March 2026</title>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" as="style">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ── RESET & TOKENS ─────────────────────────────── */
@@ -130,6 +131,7 @@ img{display:block;max-width:100%}
 .nav-chip.active:hover{
   background:var(--gold2);
 }
+.nav-chip:active{transform:scale(.95);transition-duration:.05s}
 .hdr-section-label{display:none!important}
 
 /* ── FLIGHT ALERT BAR ───────────────────────────── */
@@ -153,6 +155,12 @@ img{display:block;max-width:100%}
   text-transform:uppercase;
 }
 .fbar-text strong{color:#FFB3B3}
+.fbar-full{}
+.fbar-compact{display:none}
+@media(max-width:600px){
+  .fbar-full{display:none}
+  .fbar-compact{display:inline}
+}
 
 /* ── MAIN LAYOUT ────────────────────────────────── */
 #page-wrap{
@@ -163,11 +171,11 @@ img{display:block;max-width:100%}
 
 /* ── HERO ───────────────────────────────────────── */
 #hero{
-  min-height:62vh;
+  min-height:45vh;
   background:var(--navy2);
   display:flex;flex-direction:column;
   justify-content:center;
-  padding:var(--sp48) var(--sp24) var(--sp32);
+  padding:var(--sp32) var(--sp24) var(--sp24);
   position:relative;
   overflow:hidden;
 }
@@ -242,6 +250,7 @@ img{display:block;max-width:100%}
   background:var(--gold);color:var(--navy2);
 }
 .hero-btn-primary:hover{background:var(--gold2);transform:translateY(-1px)}
+.hero-btn-primary:active{transform:scale(.97);transition-duration:.05s}
 .hero-btn-secondary{
   background:rgba(255,255,255,.06);
   color:rgba(255,255,255,.7);
@@ -252,6 +261,7 @@ img{display:block;max-width:100%}
   color:#fff;
   border-color:rgba(255,255,255,.25);
 }
+.hero-btn-secondary:active{transform:scale(.97);transition-duration:.05s}
 .hero-wx-strip{
   display:flex;gap:var(--sp16);flex-wrap:wrap;
   margin-top:var(--sp24);
@@ -281,6 +291,19 @@ img{display:block;max-width:100%}
 }
 .content-section:first-of-type{
   border-top:none;
+}
+/* Visual break between day sections */
+#section-sat .content-section,
+#section-sun .content-section{
+  border-top:4px solid var(--navy2);
+  position:relative;
+}
+#section-sat .content-section::before,
+#section-sun .content-section::before{
+  content:'';
+  display:block;
+  height:6px;
+  background:linear-gradient(to bottom,rgba(13,25,41,.06),transparent);
 }
 
 /* ── DAY HEADER ─────────────────────────────────── */
@@ -437,6 +460,7 @@ img{display:block;max-width:100%}
   text-decoration:none;
 }
 .btn-primary:hover{background:var(--navy3);transform:translateY(-1px)}
+.btn-primary:active{transform:scale(.97);transition-duration:.05s}
 .btn-secondary{
   display:inline-flex;align-items:center;gap:var(--sp4);
   background:transparent;
@@ -453,6 +477,7 @@ img{display:block;max-width:100%}
   background:rgba(58,90,138,.07);
   border-color:rgba(58,90,138,.5);
 }
+.btn-secondary:active{transform:scale(.97);transition-duration:.05s}
 /* btn-alt-toggle styles moved to responsive section */
 /* alt body */
 .alt-body{
@@ -808,7 +833,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 .float-btn:hover{background:var(--navy3);border-color:var(--gold);transform:scale(1.05)}
 .float-btn-label{
-  font-family:'DM Mono',monospace;font-size:7.5px;
+  font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.1em;text-transform:uppercase;
   color:rgba(255,255,255,.35);
   text-align:right;margin-right:var(--sp4);
@@ -821,10 +846,10 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 /* ── PROGRESS BAR ───────────────────────────────── */
 #progress-bar{
   position:fixed;top:var(--hdr);left:0;
-  height:2px;background:var(--gold);
+  height:3px;background:var(--gold);
   width:0%;z-index:195;
   transition:width .1s linear;
-  opacity:.6;
+  opacity:.8;
 }
 
 /* ── TRANSITIONS ────────────────────────────────── */
@@ -995,12 +1020,12 @@ section[id]{
     <span>March 2026</span>
   </div>
   <nav class="hdr-nav" aria-label="Trip sections">
-    <button class="nav-chip active" data-target="hero" onclick="navTo('hero',this)">Overview</button>
-    <button class="nav-chip" data-target="section-fri" onclick="navTo('section-fri',this)">Friday</button>
-    <button class="nav-chip" data-target="section-sat" onclick="navTo('section-sat',this)">Saturday</button>
-    <button class="nav-chip" data-target="section-sun" onclick="navTo('section-sun',this)">Sunday</button>
-    <button class="nav-chip" data-target="section-essentials" onclick="navTo('section-essentials',this)">Essentials</button>
-    <button class="nav-chip" data-target="section-transit" onclick="navTo('section-transit',this)">Transit</button>
+    <button class="nav-chip active" data-target="hero">Overview</button>
+    <button class="nav-chip" data-target="section-fri">Friday</button>
+    <button class="nav-chip" data-target="section-sat">Saturday</button>
+    <button class="nav-chip" data-target="section-sun">Sunday</button>
+    <button class="nav-chip" data-target="section-essentials">Essentials</button>
+    <button class="nav-chip" data-target="section-transit">Transit</button>
   </nav>
   <div class="hdr-section-label" id="hdr-section-label">Overview</div>
 </header>
@@ -1008,14 +1033,15 @@ section[id]{
 <!-- ── FLIGHT ALERT BAR ─────────────────────────── -->
 <div id="flight-bar" role="alert" aria-live="polite">
   <div class="fbar-text">
-    🛫 Flight ZRH 8:25 PM · Sunday 29 March &nbsp;·&nbsp;
-    <strong>Leave hotel 6:00 PM sharp</strong> &nbsp;·&nbsp; Airport Express 25 min → ZRH 6:30 PM
-    <button class="fbar-dismiss" onclick="dismissFlightBar()" aria-label="Dismiss flight alert">✕</button>
+    <span class="fbar-full">🛫 Flight ZRH 8:25 PM · Sunday 29 March &nbsp;·&nbsp;
+    <strong>Leave hotel 6:00 PM sharp</strong> &nbsp;·&nbsp; Airport Express 25 min → ZRH 6:30 PM</span>
+    <span class="fbar-compact">🛫 <strong>ZRH 8:25 PM</strong> Sun 29 · Leave hotel 6 PM</span>
+    <button class="fbar-dismiss" id="fbar-dismiss-btn" aria-label="Dismiss flight alert">✕</button>
   </div>
 </div>
 
 <!-- ── FLIGHT MINI-CHIP (resurfaces on Sunday) ──── -->
-<div id="flight-chip" onclick="window.scrollTo({top:0,behavior:'smooth'})" role="button" aria-label="Flight reminder — tap for details">
+<div id="flight-chip" role="button" aria-label="Flight reminder — tap for details">
   🛫 <strong>ZRH 8:25 PM</strong> · Leave 6 PM
 </div>
 
@@ -1037,7 +1063,7 @@ section[id]{
       <a class="hero-btn hero-btn-primary" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">
         🏨 Open Hotel in Maps
       </a>
-      <button class="hero-btn hero-btn-secondary" onclick="navTo('section-sat',null)">
+      <button class="hero-btn hero-btn-secondary" id="hero-jump-sat">
         ✦ Jump to Saturday
       </button>
     </div>
@@ -1065,10 +1091,10 @@ section[id]{
         <div class="wx-c">8°C / 3°C</div>
         <div class="wx-cond">Partly Cloudy</div>
         <div class="wx-stats">
-          <span class="wx-stat">🌧 15%</span>
-          <span class="wx-stat">💨 9 mph</span>
-          <span class="wx-stat">🌅 6:48</span>
-          <span class="wx-stat">🌇 7:32</span>
+          <span class="wx-stat">Rain 15%</span>
+          <span class="wx-stat">Wind 9 mph</span>
+          <span class="wx-stat">△ 6:48</span>
+          <span class="wx-stat">▽ 7:32</span>
         </div>
         <div class="wx-tap">Tap · Live Forecast ↗</div>
       </a>
@@ -1144,10 +1170,10 @@ section[id]{
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Mostly Cloudy</div>
         <div class="wx-stats">
-          <span class="wx-stat">🌧 10%</span>
-          <span class="wx-stat">💨 6 mph</span>
-          <span class="wx-stat">🌅 6:46</span>
-          <span class="wx-stat">🌇 7:34</span>
+          <span class="wx-stat">Rain 10%</span>
+          <span class="wx-stat">Wind 6 mph</span>
+          <span class="wx-stat">△ 6:46</span>
+          <span class="wx-stat">▽ 7:34</span>
         </div>
         <div class="wx-tap">Tap · Live Forecast ↗</div>
       </a>
@@ -1166,7 +1192,7 @@ section[id]{
         <p class="stop-note">Depart 10:00 AM · Arrive 10:20 AM · 40 min at summit · Return train 11:10 AM · Back HB 11:30 AM · ⚠️ Felsenegg cable car CLOSED 2 Mar–10 Apr 2026</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3497,8.4916&dirflg=r" target="_blank" rel="noopener">🗺 Directions</a>
-          <button class="btn-alt-toggle" onclick="toggleAlt(this)" aria-expanded="false" aria-controls="alt-uetliberg">☁️ If foggy or rainy ▾</button>
+          <button class="btn-alt-toggle" aria-expanded="false" aria-controls="alt-uetliberg">☁️ If foggy or rainy ▾</button>
         </div>
         <div class="alt-body" id="alt-uetliberg" role="region">
           <div class="alt-section">
@@ -1307,10 +1333,10 @@ section[id]{
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Partly Cloudy</div>
         <div class="wx-stats">
-          <span class="wx-stat">🌧 20%</span>
-          <span class="wx-stat">💨 11 mph</span>
-          <span class="wx-stat">🌅 6:44</span>
-          <span class="wx-stat">🌇 7:35</span>
+          <span class="wx-stat">Rain 20%</span>
+          <span class="wx-stat">Wind 11 mph</span>
+          <span class="wx-stat">△ 6:44</span>
+          <span class="wx-stat">▽ 7:35</span>
         </div>
         <div class="wx-tap">Tap · Live Forecast ↗</div>
       </a>
@@ -1567,7 +1593,7 @@ section[id]{
       </div>
 
       <div class="accordion open" id="acc-tram">
-        <button class="accordion-hdr" onclick="toggleAcc(this)" aria-expanded="true" aria-controls="acc-tram-body">
+        <button class="accordion-hdr" aria-expanded="true" aria-controls="acc-tram-body">
           Tram &amp; Ticket Rules <span class="acc-chevron">▾</span>
         </button>
         <div class="accordion-body" id="acc-tram-body" role="region">
@@ -1579,7 +1605,7 @@ section[id]{
       </div>
 
       <div class="accordion" id="acc-sunday">
-        <button class="accordion-hdr" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="acc-sunday-body">
+        <button class="accordion-hdr" aria-expanded="false" aria-controls="acc-sunday-body">
           Sunday in Zürich <span class="acc-chevron">▾</span>
         </button>
         <div class="accordion-body" id="acc-sunday-body" role="region">
@@ -1590,7 +1616,7 @@ section[id]{
       </div>
 
       <div class="accordion" id="acc-apps">
-        <button class="accordion-hdr" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="acc-apps-body">
+        <button class="accordion-hdr" aria-expanded="false" aria-controls="acc-apps-body">
           Essential Apps <span class="acc-chevron">▾</span>
         </button>
         <div class="accordion-body" id="acc-apps-body" role="region">
@@ -1602,7 +1628,7 @@ section[id]{
       </div>
 
       <div class="accordion" id="acc-money">
-        <button class="accordion-hdr" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="acc-money-body">
+        <button class="accordion-hdr" aria-expanded="false" aria-controls="acc-money-body">
           Money &amp; Cards <span class="acc-chevron">▾</span>
         </button>
         <div class="accordion-body" id="acc-money-body" role="region">
@@ -1614,7 +1640,7 @@ section[id]{
       </div>
 
       <div class="accordion" id="acc-local">
-        <button class="accordion-hdr" onclick="toggleAcc(this)" aria-expanded="false" aria-controls="acc-local-body">
+        <button class="accordion-hdr" aria-expanded="false" aria-controls="acc-local-body">
           Local Knowledge <span class="acc-chevron">▾</span>
         </button>
         <div class="accordion-body" id="acc-local-body" role="region">
@@ -1627,7 +1653,7 @@ section[id]{
 
       <!-- Pronunciation -->
       <div class="pron-section open" id="pron-phrases">
-        <button class="pron-hdr" onclick="togglePron(this)" aria-expanded="true" aria-controls="pron-phrases-body">
+        <button class="pron-hdr" aria-expanded="true" aria-controls="pron-phrases-body">
           Swiss German Cheat Sheet — Züritüütsch
           <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap for audio &nbsp;▾</span>
         </button>
@@ -1648,7 +1674,7 @@ section[id]{
       </div>
 
       <div class="pron-section" id="pron-places">
-        <button class="pron-hdr" onclick="togglePron(this)" aria-expanded="false" aria-controls="pron-places-body">
+        <button class="pron-hdr" aria-expanded="false" aria-controls="pron-places-body">
           Place Names &amp; Food Terms
           <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap for audio &nbsp;▾</span>
         </button>
@@ -1683,7 +1709,7 @@ section[id]{
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
-    <button class="footer-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Back to Top</button>
+    <button class="footer-btn" id="footer-top-btn">↑ Back to Top</button>
   </div>
 </footer>
 
@@ -1691,7 +1717,7 @@ section[id]{
 <div id="float-menu" aria-label="Quick navigation">
   <div class="float-row fab-extra">
     <span class="float-btn-label">Top</span>
-    <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+    <button class="float-btn" id="fab-top-btn" aria-label="Back to top">↑</button>
   </div>
   <div class="float-row fab-extra">
     <span class="float-btn-label">Hotel</span>
@@ -1703,10 +1729,10 @@ section[id]{
   </div>
   <div class="float-row fab-extra" id="fab-jump-row">
     <span class="float-btn-label" id="fab-jump-label">Saturday</span>
-    <button class="float-btn" id="fab-jump-btn" onclick="fabJump()" aria-label="Jump to next section">✦</button>
+    <button class="float-btn" id="fab-jump-btn" aria-label="Jump to next section">✦</button>
   </div>
   <div class="float-row fab-trigger">
-    <button class="float-btn" onclick="toggleFab()" aria-label="Toggle quick menu" id="fab-trigger-btn">⋯</button>
+    <button class="float-btn" aria-label="Toggle quick menu" id="fab-trigger-btn">⋯</button>
   </div>
 </div>
 
@@ -2015,6 +2041,56 @@ document.querySelectorAll('.stop[data-url]').forEach(stop => {
     window.open(this.dataset.url, '_blank', 'noopener');
   });
 });
+
+// ── EVENT BINDINGS (replaces inline onclick) ───────────────
+
+// Nav chips
+document.querySelectorAll('.nav-chip').forEach(chip => {
+  chip.addEventListener('click', function() { navTo(this.dataset.target, this); });
+});
+
+// Flight bar dismiss
+const fbarDismissBtn = document.getElementById('fbar-dismiss-btn');
+if (fbarDismissBtn) fbarDismissBtn.addEventListener('click', dismissFlightBar);
+
+// Flight mini-chip scroll to top
+if (flightChip) flightChip.addEventListener('click', function() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Hero Jump to Saturday
+const heroJumpSat = document.getElementById('hero-jump-sat');
+if (heroJumpSat) heroJumpSat.addEventListener('click', function() {
+  navTo('section-sat', null);
+});
+
+// Accordion headers
+document.querySelectorAll('.accordion-hdr').forEach(btn => {
+  btn.addEventListener('click', function() { toggleAcc(this); });
+});
+
+// Alt-toggle buttons
+document.querySelectorAll('.btn-alt-toggle').forEach(btn => {
+  btn.addEventListener('click', function() { toggleAlt(this); });
+});
+
+// Pronunciation section headers
+document.querySelectorAll('.pron-hdr').forEach(btn => {
+  btn.addEventListener('click', function() { togglePron(this); });
+});
+
+// Back to top buttons
+function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+const fabTopBtn = document.getElementById('fab-top-btn');
+const footerTopBtn = document.getElementById('footer-top-btn');
+if (fabTopBtn) fabTopBtn.addEventListener('click', scrollToTop);
+if (footerTopBtn) footerTopBtn.addEventListener('click', scrollToTop);
+
+// FAB jump and toggle
+const fabJumpBtn = document.getElementById('fab-jump-btn');
+const fabTriggerBtn = document.getElementById('fab-trigger-btn');
+if (fabJumpBtn) fabJumpBtn.addEventListener('click', fabJump);
+if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
 </script>
 
 </body>
