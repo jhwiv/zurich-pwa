@@ -1,4 +1,4 @@
-const CACHE = 'zurich-v1';
+const CACHE = 'zurich-v3';
 const ASSETS = [
   './',
   './index.html',
