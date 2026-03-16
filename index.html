@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="theme-color" content="#0D1929">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -10,7 +13,6 @@
 <meta name="description" content="Zürich Weekend · 27–29 March 2026 · Father–daughter city break">
 <meta property="og:title" content="Zürich Weekend · March 2026">
 <meta property="og:description" content="A curated 3-day city break — mountain, art, old town, and great food.">
-<link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon-192.png">
 <title>Zürich · March 2026</title>
@@ -2091,6 +2093,22 @@ const fabJumpBtn = document.getElementById('fab-jump-btn');
 const fabTriggerBtn = document.getElementById('fab-trigger-btn');
 if (fabJumpBtn) fabJumpBtn.addEventListener('click', fabJump);
 if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
+</script>
+
+<script>
+// ── SERVICE WORKER CLEANUP ─────────────────────────────
+// Unregister any old service workers and clear caches
+// so users always get the latest version
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    registrations.forEach(function(reg) { reg.unregister(); });
+  });
+  if ('caches' in window) {
+    caches.keys().then(function(names) {
+      names.forEach(function(name) { caches.delete(name); });
+    });
+  }
+}
 </script>
 
 </body>
