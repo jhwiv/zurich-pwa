@@ -849,19 +849,8 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   .wx-card{width:100%;max-width:none}
   .ess-grid{grid-template-columns:1fr}
   .hdr-section-label{display:block}
-  /* Collapse FAB into single expandable button */
-  #float-menu .float-row.fab-extra{
-    display:none;
-    opacity:0;
-    transform:translateY(8px) scale(0.9);
-    transition:opacity .2s ease, transform .2s ease;
-  }
-  #float-menu.fab-expanded .float-row.fab-extra{
-    display:flex;
-    opacity:1;
-    transform:translateY(0) scale(1);
-  }
-  #float-menu .float-row.fab-trigger{display:flex}
+  /* Hide floating menu entirely on mobile — nav bar handles everything */
+  #float-menu{display:none!important}
 }
 @media(min-width:601px){
   #page-wrap{padding-left:var(--sp24);padding-right:var(--sp24)}
@@ -1760,10 +1749,19 @@ document.addEventListener('keydown', function(e) {
 });
 
 // ── NAVIGATION ─────────────────────────────────────────
+let navTapLock = false; // Prevent scroll spy from fighting nav taps
+
 function navTo(sectionId, btn) {
   if (btn) {
     document.querySelectorAll('.nav-chip').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
+    const hl = document.getElementById('hdr-section-label');
+    if (hl) hl.textContent = btn.textContent;
+    // Lock scroll spy from auto-scrolling chips while page is scrolling to target
+    navTapLock = true;
+    lastActiveSection = sectionId;
+    clearTimeout(navTapTimer);
+    navTapTimer = setTimeout(() => { navTapLock = false; }, 1200);
   }
 
   // Hero = scroll to very top
@@ -1790,6 +1788,7 @@ function navTo(sectionId, btn) {
 
   window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
 }
+let navTapTimer;
 
 // ── NAV SCROLL FADE INDICATOR ──────────────────────────
 const navEl = document.querySelector('.hdr-nav');
@@ -1882,6 +1881,7 @@ const sections = [
 ];
 
 let lastScroll = 0;
+let lastActiveSection = 'hero';
 
 function onScroll() {
   const scroll = window.scrollY;
@@ -1930,24 +1930,27 @@ function onScroll() {
     }
   });
 
-  document.querySelectorAll('.nav-chip').forEach(chip => {
-    const isActive = chip.dataset.target === activeSection;
-    chip.classList.toggle('active', isActive);
-    if (isActive && hdrLabel) {
-      hdrLabel.textContent = chip.textContent;
-    }
-    // Auto-scroll active chip into view in nav
-    if (isActive && navEl) {
-      const chipRect = chip.getBoundingClientRect();
-      const navRect = navEl.getBoundingClientRect();
-      if (chipRect.right > navRect.right - 20 || chipRect.left < navRect.left + 20) {
-        chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  // Only update chips + auto-scroll if section actually changed AND no nav tap in progress
+  if (activeSection !== lastActiveSection && !navTapLock) {
+    lastActiveSection = activeSection;
+    document.querySelectorAll('.nav-chip').forEach(chip => {
+      const isActive = chip.dataset.target === activeSection;
+      chip.classList.toggle('active', isActive);
+      if (isActive && hdrLabel) {
+        hdrLabel.textContent = chip.textContent;
       }
-    }
-  });
-
-  // Update contextual FAB jump target
-  updateFabJump(activeSection);
+      // Gently scroll active chip into view only on section change
+      if (isActive && navEl) {
+        const chipRect = chip.getBoundingClientRect();
+        const navRect = navEl.getBoundingClientRect();
+        if (chipRect.right > navRect.right - 8 || chipRect.left < navRect.left + 8) {
+          chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+      }
+    });
+    // Update contextual FAB jump target
+    updateFabJump(activeSection);
+  }
 
   lastScroll = scroll;
 }
