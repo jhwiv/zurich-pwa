@@ -1762,6 +1762,13 @@ function navTo(sectionId, btn) {
     lastActiveSection = sectionId;
     clearTimeout(navTapTimer);
     navTapTimer = setTimeout(() => { navTapLock = false; }, 1200);
+    // Scroll nav bar so tapped chip sits on the left, revealing chips to its right
+    if (navEl) {
+      const pad = 12; // small left padding
+      const target = btn.offsetLeft - navEl.offsetLeft - pad;
+      navEl.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
+      setTimeout(updateNavFade, 350);
+    }
   }
 
   // Hero = scroll to very top
@@ -1939,12 +1946,14 @@ function onScroll() {
       if (isActive && hdrLabel) {
         hdrLabel.textContent = chip.textContent;
       }
-      // Gently scroll active chip into view only on section change
+      // Gently scroll active chip to left edge on section change
       if (isActive && navEl) {
         const chipRect = chip.getBoundingClientRect();
         const navRect = navEl.getBoundingClientRect();
         if (chipRect.right > navRect.right - 8 || chipRect.left < navRect.left + 8) {
-          chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+          const pad = 12;
+          navEl.scrollTo({ left: Math.max(0, chip.offsetLeft - navEl.offsetLeft - pad), behavior: 'smooth' });
+          setTimeout(updateNavFade, 350);
         }
       }
     });
