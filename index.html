@@ -453,16 +453,7 @@ img{display:block;max-width:100%}
   background:rgba(58,90,138,.07);
   border-color:rgba(58,90,138,.5);
 }
-.btn-alt-toggle{
-  display:inline-flex;align-items:center;gap:var(--sp4);
-  color:var(--steel);
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.08em;text-transform:uppercase;
-  padding:7px 0;min-height:36px;
-  background:none;border:none;cursor:pointer;
-  transition:color .2s;
-}
-.btn-alt-toggle:hover{color:var(--navy)}
+/* btn-alt-toggle styles moved to responsive section */
 /* alt body */
 .alt-body{
   display:none;
@@ -855,13 +846,140 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 /* ── RESPONSIVE ─────────────────────────────────── */
 @media(max-width:600px){
   .day-header{grid-template-columns:1fr;gap:var(--sp16)}
-  .wx-card{width:100%;max-width:200px}
+  .wx-card{width:100%;max-width:none}
   .ess-grid{grid-template-columns:1fr}
   .hdr-section-label{display:block}
+  /* Collapse FAB into single expandable button */
+  #float-menu .float-row.fab-extra{
+    display:none;
+    opacity:0;
+    transform:translateY(8px) scale(0.9);
+    transition:opacity .2s ease, transform .2s ease;
+  }
+  #float-menu.fab-expanded .float-row.fab-extra{
+    display:flex;
+    opacity:1;
+    transform:translateY(0) scale(1);
+  }
+  #float-menu .float-row.fab-trigger{display:flex}
 }
 @media(min-width:601px){
   #page-wrap{padding-left:var(--sp24);padding-right:var(--sp24)}
+  #float-menu .float-row.fab-trigger{display:none}
 }
+
+/* ── NAV SCROLL FADE INDICATOR ─────────────────── */
+.hdr-nav{
+  -webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%);
+  mask-image:linear-gradient(to right,#000 85%,transparent 100%);
+}
+.hdr-nav.scrolled-end{
+  -webkit-mask-image:linear-gradient(to left,#000 85%,transparent 100%);
+  mask-image:linear-gradient(to left,#000 85%,transparent 100%);
+}
+.hdr-nav.scrolled-mid{
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 8%,#000 85%,transparent 100%);
+  mask-image:linear-gradient(to right,transparent 0%,#000 8%,#000 85%,transparent 100%);
+}
+.hdr-nav.no-overflow{
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+
+/* ── SECTION SCROLL MARGIN ─────────────────────── */
+section[id]{
+  scroll-margin-top:calc(var(--hdr) + 20px);
+}
+
+/* ── ALT TOGGLE PROMINENCE ─────────────────────── */
+.btn-alt-toggle{
+  display:inline-flex;align-items:center;gap:var(--sp4);
+  color:var(--blue);
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 14px;min-height:36px;
+  background:var(--blue2);
+  border:1px solid rgba(58,90,138,.25);
+  border-radius:var(--r6);
+  cursor:pointer;
+  transition:all .2s;
+}
+.btn-alt-toggle:hover{
+  color:var(--navy);
+  background:rgba(58,90,138,.12);
+  border-color:rgba(58,90,138,.4);
+}
+
+/* ── FLIGHT MINI-CHIP (resurfaced on Sunday) ───── */
+#flight-chip{
+  position:fixed;
+  top:calc(var(--hdr) + 8px);
+  right:16px;
+  z-index:189;
+  background:linear-gradient(135deg,#7B1C1C,#B91C1C);
+  color:rgba(255,255,255,.92);
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:6px 14px;
+  border-radius:20px;
+  box-shadow:0 2px 12px rgba(185,28,28,.4);
+  opacity:0;pointer-events:none;
+  transform:translateY(-8px);
+  transition:opacity .3s ease,transform .3s ease;
+  cursor:pointer;
+  white-space:nowrap;
+}
+#flight-chip.visible{
+  opacity:1;pointer-events:all;
+  transform:translateY(0);
+}
+#flight-chip strong{color:#FFB3B3}
+
+/* ── FLIGHT BAR DISMISS BUTTON ─────────────────── */
+.fbar-dismiss{
+  background:none;border:none;color:rgba(255,255,255,.5);
+  font-size:14px;cursor:pointer;padding:2px 6px;
+  margin-left:8px;vertical-align:middle;
+  transition:color .2s;
+}
+.fbar-dismiss:hover{color:#fff}
+
+/* ── COUNTDOWN BADGE ───────────────────────────── */
+.hero-countdown{
+  display:inline-flex;align-items:center;gap:var(--sp8);
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--gold);
+  background:rgba(200,168,75,.08);
+  border:1px solid rgba(200,168,75,.2);
+  padding:6px 16px;
+  border-radius:20px;
+  margin-top:var(--sp12);
+  opacity:0;animation:fadeUp .5s ease 1.25s forwards;
+}
+.hero-countdown .cd-num{
+  font-size:14px;font-weight:700;
+  color:var(--gold2);
+}
+
+/* ── OFFLINE INDICATOR ─────────────────────────── */
+#offline-bar{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  z-index:200;
+  background:rgba(146,64,14,.95);
+  padding:8px var(--sp16);
+  text-align:center;
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.1em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.9);
+  transform:translateY(100%);
+  transition:transform .3s ease;
+}
+#offline-bar.visible{transform:translateY(0)}
 
 /* ── ACCESSIBILITY ──────────────────────────────── */
 :focus-visible{
@@ -903,7 +1021,13 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   <div class="fbar-text">
     🛫 Flight ZRH 8:25 PM · Sunday 29 March &nbsp;·&nbsp;
     <strong>Leave hotel 6:00 PM sharp</strong> &nbsp;·&nbsp; Airport Express 25 min → ZRH 6:30 PM
+    <button class="fbar-dismiss" onclick="dismissFlightBar()" aria-label="Dismiss flight alert">✕</button>
   </div>
+</div>
+
+<!-- ── FLIGHT MINI-CHIP (resurfaces on Sunday) ──── -->
+<div id="flight-chip" onclick="window.scrollTo({top:0,behavior:'smooth'})" role="button" aria-label="Flight reminder — tap for details">
+  🛫 <strong>ZRH 8:25 PM</strong> · Leave 6 PM
 </div>
 
 <!-- ── MAIN ─────────────────────────────────────── -->
@@ -928,6 +1052,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
         ✦ Jump to Saturday
       </button>
     </div>
+    <div class="hero-countdown" id="hero-countdown" aria-label="Trip countdown"></div>
     <div class="hero-wx-strip">
       <div><div class="hero-wx-day">Fri 27</div><div class="hero-wx-temp">47°/37°F · Partly cloudy</div></div>
       <div><div class="hero-wx-day">Sat 28</div><div class="hero-wx-temp">49°/36°F · Mostly cloudy</div></div>
@@ -1575,29 +1700,35 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 
 <!-- ── FLOATING UTILITY MENU ──────────────────────── -->
 <div id="float-menu" aria-label="Quick navigation">
-  <div class="float-row">
+  <div class="float-row fab-extra">
     <span class="float-btn-label">Top</span>
     <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
   </div>
-  <div class="float-row">
+  <div class="float-row fab-extra">
     <span class="float-btn-label">Hotel</span>
     <a class="float-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener" aria-label="Open hotel in maps">🏨</a>
   </div>
-  <div class="float-row">
+  <div class="float-row fab-extra">
     <span class="float-btn-label">Weather</span>
     <a class="float-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Live weather forecast">🌤</a>
   </div>
-  <div class="float-row">
-    <span class="float-btn-label">Saturday</span>
-    <button class="float-btn" onclick="navTo('section-sat',null)" aria-label="Jump to Saturday">✦</button>
+  <div class="float-row fab-extra" id="fab-jump-row">
+    <span class="float-btn-label" id="fab-jump-label">Saturday</span>
+    <button class="float-btn" id="fab-jump-btn" onclick="fabJump()" aria-label="Jump to next section">✦</button>
+  </div>
+  <div class="float-row fab-trigger">
+    <button class="float-btn" onclick="toggleFab()" aria-label="Toggle quick menu" id="fab-trigger-btn">⋯</button>
   </div>
 </div>
+
+<!-- ── OFFLINE INDICATOR ───────────────────────────── -->
+<div id="offline-bar" role="status" aria-live="polite">📡 You're offline — cached version loaded</div>
 
 <!-- ── PAGE TRANSITION OVERLAY ──────────────────────── -->
 <div id="page-fade" aria-hidden="true"></div>
 
 <script>
-// ── ACCORDION TOGGLES ──────────────────────────────────
+// ── ACCORDION TOGGLES (with keyboard a11y) ─────────────
 function toggleAcc(btn) {
   const acc = btn.closest('.accordion');
   const isOpen = acc.classList.toggle('open');
@@ -1617,6 +1748,17 @@ function togglePron(btn) {
   btn.setAttribute('aria-expanded', isOpen);
 }
 
+// Keyboard a11y: ensure Enter/Space work on all toggle buttons
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    const t = e.target;
+    if (t.classList.contains('accordion-hdr') || t.classList.contains('btn-alt-toggle') || t.classList.contains('pron-hdr')) {
+      e.preventDefault();
+      t.click();
+    }
+  }
+});
+
 // ── NAVIGATION ─────────────────────────────────────────
 function navTo(sectionId, btn) {
   if (btn) {
@@ -1624,7 +1766,13 @@ function navTo(sectionId, btn) {
     btn.classList.add('active');
   }
 
-  // Find the real section element (not anchor)
+  // Hero = scroll to very top
+  if (sectionId === 'hero') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    return;
+  }
+
+  // Find the real section element
   const section = document.getElementById(sectionId);
   if (!section) return;
 
@@ -1637,15 +1785,88 @@ function navTo(sectionId, btn) {
   const fbVisible = fb && !fb.classList.contains('hidden');
   const fbH = fbVisible ? fb.getBoundingClientRect().height : 0;
 
-  const gap = 16; // breathing room below sticky bar
+  const gap = 20; // breathing room below sticky bar
   const targetTop = section.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
 
   window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
 }
 
+// ── NAV SCROLL FADE INDICATOR ──────────────────────────
+const navEl = document.querySelector('.hdr-nav');
+function updateNavFade() {
+  if (!navEl) return;
+  const sl = navEl.scrollLeft;
+  const maxScroll = navEl.scrollWidth - navEl.clientWidth;
+  if (maxScroll <= 2) {
+    navEl.className = 'hdr-nav no-overflow';
+  } else if (sl < 4) {
+    navEl.className = 'hdr-nav'; // fade on right
+  } else if (sl >= maxScroll - 4) {
+    navEl.className = 'hdr-nav scrolled-end'; // fade on left
+  } else {
+    navEl.className = 'hdr-nav scrolled-mid'; // fade both
+  }
+}
+if (navEl) {
+  navEl.addEventListener('scroll', updateNavFade, { passive: true });
+  window.addEventListener('resize', updateNavFade);
+  updateNavFade();
+}
+
+// ── FLIGHT BAR DISMISS + RESURFACE ─────────────────────
+let flightBarDismissed = false;
+
+function dismissFlightBar() {
+  const fb = document.getElementById('flight-bar');
+  fb.classList.add('hidden');
+  flightBarDismissed = true;
+}
+
+// ── MOBILE FAB TOGGLE ──────────────────────────────────
+let fabOpen = false;
+function toggleFab() {
+  const fm = document.getElementById('float-menu');
+  fabOpen = !fabOpen;
+  fm.classList.toggle('fab-expanded', fabOpen);
+  document.getElementById('fab-trigger-btn').textContent = fabOpen ? '✕' : '⋯';
+}
+
+// Close FAB when tapping outside
+document.addEventListener('click', function(e) {
+  if (fabOpen && !e.target.closest('#float-menu')) {
+    fabOpen = false;
+    document.getElementById('float-menu').classList.remove('fab-expanded');
+    document.getElementById('fab-trigger-btn').textContent = '⋯';
+  }
+});
+
+// ── CONTEXTUAL FAB JUMP BUTTON ─────────────────────────
+const jumpTargets = {
+  'hero':               { label: 'Friday',    target: 'section-fri' },
+  'section-fri':        { label: 'Saturday',  target: 'section-sat' },
+  'section-sat':        { label: 'Sunday',    target: 'section-sun' },
+  'section-sun':        { label: 'Essentials',target: 'section-essentials' },
+  'section-essentials': { label: 'Transit',   target: 'section-transit' },
+  'section-transit':    { label: 'Top',       target: 'hero' },
+};
+let currentFabTarget = 'section-sat';
+
+function updateFabJump(activeSection) {
+  const info = jumpTargets[activeSection] || { label: 'Saturday', target: 'section-sat' };
+  const labelEl = document.getElementById('fab-jump-label');
+  const btnEl = document.getElementById('fab-jump-btn');
+  if (labelEl) labelEl.textContent = info.label;
+  currentFabTarget = info.target;
+}
+
+function fabJump() {
+  navTo(currentFabTarget, null);
+}
+
 // ── SCROLL BEHAVIORS ───────────────────────────────────
 const header = document.getElementById('site-header');
 const flightBar = document.getElementById('flight-bar');
+const flightChip = document.getElementById('flight-chip');
 const floatMenu = document.getElementById('float-menu');
 const progressBar = document.getElementById('progress-bar');
 const hdrLabel = document.getElementById('hdr-section-label');
@@ -1660,7 +1881,6 @@ const sections = [
   { id: 'section-transit',    label: 'Transit' },
 ];
 
-let flightBarVisible = true;
 let lastScroll = 0;
 
 function onScroll() {
@@ -1671,14 +1891,25 @@ function onScroll() {
   if (scroll > 40) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
 
-  // Flight bar: hide after scrolling past hero
+  // Flight bar logic
   const heroH = document.getElementById('hero').offsetHeight;
-  if (scroll > heroH * 0.6 && flightBarVisible) {
-    flightBar.classList.add('hidden');
-    flightBarVisible = false;
-  } else if (scroll <= heroH * 0.4 && !flightBarVisible) {
-    flightBar.classList.remove('hidden');
-    flightBarVisible = true;
+  if (!flightBarDismissed) {
+    // Keep flight bar sticky until dismissed — only auto-hide after hero
+    if (scroll > heroH * 0.6) {
+      flightBar.classList.add('hidden');
+    } else if (scroll <= heroH * 0.4) {
+      flightBar.classList.remove('hidden');
+    }
+  }
+
+  // Flight mini-chip: show when in Sunday section (or later) and flight bar is hidden
+  const sunSection = document.getElementById('section-sun');
+  const sunTop = sunSection ? sunSection.getBoundingClientRect().top : 9999;
+  const hdrHeight = header ? header.offsetHeight : 56;
+  if (sunTop <= hdrHeight + 60 && flightBar.classList.contains('hidden')) {
+    flightChip.classList.add('visible');
+  } else {
+    flightChip.classList.remove('visible');
   }
 
   // Float menu: show after 300px scroll
@@ -1689,7 +1920,7 @@ function onScroll() {
   const pct = docH > 0 ? Math.min(100, (scroll / docH) * 100) : 0;
   progressBar.style.width = pct + '%';
 
-  // Scroll spy — update active nav chip
+  // Scroll spy — update active nav chip + contextual FAB
   let activeSection = 'hero';
   const hdrH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 56;
   sections.forEach(s => {
@@ -1705,13 +1936,64 @@ function onScroll() {
     if (isActive && hdrLabel) {
       hdrLabel.textContent = chip.textContent;
     }
+    // Auto-scroll active chip into view in nav
+    if (isActive && navEl) {
+      const chipRect = chip.getBoundingClientRect();
+      const navRect = navEl.getBoundingClientRect();
+      if (chipRect.right > navRect.right - 20 || chipRect.left < navRect.left + 20) {
+        chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }
   });
+
+  // Update contextual FAB jump target
+  updateFabJump(activeSection);
 
   lastScroll = scroll;
 }
 
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll(); // Run once on load
+
+// ── COUNTDOWN TIMER ────────────────────────────────────
+(function() {
+  const tripDate = new Date('2026-03-27T00:00:00+01:00'); // CET
+  const now = new Date();
+  const diffMs = tripDate - now;
+  const el = document.getElementById('hero-countdown');
+  if (!el) return;
+
+  if (diffMs <= 0) {
+    // Trip is happening or past
+    const endDate = new Date('2026-03-30T00:00:00+01:00');
+    if (now < endDate) {
+      el.innerHTML = '✦ <span class="cd-num">Now</span> · Trip in progress';
+    } else {
+      el.style.display = 'none';
+    }
+  } else {
+    const days = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+    if (days === 1) {
+      el.innerHTML = '✦ <span class="cd-num">Tomorrow</span> · Pack your bags';
+    } else {
+      el.innerHTML = '✦ <span class="cd-num">' + days + ' days</span> until departure';
+    }
+  }
+})();
+
+// ── OFFLINE INDICATOR ──────────────────────────────────
+const offlineBar = document.getElementById('offline-bar');
+function updateOnlineStatus() {
+  if (!offlineBar) return;
+  if (!navigator.onLine) {
+    offlineBar.classList.add('visible');
+  } else {
+    offlineBar.classList.remove('visible');
+  }
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
 
 // ── STOP CARD CLICK → WEBSITE ──────────────────────────
 document.querySelectorAll('.stop[data-url]').forEach(stop => {
@@ -1725,4 +2007,3 @@ document.querySelectorAll('.stop[data-url]').forEach(stop => {
 
 </body>
 </html>
-HTMLEOF
