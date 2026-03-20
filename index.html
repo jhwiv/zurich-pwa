@@ -1093,10 +1093,10 @@ section[id]{
       </button>
     </div>
     <div class="hero-countdown" id="hero-countdown" aria-label="Trip countdown"></div>
-    <div class="hero-wx-strip">
-      <div><div class="hero-wx-day">Fri 27</div><div class="hero-wx-temp">47°/37°F · Partly cloudy</div></div>
-      <div><div class="hero-wx-day">Sat 28</div><div class="hero-wx-temp">49°/36°F · Mostly cloudy</div></div>
-      <div><div class="hero-wx-day">Sun 29</div><div class="hero-wx-temp">48°/35°F · Partly cloudy</div></div>
+    <div class="hero-wx-strip" id="hero-wx-strip">
+      <div id="hero-wx-fri"><div class="hero-wx-day">Fri 27</div><div class="hero-wx-temp">47°/37°F · Partly cloudy</div></div>
+      <div id="hero-wx-sat"><div class="hero-wx-day">Sat 28</div><div class="hero-wx-temp">49°/36°F · Mostly cloudy</div></div>
+      <div id="hero-wx-sun"><div class="hero-wx-day">Sun 29</div><div class="hero-wx-temp">48°/35°F · Partly cloudy</div></div>
     </div>
   </div>
 </section>
@@ -1111,7 +1111,7 @@ section[id]{
         <h2 class="day-title">Arrival &amp;<br>White Elephant</h2>
         <p class="day-intro">A gentle landing. Activate your Zürich Card in the app at the airport. Nothing to prove on the first evening.</p>
       </div>
-      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Friday weather — tap for live forecast">
+      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Friday weather — tap for live forecast" id="wx-fri">
         <div><span class="wx-hi">47°F</span><span class="wx-lo">/ 37°F</span></div>
         <div class="wx-c">8°C / 3°C</div>
         <div class="wx-cond">Partly Cloudy</div>
@@ -1190,7 +1190,7 @@ section[id]{
         <h2 class="day-title">Mountain, Art<br>&amp; Old Town</h2>
         <p class="day-intro">Uetliberg → Sprüngli → Kunsthaus → Old Town → Lindenhof → aperitivo → Zeughauskeller. No hotel return before dinner. Leave hotel at 10:00 AM.</p>
       </div>
-      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Saturday weather — tap for live forecast">
+      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Saturday weather — tap for live forecast" id="wx-sat">
         <div><span class="wx-hi">49°F</span><span class="wx-lo">/ 36°F</span></div>
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Mostly Cloudy</div>
@@ -1353,7 +1353,7 @@ section[id]{
         <h2 class="day-title">Slow Morning<br>&amp; Farewell</h2>
         <p class="day-intro">The breathing day — unhurried and beautiful. <strong style="color:var(--red)">Leave hotel by 6:00 PM sharp.</strong> Full city window: 10 AM–4:30 PM.</p>
       </div>
-      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Sunday weather — tap for live forecast">
+      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Sunday weather — tap for live forecast" id="wx-sun">
         <div><span class="wx-hi">48°F</span><span class="wx-lo">/ 35°F</span></div>
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Partly Cloudy</div>
@@ -1524,7 +1524,7 @@ section[id]{
       </div>
       <div class="ess-item">
         <div class="ess-label">Weather Forecast</div>
-        <div class="ess-value">47–49°F highs · 35–37°F lows<br>10–20% rain · Layers + compact umbrella</div>
+        <div class="ess-value" id="ess-wx">47–49°F highs · 35–37°F lows<br>10–20% rain · Layers + compact umbrella</div>
       </div>
       <div class="ess-item">
         <div class="ess-label">Emergency</div>
@@ -1765,7 +1765,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.2 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.3 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -2193,5 +2193,127 @@ if ('serviceWorker' in navigator) {
 }
 </script>
 
+
+<script>
+// ── LIVE WEATHER (Open-Meteo API) ──────────────────────
+(function() {
+  // WMO weather code → human-readable condition
+  var WX_CODES = {
+    0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
+    45:'Fog', 48:'Rime fog',
+    51:'Light drizzle', 53:'Moderate drizzle', 55:'Dense drizzle',
+    56:'Light freezing drizzle', 57:'Dense freezing drizzle',
+    61:'Light rain', 63:'Moderate rain', 65:'Heavy rain',
+    66:'Light freezing rain', 67:'Heavy freezing rain',
+    71:'Light snow', 73:'Moderate snow', 75:'Heavy snow',
+    77:'Snow grains',
+    80:'Light showers', 81:'Moderate showers', 82:'Violent showers',
+    85:'Light snow showers', 86:'Heavy snow showers',
+    95:'Thunderstorm', 96:'Thunderstorm + light hail', 99:'Thunderstorm + heavy hail'
+  };
+
+  // Format sunrise/sunset ISO string → local Zürich time like "6:15"
+  // Open-Meteo returns times in CET (+01:00) regardless of DST.
+  // We parse as CET then format in Europe/Zurich to get correct local time.
+  function fmtSunTime(iso) {
+    // Append +01:00 since Open-Meteo returns CET
+    var d = new Date(iso + ':00+01:00');
+    var t = d.toLocaleTimeString('en-US', {
+      hour: 'numeric', minute: '2-digit',
+      hour12: false, timeZone: 'Europe/Zurich'
+    });
+    // Strip leading zero: "06:14" → "6:14"
+    return t.replace(/^0/, '');
+  }
+
+  // Convert °F to °C (rounded to nearest integer)
+  function fToC(f) { return Math.round((f - 32) * 5 / 9); }
+
+  var API = 'https://api.open-meteo.com/v1/forecast'
+    + '?latitude=47.3769&longitude=8.5417'
+    + '&daily=weather_code,temperature_2m_max,temperature_2m_min,'
+    + 'precipitation_probability_max,wind_speed_10m_max,sunrise,sunset'
+    + '&temperature_unit=fahrenheit&wind_speed_unit=mph'
+    + '&timezone=Europe/Zurich'
+    + '&start_date=2026-03-27&end_date=2026-03-29';
+
+  fetch(API)
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      var d = data.daily;
+      if (!d || !d.time || d.time.length < 3) return;
+
+      var days = [
+        { idx: 0, cardId: 'wx-fri', heroId: 'hero-wx-fri', label: 'Fri 27' },
+        { idx: 1, cardId: 'wx-sat', heroId: 'hero-wx-sat', label: 'Sat 28' },
+        { idx: 2, cardId: 'wx-sun', heroId: 'hero-wx-sun', label: 'Sun 29' }
+      ];
+
+      var allHighs = [], allLows = [], allRain = [];
+
+      days.forEach(function(day) {
+        var i = day.idx;
+        var hi = Math.round(d.temperature_2m_max[i]);
+        var lo = Math.round(d.temperature_2m_min[i]);
+        var hiC = fToC(d.temperature_2m_max[i]);
+        var loC = fToC(d.temperature_2m_min[i]);
+        var cond = WX_CODES[d.weather_code[i]] || 'Mixed';
+        var rain = d.precipitation_probability_max[i];
+        var wind = Math.round(d.wind_speed_10m_max[i]);
+        var rise = fmtSunTime(d.sunrise[i]);
+        var set  = fmtSunTime(d.sunset[i]);
+
+        allHighs.push(hi);
+        allLows.push(lo);
+        allRain.push(rain);
+
+        // Update the day weather card
+        var card = document.getElementById(day.cardId);
+        if (card) {
+          var wxHi = card.querySelector('.wx-hi');
+          var wxLo = card.querySelector('.wx-lo');
+          var wxC  = card.querySelector('.wx-c');
+          var wxCond = card.querySelector('.wx-cond');
+          var stats  = card.querySelectorAll('.wx-stat');
+          if (wxHi)  wxHi.textContent = hi + '°F';
+          if (wxLo)  wxLo.textContent = '/ ' + lo + '°F';
+          if (wxC)   wxC.textContent = hiC + '°C / ' + loC + '°C';
+          if (wxCond) wxCond.textContent = cond;
+          if (stats.length >= 4) {
+            stats[0].textContent = 'Rain ' + rain + '%';
+            stats[1].textContent = 'Wind ' + wind + ' mph';
+            stats[2].textContent = '△ ' + rise;
+            stats[3].textContent = '▽ ' + set;
+          }
+        }
+
+        // Update the hero strip
+        var hero = document.getElementById(day.heroId);
+        if (hero) {
+          var temp = hero.querySelector('.hero-wx-temp');
+          if (temp) temp.textContent = hi + '°/' + lo + '°F · ' + cond;
+        }
+      });
+
+      // Update essentials summary
+      var essWx = document.getElementById('ess-wx');
+      if (essWx) {
+        var minHi = Math.min.apply(null, allHighs);
+        var maxHi = Math.max.apply(null, allHighs);
+        var minLo = Math.min.apply(null, allLows);
+        var maxLo = Math.max.apply(null, allLows);
+        var minRain = Math.min.apply(null, allRain);
+        var maxRain = Math.max.apply(null, allRain);
+        essWx.innerHTML = minHi + '–' + maxHi + '°F highs · '
+          + minLo + '–' + maxLo + '°F lows<br/>'
+          + minRain + '–' + maxRain + '% rain · Layers + compact umbrella';
+      }
+    })
+    .catch(function(e) {
+      // Silently fail — static fallback values remain visible
+      console.log('Weather fetch failed (offline?), using static values.');
+    });
+})();
+</script>
 </body>
 </html>
