@@ -429,6 +429,8 @@ img{display:block;max-width:100%}
   transition:background .2s,border-color .2s;
   text-decoration:none;
 }
+.stop-pron:active{transform:scale(.93);transition-duration:.05s}
+.pron-link:active{opacity:.5;transition:opacity .05s}
 .stop-pron:hover{
   background:rgba(200,168,75,.18);
   border-color:rgba(200,168,75,.35);
@@ -790,7 +792,7 @@ table.ptbl td{
 }
 table.ptbl tr:last-child td{border-bottom:none}
 table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
-.pron-link{color:var(--gold);text-decoration:none;margin-right:var(--sp4);font-size:13px}
+.pron-link{color:var(--gold);text-decoration:none;margin-right:var(--sp4);font-size:13px;background:none;border:none;cursor:pointer;padding:0;display:inline;vertical-align:baseline;line-height:1}
 .phon{font-family:'DM Mono',monospace;font-size:10px;color:rgba(200,168,75,.8);white-space:nowrap}
 
 /* ── FOOTER ─────────────────────────────────────── */
@@ -1126,7 +1128,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">7:40 PM</div>
-        <h3 class="stop-title">Airport → Zürich Marriott Hotel <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Z%C3%BCrich+in+German" target="_blank" rel="noopener">🔊 TSOO-rikh</a></h3>
+        <h3 class="stop-title">Airport → Zürich Marriott Hotel <button class="stop-pron" onclick="speakWord('Zürich','de-DE')">🔊 TSOO-rikh</button></h3>
         <p class="stop-body">Collect bags. Activate Zürich Card in the app. Airport Express to HB every 10 min — 10-min ride, fully covered. Tram 13 one stop → Sihlquai/HB. Hotel is 3 min walk.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚆 Airport Express + Tram 13</span>
@@ -1205,7 +1207,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">10:00 AM</div>
-        <h3 class="stop-title">Uetliberg Summit · 871 m <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Uetliberg+in+German" target="_blank" rel="noopener">🔊 OOT-lee-berg</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Uetliberg Summit · 871 m <button class="stop-pron" onclick="speakWord('Uetliberg','de-DE')">🔊 OOT-lee-berg</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's local mountain — a 20-min S10 train from HB takes you above the city. Walk 10 min to the summit tower: Alps panorama, Lake Zürich, and the rooftops below. Perfect sketchbook moment. Zürich Card covers the journey fully.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚆 S10 from HB tracks 21/22</span>
@@ -1231,7 +1233,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">12:45 PM</div>
-        <h3 class="stop-title">Café Sprüngli <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Spr%C3%BCngli+in+German" target="_blank" rel="noopener">🔊 SHPRUNG-lee</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Café Sprüngli <button class="stop-pron" onclick="speakWord('Sprüngli','de-DE')">🔊 SHPRUNG-lee</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's legendary confiserie since 1836. The hot chocolate is considered legendary by locals. Order the Luxemburgerli macarons — bite-sized, seasonal, unlike anything from Copenhagen. 🌿 Fully vegetarian.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚶 12 min walk from HB</span>
@@ -1247,7 +1249,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">1:30 PM</div>
-        <h3 class="stop-title">Kunsthaus Zürich <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Kunsthaus+in+German" target="_blank" rel="noopener">🔊 KOONST-howss</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Kunsthaus Zürich <button class="stop-pron" onclick="speakWord('Kunsthaus','de-DE')">🔊 KOONST-howss</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Switzerland's largest art museum. Must-see: Bührle Collection (Monet, Cézanne, Renoir), Munch (largest outside Norway), Giacometti, and Pipilotti Rist. Plan two hours. Free with Zürich Card. Rich sketchbook territory.</p>
         <div class="stop-meta">
           <span class="meta-chip">🎨 Museum</span>
@@ -1273,7 +1275,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">4:15 PM</div>
-        <h3 class="stop-title">Old Town — Augustinergasse &amp; Cathedrals <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Augustinergasse+in+German" target="_blank" rel="noopener">🔊 ow-goo-STEE-ner-gah-suh</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Old Town — Augustinergasse &amp; Cathedrals <button class="stop-pron" onclick="speakWord('Augustinergasse','de-DE')">🔊 ow-goo-STEE-ner-gah-suh</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's most photographed medieval lane. Cross the Limmat to <strong>Grossmünster</strong> (twin-towered Romanesque cathedral, begun 1100s). Then <strong>Fraumünster</strong> with Marc Chagall's magnificent stained glass. Münsterhof square beyond — car-free and beautiful.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚶 18 min walk W from Kunsthaus</span>
@@ -1288,7 +1290,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">5:45 PM</div>
-        <h3 class="stop-title">Lindenhof Hill — Best Panorama <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Lindenhof+in+German" target="_blank" rel="noopener">🔊 LIN-den-hohf</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Lindenhof Hill — Best Panorama <button class="stop-pron" onclick="speakWord('Lindenhof','de-DE')">🔊 LIN-den-hohf</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Former Roman fort hilltop park. Panoramic views over the Limmat and Old Town rooftops. A large public chessboard. Stone benches — ideal for the sketchbook. Late afternoon March light is warm and low.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚶 5 min from Fraumünster</span>
@@ -1301,7 +1303,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">6:30 PM</div>
-        <h3 class="stop-title">Pre-Dinner Drinks: Café Bar Münsterhof <a class="stop-pron" href="https://www.google.com/search?q=pronounce+M%C3%BCnsterhof+in+German" target="_blank" rel="noopener">🔊 MOON-ster-hohf</a></h3>
+        <h3 class="stop-title">Pre-Dinner Drinks: Café Bar Münsterhof <button class="stop-pron" onclick="speakWord('Münsterhof','de-DE')">🔊 MOON-ster-hohf</button></h3>
         <p class="stop-body">Walk 5 min down from Lindenhof to the Münsterhof square. Order a Spritz or local wine. Watch the square settle into evening. Smart-casual is perfect — no need to change.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚶 5 min from Lindenhof</span>
@@ -1315,7 +1317,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">7:30 PM <span class="stop-time-badge badge-conf">✓ Confirmed</span></div>
-        <h3 class="stop-title">Dinner: Zeughauskeller <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Zeughauskeller+in+German" target="_blank" rel="noopener">🔊 TSOYG-howss-kel-er</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Dinner: Zeughauskeller <button class="stop-pron" onclick="speakWord('Zeughauskeller','de-DE')">🔊 TSOYG-howss-kel-er</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's most famous beer-hall restaurant, in a 15th-century former armory on Bahnhofstrasse. High ceilings, oak beams, long tables. Excellent Zürcher Geschnetzeltes. 🌿 Älplermagronen (Alpine macaroni) — the vegetarian option.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚶 3 min from Münsterhof</span>
@@ -1368,7 +1370,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">10:00 AM</div>
-        <h3 class="stop-title">Breakfast: Hiltl <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Hiltl+in+German" target="_blank" rel="noopener">🔊 HILL-tul</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Breakfast: Hiltl <button class="stop-pron" onclick="speakWord('Hiltl','de-DE')">🔊 HILL-tul</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">World's oldest vegetarian restaurant (est. 1898). Legendary Sunday brunch buffet — 100+ dishes: Indian curries, Middle Eastern mezze, Swiss cheese boards, fresh pastries. Arrive by 10 AM before the rush. 🌿 Fully vegetarian &amp; vegan. CHF 57 pp all-inclusive.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚶 8 min from hotel</span>
@@ -1384,7 +1386,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">11:15 AM</div>
-        <h3 class="stop-title">Lake Zürich Promenade <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Quaianlagen+in+German" target="_blank" rel="noopener">🔊 KY-ahn-lah-gen</a></h3>
+        <h3 class="stop-title">Lake Zürich Promenade <button class="stop-pron" onclick="speakWord('Quaianlagen','de-DE')">🔊 KY-ahn-lah-gen</button></h3>
         <p class="stop-body">Quaianlagen park from Bürkliplatz: swans, sailboats, Alps views on clear days. Pure unscheduled downtime. Find a bench. Draw the water. March light on the lake is extraordinary.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚶 12 min S from Hiltl</span>
@@ -1413,7 +1415,7 @@ section[id]{
 
       <article class="stop is-optional" role="listitem">
         <div class="stop-time">Bonus opt. <span class="stop-time-badge badge-opt">Or this instead</span></div>
-        <h3 class="stop-title optional">Polybahn Funicular <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Polybahn+in+German" target="_blank" rel="noopener">🔊 POH-lee-bahn</a></h3>
+        <h3 class="stop-title optional">Polybahn Funicular <button class="stop-pron" onclick="speakWord('Polybahn','de-DE')">🔊 POH-lee-bahn</button></h3>
         <p class="stop-body">Zürich's tiny historic funicular — a 90-second ride from Central up to ETH Zürich. One of the best rooftop views in the city, completely different from Lindenhof. Free with Zürich Card, adds 15–20 min total.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚠 Rämistrasse 101 (Central)</span>
@@ -1427,7 +1429,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">1:00 PM</div>
-        <h3 class="stop-title">Lunch: Fischerstube Zürihorn <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Fischerstube+in+German" target="_blank" rel="noopener">🔊 FISH-er-shtoo-buh · TSOO-ree-horn</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Lunch: Fischerstube Zürihorn <button class="stop-pron" onclick="speakWord('Fischerstube','de-DE')">🔊 FISH-er-shtoo-buh · TSOO-ree-horn</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Lakeside terrace directly over the water. Seasonal Swiss fish from Lake Zürich: smoked trout, perch fillets with lemon butter. Sitting on the terrace above the lake is one of Zürich's great pleasures. 🌿 Vegetarian options on menu.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚃 Tram 2 → Zürichhorn (10 min)</span>
@@ -1442,7 +1444,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">2:30 PM</div>
-        <h3 class="stop-title">Museum Rietberg <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Rietberg+in+German" target="_blank" rel="noopener">🔊 REET-berg</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Museum Rietberg <button class="stop-pron" onclick="speakWord('Rietberg','de-DE')">🔊 REET-berg</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Asian, African &amp; Oceanic art in historic villas in Rieter Park. Wagner wrote Tristan here. The underground Emerald extension is architecturally stunning. Free with Zürich Card. Rich sketching territory.</p>
         <div class="stop-meta">
           <span class="meta-chip">🚕 Uber ~10 min recommended</span>
@@ -1458,7 +1460,7 @@ section[id]{
 
       <article class="stop" role="listitem">
         <div class="stop-time">5:15 PM</div>
-        <h3 class="stop-title">Farewell Dinner: eCHo <a class="stop-pron" href="https://www.google.com/search?q=pronounce+Echo+in+German" target="_blank" rel="noopener">🔊 EKK-oh</a> <span class="stop-ext">↗</span></h3>
+        <h3 class="stop-title">Farewell Dinner: eCHo <button class="stop-pron" onclick="speakWord('Echo','de-DE')">🔊 EKK-oh</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">The hotel's own Swiss restaurant — authentic Züri Gschnätzlets, cheese fondue, regional produce. Your last Swiss meal, steps from the lobby. Finish by 6:00 PM. 🌿 Vegetarian &amp; vegan options.</p>
         <div class="stop-meta">
           <span class="meta-chip">🍽 On-site, Marriott</span>
@@ -1681,16 +1683,16 @@ section[id]{
           <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap to hear it &nbsp;▾</span>
         </button>
         <div class="pron-body" id="pron-phrases-body" role="region">
-          <div class="pron-hint">🔊 Tap 🔊 to hear any word spoken aloud. Opening with "Grüezi" transforms how locals respond to you.</div>
+          <div class="pron-hint">🔊 Tap 🔊 to hear any word spoken aloud — no internet needed. Opening with "Grüezi" transforms how locals respond to you.</div>
           <table class="ptbl">
             <thead><tr><th>Phrase</th><th>Say It</th><th>Usage</th></tr></thead>
             <tbody>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Gr%C3%BCezi+in+German" target="_blank" class="pron-link">🔊</a> Grüezi</td><td class="phon">GREW-tsee</td><td>Hello / Good day — use entering any shop or restaurant.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Merci+in+German" target="_blank" class="pron-link">🔊</a> Merci</td><td class="phon">MER-see</td><td>Thank you — locals use this far more than "Danke".</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Bitte+in+German" target="_blank" class="pron-link">🔊</a> Bitte</td><td class="phon">BIT-tuh</td><td>Please / You're welcome.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+En+Guete+in+German" target="_blank" class="pron-link">🔊</a> En Guete!</td><td class="phon">en GOO-tuh</td><td>Enjoy your meal!</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+D%27Rechnig+bitte+in+German" target="_blank" class="pron-link">🔊</a> D'Rechnig bitte</td><td class="phon">d'REKH-nig BIT-tuh</td><td>The bill, please.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Proscht+in+German" target="_blank" class="pron-link">🔊</a> Proscht!</td><td class="phon">PRAWSHT</td><td>Cheers! Make eye contact when clinking.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Grüezi','de-DE')">🔊</button> Grüezi</td><td class="phon">GREW-tsee</td><td>Hello / Good day — use entering any shop or restaurant.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Merci','de-DE')">🔊</button> Merci</td><td class="phon">MER-see</td><td>Thank you — locals use this far more than "Danke".</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Bitte','de-DE')">🔊</button> Bitte</td><td class="phon">BIT-tuh</td><td>Please / You're welcome.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('En Guete','de-DE')">🔊</button> En Guete!</td><td class="phon">en GOO-tuh</td><td>Enjoy your meal!</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('D\'Rechnig bitte','de-DE')">🔊</button> D'Rechnig bitte</td><td class="phon">d'REKH-nig BIT-tuh</td><td>The bill, please.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Proscht','de-DE')">🔊</button> Proscht!</td><td class="phon">PRAWSHT</td><td>Cheers! Make eye contact when clinking.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1702,30 +1704,30 @@ section[id]{
           <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap to hear it &nbsp;▾</span>
         </button>
         <div class="pron-body" id="pron-places-body" role="region">
-          <div class="pron-hint">Every German/Swiss-German place you'll visit, in order of appearance. Tap 🔊 to hear any word spoken aloud.</div>
+          <div class="pron-hint">Every German/Swiss-German place you'll visit, in order of appearance. Tap 🔊 to hear any word spoken aloud — works offline too.</div>
           <table class="ptbl">
             <thead><tr><th>Place</th><th>Say It</th><th>What It Is</th></tr></thead>
             <tbody>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Z%C3%BCrich+in+German" target="_blank" class="pron-link">🔊</a> Zürich</td><td class="phon">TSOO-rikh</td><td>The city. Not "ZOO-rick".</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Sihlquai+in+German" target="_blank" class="pron-link">🔊</a> Sihlquai</td><td class="phon">ZEEL-ky</td><td>Tram stop near your hotel.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Uetliberg+in+German" target="_blank" class="pron-link">🔊</a> Uetliberg</td><td class="phon">OOT-lee-berg</td><td>Zürich's local mountain. Saturday morning.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Spr%C3%BCngli+in+German" target="_blank" class="pron-link">🔊</a> Sprüngli</td><td class="phon">SHPRUNG-lee</td><td>The legendary confiserie since 1836.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Luxemburgerli+in+German" target="_blank" class="pron-link">🔊</a> Luxemburgerli</td><td class="phon">LUX-em-boor-ger-lee</td><td>Sprüngli's iconic bite-sized macarons.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Bahnhofstrasse+in+German" target="_blank" class="pron-link">🔊</a> Bahnhofstrasse</td><td class="phon">BAHN-hohf-shtrah-suh</td><td>Main shopping boulevard. Sprüngli &amp; Zeughauskeller are here.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Kunsthaus+in+German" target="_blank" class="pron-link">🔊</a> Kunsthaus</td><td class="phon">KOONST-howss</td><td>Switzerland's largest art museum.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Augustinergasse+in+German" target="_blank" class="pron-link">🔊</a> Augustinergasse</td><td class="phon">ow-goo-STEE-ner-gah-suh</td><td>Most photographed medieval lane in Old Town.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Grossm%C3%BCnster+in+German" target="_blank" class="pron-link">🔊</a> Grossmünster</td><td class="phon">GROSS-moon-ster</td><td>The twin-towered Romanesque cathedral.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Fraum%C3%BCnster+in+German" target="_blank" class="pron-link">🔊</a> Fraumünster</td><td class="phon">FROW-moon-ster</td><td>Church with Chagall's stained glass windows.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Lindenhof+in+German" target="_blank" class="pron-link">🔊</a> Lindenhof</td><td class="phon">LIN-den-hohf</td><td>Hilltop park with the best Old Town panorama.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+M%C3%BCnsterhof+in+German" target="_blank" class="pron-link">🔊</a> Münsterhof</td><td class="phon">MOON-ster-hohf</td><td>Car-free square near Fraumünster. Pre-dinner drinks.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Zeughauskeller+in+German" target="_blank" class="pron-link">🔊</a> Zeughauskeller</td><td class="phon">TSOYG-howss-kel-er</td><td>Your Saturday dinner. A 15th-century armory cellar.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Hiltl+in+German" target="_blank" class="pron-link">🔊</a> Hiltl</td><td class="phon">HILL-tul</td><td>World's oldest vegetarian restaurant. Sunday brunch.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Quaianlagen+in+German" target="_blank" class="pron-link">🔊</a> Quaianlagen</td><td class="phon">KY-ahn-lah-gen</td><td>Lakefront park for your Sunday promenade.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+B%C3%BCrkliplatz+in+German" target="_blank" class="pron-link">🔊</a> Bürkliplatz</td><td class="phon">BOOR-klee-plahts</td><td>Lake pier — boat cruise departure point.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Polybahn+in+German" target="_blank" class="pron-link">🔊</a> Polybahn</td><td class="phon">POH-lee-bahn</td><td>The tiny funicular up to ETH Zürich.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Fischerstube+in+German" target="_blank" class="pron-link">🔊</a> Fischerstube</td><td class="phon">FISH-er-shtoo-buh</td><td>Lakeside fish restaurant. Sunday lunch.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Z%C3%BCrihorn+in+German" target="_blank" class="pron-link">🔊</a> Zürihorn</td><td class="phon">TSOO-ree-horn</td><td>Lakeside park area near Fischerstube.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Rietberg+in+German" target="_blank" class="pron-link">🔊</a> Rietberg</td><td class="phon">REET-berg</td><td>Art museum in Rieter Park. Sunday afternoon.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Zürich','de-DE')">🔊</button> Zürich</td><td class="phon">TSOO-rikh</td><td>The city. Not "ZOO-rick".</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Sihlquai','de-DE')">🔊</button> Sihlquai</td><td class="phon">ZEEL-ky</td><td>Tram stop near your hotel.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Uetliberg','de-DE')">🔊</button> Uetliberg</td><td class="phon">OOT-lee-berg</td><td>Zürich's local mountain. Saturday morning.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Sprüngli','de-DE')">🔊</button> Sprüngli</td><td class="phon">SHPRUNG-lee</td><td>The legendary confiserie since 1836.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Luxemburgerli','de-DE')">🔊</button> Luxemburgerli</td><td class="phon">LUX-em-boor-ger-lee</td><td>Sprüngli's iconic bite-sized macarons.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Bahnhofstrasse','de-DE')">🔊</button> Bahnhofstrasse</td><td class="phon">BAHN-hohf-shtrah-suh</td><td>Main shopping boulevard. Sprüngli &amp; Zeughauskeller are here.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Kunsthaus','de-DE')">🔊</button> Kunsthaus</td><td class="phon">KOONST-howss</td><td>Switzerland's largest art museum.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Augustinergasse','de-DE')">🔊</button> Augustinergasse</td><td class="phon">ow-goo-STEE-ner-gah-suh</td><td>Most photographed medieval lane in Old Town.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Grossmünster','de-DE')">🔊</button> Grossmünster</td><td class="phon">GROSS-moon-ster</td><td>The twin-towered Romanesque cathedral.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Fraumünster','de-DE')">🔊</button> Fraumünster</td><td class="phon">FROW-moon-ster</td><td>Church with Chagall's stained glass windows.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Lindenhof','de-DE')">🔊</button> Lindenhof</td><td class="phon">LIN-den-hohf</td><td>Hilltop park with the best Old Town panorama.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Münsterhof','de-DE')">🔊</button> Münsterhof</td><td class="phon">MOON-ster-hohf</td><td>Car-free square near Fraumünster. Pre-dinner drinks.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Zeughauskeller','de-DE')">🔊</button> Zeughauskeller</td><td class="phon">TSOYG-howss-kel-er</td><td>Your Saturday dinner. A 15th-century armory cellar.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Hiltl','de-DE')">🔊</button> Hiltl</td><td class="phon">HILL-tul</td><td>World's oldest vegetarian restaurant. Sunday brunch.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Quaianlagen','de-DE')">🔊</button> Quaianlagen</td><td class="phon">KY-ahn-lah-gen</td><td>Lakefront park for your Sunday promenade.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Bürkliplatz','de-DE')">🔊</button> Bürkliplatz</td><td class="phon">BOOR-klee-plahts</td><td>Lake pier — boat cruise departure point.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Polybahn','de-DE')">🔊</button> Polybahn</td><td class="phon">POH-lee-bahn</td><td>The tiny funicular up to ETH Zürich.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Fischerstube','de-DE')">🔊</button> Fischerstube</td><td class="phon">FISH-er-shtoo-buh</td><td>Lakeside fish restaurant. Sunday lunch.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Zürihorn','de-DE')">🔊</button> Zürihorn</td><td class="phon">TSOO-ree-horn</td><td>Lakeside park area near Fischerstube.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Rietberg','de-DE')">🔊</button> Rietberg</td><td class="phon">REET-berg</td><td>Art museum in Rieter Park. Sunday afternoon.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1741,12 +1743,12 @@ section[id]{
           <table class="ptbl">
             <thead><tr><th>Term</th><th>Say It</th><th>What It Is</th></tr></thead>
             <tbody>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Z%C3%BCrcher+Geschnetzeltes+in+German" target="_blank" class="pron-link">🔊</a> Zürcher Geschnetzeltes</td><td class="phon">TSOOR-kher geh-SHNET-tsel-tes</td><td>Zürich's signature veal dish in cream sauce.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+R%C3%B6sti+in+German" target="_blank" class="pron-link">🔊</a> Rösti</td><td class="phon">RURR-shti</td><td>Swiss potato cake. Not "ROH-stee".</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+%C3%84lplermagronen+in+German" target="_blank" class="pron-link">🔊</a> Älplermagronen</td><td class="phon">ELP-ler-mah-GROH-nen</td><td>Alpine macaroni with cheese &amp; applesauce.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Z%C3%BCri+Gschn%C3%A4tzlets+in+German" target="_blank" class="pron-link">🔊</a> Züri Gschnätzlets</td><td class="phon">TSOO-ree g'SHNET-sletts</td><td>Swiss-German for Geschnetzeltes. eCHo menu.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Fondue+in+French" target="_blank" class="pron-link">🔊</a> Fondue</td><td class="phon">fon-DOO</td><td>Melted cheese pot. Stir in a figure-8.</td></tr>
-              <tr><td><a href="https://www.google.com/search?q=pronounce+Bircherm%C3%BCesli+in+German" target="_blank" class="pron-link">🔊</a> Birchermüesli</td><td class="phon">BEER-kher-MOOS-lee</td><td>The original Swiss muesli. Try it at Hiltl.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Zürcher Geschnetzeltes','de-DE')">🔊</button> Zürcher Geschnetzeltes</td><td class="phon">TSOOR-kher geh-SHNET-tsel-tes</td><td>Zürich's signature veal dish in cream sauce.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Rösti','de-DE')">🔊</button> Rösti</td><td class="phon">RURR-shti</td><td>Swiss potato cake. Not "ROH-stee".</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Älplermagronen','de-DE')">🔊</button> Älplermagronen</td><td class="phon">ELP-ler-mah-GROH-nen</td><td>Alpine macaroni with cheese &amp; applesauce.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Züri Gschnätzlets','de-DE')">🔊</button> Züri Gschnätzlets</td><td class="phon">TSOO-ree g'SHNET-sletts</td><td>Swiss-German for Geschnetzeltes. eCHo menu.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Fondue','fr-FR')">🔊</button> Fondue</td><td class="phon">fon-DOO</td><td>Melted cheese pot. Stir in a figure-8.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Birchermüesli','de-DE')">🔊</button> Birchermüesli</td><td class="phon">BEER-kher-MOOS-lee</td><td>The original Swiss muesli. Try it at Hiltl.</td></tr>
             </tbody>
           </table>
         </div>
@@ -1763,7 +1765,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.1 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.2 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -1820,6 +1822,30 @@ function togglePron(btn) {
   const isOpen = sec.classList.toggle('open');
   btn.setAttribute('aria-expanded', isOpen);
 }
+// ── PRONUNCIATION: Web Speech API ──────────────────────
+function speakWord(text, lang) {
+  if (!('speechSynthesis' in window)) {
+    alert('Speech not supported on this browser.');
+    return;
+  }
+  // Cancel any in-progress speech
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang || 'de-DE';
+  u.rate = 0.85;  // slightly slower for clarity
+  u.pitch = 1;
+  // Try to find a native voice for the language
+  const voices = window.speechSynthesis.getVoices();
+  const match = voices.find(v => v.lang === lang || v.lang.startsWith(lang.split('-')[0]));
+  if (match) u.voice = match;
+  window.speechSynthesis.speak(u);
+}
+// Pre-load voices (some browsers load them async)
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); };
+}
+
 
 // Keyboard a11y: ensure Enter/Space work on all toggle buttons
 document.addEventListener('keydown', function(e) {
