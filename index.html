@@ -49,50 +49,9 @@
   --amber2:#FEF3C7;
   --sp4:4px;--sp8:8px;--sp12:12px;--sp16:16px;--sp24:24px;--sp32:32px;--sp48:48px;
   --r6:6px;--r9:9px;--r12:12px;
-  --hdr:78px;
+  --hdr:104px;
 }
 
-/* ── VACANZA TRAVEL THEME ──────────────────────── */
-html.theme-vacanza{
-  --navy:  #654359;
-  --navy2: #4A2F3F;
-  --navy3: #7A5468;
-  --gold:  #9A8C95;
-  --gold2: #B0A4AB;
-  --gold3: rgba(154,140,149,.12);
-  --cream: #FAF8F9;
-  --cream2:#F2EFF0;
-  --divider:#D4C9D0;
-  --divider2:rgba(180,170,176,.4);
-}
-html.theme-vacanza body{font-family:'Karla',sans-serif}
-html.theme-vacanza .hero-title,
-html.theme-vacanza .day-title,
-html.theme-vacanza .footer-quote{font-family:'Dancing Script',cursive}
-html.theme-vacanza .nav-chip,
-html.theme-vacanza .meta-chip,
-html.theme-vacanza .hero-eyebrow,
-html.theme-vacanza .day-label,
-html.theme-vacanza .stop-time,
-html.theme-vacanza .phon,
-html.theme-vacanza .wx-stat,
-html.theme-vacanza .wx-tap,
-html.theme-vacanza .footer-meta,
-html.theme-vacanza .stop-pron,
-html.theme-vacanza .fbar-text,
-html.theme-vacanza .hdr-section-label{font-family:'Montserrat',sans-serif}
-html.theme-vacanza #site-header{background:rgba(74,47,63,.95);border-bottom-color:rgba(154,140,149,.25)}
-html.theme-vacanza .nav-chip.active{background:rgba(255,255,255,.88);color:#654359;border-color:rgba(255,255,255,.88)}
-html.theme-vacanza .nav-chip{color:rgba(255,255,255,.6)}
-html.theme-vacanza .nav-chip:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.1)}
-html.theme-vacanza #site-footer{background:#654359;border-top-color:#9A8C95}
-html.theme-vacanza .hero-grid{background-image:
-  linear-gradient(rgba(154,140,149,.05) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(154,140,149,.05) 1px,transparent 1px)}
-/* Branded text visibility */
-.vacanza-only{display:none!important}
-html.theme-vacanza .vacanza-only{display:inline!important}
-html.theme-vacanza .default-only{display:none!important}
 
 html{-webkit-text-size-adjust:100%}
 body{
@@ -1003,22 +962,36 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
-/* ── THEME TOGGLE FAB ───────────────────────────── */
-#theme-fab{
-  position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
-  right:var(--sp16);z-index:190;
-  width:40px;height:40px;border-radius:50%;
-  background:var(--navy);color:#fff;
-  border:1.5px solid rgba(255,255,255,.2);
+/* ── VACANZA TRAVEL BANNER ──────────────────────── */
+.hdr-vacanza-bar{
   display:flex;align-items:center;justify-content:center;
-  font-size:16px;
-  box-shadow:0 3px 16px rgba(0,0,0,.35);
-  cursor:pointer;
-  transition:all .2s;
-  opacity:.7;
+  gap:var(--sp8);
+  padding:5px var(--sp16) 3px;
+  border-bottom:1px solid rgba(200,168,75,.1);
+  position:relative;
 }
-#theme-fab:hover{opacity:1;transform:scale(1.08)}
-#theme-fab:active{transform:scale(.93)}
+.hdr-vacanza-bar.hidden{display:none}
+.vacanza-brand-link{
+  display:flex;align-items:baseline;gap:6px;
+  text-decoration:none;
+}
+.vacanza-label{
+  font-family:'Montserrat',sans-serif;
+  font-size:7px;letter-spacing:.22em;
+  text-transform:uppercase;
+  color:rgba(200,168,75,.45);
+}
+.vacanza-name{
+  font-family:'Dancing Script',cursive;
+  font-size:18px;font-weight:500;
+  color:var(--gold2);
+}
+.vacanza-dismiss{
+  position:absolute;right:var(--sp8);top:50%;transform:translateY(-50%);
+  background:none;border:none;color:rgba(255,255,255,.25);
+  font-size:12px;cursor:pointer;padding:4px;
+}
+.vacanza-dismiss:hover{color:rgba(255,255,255,.5)}
 /* ── FLOATING SEARCH ────────────────────────────── */
 #search-fab{
   position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
@@ -1296,6 +1269,13 @@ section[id]{
 
 <!-- ── SITE HEADER ────────────────────────────────── -->
 <header id="site-header" role="banner">
+  <div class="hdr-vacanza-bar" id="vacanza-bar">
+    <a href="https://vacanzatraveler.com/" target="_blank" rel="noopener" class="vacanza-brand-link">
+      <span class="vacanza-label">Travel Design by</span>
+      <span class="vacanza-name">Vacanza Travel</span>
+    </a>
+    <button class="vacanza-dismiss" id="vacanza-dismiss" aria-label="Dismiss branding">✕</button>
+  </div>
   <div class="hdr-rows">
     <nav class="hdr-nav hdr-row-1" aria-label="Day sections">
       <button class="nav-chip active" data-target="hero">Overview</button>
@@ -1336,11 +1316,11 @@ section[id]{
   <div class="hero-grid"></div>
   <div class="hero-vignette"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow"><span class="default-only">A Curated Weekend · Copenhagen → Switzerland</span><span class="vacanza-only">Travel Design by Vacanza Travel</span></div>
+    <div class="hero-eyebrow">A Curated Weekend · Copenhagen → Switzerland</div>
     <div class="hero-title" aria-label="Zürich">ZÜRICH</div>
     <div class="hero-dates">27 – 29 March 2026</div>
     <div class="hero-rule"></div>
-    <div class="hero-desc"><span class="default-only">Father–daughter city break based at Zürich Marriott. Culture, mountain air, great food, and easy logistics.</span><span class="vacanza-only">A curated city break designed for you. Culture, mountain air, great food, and easy logistics.</span></div>
+    <div class="hero-desc">Father–daughter city break based at Zürich Marriott. Culture, mountain air, great food, and easy logistics.</div>
     <div class="hero-actions">
       <a class="hero-btn hero-btn-primary" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">
         🏨 Open Hotel in Maps
@@ -2191,13 +2171,12 @@ section[id]{
 <!-- ── FOOTER ──────────────────────────────────────── -->
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
-  <p class="footer-sub"><span class="default-only">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</span><span class="vacanza-only">Where Dreams Come To Be Found · vacanzatraveler.com</span></p>
-  <p class="footer-meta"><span class="default-only">Zürich · March 2026 · v3.18 · Updated 20 March 2026</span><span class="vacanza-only">Zürich · March 2026 · Curated by Vacanza Travel</span></p>
+  <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.19 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
     <button class="footer-btn" id="footer-top-btn">↑ Back to Top</button>
-    <button class="footer-btn" id="theme-toggle-btn" style="font-size:8px;opacity:.6">🎨 Brand Demo</button>
   </div>
 </footer>
 
@@ -2225,8 +2204,6 @@ section[id]{
 </div>
 
 
-<!-- ── THEME TOGGLE FAB ──────────────────────────────── -->
-<button id="theme-fab" aria-label="Toggle brand theme">🎨</button>
 <!-- ── ADD TO HOME SCREEN BANNER ────────────────────── -->
 <div id="a2hs-banner" role="dialog" aria-label="Add to Home Screen">
   <div class="a2hs-inner">
@@ -3009,30 +2986,20 @@ if ('serviceWorker' in navigator) {
 })();
 </script>
 
+
 <script>
-// ── THEME TOGGLE ───────────────────────────────────────
+// ── VACANZA BANNER DISMISS ─────────────────────────────
 (function() {
-  var footerBtn = document.getElementById('theme-toggle-btn');
-  var fab = document.getElementById('theme-fab');
-  
-  function applyTheme(isVacanza) {
-    document.documentElement.classList.toggle('theme-vacanza', isVacanza);
-    localStorage.setItem('theme', isVacanza ? 'vacanza' : 'default');
-    if (footerBtn) footerBtn.textContent = isVacanza ? '🎨 Original Theme' : '🎨 Brand Demo';
+  var bar = document.getElementById('vacanza-bar');
+  var btn = document.getElementById('vacanza-dismiss');
+  if (!bar || !btn) return;
+  if (localStorage.getItem('vacanza-bar-dismissed') === '1') {
+    bar.classList.add('hidden');
   }
-  
-  // Restore saved theme
-  if (localStorage.getItem('theme') === 'vacanza') {
-    applyTheme(true);
-  }
-  
-  function toggle() {
-    var isVacanza = !document.documentElement.classList.contains('theme-vacanza');
-    applyTheme(isVacanza);
-  }
-  
-  if (footerBtn) footerBtn.addEventListener('click', toggle);
-  if (fab) fab.addEventListener('click', toggle);
+  btn.addEventListener('click', function() {
+    bar.classList.add('hidden');
+    localStorage.setItem('vacanza-bar-dismissed', '1');
+  });
 })();
 </script>
 </body>
