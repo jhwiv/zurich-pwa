@@ -1120,7 +1120,7 @@ section[id]{
 </header>
 
 <!-- ── FLIGHT ALERT BAR ─────────────────────────── -->
-<div id="flight-bar" role="alert" aria-live="polite">
+<div id="flight-bar" class="hidden" role="alert" aria-live="polite">
   <div class="fbar-text">
     <span class="fbar-full">🛫 Flight ZRH 8:25 PM · Sunday 29 March &nbsp;·&nbsp;
     <strong>Leave hotel 6:00 PM sharp</strong> &nbsp;·&nbsp; Airport Express 25 min → ZRH 6:30 PM</span>
@@ -1996,7 +1996,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.10 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.11 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -2243,22 +2243,18 @@ function onScroll() {
   if (scroll > 40) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
 
-  // Flight bar logic
-  const heroH = document.getElementById('hero').offsetHeight;
-  if (!flightBarDismissed) {
-    // Keep flight bar sticky until dismissed — only auto-hide after hero
-    if (scroll > heroH * 0.6) {
-      flightBar.classList.add('hidden');
-    } else if (scroll <= heroH * 0.4) {
-      flightBar.classList.remove('hidden');
-    }
-  }
-
-  // Flight mini-chip: show when in Sunday section (or later) and flight bar is hidden
+  // Flight bar logic — only show when scrolled to Sunday section
   const sunSection = document.getElementById('section-sun');
   const sunTop = sunSection ? sunSection.getBoundingClientRect().top : 9999;
   const hdrHeight = header ? header.offsetHeight : 56;
-  if (sunTop <= hdrHeight + 60 && flightBar.classList.contains('hidden')) {
+  if (!flightBarDismissed && sunTop <= hdrHeight + 80) {
+    flightBar.classList.remove('hidden');
+  } else {
+    flightBar.classList.add('hidden');
+  }
+
+  // Flight mini-chip: show in Sunday section when bar is dismissed
+  if (sunTop <= hdrHeight + 60 && flightBarDismissed) {
     flightChip.classList.add('visible');
   } else {
     flightChip.classList.remove('visible');
