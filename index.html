@@ -353,45 +353,48 @@ img{display:block;max-width:100%}
   background:#fff;
   border:1px solid var(--divider);
   border-radius:var(--r9);
-  padding:var(--sp16) var(--sp16);
-  width:160px;flex-shrink:0;
-  text-align:center;
+  padding:var(--sp16);
   text-decoration:none;
   display:block;
   position:relative;overflow:hidden;
   transition:box-shadow .2s,transform .2s;
+  grid-column:1/-1;
 }
 .wx-card::before{
   content:'';position:absolute;left:0;top:0;bottom:0;
   width:3px;background:var(--gold);border-radius:3px 0 0 3px;
 }
 .wx-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.08);transform:translateY(-1px)}
+.wx-top{display:flex;align-items:baseline;gap:var(--sp12);flex-wrap:wrap}
 .wx-hi{
   font-family:'Playfair Display',serif;
-  font-size:30px;font-weight:700;
+  font-size:34px;font-weight:700;
   color:var(--navy);line-height:1;
 }
-.wx-lo{font-size:12px;color:var(--steel);margin-left:2px}
-.wx-c{font-size:11px;color:var(--muted);margin-top:2px}
+.wx-lo{font-size:13px;color:var(--steel)}
 .wx-cond{
-  font-family:'DM Mono',monospace;font-size:7.5px;
-  letter-spacing:.12em;text-transform:uppercase;
-  color:var(--gold);margin-top:var(--sp4);
+  font-family:'Crimson Pro',serif;font-size:15px;
+  color:var(--body);margin-top:var(--sp8);line-height:1.45;
+}
+.wx-narrative{
+  font-family:'Crimson Pro',serif;font-size:14px;
+  color:var(--steel);margin-top:var(--sp4);line-height:1.45;
 }
 .wx-stats{
-  display:flex;justify-content:center;gap:var(--sp8);
-  margin-top:var(--sp8);padding-top:var(--sp8);
+  display:flex;gap:var(--sp12);
+  margin-top:var(--sp12);padding-top:var(--sp8);
   border-top:1px solid var(--divider);flex-wrap:wrap;
 }
 .wx-stat{
-  font-family:'DM Mono',monospace;font-size:7.5px;
-  color:var(--muted);
+  font-family:'DM Mono',monospace;font-size:8px;
+  color:var(--muted);letter-spacing:.04em;
 }
 .wx-tap{
   font-family:'DM Mono',monospace;font-size:7px;
   color:var(--gold);margin-top:var(--sp8);
   letter-spacing:.08em;opacity:.75;
 }
+.wx-c{display:none}
 
 /* ── STOP CARDS ─────────────────────────────────── */
 .stops{padding:var(--sp8) 0 var(--sp4);}
@@ -1176,9 +1179,10 @@ section[id]{
         <p class="day-intro">A gentle landing. Activate your Zürich Card in the app at the airport. Nothing to prove on the first evening.</p>
       </div>
       <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Friday weather — tap for live forecast" id="wx-fri">
-        <div><span class="wx-hi">47°F</span><span class="wx-lo">/ 37°F</span></div>
+        <div class="wx-top"><span class="wx-hi">47°</span><span class="wx-lo">Lo 37°F (8°C / 3°C)</span></div>
         <div class="wx-c">8°C / 3°C</div>
-        <div class="wx-cond">Partly Cloudy</div>
+        <div class="wx-cond">Partly Cloudy. Hi 47°F.</div>
+        <div class="wx-narrative" id="wx-fri-narrative"></div>
         <div class="wx-stats">
           <span class="wx-stat">Rain 15%</span>
           <span class="wx-stat">Wind 9 mph</span>
@@ -1256,9 +1260,10 @@ section[id]{
         <p class="day-intro">Uetliberg → Sprüngli → Kunsthaus → Old Town → Lindenhof → aperitivo → Zeughauskeller. No hotel return before dinner. Leave hotel at 10:00 AM.</p>
       </div>
       <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Saturday weather — tap for live forecast" id="wx-sat">
-        <div><span class="wx-hi">49°F</span><span class="wx-lo">/ 36°F</span></div>
+        <div class="wx-top"><span class="wx-hi">49°</span><span class="wx-lo">Lo 36°F (9°C / 2°C)</span></div>
         <div class="wx-c">9°C / 2°C</div>
-        <div class="wx-cond">Mostly Cloudy</div>
+        <div class="wx-cond">Mostly Cloudy. Hi 49°F.</div>
+        <div class="wx-narrative" id="wx-sat-narrative"></div>
         <div class="wx-stats">
           <span class="wx-stat">Rain 10%</span>
           <span class="wx-stat">Wind 6 mph</span>
@@ -1426,9 +1431,10 @@ section[id]{
         <p class="day-intro">The breathing day — unhurried and beautiful. <strong style="color:var(--red)">Leave hotel by 6:00 PM sharp.</strong> Full city window: 10 AM–4:30 PM.</p>
       </div>
       <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Sunday weather — tap for live forecast" id="wx-sun">
-        <div><span class="wx-hi">48°F</span><span class="wx-lo">/ 35°F</span></div>
+        <div class="wx-top"><span class="wx-hi">48°</span><span class="wx-lo">Lo 35°F (9°C / 2°C)</span></div>
         <div class="wx-c">9°C / 2°C</div>
-        <div class="wx-cond">Partly Cloudy</div>
+        <div class="wx-cond">Partly Cloudy. Hi 47°F.</div>
+        <div class="wx-narrative" id="wx-sun-narrative"></div>
         <div class="wx-stats">
           <span class="wx-stat">Rain 20%</span>
           <span class="wx-stat">Wind 11 mph</span>
@@ -1996,7 +2002,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.13 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.14 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -2428,42 +2434,113 @@ if ('serviceWorker' in navigator) {
 <script>
 // ── LIVE WEATHER (Open-Meteo API) ──────────────────────
 (function() {
-  // WMO weather code → human-readable condition
-  var WX_CODES = {
-    0:'Clear sky', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
-    45:'Fog', 48:'Rime fog',
-    51:'Light drizzle', 53:'Moderate drizzle', 55:'Dense drizzle',
-    56:'Light freezing drizzle', 57:'Dense freezing drizzle',
-    61:'Light rain', 63:'Moderate rain', 65:'Heavy rain',
-    66:'Light freezing rain', 67:'Heavy freezing rain',
-    71:'Light snow', 73:'Moderate snow', 75:'Heavy snow',
-    77:'Snow grains',
-    80:'Light showers', 81:'Moderate showers', 82:'Violent showers',
-    85:'Light snow showers', 86:'Heavy snow showers',
-    95:'Thunderstorm', 96:'Thunderstorm + light hail', 99:'Thunderstorm + heavy hail'
+  var WX = {
+    0:'Clear', 1:'Mainly clear', 2:'Partly cloudy', 3:'Overcast',
+    45:'Foggy', 48:'Rime fog',
+    51:'Light drizzle', 53:'Drizzle', 55:'Dense drizzle',
+    56:'Freezing drizzle', 57:'Dense freezing drizzle',
+    61:'Light rain', 63:'Rain', 65:'Heavy rain',
+    66:'Freezing rain', 67:'Heavy freezing rain',
+    71:'Light snow', 73:'Snow', 75:'Heavy snow', 77:'Snow grains',
+    80:'Light showers', 81:'Showers', 82:'Heavy showers',
+    85:'Snow showers', 86:'Heavy snow showers',
+    95:'Thunderstorm', 96:'T-storm + hail', 99:'T-storm + heavy hail'
   };
 
-  // Format sunrise/sunset ISO string → local Zürich time like "6:15"
-  // Open-Meteo returns times in CET (+01:00) regardless of DST.
-  // We parse as CET then format in Europe/Zurich to get correct local time.
+  // Short label for narrative
+  var WX_SHORT = {
+    0:'clear', 1:'clear', 2:'partly cloudy', 3:'cloudy',
+    45:'foggy', 48:'foggy',
+    51:'drizzle', 53:'drizzle', 55:'drizzle',
+    56:'freezing drizzle', 57:'freezing drizzle',
+    61:'light rain', 63:'rain', 65:'heavy rain',
+    66:'freezing rain', 67:'freezing rain',
+    71:'light snow', 73:'snow', 75:'heavy snow', 77:'snow grains',
+    80:'showers', 81:'showers', 82:'heavy showers',
+    85:'snow showers', 86:'snow showers',
+    95:'storms', 96:'storms', 99:'storms'
+  };
+
+  function isRainy(code) { return code >= 51; }
+  function fToC(f) { return Math.round((f - 32) * 5 / 9); }
+
   function fmtSunTime(iso) {
-    // Append +01:00 since Open-Meteo returns CET
     var d = new Date(iso + ':00+01:00');
     var t = d.toLocaleTimeString('en-US', {
-      hour: 'numeric', minute: '2-digit',
-      hour12: false, timeZone: 'Europe/Zurich'
+      hour:'numeric', minute:'2-digit', hour12:true, timeZone:'Europe/Zurich'
     });
-    // Strip leading zero: "06:14" → "6:14"
-    return t.replace(/^0/, '');
+    return t.replace(':00 ',' ').replace(/^0/,'');
   }
 
-  // Convert °F to °C (rounded to nearest integer)
-  function fToC(f) { return Math.round((f - 32) * 5 / 9); }
+  function fmtHour(h) {
+    if (h === 0) return '12 AM';
+    if (h < 12) return h + ' AM';
+    if (h === 12) return '12 PM';
+    return (h - 12) + ' PM';
+  }
+
+  // Build a narrative from hourly data for one day
+  function buildNarrative(hours) {
+    // hours: [{h:0-23, code, rain, temp}, ...]
+    // Only care about waking hours 6 AM - 11 PM
+    var waking = hours.filter(function(x) { return x.h >= 6 && x.h <= 22; });
+    if (!waking.length) return '';
+
+    // Group consecutive hours with similar conditions
+    var segments = [];
+    var cur = { cond: WX_SHORT[waking[0].code] || 'mixed', start: waking[0].h, end: waking[0].h, maxRain: waking[0].rain };
+    for (var i = 1; i < waking.length; i++) {
+      var c = WX_SHORT[waking[i].code] || 'mixed';
+      if (c === cur.cond) {
+        cur.end = waking[i].h;
+        cur.maxRain = Math.max(cur.maxRain, waking[i].rain);
+      } else {
+        segments.push(cur);
+        cur = { cond: c, start: waking[i].h, end: waking[i].h, maxRain: waking[i].rain };
+      }
+    }
+    segments.push(cur);
+
+    // Merge very short segments (1 hour) into neighbors
+    var merged = [];
+    for (var j = 0; j < segments.length; j++) {
+      var s = segments[j];
+      var span = s.end - s.start + 1;
+      if (span <= 1 && merged.length > 0) {
+        merged[merged.length - 1].end = s.end;
+        merged[merged.length - 1].maxRain = Math.max(merged[merged.length - 1].maxRain, s.maxRain);
+      } else {
+        merged.push(Object.assign({}, s));
+      }
+    }
+
+    // Build sentence
+    var parts = [];
+    merged.forEach(function(seg) {
+      var timeStr;
+      if (seg.start <= 7 && seg.end >= 20) {
+        timeStr = 'all day';
+      } else if (seg.start <= 7) {
+        timeStr = 'morning until ' + fmtHour(seg.end + 1);
+      } else if (seg.end >= 20) {
+        timeStr = 'from ' + fmtHour(seg.start) + ' onward';
+      } else {
+        timeStr = fmtHour(seg.start) + '–' + fmtHour(seg.end + 1);
+      }
+      var rainNote = seg.maxRain >= 30 ? ' (' + seg.maxRain + '% chance)' : '';
+      var cond = seg.cond.charAt(0).toUpperCase() + seg.cond.slice(1);
+      parts.push(cond + ' ' + timeStr + rainNote);
+    });
+
+    return parts.join('. ') + '.';
+  }
 
   var API = 'https://api.open-meteo.com/v1/forecast'
     + '?latitude=47.3769&longitude=8.5417'
+    + '&hourly=temperature_2m,weather_code,precipitation_probability'
     + '&daily=weather_code,temperature_2m_max,temperature_2m_min,'
     + 'precipitation_probability_max,wind_speed_10m_max,sunrise,sunset'
+    + '&current=temperature_2m,weather_code,wind_speed_10m,apparent_temperature'
     + '&temperature_unit=fahrenheit&wind_speed_unit=mph'
     + '&timezone=Europe/Zurich'
     + '&start_date=2026-03-27&end_date=2026-03-29';
@@ -2472,12 +2549,13 @@ if ('serviceWorker' in navigator) {
     .then(function(r) { return r.json(); })
     .then(function(data) {
       var d = data.daily;
+      var h = data.hourly;
       if (!d || !d.time || d.time.length < 3) return;
 
       var days = [
-        { idx: 0, cardId: 'wx-fri', heroId: 'hero-wx-fri', label: 'Fri 27' },
-        { idx: 1, cardId: 'wx-sat', heroId: 'hero-wx-sat', label: 'Sat 28' },
-        { idx: 2, cardId: 'wx-sun', heroId: 'hero-wx-sun', label: 'Sun 29' }
+        { idx: 0, cardId: 'wx-fri', heroId: 'hero-wx-fri', dateStr: '2026-03-27' },
+        { idx: 1, cardId: 'wx-sat', heroId: 'hero-wx-sat', dateStr: '2026-03-28' },
+        { idx: 2, cardId: 'wx-sun', heroId: 'hero-wx-sun', dateStr: '2026-03-29' }
       ];
 
       var allHighs = [], allLows = [], allRain = [];
@@ -2488,37 +2566,50 @@ if ('serviceWorker' in navigator) {
         var lo = Math.round(d.temperature_2m_min[i]);
         var hiC = fToC(d.temperature_2m_max[i]);
         var loC = fToC(d.temperature_2m_min[i]);
-        var cond = WX_CODES[d.weather_code[i]] || 'Mixed';
+        var cond = WX[d.weather_code[i]] || 'Mixed';
         var rain = d.precipitation_probability_max[i];
         var wind = Math.round(d.wind_speed_10m_max[i]);
         var rise = fmtSunTime(d.sunrise[i]);
         var set  = fmtSunTime(d.sunset[i]);
 
-        allHighs.push(hi);
-        allLows.push(lo);
-        allRain.push(rain);
+        allHighs.push(hi); allLows.push(lo); allRain.push(rain);
 
-        // Update the day weather card
+        // Build hourly narrative for this day
+        var dayHours = [];
+        for (var hh = 0; hh < h.time.length; hh++) {
+          if (h.time[hh].startsWith(day.dateStr)) {
+            var hour = parseInt(h.time[hh].split('T')[1].split(':')[0]);
+            dayHours.push({
+              h: hour,
+              code: h.weather_code[hh],
+              rain: h.precipitation_probability[hh],
+              temp: h.temperature_2m[hh]
+            });
+          }
+        }
+        var narrative = buildNarrative(dayHours);
+
+        // Update card
         var card = document.getElementById(day.cardId);
         if (card) {
           var wxHi = card.querySelector('.wx-hi');
           var wxLo = card.querySelector('.wx-lo');
-          var wxC  = card.querySelector('.wx-c');
           var wxCond = card.querySelector('.wx-cond');
-          var stats  = card.querySelectorAll('.wx-stat');
-          if (wxHi)  wxHi.textContent = hi + '°F';
-          if (wxLo)  wxLo.textContent = '/ ' + lo + '°F';
-          if (wxC)   wxC.textContent = hiC + '°C / ' + loC + '°C';
-          if (wxCond) wxCond.textContent = cond;
+          var wxNarr = document.getElementById(day.cardId + '-narrative');
+          var stats = card.querySelectorAll('.wx-stat');
+          if (wxHi) wxHi.textContent = hi + '°';
+          if (wxLo) wxLo.textContent = 'Lo ' + lo + '°F (' + hiC + '/' + loC + '°C)';
+          if (wxCond) wxCond.textContent = cond + '. Hi ' + hi + '°F.';
+          if (wxNarr) wxNarr.textContent = narrative;
           if (stats.length >= 4) {
             stats[0].textContent = 'Rain ' + rain + '%';
             stats[1].textContent = 'Wind ' + wind + ' mph';
-            stats[2].textContent = '△ ' + rise;
-            stats[3].textContent = '▽ ' + set;
+            stats[2].textContent = '☀ ' + rise;
+            stats[3].textContent = '☾ ' + set;
           }
         }
 
-        // Update the hero strip
+        // Update hero strip
         var hero = document.getElementById(day.heroId);
         if (hero) {
           var temp = hero.querySelector('.hero-wx-temp');
@@ -2541,7 +2632,6 @@ if ('serviceWorker' in navigator) {
       }
     })
     .catch(function(e) {
-      // Silently fail — static fallback values remain visible
       console.log('Weather fetch failed (offline?), using static values.');
     });
 })();
