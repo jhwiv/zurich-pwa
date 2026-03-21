@@ -960,6 +960,86 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
+/* ── FLOATING SEARCH ────────────────────────────── */
+#search-fab{
+  position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
+  left:var(--sp16);z-index:190;
+  width:48px;height:48px;border-radius:50%;
+  background:var(--navy);color:var(--gold);
+  border:1.5px solid rgba(200,168,75,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  box-shadow:0 3px 16px rgba(0,0,0,.35);
+  cursor:pointer;
+  transition:all .2s;
+}
+#search-fab:hover{background:var(--navy3);border-color:var(--gold);transform:scale(1.08)}
+#search-fab:active{transform:scale(.93)}
+#search-card{
+  display:none;
+  position:fixed;bottom:calc(72px + env(safe-area-inset-bottom,0px));
+  left:var(--sp16);right:var(--sp16);
+  max-width:400px;z-index:191;
+  background:var(--navy);
+  border:1px solid rgba(200,168,75,.2);
+  border-radius:var(--r12);
+  box-shadow:0 8px 40px rgba(0,0,0,.45);
+  padding:var(--sp16);
+  animation:slideUp .25s ease;
+}
+#search-card.open{display:block}
+.search-input-row{
+  display:flex;gap:var(--sp8);margin-bottom:var(--sp12);
+}
+#search-input{
+  flex:1;
+  font-family:'Crimson Pro',serif;font-size:15px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--r6);
+  padding:10px 14px;
+  color:#fff;
+  outline:none;
+}
+#search-input::placeholder{color:rgba(255,255,255,.35)}
+#search-input:focus{border-color:var(--gold);background:rgba(255,255,255,.1)}
+#search-go{
+  background:var(--gold);color:var(--navy2);
+  border:none;border-radius:var(--r6);
+  padding:10px 16px;cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:10px;
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  white-space:nowrap;
+}
+#search-go:hover{background:var(--gold2)}
+.search-presets{
+  display:flex;flex-wrap:wrap;gap:6px;
+}
+.search-preset{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.04em;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;
+  padding:7px 12px;
+  color:rgba(255,255,255,.6);
+  cursor:pointer;
+  transition:all .15s;
+  white-space:nowrap;
+}
+.search-preset:hover{
+  background:rgba(200,168,75,.12);
+  border-color:rgba(200,168,75,.3);
+  color:var(--gold2);
+}
+.search-preset:active{transform:scale(.95)}
+.search-loc-status{
+  font-family:'DM Mono',monospace;font-size:8px;
+  color:rgba(255,255,255,.3);
+  margin-top:var(--sp8);
+  letter-spacing:.04em;
+}
+
 /* ── RESPONSIVE ─────────────────────────────────── */
 @media(max-width:600px){
   .day-header{grid-template-columns:1fr;gap:var(--sp16)}
@@ -2053,7 +2133,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.15 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.16 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -2095,6 +2175,29 @@ section[id]{
     <button class="a2hs-btn" id="a2hs-install-btn">Install</button>
     <button class="a2hs-dismiss" id="a2hs-dismiss" aria-label="Dismiss">✕</button>
   </div>
+</div>
+
+
+<!-- ── FLOATING SEARCH ───────────────────────────────── -->
+<button id="search-fab" aria-label="Search nearby">🔍</button>
+<div id="search-card" role="dialog" aria-label="Search nearby places">
+  <div class="search-input-row">
+    <input id="search-input" type="text" placeholder="Search Zürich…" autocomplete="off">
+    <button id="search-go">Go</button>
+  </div>
+  <div class="search-presets">
+    <button class="search-preset" data-q="coffee shop">☕ Coffee</button>
+    <button class="search-preset" data-q="restaurant">🍽 Restaurant</button>
+    <button class="search-preset" data-q="supermarket">🛒 Grocery</button>
+    <button class="search-preset" data-q="pharmacy">💊 Pharmacy</button>
+    <button class="search-preset" data-q="ATM">🏧 ATM</button>
+    <button class="search-preset" data-q="bar">🍺 Bar</button>
+    <button class="search-preset" data-q="gelato ice cream">🍦 Gelato</button>
+    <button class="search-preset" data-q="public toilet WC">🚻 WC</button>
+    <button class="search-preset" data-q="bookstore">📚 Books</button>
+    <button class="search-preset" data-q="souvenir gift shop">🎁 Souvenirs</button>
+  </div>
+  <div class="search-loc-status" id="search-loc-status">📍 Tap to allow location for nearby results</div>
 </div>
 
 <!-- ── OFFLINE INDICATOR ───────────────────────────── -->
@@ -2758,6 +2861,87 @@ if ('serviceWorker' in navigator) {
   // Auto-hide if app is later launched in standalone
   window.matchMedia('(display-mode: standalone)').addEventListener('change', function(e) {
     if (e.matches) banner.classList.remove('visible');
+  });
+})();
+</script>
+
+<script>
+// ── FLOATING SEARCH ────────────────────────────────────
+(function() {
+  var fab = document.getElementById('search-fab');
+  var card = document.getElementById('search-card');
+  var input = document.getElementById('search-input');
+  var goBtn = document.getElementById('search-go');
+  var status = document.getElementById('search-loc-status');
+  if (!fab || !card) return;
+
+  var userLat = null, userLng = null;
+
+  // Toggle card
+  fab.addEventListener('click', function() {
+    var isOpen = card.classList.toggle('open');
+    fab.textContent = isOpen ? '✕' : '🔍';
+    if (isOpen) {
+      input.focus();
+      getLocation();
+    }
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (card.classList.contains('open') && !e.target.closest('#search-card') && !e.target.closest('#search-fab')) {
+      card.classList.remove('open');
+      fab.textContent = '🔍';
+    }
+  });
+
+  // Get user location
+  function getLocation() {
+    if (userLat) return; // already have it
+    if (!navigator.geolocation) {
+      status.textContent = '📍 Location not available — searching Zürich center';
+      userLat = 47.3769; userLng = 8.5417;
+      return;
+    }
+    status.textContent = '📍 Getting your location…';
+    navigator.geolocation.getCurrentPosition(
+      function(pos) {
+        userLat = pos.coords.latitude;
+        userLng = pos.coords.longitude;
+        status.textContent = '📍 Location found — results will be nearby';
+      },
+      function() {
+        status.textContent = '📍 Location denied — searching Zürich center';
+        userLat = 47.3769; userLng = 8.5417;
+      },
+      { timeout: 8000, maximumAge: 60000 }
+    );
+  }
+
+  // Search function
+  function doSearch(query) {
+    if (!query.trim()) return;
+    var lat = userLat || 47.3769;
+    var lng = userLng || 8.5417;
+    var url = 'https://www.google.com/maps/search/' + encodeURIComponent(query)
+      + '/@' + lat + ',' + lng + ',15z';
+    window.open(url, '_blank', 'noopener');
+    card.classList.remove('open');
+    fab.textContent = '🔍';
+    input.value = '';
+  }
+
+  // Go button
+  goBtn.addEventListener('click', function() { doSearch(input.value); });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doSearch(input.value);
+  });
+
+  // Preset buttons
+  document.querySelectorAll('.search-preset').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      doSearch(btn.dataset.q);
+    });
   });
 })();
 </script>
