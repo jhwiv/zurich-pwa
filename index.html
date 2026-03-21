@@ -503,6 +503,25 @@ img{display:block;max-width:100%}
   border-color:rgba(58,90,138,.5);
 }
 .btn-secondary:active{transform:scale(.97);transition-duration:.05s}
+.btn-sv{
+  display:inline-flex;align-items:center;gap:var(--sp4);
+  background:transparent;
+  color:var(--green3);
+  border:1px solid rgba(22,101,52,.3);
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 14px;border-radius:var(--r6);
+  min-height:36px;font-weight:500;
+  transition:all .2s;
+  text-decoration:none;
+  cursor:pointer;
+}
+.btn-sv:hover{
+  background:rgba(22,101,52,.07);
+  border-color:rgba(22,101,52,.5);
+}
+.btn-sv:active{transform:scale(.97);transition-duration:.05s}
+
 /* btn-alt-toggle styles moved to responsive section */
 /* alt body */
 .alt-body{
@@ -1137,6 +1156,8 @@ section[id]{
         <p class="stop-note">Airport Express → HB 10 min · Zürich Card ✓ &nbsp;·&nbsp; Tram 13 → Sihlquai/HB 2 min · 3 min walk · <strong>Hotel ~8:30–8:45 PM</strong></p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3812,8.5387&dirflg=r" target="_blank" rel="noopener">🗺 Transit Directions</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3813,8.5389&heading=200" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1218,6 +1239,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3497,8.4916&dirflg=r" target="_blank" rel="noopener">🗺 Directions</a>
           <button class="btn-alt-toggle" aria-expanded="false" aria-controls="alt-uetliberg">☁️ If foggy or rainy ▾</button>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3497,8.4919&heading=180" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
         <div class="alt-body" id="alt-uetliberg" role="region">
           <div class="alt-section">
@@ -1244,6 +1267,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3692,8.5378&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.confiserie-spruengli.ch/en" target="_blank" rel="noopener">🌐 Website</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3693,8.5381&heading=30" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1260,6 +1285,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3703,8.5489&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.kunsthaus.ch/en/" target="_blank" rel="noopener">🌐 Official Site</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3706,8.549&heading=160" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1285,6 +1312,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3700,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.grossmuenster.ch/en/" target="_blank" rel="noopener">🌐 Grossmünster</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3698,8.5414&heading=280" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1298,6 +1327,8 @@ section[id]{
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3727,8.5400&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3726,8.5401&heading=120" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1312,6 +1343,8 @@ section[id]{
         <p class="stop-note">Then walk 3 min direct to Zeughauskeller on Bahnhofstrasse</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3700,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Directions</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3699,8.5415&heading=200" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1328,6 +1361,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3699,8.5378&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.zeughauskeller.ch/en/" target="_blank" rel="noopener">🌐 Website</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3699,8.538&heading=280" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1381,6 +1416,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3744,8.5370&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.hiltl.ch/en/" target="_blank" rel="noopener">🌐 Website</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3744,8.5372&heading=350" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1395,6 +1432,8 @@ section[id]{
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Directions</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3656,8.5416&heading=180" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1410,6 +1449,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Pier Location</a>
           <a class="btn-secondary" href="https://www.zsg.ch/en/" target="_blank" rel="noopener">🌐 ZSG Schedule</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3654,8.5408&heading=200" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1424,6 +1465,8 @@ section[id]{
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3744,8.5449&dirflg=w" target="_blank" rel="noopener">🗺 Directions</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3742,8.545&heading=90" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1439,6 +1482,8 @@ section[id]{
         <p class="stop-note">Bellerivestrasse 160 · +41 44 422 25 20 · Recommended: book ahead</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3537,8.5562&dirflg=r" target="_blank" rel="noopener">🗺 Transit Directions</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3538,8.5563&heading=280" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1455,6 +1500,8 @@ section[id]{
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3598,8.5293&dirflg=r" target="_blank" rel="noopener">🗺 Directions</a>
           <a class="btn-secondary" href="https://www.rietberg.ch/en/" target="_blank" rel="noopener">🌐 Website</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.36,8.5295&heading=150" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1469,6 +1516,8 @@ section[id]{
         <p class="stop-note">+41 44 360 73 18 · Ask hotel to seat you at 5:15 PM — mention 8:25 PM flight</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3812,8.5387&dirflg=w" target="_blank" rel="noopener">🗺 Hotel Location</a>
+          <a class="btn-sv" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=47.3813,8.5389&heading=200" target="_blank" rel="noopener">👁 Street View</a>
+
         </div>
       </article>
 
@@ -1765,7 +1814,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.3 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.4 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
