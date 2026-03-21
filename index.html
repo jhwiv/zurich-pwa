@@ -89,11 +89,12 @@ img{display:block;max-width:100%}
 }
 .hdr-row-1::-webkit-scrollbar,.hdr-row-2::-webkit-scrollbar{display:none}
 .hdr-row-2 .nav-chip{
-  font-size:8.5px;
-  padding:5px 10px;
-  min-height:28px;
-  border-radius:14px;
-  color:rgba(255,255,255,.4);
+  font-size:10px;
+  font-weight:600;
+  padding:6px 14px;
+  min-height:30px;
+  border-radius:16px;
+  color:rgba(255,255,255,.55);
 }
 .hdr-row-2 .nav-chip.active{
   color:var(--navy2);
@@ -133,13 +134,14 @@ img{display:block;max-width:100%}
 .hdr-nav::-webkit-scrollbar{display:none}
 .nav-chip{
   font-family:'DM Mono',monospace;
-  font-size:10px;letter-spacing:.08em;
+  font-size:11px;letter-spacing:.06em;
   text-transform:uppercase;
-  padding:8px 14px;
+  font-weight:600;
+  padding:8px 16px;
   min-height:36px;
   border-radius:20px;
   white-space:nowrap;
-  color:rgba(255,255,255,.5);
+  color:rgba(255,255,255,.65);
   border:1px solid transparent;
   background:transparent;
   transition:color .18s,background .18s,border-color .18s;
@@ -564,8 +566,21 @@ img{display:block;max-width:100%}
   height:260px;
   border:none;
 }
-.sv-stop .stop-title{font-size:17px}
-.sv-stop .stop-body{color:var(--muted);font-size:13px}
+.sv-stop{
+  cursor:pointer;
+  transition:background .2s;
+}
+.sv-stop:hover{background:rgba(255,255,255,.03)}
+.sv-stop .stop-title{
+  font-size:17px;
+  display:flex;align-items:center;gap:var(--sp8);
+}
+.sv-stop .stop-title::before{
+  content:'👁';font-size:14px;flex-shrink:0;
+}
+.sv-stop.sv-open .stop-title::before{content:'✕'}
+.sv-stop .stop-body{color:var(--muted);font-size:13px;margin-bottom:0}
+.sv-stop .sv-panel{margin-top:var(--sp12)}
 .sv-panel-hint{
   position:absolute;bottom:0;left:0;right:0;
   background:linear-gradient(transparent,rgba(0,0,0,.6));
@@ -1865,155 +1880,140 @@ section[id]{
       <div>
         <div class="day-label">Explore · 360° Views</div>
         <h2 class="day-title">Street View</h2>
-        <p class="day-intro">Tap any location to explore the area in 360° panoramic view. Drag to look around, use arrows to walk the streets.</p>
+        <p class="day-intro">Tap any location to explore it in 360°. Drag to look around, use arrows to walk the streets.</p>
       </div>
     </div>
     <div class="stops" role="list">
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Zürich Marriott Hotel</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Neumühlequai 42 — Your home base on the Limmat</p>
-        <button class="btn-sv" onclick="toggleSV('sv-1',this)" aria-expanded="false" aria-controls="sv-1">👁 Open Street View</button>
         <div class="sv-panel" id="sv-1" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.38180,8.54150&cbp=11,300,0,0,0&output=svembed">
           <iframe title="Street View — Zürich Marriott Hotel" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Uetliberg Summit</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">871 m — Zürich's local mountain, Saturday morning</p>
-        <button class="btn-sv" onclick="toggleSV('sv-2',this)" aria-expanded="false" aria-controls="sv-2">👁 Open Street View</button>
         <div class="sv-panel" id="sv-2" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3497,8.4919&cbp=11,180,0,0,0&output=svembed">
           <iframe title="Street View — Uetliberg Summit" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Confiserie Sprüngli</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Bahnhofstrasse 21, Paradeplatz — Hot chocolate & Luxemburgerli</p>
-        <button class="btn-sv" onclick="toggleSV('sv-3',this)" aria-expanded="false" aria-controls="sv-3">👁 Open Street View</button>
         <div class="sv-panel" id="sv-3" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.36953,8.53925&cbp=11,240,0,0,0&output=svembed">
           <iframe title="Street View — Confiserie Sprüngli" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Kunsthaus Zürich</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Heimplatz 1 — Switzerland's largest art museum</p>
-        <button class="btn-sv" onclick="toggleSV('sv-4',this)" aria-expanded="false" aria-controls="sv-4">👁 Open Street View</button>
         <div class="sv-panel" id="sv-4" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3705,8.54887&cbp=11,225,0,0,0&output=svembed">
           <iframe title="Street View — Kunsthaus Zürich" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Augustinergasse</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Zürich's most photographed medieval lane</p>
-        <button class="btn-sv" onclick="toggleSV('sv-5',this)" aria-expanded="false" aria-controls="sv-5">👁 Open Street View</button>
         <div class="sv-panel" id="sv-5" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.371,8.5378&cbp=11,0,0,0,0&output=svembed">
           <iframe title="Street View — Augustinergasse" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Lindenhof</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Roman hilltop park — best Old Town panorama</p>
-        <button class="btn-sv" onclick="toggleSV('sv-6',this)" aria-expanded="false" aria-controls="sv-6">👁 Open Street View</button>
         <div class="sv-panel" id="sv-6" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.37300,8.54350&cbp=11,270,0,0,0&output=svembed">
           <iframe title="Street View — Lindenhof" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Münsterhof</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Car-free square near Fraumünster — pre-dinner drinks</p>
-        <button class="btn-sv" onclick="toggleSV('sv-7',this)" aria-expanded="false" aria-controls="sv-7">👁 Open Street View</button>
         <div class="sv-panel" id="sv-7" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3701,8.54035&cbp=11,200,0,0,0&output=svembed">
           <iframe title="Street View — Münsterhof" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Zeughauskeller</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Bahnhofstrasse 28A — 15th-century armory restaurant</p>
-        <button class="btn-sv" onclick="toggleSV('sv-8',this)" aria-expanded="false" aria-controls="sv-8">👁 Open Street View</button>
         <div class="sv-panel" id="sv-8" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3703,8.5399&cbp=11,90,0,0,0&output=svembed">
           <iframe title="Street View — Zeughauskeller" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Hiltl</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Sihlstrasse 28 — World's oldest vegetarian restaurant</p>
-        <button class="btn-sv" onclick="toggleSV('sv-9',this)" aria-expanded="false" aria-controls="sv-9">👁 Open Street View</button>
         <div class="sv-panel" id="sv-9" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.37330,8.53580&cbp=11,80,0,0,0&output=svembed">
           <iframe title="Street View — Hiltl" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Quaianlagen</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Lake Zürich lakeside promenade — swans & Alps views</p>
-        <button class="btn-sv" onclick="toggleSV('sv-10',this)" aria-expanded="false" aria-controls="sv-10">👁 Open Street View</button>
         <div class="sv-panel" id="sv-10" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3636,8.5364&cbp=11,270,0,0,0&output=svembed">
           <iframe title="Street View — Quaianlagen" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Bürkliplatz</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Boat pier — departure point for lake cruises</p>
-        <button class="btn-sv" onclick="toggleSV('sv-11',this)" aria-expanded="false" aria-controls="sv-11">👁 Open Street View</button>
         <div class="sv-panel" id="sv-11" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.367,8.5395&cbp=11,90,0,0,0&output=svembed">
           <iframe title="Street View — Bürkliplatz" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Polybahn</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Limmatquai — historic funicular to ETH Zürich</p>
-        <button class="btn-sv" onclick="toggleSV('sv-12',this)" aria-expanded="false" aria-controls="sv-12">👁 Open Street View</button>
         <div class="sv-panel" id="sv-12" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.37625,8.5437&cbp=11,20,0,0,0&output=svembed">
           <iframe title="Street View — Polybahn" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Fischerstube Zürihorn</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Bellerivestrasse — Lakeside fish restaurant, Sunday lunch</p>
-        <button class="btn-sv" onclick="toggleSV('sv-13',this)" aria-expanded="false" aria-controls="sv-13">👁 Open Street View</button>
         <div class="sv-panel" id="sv-13" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.35302,8.55051&cbp=11,180,0,0,0&output=svembed">
           <iframe title="Street View — Fischerstube Zürihorn" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">Museum Rietberg</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Gablerstrasse 15 — Art museum in Rieter Park</p>
-        <button class="btn-sv" onclick="toggleSV('sv-14',this)" aria-expanded="false" aria-controls="sv-14">👁 Open Street View</button>
         <div class="sv-panel" id="sv-14" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3587,8.5304&cbp=11,270,0,0,0&output=svembed">
           <iframe title="Street View — Museum Rietberg" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
         </div>
       </article>
 
-      <article class="stop sv-stop" role="listitem">
+      <article class="stop sv-stop" role="listitem" tabindex="0">
         <h3 class="stop-title">eCHo at Marriott</h3>
         <p class="stop-body" style="margin-bottom:var(--sp8)">Hotel restaurant — Farewell dinner, Sunday evening</p>
-        <button class="btn-sv" onclick="toggleSV('sv-15',this)" aria-expanded="false" aria-controls="sv-15">👁 Open Street View</button>
         <div class="sv-panel" id="sv-15" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.38180,8.54150&cbp=11,300,0,0,0&output=svembed">
           <iframe title="Street View — eCHo at Marriott" loading="lazy" allowfullscreen></iframe>
           <div class="sv-panel-hint">Drag to look around · Arrows to walk</div>
@@ -2027,7 +2027,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.6 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.7 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -2103,22 +2103,32 @@ function speakWord(text, lang) {
   window.speechSynthesis.speak(u);
 }
 
-// ── STREET VIEW TOGGLE ─────────────────────────────────
-function toggleSV(panelId, btn) {
-  var panel = document.getElementById(panelId);
+// ── STREET VIEW CARD TOGGLE ─────────────────────────────
+function toggleSVCard(card) {
+  var panel = card.querySelector('.sv-panel');
   if (!panel) return;
-  var isOpen = panel.classList.toggle('open');
-  btn.setAttribute('aria-expanded', isOpen);
-  btn.textContent = isOpen ? '✕ Close Street View' : '👁 Open Street View';
+  var isOpen = card.classList.toggle('sv-open');
+  panel.classList.toggle('open', isOpen);
   if (isOpen) {
     var iframe = panel.querySelector('iframe');
     if (iframe && !iframe.src) {
       iframe.src = panel.dataset.svUrl;
     }
-    // Smooth scroll to show the panel
-    setTimeout(function() { panel.scrollIntoView({ behavior:'smooth', block:'center' }); }, 100);
+    setTimeout(function() { panel.scrollIntoView({ behavior:'smooth', block:'nearest' }); }, 100);
   }
 }
+
+// Bind click to all SV stop cards
+document.querySelectorAll('.sv-stop').forEach(function(card) {
+  card.addEventListener('click', function(e) {
+    // Don't toggle if clicking inside the iframe panel (let user interact with SV)
+    if (e.target.closest('.sv-panel')) return;
+    toggleSVCard(card);
+  });
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSVCard(card); }
+  });
+});
 
 // Pre-load voices (some browsers load them async)
 if ('speechSynthesis' in window) {
