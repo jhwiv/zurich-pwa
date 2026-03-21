@@ -17,8 +17,8 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon-192.png">
 <title>Zürich</title>
-<link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&family=Karla:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" as="style">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&family=Karla:wght@300;400;500;600&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Raleway:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" as="style">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Raleway:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ── RESET & TOKENS ─────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -962,36 +962,38 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
-/* ── VACANZA TRAVEL BANNER ──────────────────────── */
-.hdr-vacanza-bar{
+/* ── AGENCY BRANDING BANNER ─────────────────────── */
+.hdr-agency-bar{
   display:flex;align-items:center;justify-content:center;
-  gap:var(--sp8);
-  padding:5px var(--sp16) 3px;
-  border-bottom:1px solid rgba(200,168,75,.1);
+  gap:var(--sp4);
+  padding:6px var(--sp16) 4px;
+  border-bottom:1px solid rgba(255,255,255,.08);
   position:relative;
 }
-.hdr-vacanza-bar.hidden{display:none}
-.vacanza-brand-link{
-  display:flex;align-items:baseline;gap:6px;
+.hdr-agency-bar.hidden{display:none}
+.agency-brand-link{
+  display:flex;flex-direction:column;align-items:center;gap:0;
   text-decoration:none;
 }
-.vacanza-label{
-  font-family:'Montserrat',sans-serif;
-  font-size:7px;letter-spacing:.22em;
-  text-transform:uppercase;
-  color:rgba(200,168,75,.45);
-}
-.vacanza-name{
+.agency-name{
   font-family:'Dancing Script',cursive;
-  font-size:18px;font-weight:500;
-  color:var(--gold2);
+  font-size:20px;font-weight:500;
+  color:#fff;
+  line-height:1.1;
 }
-.vacanza-dismiss{
+.agency-label{
+  font-family:'Raleway',sans-serif;
+  font-size:7px;letter-spacing:.3em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  margin-top:1px;
+}
+.agency-dismiss{
   position:absolute;right:var(--sp8);top:50%;transform:translateY(-50%);
   background:none;border:none;color:rgba(255,255,255,.25);
   font-size:12px;cursor:pointer;padding:4px;
 }
-.vacanza-dismiss:hover{color:rgba(255,255,255,.5)}
+.agency-dismiss:hover{color:rgba(255,255,255,.5)}
 /* ── FLOATING SEARCH ────────────────────────────── */
 #search-fab{
   position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
@@ -1269,12 +1271,12 @@ section[id]{
 
 <!-- ── SITE HEADER ────────────────────────────────── -->
 <header id="site-header" role="banner">
-  <div class="hdr-vacanza-bar" id="vacanza-bar">
-    <a href="https://vacanzatraveler.com/" target="_blank" rel="noopener" class="vacanza-brand-link">
-      <span class="vacanza-label">Travel Design by</span>
-      <span class="vacanza-name">Vacanza Travel</span>
+  <div class="hdr-agency-bar" id="agency-bar">
+    <a href="https://marthagood.com/" target="_blank" rel="noopener" class="agency-brand-link">
+      <span class="agency-name">Martha Good</span>
+      <span class="agency-label">Luxury Travel</span>
     </a>
-    <button class="vacanza-dismiss" id="vacanza-dismiss" aria-label="Dismiss branding">✕</button>
+    <button class="agency-dismiss" id="agency-dismiss" aria-label="Dismiss branding">✕</button>
   </div>
   <div class="hdr-rows">
     <nav class="hdr-nav hdr-row-1" aria-label="Day sections">
@@ -2172,7 +2174,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.19 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.20 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -2988,17 +2990,17 @@ if ('serviceWorker' in navigator) {
 
 
 <script>
-// ── VACANZA BANNER DISMISS ─────────────────────────────
+// ── AGENCY BANNER DISMISS ─────────────────────────────
 (function() {
-  var bar = document.getElementById('vacanza-bar');
-  var btn = document.getElementById('vacanza-dismiss');
+  var bar = document.getElementById('agency-bar');
+  var btn = document.getElementById('agency-dismiss');
   if (!bar || !btn) return;
-  if (localStorage.getItem('vacanza-bar-dismissed') === '1') {
+  if (localStorage.getItem('agency-bar-dismissed') === '1') {
     bar.classList.add('hidden');
   }
   btn.addEventListener('click', function() {
     bar.classList.add('hidden');
-    localStorage.setItem('vacanza-bar-dismissed', '1');
+    localStorage.setItem('agency-bar-dismissed', '1');
   });
 })();
 </script>
