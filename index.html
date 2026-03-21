@@ -26,9 +26,9 @@
   --navy:  #0A0A0A;
   --navy2: #050505;
   --navy3: #1A1A1A;
-  --gold:  #2894AF;
-  --gold2: #2894AF;
-  --gold3: rgba(40,148,175,.1);
+  --gold:  #6BB4D0;
+  --gold2: #7DC2DA;
+  --gold3: rgba(107,180,208,.1);
   --cream: #FFFFFF;
   --cream2:#F5F5F5;
   --steel: #666666;
@@ -70,7 +70,7 @@ img{display:block;max-width:100%}
   position:fixed;top:0;left:0;right:0;z-index:200;
   background:rgba(5,5,5,.95);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(40,148,175,.15);
+  border-bottom:1px solid rgba(107,180,208,.15);
   transition:box-shadow .25s ease;
   padding:0 var(--sp16);
   height:var(--hdr);
@@ -200,8 +200,8 @@ img{display:block;max-width:100%}
 .hero-grid{
   position:absolute;inset:0;
   background-image:
-    linear-gradient(rgba(40,148,175,.04) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(40,148,175,.04) 1px,transparent 1px);
+    linear-gradient(rgba(107,180,208,.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(107,180,208,.04) 1px,transparent 1px);
   background-size:60px 60px;
   pointer-events:none;
 }
@@ -225,7 +225,7 @@ img{display:block;max-width:100%}
   font-size:clamp(36px,8vw,56px);
   line-height:.88;letter-spacing:-.02em;
   color:var(--gold2);
-  text-shadow:0 0 40px rgba(40,148,175,.2);
+  text-shadow:0 0 40px rgba(107,180,208,.3);
   margin-bottom:var(--sp16);
   opacity:0;animation:fadeUp .7s ease .35s forwards;
 }
@@ -288,7 +288,7 @@ img{display:block;max-width:100%}
 .hero-wx-day{
   font-family:'DM Mono',monospace;
   font-size:10px;letter-spacing:.1em;
-  color:rgba(40,148,175,.75);
+  color:rgba(107,180,208,.75);
   text-transform:uppercase;
 }
 .hero-wx-temp{
@@ -327,7 +327,7 @@ img{display:block;max-width:100%}
 /* ── DAY HEADER ─────────────────────────────────── */
 .day-header{
   padding:var(--sp32) var(--sp24) var(--sp24);
-  background:linear-gradient(to bottom,rgba(40,148,175,.05),transparent);
+  background:linear-gradient(to bottom,rgba(107,180,208,.05),transparent);
   border-bottom:2px solid var(--gold);
   display:grid;
   grid-template-columns:1fr auto;
@@ -437,7 +437,7 @@ img{display:block;max-width:100%}
   font-size:9px;letter-spacing:.06em;
   color:var(--gold);
   background:var(--gold3);
-  border:1px solid rgba(40,148,175,.18);
+  border:1px solid rgba(107,180,208,.18);
   padding:2px 8px;
   border-radius:12px;
   margin-left:var(--sp8);
@@ -451,8 +451,8 @@ img{display:block;max-width:100%}
 .stop-pron:active{transform:scale(.93);transition-duration:.05s}
 .pron-link:active{opacity:.5;transition:opacity .05s}
 .stop-pron:hover{
-  background:rgba(40,148,175,.18);
-  border-color:rgba(40,148,175,.35);
+  background:rgba(107,180,208,.18);
+  border-color:rgba(107,180,208,.35);
 }
 .stop-ext{
   font-family:'DM Mono',monospace;font-size:9px;
@@ -645,7 +645,7 @@ img{display:block;max-width:100%}
 }
 .essentials-header{
   padding:var(--sp24) var(--sp24) var(--sp16);
-  border-bottom:2px solid rgba(40,148,175,.2);
+  border-bottom:2px solid rgba(107,180,208,.2);
 }
 .essentials-eyebrow{
   font-family:'DM Mono',monospace;font-size:9px;
@@ -666,7 +666,7 @@ img{display:block;max-width:100%}
 .ess-label{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.2em;text-transform:uppercase;
-  color:rgba(40,148,175,.6);margin-bottom:var(--sp4);
+  color:rgba(107,180,208,.6);margin-bottom:var(--sp4);
 }
 .ess-value{
   font-family:'Crimson Pro',serif;font-size:13.5px;
@@ -689,7 +689,7 @@ img{display:block;max-width:100%}
 .section-header{
   padding:var(--sp32) var(--sp24) var(--sp20);
   border-bottom:2px solid var(--gold);
-  background:linear-gradient(to bottom,rgba(40,148,175,.04),transparent);
+  background:linear-gradient(to bottom,rgba(107,180,208,.04),transparent);
 }
 .section-eyebrow{
   font-family:'DM Mono',monospace;font-size:9px;
@@ -786,7 +786,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .accordion-hdr{
   width:100%;
   font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(40,148,175,.75);
+  text-transform:uppercase;color:rgba(107,180,208,.75);
   padding:13px var(--sp16) 11px;
   border:none;background:none;cursor:pointer;
   display:flex;justify-content:space-between;align-items:center;
@@ -829,7 +829,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .pron-hdr{
   width:100%;
   font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(40,148,175,.75);
+  text-transform:uppercase;color:rgba(107,180,208,.75);
   padding:13px var(--sp16) 11px;
   border:none;background:none;cursor:pointer;
   display:flex;justify-content:space-between;align-items:center;
@@ -851,7 +851,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 table.ptbl{width:100%;border-collapse:collapse;font-size:13px}
 table.ptbl th{
   font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(40,148,175,.5);
+  text-transform:uppercase;color:rgba(107,180,208,.5);
   padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.05);text-align:left;
 }
 table.ptbl td{
@@ -862,7 +862,7 @@ table.ptbl td{
 table.ptbl tr:last-child td{border-bottom:none}
 table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 .pron-link{color:var(--gold);text-decoration:none;margin-right:var(--sp4);font-size:13px;background:none;border:none;cursor:pointer;padding:0;display:inline;vertical-align:baseline;line-height:1}
-.phon{font-family:'DM Mono',monospace;font-size:10px;color:rgba(40,148,175,.8);white-space:nowrap}
+.phon{font-family:'DM Mono',monospace;font-size:10px;color:rgba(107,180,208,.8);white-space:nowrap}
 
 /* ── FOOTER ─────────────────────────────────────── */
 #site-footer{
@@ -879,12 +879,12 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 .footer-sub{
   font-family:'Crimson Pro',serif;font-style:italic;
-  font-size:14px;color:rgba(40,148,175,.5);margin-bottom:var(--sp12);
+  font-size:14px;color:rgba(107,180,208,.5);margin-bottom:var(--sp12);
 }
 .footer-meta{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(40,148,175,.3);
+  color:rgba(107,180,208,.3);
 }
 .footer-actions{
   display:flex;justify-content:center;gap:var(--sp12);
@@ -917,7 +917,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 .float-btn{
   width:44px;height:44px;border-radius:50%;
   background:var(--navy);color:var(--gold);
-  border:1px solid rgba(40,148,175,.25);
+  border:1px solid rgba(107,180,208,.25);
   display:flex;align-items:center;justify-content:center;
   font-size:16px;
   box-shadow:0 2px 12px rgba(0,0,0,.3);
@@ -1000,7 +1000,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   left:var(--sp16);z-index:190;
   width:48px;height:48px;border-radius:50%;
   background:var(--navy);color:var(--gold);
-  border:1.5px solid rgba(40,148,175,.3);
+  border:1.5px solid rgba(107,180,208,.3);
   display:flex;align-items:center;justify-content:center;
   font-size:20px;
   box-shadow:0 3px 16px rgba(0,0,0,.35);
@@ -1015,7 +1015,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   left:var(--sp16);right:var(--sp16);
   max-width:400px;z-index:191;
   background:var(--navy);
-  border:1px solid rgba(40,148,175,.2);
+  border:1px solid rgba(107,180,208,.2);
   border-radius:var(--r12);
   box-shadow:0 8px 40px rgba(0,0,0,.45);
   padding:var(--sp16);
@@ -1062,8 +1062,8 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   white-space:nowrap;
 }
 .search-preset:hover{
-  background:rgba(40,148,175,.12);
-  border-color:rgba(40,148,175,.3);
+  background:rgba(107,180,208,.12);
+  border-color:rgba(107,180,208,.3);
   color:var(--gold2);
 }
 .search-preset:active{transform:scale(.95)}
@@ -1172,8 +1172,8 @@ section[id]{
   font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;
   color:var(--gold);
-  background:rgba(40,148,175,.08);
-  border:1px solid rgba(40,148,175,.2);
+  background:rgba(107,180,208,.08);
+  border:1px solid rgba(107,180,208,.2);
   padding:6px 16px;
   border-radius:20px;
   margin-top:var(--sp12);
@@ -2174,7 +2174,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.21 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.22 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
