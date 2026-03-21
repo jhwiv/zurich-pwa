@@ -48,7 +48,7 @@
   --amber2:#FEF3C7;
   --sp4:4px;--sp8:8px;--sp12:12px;--sp16:16px;--sp24:24px;--sp32:32px;--sp48:48px;
   --r6:6px;--r9:9px;--r12:12px;
-  --hdr:82px;
+  --hdr:98px;
 }
 html{-webkit-text-size-adjust:100%}
 body{
@@ -71,13 +71,13 @@ img{display:block;max-width:100%}
   transition:box-shadow .25s ease;
   padding:0 var(--sp16);
   height:var(--hdr);
-  display:flex;align-items:center;
-  gap:0;
+  display:flex;flex-direction:column;
+  justify-content:center;
 }
 .hdr-rows{
   display:flex;flex-direction:column;gap:2px;
-  flex:1;overflow:hidden;
-  padding:4px 0;
+  overflow:hidden;
+  padding:0 0 4px;
 }
 .hdr-row-1,.hdr-row-2{
   display:flex;align-items:center;
@@ -106,21 +106,20 @@ img{display:block;max-width:100%}
   box-shadow:0 2px 20px rgba(0,0,0,.35);
 }
 .hdr-brand{
+  display:flex;align-items:baseline;gap:var(--sp8);
+  padding:6px var(--sp4) 2px;
+  white-space:nowrap;
+}
+.hdr-brand-name{
   font-family:'Playfair Display',serif;
   font-size:15px;font-weight:700;
   color:var(--gold2);
-  white-space:nowrap;
-  flex-shrink:0;
-  padding-right:var(--sp16);
-  border-right:1px solid rgba(200,168,75,.15);
-  margin-right:var(--sp12);
 }
-.hdr-brand span{
+.hdr-brand-date{
   font-family:'DM Mono',monospace;
   font-size:9px;letter-spacing:.18em;
   text-transform:uppercase;
   color:rgba(200,168,75,.5);
-  display:block;margin-top:1px;
 }
 .hdr-nav{
   display:flex;align-items:center;
@@ -1131,8 +1130,8 @@ section[id]{
 <!-- ── SITE HEADER ────────────────────────────────── -->
 <header id="site-header" role="banner">
   <div class="hdr-brand">
-    Zürich
-    <span>March 2026</span>
+    <span class="hdr-brand-name">Zürich</span>
+    <span class="hdr-brand-date">March 2026</span>
   </div>
   <div class="hdr-rows">
     <nav class="hdr-nav hdr-row-1" aria-label="Day sections">
@@ -2027,7 +2026,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.7 · Updated 20 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.8 · Updated 20 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
