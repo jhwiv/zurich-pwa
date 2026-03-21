@@ -1003,6 +1003,22 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
+/* ── THEME TOGGLE FAB ───────────────────────────── */
+#theme-fab{
+  position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
+  right:var(--sp16);z-index:190;
+  width:40px;height:40px;border-radius:50%;
+  background:var(--navy);color:#fff;
+  border:1.5px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;
+  box-shadow:0 3px 16px rgba(0,0,0,.35);
+  cursor:pointer;
+  transition:all .2s;
+  opacity:.7;
+}
+#theme-fab:hover{opacity:1;transform:scale(1.08)}
+#theme-fab:active{transform:scale(.93)}
 /* ── FLOATING SEARCH ────────────────────────────── */
 #search-fab{
   position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
@@ -2176,7 +2192,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub"><span class="default-only">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</span><span class="vacanza-only">Where Dreams Come To Be Found · vacanzatraveler.com</span></p>
-  <p class="footer-meta"><span class="default-only">Zürich · March 2026 · v3.17 · Updated 20 March 2026</span><span class="vacanza-only">Zürich · March 2026 · Curated by Vacanza Travel</span></p>
+  <p class="footer-meta"><span class="default-only">Zürich · March 2026 · v3.18 · Updated 20 March 2026</span><span class="vacanza-only">Zürich · March 2026 · Curated by Vacanza Travel</span></p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -2208,6 +2224,9 @@ section[id]{
   </div>
 </div>
 
+
+<!-- ── THEME TOGGLE FAB ──────────────────────────────── -->
+<button id="theme-fab" aria-label="Toggle brand theme">🎨</button>
 <!-- ── ADD TO HOME SCREEN BANNER ────────────────────── -->
 <div id="a2hs-banner" role="dialog" aria-label="Add to Home Screen">
   <div class="a2hs-inner">
@@ -2993,20 +3012,27 @@ if ('serviceWorker' in navigator) {
 <script>
 // ── THEME TOGGLE ───────────────────────────────────────
 (function() {
-  var btn = document.getElementById('theme-toggle-btn');
-  if (!btn) return;
+  var footerBtn = document.getElementById('theme-toggle-btn');
+  var fab = document.getElementById('theme-fab');
+  
+  function applyTheme(isVacanza) {
+    document.documentElement.classList.toggle('theme-vacanza', isVacanza);
+    localStorage.setItem('theme', isVacanza ? 'vacanza' : 'default');
+    if (footerBtn) footerBtn.textContent = isVacanza ? '🎨 Original Theme' : '🎨 Brand Demo';
+  }
   
   // Restore saved theme
   if (localStorage.getItem('theme') === 'vacanza') {
-    document.documentElement.classList.add('theme-vacanza');
-    btn.textContent = '🎨 Original Theme';
+    applyTheme(true);
   }
   
-  btn.addEventListener('click', function() {
-    var isVacanza = document.documentElement.classList.toggle('theme-vacanza');
-    localStorage.setItem('theme', isVacanza ? 'vacanza' : 'default');
-    btn.textContent = isVacanza ? '🎨 Original Theme' : '🎨 Brand Demo';
-  });
+  function toggle() {
+    var isVacanza = !document.documentElement.classList.contains('theme-vacanza');
+    applyTheme(isVacanza);
+  }
+  
+  if (footerBtn) footerBtn.addEventListener('click', toggle);
+  if (fab) fab.addEventListener('click', toggle);
 })();
 </script>
 </body>
