@@ -2882,7 +2882,6 @@ if ('serviceWorker' in navigator) {
     var isOpen = card.classList.toggle('open');
     fab.textContent = isOpen ? '✕' : '🔍';
     if (isOpen) {
-      input.focus();
       getLocation();
     }
   });
