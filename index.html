@@ -3085,7 +3085,7 @@ if ('serviceWorker' in navigator) {
 </script>
 
 <script>
-// ── FLOATING SEARCH ────────────────────────────────────
+// ── FLOATING SEARCH (location-aware) ──────────────────
 (function() {
   var fab = document.getElementById('search-fab');
   var card = document.getElementById('search-card');
@@ -3095,12 +3095,38 @@ if ('serviceWorker' in navigator) {
   if (!fab || !card) return;
 
   var userLat = null, userLng = null;
+  var geoGranted = false; // true once real GPS acquired
+
+  // City configs keyed by context
+  var cities = {
+    copenhagen: { name: 'Copenhagen', lat: 55.6761, lng: 12.5683 },
+    zurich:     { name: 'Zürich',     lat: 47.3769, lng: 8.5417  }
+  };
+
+  // Map scroll-spy section IDs to a city
+  function getActiveCity() {
+    var sec = (typeof lastActiveSection !== 'undefined') ? lastActiveSection : 'hero';
+    if (sec === 'section-denmark' || sec === 'hero') return cities.copenhagen;
+    return cities.zurich;
+  }
+
+  // Update placeholder and status text to match active city
+  function syncCityUI() {
+    var city = getActiveCity();
+    input.placeholder = 'Search ' + city.name + '…';
+    if (!geoGranted) {
+      if (userLat) {
+        status.textContent = '📍 Location denied — searching ' + city.name + ' center';
+      }
+    }
+  }
 
   // Toggle card
   fab.addEventListener('click', function() {
     var isOpen = card.classList.toggle('open');
     fab.textContent = isOpen ? '✕' : '🔍';
     if (isOpen) {
+      syncCityUI();
       getLocation();
     }
   });
@@ -3115,10 +3141,11 @@ if ('serviceWorker' in navigator) {
 
   // Get user location
   function getLocation() {
-    if (userLat) return; // already have it
+    if (geoGranted) return;
     if (!navigator.geolocation) {
-      status.textContent = '📍 Location not available — searching Zürich center';
-      userLat = 47.3769; userLng = 8.5417;
+      var c = getActiveCity();
+      status.textContent = '📍 Location not available — searching ' + c.name + ' center';
+      userLat = c.lat; userLng = c.lng;
       return;
     }
     status.textContent = '📍 Getting your location…';
@@ -3126,21 +3153,24 @@ if ('serviceWorker' in navigator) {
       function(pos) {
         userLat = pos.coords.latitude;
         userLng = pos.coords.longitude;
+        geoGranted = true;
         status.textContent = '📍 Location found — results will be nearby';
       },
       function() {
-        status.textContent = '📍 Location denied — searching Zürich center';
-        userLat = 47.3769; userLng = 8.5417;
+        var c = getActiveCity();
+        status.textContent = '📍 Location denied — searching ' + c.name + ' center';
+        userLat = c.lat; userLng = c.lng;
       },
       { timeout: 8000, maximumAge: 60000 }
     );
   }
 
-  // Search function
+  // Search — uses real GPS if granted, otherwise falls back to active city center
   function doSearch(query) {
     if (!query.trim()) return;
-    var lat = userLat || 47.3769;
-    var lng = userLng || 8.5417;
+    var city = getActiveCity();
+    var lat = geoGranted ? userLat : city.lat;
+    var lng = geoGranted ? userLng : city.lng;
     var url = 'https://www.google.com/maps/search/' + encodeURIComponent(query)
       + '/@' + lat + ',' + lng + ',15z';
     window.open(url, '_blank', 'noopener');
@@ -3161,6 +3191,16 @@ if ('serviceWorker' in navigator) {
       doSearch(btn.dataset.q);
     });
   });
+
+  // Keep search card in sync with scroll-spy section changes
+  var lastSyncedSection = '';
+  setInterval(function() {
+    var sec = (typeof lastActiveSection !== 'undefined') ? lastActiveSection : 'hero';
+    if (sec !== lastSyncedSection) {
+      lastSyncedSection = sec;
+      syncCityUI();
+    }
+  }, 300);
 })();
 </script>
 </body>
