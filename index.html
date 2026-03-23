@@ -1411,6 +1411,7 @@ section[id]{
     <nav class="hdr-nav hdr-row-2" aria-label="Reference sections">
       <button class="nav-chip" data-target="section-essentials">Essentials</button>
       <button class="nav-chip" data-target="section-transit">Transit</button>
+      <button class="nav-chip" data-target="section-history">History</button>
       <button class="nav-chip" data-target="section-streetview">Street Views</button>
     </nav>
   </div>
@@ -2350,6 +2351,39 @@ section[id]{
 
 
 <!-- ── STREET VIEW ──────────────────────────────── -->
+<!-- ── HISTORY ──────────────────────────────────────── -->
+<span class="section-anchor" id="section-history-anchor"></span>
+<section id="section-history" aria-label="Destination history">
+  <div class="content-section" style="background:var(--navy2)">
+    <div class="section-header">
+      <div class="section-eyebrow">Background</div>
+      <h2 class="section-title" style="color:#fff">History</h2>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-title">🇩🇰 Copenhagen</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.7;color:rgba(255,255,255,.88);margin-bottom:12px">
+        Copenhagen began as a Viking fishing village in the 10th century on the shores of what is now Gammel Strand. In 1167, Bishop Absalon fortified the harbour with a castle, transforming it from a modest settlement into a defensible trading post — the city’s name, København, literally means “merchants’ harbour.” It became Denmark’s capital in the early 15th century and exploded in ambition under Christian IV, who ruled from 1596 to 1648 and reshaped the city with Renaissance landmarks, including the Round Tower, Rosenborg Castle, and the Christianshavn district modelled on Amsterdam.
+      </p>
+      <p style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.7;color:rgba(255,255,255,.88);margin-bottom:12px">
+        The city endured devastating fires in 1728 and 1795 that destroyed much of its medieval core, and British bombardments in 1801 and 1807 during the Napoleonic Wars. Yet Copenhagen rebuilt each time. The University of Copenhagen was founded in 1479, Hans Christian Andersen made the city his lifelong home in the 19th century, and Tivoli Gardens — one of the world’s oldest amusement parks — opened in 1843. Today Denmark maintains one of the oldest continuous monarchies in the world, and the royal family still resides at Amalienborg Palace, a short walk from where you’ll be staying near Nørreport.
+      </p>
+    </div>
+
+    <div class="ref-block">
+      <div class="ref-title">🇨🇭 Zürich</div>
+      <p style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.7;color:rgba(255,255,255,.88);margin-bottom:12px">
+        Zürich’s story begins over 2,000 years ago when the Romans established a customs post called Turicum on the Limmat River, though pile-dwelling settlements along the lake shores date back more than 5,000 years. The city prospered in the Middle Ages thanks to the Fraumünster convent, which drew aristocratic women from across Europe, and its position straddling major trade routes between northern Italy and Holland. In 1218, Zürich became a free imperial city, governing itself, and in 1351 it joined the Swiss Confederation as its sixth canton.
+      </p>
+      <p style="font-family:'Crimson Pro',serif;font-size:15px;line-height:1.7;color:rgba(255,255,255,.88);margin-bottom:12px">
+        In 1519, Huldrych Zwingli began preaching at the Grossmünster — the twin-towered church you’ll visit on Saturday — launching the Swiss Reformation that reshaped Zürich’s character into an industrious, intellectually rigorous city. Religious refugees from Italy and France flooded in, sparking the textile and silk industries. By the 19th century, Zürich had pivoted to finance and engineering: Switzerland’s first railway ran from here in 1847, and Alfred Escher founded what became Credit Suisse in 1856. The University of Zürich, founded in 1833, was the first in Europe to admit women, and its alumni include Albert Einstein, who developed his theory of special relativity while working at the Swiss Patent Office nearby. Today Zürich is Switzerland’s largest city and its uncontested financial capital.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── STREET VIEWS ─────────────────────────────────── -->
 <span class="section-anchor" id="section-streetview-anchor"></span>
 <section id="section-streetview" aria-label="Street View exploration">
   <div class="content-section">
@@ -2664,7 +2698,7 @@ section[id]{
 </div>
 
 <!-- CHAT PANEL -->
-<div id="chat-panel" role="dialog" aria-label="Trip assistant chat">
+<div id="chat-panel" style="display:none;position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));left:16px;right:16px;max-width:420px;z-index:191;background:#0D1929;border:1px solid rgba(200,168,75,.25);border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.7);max-height:min(420px,calc(100vh - 180px));overflow:hidden" role="dialog" aria-label="Trip assistant chat">
   <div class="chat-header">
     <span class="chat-header-title">✦ Trip Concierge</span>
     <button class="chat-header-close" id="chat-close" aria-label="Close chat">✕</button>
@@ -2888,6 +2922,7 @@ const sections = [
   { id: 'section-sun',        label: 'Sunday' },
   { id: 'section-essentials', label: 'Essentials' },
   { id: 'section-transit',    label: 'Transit' },
+  { id: 'section-history',    label: 'History' },
   { id: 'section-streetview', label: 'Street View' },
 ];
 
@@ -3438,27 +3473,36 @@ if ('serviceWorker' in navigator) {
     );
   }
 
+  function openChat() {
+    chatPanel.style.display = 'flex';
+    chatPanel.style.flexDirection = 'column';
+    getChatLocation();
+    chatInput.focus();
+    var sc = document.getElementById('search-card');
+    if (sc) sc.classList.remove('open');
+    var sf = document.getElementById('search-fab');
+    if (sf) sf.textContent = '\uD83D\uDD0D';
+  }
+  function closeChat() {
+    chatPanel.style.display = 'none';
+  }
+  function isChatOpen() {
+    return chatPanel.style.display === 'flex';
+  }
+
   chatFab.addEventListener('click', function() {
-    var isOpen = chatPanel.classList.toggle('open');
-    if (isOpen) {
-      getChatLocation();
-      chatInput.focus();
-      var sc = document.getElementById('search-card');
-      if (sc) sc.classList.remove('open');
-      var sf = document.getElementById('search-fab');
-      if (sf) sf.textContent = '\uD83D\uDD0D';
-    }
+    if (isChatOpen()) { closeChat(); } else { openChat(); }
   });
 
   chatClose.addEventListener('click', function() {
-    chatPanel.classList.remove('open');
+    closeChat();
   });
 
   document.addEventListener('click', function(e) {
-    if (chatPanel.classList.contains('open')
+    if (isChatOpen()
       && !e.target.closest('#chat-panel')
       && !e.target.closest('#chat-fab')) {
-      chatPanel.classList.remove('open');
+      closeChat();
     }
   });
 
