@@ -382,6 +382,16 @@ img{display:block;max-width:100%}
   font-family:'Crimson Pro',serif;font-size:14px;
   color:var(--steel);margin-top:var(--sp4);line-height:1.45;
 }
+.wx-advisory{
+  font-family:'Crimson Pro',serif;font-size:13px;
+  color:var(--body);line-height:1.45;
+  margin-top:var(--sp4);
+  padding:4px 8px;
+  border-left:2px solid var(--gold);
+  background:var(--gold3);
+  border-radius:0 var(--r6) var(--r6) 0;
+}
+.wx-advisory:empty{display:none}
 .wx-stats{
   display:flex;gap:var(--sp12);
   margin-top:var(--sp12);padding-top:var(--sp8);
@@ -1513,6 +1523,7 @@ section[id]{
         <div class="wx-c">6°C / 1°C</div>
         <div class="wx-cond">Partly Cloudy. Hi 43°F.</div>
         <div class="wx-narrative" id="wx-dk-narrative"></div>
+        <div class="wx-advisory" id="wx-dk-advisory"></div>
         <div class="wx-stats">
           <span class="wx-stat">Rain 20%</span>
           <span class="wx-stat">Wind 12 mph</span>
@@ -1705,6 +1716,7 @@ section[id]{
         <div class="wx-c">8°C / 3°C</div>
         <div class="wx-cond">Partly Cloudy. Hi 47°F.</div>
         <div class="wx-narrative" id="wx-fri-narrative"></div>
+        <div class="wx-advisory" id="wx-fri-advisory"></div>
         <div class="wx-stats">
           <span class="wx-stat">Rain 15%</span>
           <span class="wx-stat">Wind 9 mph</span>
@@ -1786,6 +1798,7 @@ section[id]{
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Mostly Cloudy. Hi 49°F.</div>
         <div class="wx-narrative" id="wx-sat-narrative"></div>
+        <div class="wx-advisory" id="wx-sat-advisory"></div>
         <div class="wx-stats">
           <span class="wx-stat">Rain 10%</span>
           <span class="wx-stat">Wind 6 mph</span>
@@ -1957,6 +1970,7 @@ section[id]{
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Partly Cloudy. Hi 47°F.</div>
         <div class="wx-narrative" id="wx-sun-narrative"></div>
+        <div class="wx-advisory" id="wx-sun-advisory"></div>
         <div class="wx-stats">
           <span class="wx-stat">Rain 20%</span>
           <span class="wx-stat">Wind 11 mph</span>
@@ -3225,6 +3239,80 @@ if ('serviceWorker' in navigator) {
 
 
 <script>
+// ── WEATHER ADVISORY (concierge tips per day) ──────────
+function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
+  var isFoggy = weatherCode === 45 || weatherCode === 48;
+  var isOvercast = weatherCode === 3;
+  var isRainyCode = (weatherCode >= 51 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82) || (weatherCode >= 95 && weatherCode <= 99);
+  var isSnowy = (weatherCode >= 71 && weatherCode <= 77) || weatherCode === 85 || weatherCode === 86;
+  var isClear = weatherCode <= 2;
+  var rainLikely = rain >= 40;
+  var isWindy = wind >= 20;
+  var isCold = hi <= 40;
+
+  if (dayId === 'dk') {
+    if (isRainyCode || rainLikely) return '🌧 Bring an umbrella for city walking — Torvehallerne market is covered if you need shelter.';
+    if (isSnowy) return '❄️ Snow in Copenhagen — dress warm and watch for slippery cobblestones around Nyhavn.';
+    if (isCold && isWindy) return '💨 Layer up — cold wind off the harbor can be sharp around Nyhavn and the waterfront.';
+    if (isCold) return '🧥 Bundle up for a chilly walking day — Round Tower is a good warm-up stop.';
+    if (isWindy) return '💨 Breezy day — wind off the harbor can be sharp. A windbreaker layer will help.';
+    if (isFoggy) return '🌫 Foggy start — atmospheric for Nyhavn photos. Torvehallerne is a cozy fallback.';
+    if (isOvercast) return '☁️ Overcast but dry — good walking weather. No sunscreen needed.';
+    return '☀️ Beautiful day for exploring Copenhagen on foot — enjoy every stop.';
+  }
+
+  if (dayId === 'fri') {
+    if (isRainyCode || rainLikely) return '☔ No worries — your evening is all indoors at the hotel restaurant.';
+    if (isSnowy) return '❄️ Snow on arrival — take it slow from the tram to the hotel. Dinner is on-site.';
+    if (isCold && isWindy) return '🧥 Warm coat for the walk from tram to hotel — then settle in for dinner.';
+    if (isCold) return '🧥 Chilly evening — warm coat for the short walk from tram, then cozy dinner at White Elephant.';
+    if (isWindy) return '💨 Breezy evening — short walk from tram then indoor dining. No stress.';
+    return '☀️ Pleasant evening ahead — enjoy the walk to the hotel and a relaxed dinner.';
+  }
+
+  if (dayId === 'sat') {
+    var morningFoggy = false, morningRainy = false, morningClear = false;
+    var afternoonRainy = false;
+    if (hours && hours.length) {
+      var mornHours = hours.filter(function(x) { return x.h >= 6 && x.h <= 11; });
+      var pmHours = hours.filter(function(x) { return x.h >= 12 && x.h <= 18; });
+      var mornRainyCnt = mornHours.filter(function(x) { return x.code >= 51 || x.rain >= 40; }).length;
+      var mornFoggyCnt = mornHours.filter(function(x) { return x.code === 45 || x.code === 48 || x.code === 3; }).length;
+      var mornClearCnt = mornHours.filter(function(x) { return x.code <= 2; }).length;
+      var pmRainyCnt = pmHours.filter(function(x) { return x.code >= 51 || x.rain >= 40; }).length;
+      morningFoggy = mornFoggyCnt >= 3;
+      morningRainy = mornRainyCnt >= 3;
+      morningClear = mornClearCnt >= 3;
+      afternoonRainy = pmRainyCnt >= 3;
+    }
+    if ((isRainyCode && rainLikely) || isSnowy) {
+      if (morningRainy || isSnowy) return '⚠️ Uetliberg is a washout today — swap for Landesmuseum (behind HB, free with Zürich Card) and stay dry.';
+    }
+    if (morningFoggy || (isFoggy && !morningClear)) return '⚠️ Uetliberg may be socked in — consider Polybahn + ETH Terrace instead (90-sec funicular, great rooftop views, no fog risk).';
+    if (morningClear && afternoonRainy) return '☀️ Morning looks clear for Uetliberg — afternoon showers likely, but Kunsthaus and Old Town are sheltered.';
+    if (rainLikely) return '☔ Rain likely — if morning is dry, hit Uetliberg early. Kunsthaus and Old Town work in any weather.';
+    if (isCold && isWindy) return '💨 Summit will be 5–10°F colder with wind — bring layers for Uetliberg and warm up at Sprüngli after.';
+    if (isWindy) return '💨 Windy at the summit — add a layer for Uetliberg. Sprüngli hot chocolate afterwards.';
+    if (isCold) return '🧥 Cool day — extra layer for the Uetliberg summit, which runs colder than the city.';
+    if (isOvercast) return '☁️ Overcast but views should be fine from Uetliberg — cloud base is usually above the summit.';
+    return '☀️ Perfect for Uetliberg — expect panoramic Alps views from the summit. A great day ahead.';
+  }
+
+  if (dayId === 'sun') {
+    if (isRainyCode || rainLikely) return '🌧 Skip the boat — extra time at Rietberg or a second pass through Old Town instead.';
+    if (isSnowy) return '❄️ Snowy farewell day — Hiltl brunch and Rietberg are cozy indoors. Skip the lake walk.';
+    if (isWindy && (isRainyCode || rainLikely)) return '💨 Lake will be rough — stay on land. Rietberg and Old Town are great rainy-day options.';
+    if (isWindy) return '💨 Lake may be choppy — promenade walk is still nice, but the boat ride could be rough.';
+    if (isCold) return '🧥 Chilly by the lake — layer up for the promenade. Hot drinks at Bürkliplatz if needed.';
+    if (isOvercast) return '☁️ Overcast but calm — lake promenade and boat cruise are still on. Enjoy the moody views.';
+    return '☀️ Great day for the lake cruise — book the Rundfahrt from Bürkliplatz and soak it in.';
+  }
+
+  return '';
+}
+</script>
+
+<script>
 // ── LIVE WEATHER (Open-Meteo API) ──────────────────────
 (function() {
   var WX = {
@@ -3394,6 +3482,10 @@ if ('serviceWorker' in navigator) {
           if (wxLo) wxLo.textContent = 'Lo ' + lo + '°F (' + hiC + '/' + loC + '°C)';
           if (wxCond) wxCond.textContent = cond + '. Hi ' + hi + '°F.';
           if (wxNarr) wxNarr.textContent = narrative;
+          // Advisory
+          var dayTag = day.cardId.replace('wx-', '');
+          var advEl = document.getElementById(day.cardId + '-advisory');
+          if (advEl) advEl.textContent = buildAdvisory(dayTag, d.weather_code[i], rain, wind, hi, lo, dayHours);
           if (stats.length >= 4) {
             stats[0].textContent = 'Rain ' + rain + '%';
             stats[1].textContent = 'Wind ' + wind + ' mph';
@@ -3482,6 +3574,9 @@ if ('serviceWorker' in navigator) {
           stats[2].textContent = '☀ ' + rise;
           stats[3].textContent = '☾ ' + set;
         }
+        // Advisory
+        var advEl = document.getElementById('wx-dk-advisory');
+        if (advEl) advEl.textContent = buildAdvisory('dk', d.weather_code[0], rain, wind, hi, lo, null);
       }
     })
     .catch(function(e) {
