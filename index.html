@@ -961,23 +961,10 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
 /* ── FLOATING SEARCH ────────────────────────────── */
-#search-fab{
-  position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
-  left:var(--sp16);z-index:190;
-  width:48px;height:48px;border-radius:50%;
-  background:var(--navy);color:var(--gold);
-  border:1.5px solid rgba(200,168,75,.3);
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;
-  box-shadow:0 3px 16px rgba(0,0,0,.35);
-  cursor:pointer;
-  transition:all .2s;
-}
-#search-fab:hover{background:var(--navy3);border-color:var(--gold);transform:scale(1.08)}
-#search-fab:active{transform:scale(.93)}
+/* search-fab styling now handled by .fab-btn */
 #search-card{
   display:none;
-  position:fixed;bottom:calc(72px + env(safe-area-inset-bottom,0px));
+  position:fixed;bottom:calc(90px + env(safe-area-inset-bottom,0px));
   left:var(--sp16);right:var(--sp16);
   max-width:400px;z-index:191;
   background:var(--navy);
@@ -1216,6 +1203,182 @@ section[id]{
   transition:transform .3s ease;
 }
 #offline-bar.visible{transform:translateY(0)}
+
+/* ── CHAT FAB & PANEL ──────────────────────────── */
+.fab-wrap{
+  position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
+  z-index:190;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+}
+#search-fab-wrap{left:var(--sp16)}
+#chat-fab-wrap{left:calc(var(--sp16) + 64px)}
+.fab-btn{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--navy);color:var(--gold);
+  border:1.5px solid rgba(200,168,75,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+  box-shadow:0 3px 16px rgba(0,0,0,.35);
+  cursor:pointer;
+  transition:all .2s;
+}
+.fab-btn:hover{background:var(--navy3);border-color:var(--gold);transform:scale(1.08)}
+.fab-btn:active{transform:scale(.93)}
+.fab-label{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:.08em;
+  text-transform:uppercase;
+  color:rgba(200,168,75,.7);
+  pointer-events:none;
+}
+#chat-panel{
+  display:none;
+  position:fixed;
+  bottom:calc(90px + env(safe-area-inset-bottom,0px));
+  left:var(--sp16);right:var(--sp16);
+  max-width:420px;z-index:191;
+  background:var(--navy);
+  border:1px solid rgba(200,168,75,.2);
+  border-radius:var(--r12);
+  box-shadow:0 8px 40px rgba(0,0,0,.5);
+  animation:slideUp .25s ease;
+  display:none;
+  flex-direction:column;
+  max-height:min(480px, calc(100vh - 160px));
+}
+#chat-panel.open{display:flex}
+.chat-header{
+  padding:12px 16px;
+  border-bottom:1px solid rgba(200,168,75,.12);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.chat-header-title{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--gold);
+  font-weight:600;
+}
+.chat-header-close{
+  width:28px;height:28px;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;font-size:14px;
+  color:rgba(255,255,255,.5);
+  transition:all .15s;
+}
+.chat-header-close:hover{color:#fff;background:rgba(255,255,255,.08)}
+.chat-messages{
+  flex:1;
+  overflow-y:auto;
+  padding:12px 16px;
+  display:flex;flex-direction:column;gap:10px;
+  scrollbar-width:thin;
+  scrollbar-color:rgba(200,168,75,.2) transparent;
+  min-height:120px;
+}
+.chat-messages::-webkit-scrollbar{width:4px}
+.chat-messages::-webkit-scrollbar-track{background:transparent}
+.chat-messages::-webkit-scrollbar-thumb{background:rgba(200,168,75,.2);border-radius:4px}
+.chat-msg{
+  max-width:88%;
+  padding:10px 14px;
+  border-radius:var(--r9);
+  font-family:'Crimson Pro',serif;
+  font-size:14px;
+  line-height:1.55;
+  word-break:break-word;
+}
+.chat-msg.user{
+  align-self:flex-end;
+  background:rgba(200,168,75,.15);
+  color:var(--gold2);
+  border-bottom-right-radius:3px;
+}
+.chat-msg.assistant{
+  align-self:flex-start;
+  background:rgba(255,255,255,.06);
+  color:rgba(255,255,255,.88);
+  border-bottom-left-radius:3px;
+}
+.chat-msg.assistant strong{color:var(--gold2)}
+.chat-msg.system{
+  align-self:center;
+  font-family:'DM Mono',monospace;
+  font-size:9px;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.3);
+  background:none;
+  padding:4px 0;
+}
+.chat-typing{
+  display:flex;gap:4px;padding:8px 14px;
+  align-self:flex-start;
+}
+.chat-typing span{
+  width:6px;height:6px;border-radius:50%;
+  background:rgba(200,168,75,.4);
+  animation:chatBounce .6s infinite alternate;
+}
+.chat-typing span:nth-child(2){animation-delay:.15s}
+.chat-typing span:nth-child(3){animation-delay:.3s}
+@keyframes chatBounce{from{opacity:.3;transform:translateY(0)}to{opacity:1;transform:translateY(-4px)}}
+.chat-input-row{
+  padding:10px 12px;
+  border-top:1px solid rgba(200,168,75,.12);
+  display:flex;gap:8px;
+  background:rgba(0,0,0,.15);
+  border-radius:0 0 var(--r12) var(--r12);
+}
+#chat-input{
+  flex:1;
+  font-family:'Crimson Pro',serif;font-size:14px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:var(--r6);
+  padding:9px 12px;
+  color:#fff;
+  outline:none;
+  resize:none;
+  min-height:38px;
+  max-height:80px;
+}
+#chat-input::placeholder{color:rgba(255,255,255,.35)}
+#chat-input:focus{border-color:var(--gold);background:rgba(255,255,255,.1)}
+#chat-send{
+  background:var(--gold);color:var(--navy2);
+  border:none;border-radius:var(--r6);
+  padding:9px 14px;cursor:pointer;
+  font-family:'DM Mono',monospace;font-size:10px;
+  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  white-space:nowrap;
+  align-self:flex-end;
+  min-height:38px;
+  transition:background .15s;
+}
+#chat-send:hover{background:var(--gold2)}
+#chat-send:disabled{opacity:.4;cursor:default}
+.chat-suggestions{
+  display:flex;flex-wrap:wrap;gap:5px;
+  padding:0 16px 10px;
+}
+.chat-suggest-btn{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:.04em;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:16px;
+  padding:6px 10px;
+  color:rgba(255,255,255,.5);
+  cursor:pointer;
+  transition:all .15s;
+  white-space:nowrap;
+}
+.chat-suggest-btn:hover{
+  background:rgba(200,168,75,.1);
+  border-color:rgba(200,168,75,.3);
+  color:var(--gold2);
+}
 
 /* ── ACCESSIBILITY ──────────────────────────────── */
 :focus-visible{
@@ -2469,7 +2632,17 @@ section[id]{
 
 
 <!-- ── FLOATING SEARCH ───────────────────────────────── -->
-<button id="search-fab" aria-label="Search nearby">🔍</button>
+<!-- FLOATING FABs -->
+<div class="fab-wrap" id="search-fab-wrap">
+  <button class="fab-btn" id="search-fab" aria-label="Search nearby">🔍</button>
+  <span class="fab-label">Local</span>
+</div>
+<div class="fab-wrap" id="chat-fab-wrap">
+  <button class="fab-btn" id="chat-fab" aria-label="Chat assistant">💬</button>
+  <span class="fab-label">Chat</span>
+</div>
+
+<!-- SEARCH CARD (unchanged) -->
 <div id="search-card" role="dialog" aria-label="Search nearby places">
   <div class="search-input-row">
     <input id="search-input" type="text" placeholder="Search Zürich…" autocomplete="off">
@@ -2488,6 +2661,27 @@ section[id]{
     <button class="search-preset" data-q="souvenir gift shop">🎁 Souvenirs</button>
   </div>
   <div class="search-loc-status" id="search-loc-status">📍 Tap to allow location for nearby results</div>
+</div>
+
+<!-- CHAT PANEL -->
+<div id="chat-panel" role="dialog" aria-label="Trip assistant chat">
+  <div class="chat-header">
+    <span class="chat-header-title">✦ Trip Concierge</span>
+    <button class="chat-header-close" id="chat-close" aria-label="Close chat">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-msg system">Ask about your itinerary, weather, or what to do next</div>
+  </div>
+  <div class="chat-suggestions" id="chat-suggestions">
+    <button class="chat-suggest-btn" data-q="What should I do next?">What's next?</button>
+    <button class="chat-suggest-btn" data-q="Will it rain today?">Rain today?</button>
+    <button class="chat-suggest-btn" data-q="Best restaurant tonight?">Dinner?</button>
+    <button class="chat-suggest-btn" data-q="How do I get to Uetliberg?">Uetliberg</button>
+  </div>
+  <div class="chat-input-row">
+    <textarea id="chat-input" placeholder="Ask anything about the trip…" rows="1"></textarea>
+    <button id="chat-send">Send</button>
+  </div>
 </div>
 
 <!-- ── OFFLINE INDICATOR ───────────────────────────── -->
@@ -3218,6 +3412,155 @@ if ('serviceWorker' in navigator) {
 </script>
 
 <script>
+// ── CHAT ASSISTANT ────────────────────────────────────
+(function() {
+  var CHAT_API = '__PORT_3001__';
+  if (CHAT_API.indexOf('__') === 0) CHAT_API = 'http://localhost:3001';
+
+  var chatFab = document.getElementById('chat-fab');
+  var chatPanel = document.getElementById('chat-panel');
+  var chatClose = document.getElementById('chat-close');
+  var chatMessages = document.getElementById('chat-messages');
+  var chatInput = document.getElementById('chat-input');
+  var chatSend = document.getElementById('chat-send');
+  var chatSuggestions = document.getElementById('chat-suggestions');
+  if (!chatFab || !chatPanel) return;
+
+  var chatHistory = [];
+  var chatLat = null, chatLng = null;
+  var isSending = false;
+
+  function getChatLocation() {
+    if (!navigator.geolocation) return;
+    navigator.geolocation.getCurrentPosition(
+      function(pos) { chatLat = pos.coords.latitude; chatLng = pos.coords.longitude; },
+      function() {},
+      { timeout: 8000, maximumAge: 120000 }
+    );
+  }
+
+  chatFab.addEventListener('click', function() {
+    var isOpen = chatPanel.classList.toggle('open');
+    if (isOpen) {
+      getChatLocation();
+      chatInput.focus();
+      var sc = document.getElementById('search-card');
+      if (sc) sc.classList.remove('open');
+      var sf = document.getElementById('search-fab');
+      if (sf) sf.textContent = '\uD83D\uDD0D';
+    }
+  });
+
+  chatClose.addEventListener('click', function() {
+    chatPanel.classList.remove('open');
+  });
+
+  document.addEventListener('click', function(e) {
+    if (chatPanel.classList.contains('open')
+      && !e.target.closest('#chat-panel')
+      && !e.target.closest('#chat-fab')) {
+      chatPanel.classList.remove('open');
+    }
+  });
+
+  chatInput.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 80) + 'px';
+  });
+
+  chatInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(chatInput.value);
+    }
+  });
+  chatSend.addEventListener('click', function() {
+    sendMessage(chatInput.value);
+  });
+
+  chatSuggestions.addEventListener('click', function(e) {
+    var btn = e.target.closest('.chat-suggest-btn');
+    if (btn) sendMessage(btn.dataset.q);
+  });
+
+  function addMessage(role, text) {
+    var div = document.createElement('div');
+    div.className = 'chat-msg ' + role;
+    if (role === 'assistant') {
+      text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      text = text.replace(/\n/g, '<br>');
+      div.innerHTML = text;
+    } else {
+      div.textContent = text;
+    }
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return div;
+  }
+
+  function showTyping() {
+    var div = document.createElement('div');
+    div.className = 'chat-typing';
+    div.id = 'chat-typing-indicator';
+    div.innerHTML = '<span></span><span></span><span></span>';
+    chatMessages.appendChild(div);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  function hideTyping() {
+    var el = document.getElementById('chat-typing-indicator');
+    if (el) el.remove();
+  }
+
+  function sendMessage(text) {
+    if (!text || !text.trim() || isSending) return;
+    text = text.trim();
+    isSending = true;
+    chatSend.disabled = true;
+    chatInput.value = '';
+    chatInput.style.height = 'auto';
+
+    if (chatSuggestions.style.display !== 'none') {
+      chatSuggestions.style.display = 'none';
+    }
+
+    addMessage('user', text);
+    chatHistory.push({ role: 'user', content: text });
+    showTyping();
+
+    fetch(CHAT_API + '/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        message: text,
+        lat: chatLat,
+        lng: chatLng,
+        history: chatHistory.slice(-8)
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      hideTyping();
+      if (data.reply) {
+        addMessage('assistant', data.reply);
+        chatHistory.push({ role: 'assistant', content: data.reply });
+      } else if (data.error) {
+        addMessage('system', data.error);
+      }
+    })
+    .catch(function() {
+      hideTyping();
+      addMessage('system', 'Connection error \u2014 check your internet');
+    })
+    .finally(function() {
+      isSending = false;
+      chatSend.disabled = false;
+      chatInput.focus();
+    });
+  }
+})();
+</script>
+
+<script>
 // ── FLOATING SEARCH (location-aware) ──────────────────
 (function() {
   var fab = document.getElementById('search-fab');
@@ -3261,6 +3604,9 @@ if ('serviceWorker' in navigator) {
     if (isOpen) {
       syncCityUI();
       getLocation();
+      // Close chat if open
+      var cp = document.getElementById('chat-panel');
+      if (cp) cp.classList.remove('open');
     }
   });
 
