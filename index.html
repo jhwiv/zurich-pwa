@@ -183,6 +183,7 @@ img{display:block;max-width:100%}
   max-width:680px;
   margin:0 auto;
   padding-top:calc(var(--hdr) + 32px);
+  padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));
 }
 
 /* ── HERO ───────────────────────────────────────── */
@@ -1263,7 +1264,7 @@ section[id]{
   width:28px;height:28px;
   display:flex;align-items:center;justify-content:center;
   border-radius:50%;font-size:14px;
-  color:rgba(255,255,255,.5);
+  color:rgba(255,255,255,.75);
   transition:all .15s;
 }
 .chat-header-close:hover{color:#fff;background:rgba(255,255,255,.08)}
@@ -1290,14 +1291,14 @@ section[id]{
 }
 .chat-msg.user{
   align-self:flex-end;
-  background:rgba(200,168,75,.15);
-  color:var(--gold2);
+  background:rgba(200,168,75,.18);
+  color:#f0dfa0;
   border-bottom-right-radius:3px;
 }
 .chat-msg.assistant{
   align-self:flex-start;
-  background:rgba(255,255,255,.06);
-  color:rgba(255,255,255,.88);
+  background:rgba(255,255,255,.08);
+  color:#f0efe8;
   border-bottom-left-radius:3px;
 }
 .chat-msg.assistant strong{color:var(--gold2)}
@@ -1307,7 +1308,7 @@ section[id]{
   font-size:9px;
   letter-spacing:.06em;
   text-transform:uppercase;
-  color:rgba(255,255,255,.3);
+  color:rgba(255,255,255,.55);
   background:none;
   padding:4px 0;
 }
@@ -1317,7 +1318,7 @@ section[id]{
 }
 .chat-typing span{
   width:6px;height:6px;border-radius:50%;
-  background:rgba(200,168,75,.4);
+  background:rgba(200,168,75,.7);
   animation:chatBounce .6s infinite alternate;
 }
 .chat-typing span:nth-child(2){animation-delay:.15s}
@@ -1343,7 +1344,7 @@ section[id]{
   min-height:38px;
   max-height:80px;
 }
-#chat-input::placeholder{color:rgba(255,255,255,.35)}
+#chat-input::placeholder{color:rgba(255,255,255,.55)}
 #chat-input:focus{border-color:var(--gold);background:rgba(255,255,255,.1)}
 #chat-send{
   background:var(--gold);color:var(--navy2);
@@ -1365,11 +1366,11 @@ section[id]{
 .chat-suggest-btn{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.04em;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.18);
   border-radius:16px;
   padding:6px 10px;
-  color:rgba(255,255,255,.5);
+  color:rgba(255,255,255,.78);
   cursor:pointer;
   transition:all .15s;
   white-space:nowrap;
