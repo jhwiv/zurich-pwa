@@ -2766,7 +2766,7 @@ section[id]{
 </div>
 
 <!-- CHAT PANEL -->
-<div id="chat-panel" style="display:none;position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));left:16px;right:16px;max-width:420px;z-index:191;background:#0D1929;border:1px solid rgba(200,168,75,.25);border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.7);max-height:min(420px,calc(100vh - 180px));overflow:hidden" role="dialog" aria-label="Trip assistant chat">
+<div id="chat-panel" style="display:none;position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));left:12px;right:12px;max-width:420px;z-index:191;background:#0D1929;border:1px solid rgba(200,168,75,.25);border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.7);max-height:min(360px,calc(100vh - 200px));overflow:hidden" role="dialog" aria-label="Trip assistant chat">
   <div class="chat-header">
     <span class="chat-header-title">✦ Trip Concierge</span>
     <button class="chat-header-close" id="chat-close" aria-label="Close chat">✕</button>
@@ -3541,11 +3541,14 @@ if ('serviceWorker' in navigator) {
     );
   }
 
+  var chatBaseBottom = 86; // px above safe area
+
   function openChat() {
     chatPanel.style.display = 'flex';
     chatPanel.style.flexDirection = 'column';
     getChatLocation();
-    chatInput.focus();
+    // Don't auto-focus input — let user tap it when ready
+    // This prevents the keyboard from popping up immediately
     var sc = document.getElementById('search-card');
     if (sc) sc.classList.remove('open');
     var sf = document.getElementById('search-fab');
@@ -3553,9 +3556,27 @@ if ('serviceWorker' in navigator) {
   }
   function closeChat() {
     chatPanel.style.display = 'none';
+    chatPanel.style.bottom = 'calc(' + chatBaseBottom + 'px + env(safe-area-inset-bottom,0px))';
   }
   function isChatOpen() {
     return chatPanel.style.display === 'flex';
+  }
+
+  // Move chat panel above iOS keyboard when it opens
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', function() {
+      if (!isChatOpen()) return;
+      var keyboardHeight = window.innerHeight - window.visualViewport.height;
+      if (keyboardHeight > 100) {
+        // Keyboard is open — position panel above it
+        chatPanel.style.bottom = (keyboardHeight + 8) + 'px';
+        chatPanel.style.maxHeight = (window.visualViewport.height - 60) + 'px';
+      } else {
+        // Keyboard closed — restore original position
+        chatPanel.style.bottom = 'calc(' + chatBaseBottom + 'px + env(safe-area-inset-bottom,0px))';
+        chatPanel.style.maxHeight = 'min(360px, calc(100vh - 200px))';
+      }
+    });
   }
 
   chatFab.addEventListener('click', function() {
