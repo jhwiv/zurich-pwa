@@ -4,7 +4,7 @@
 const ITINERARY = {
   trip: {
     title: "Zürich · March 2026",
-    subtitle: "Father–daughter trip — Copenhagen stopover, then a Zürich weekend",
+    subtitle: "Father–daughter trip — visiting Charlotte while she's studying in Copenhagen, then a Zürich weekend",
     dates: "26–29 March 2026",
     hotel: {
       name: "Zürich Marriott Hotel",
@@ -32,7 +32,7 @@ const ITINERARY = {
         { time: "Wed Night", title: "Departure → Copenhagen ✈", desc: "Overnight flight departing Wednesday night. Arrive Copenhagen (CPH) Thursday morning at 7 AM.", tags: ["✈ Overnight flight", "🕖 Arrive Thu 7 AM"] },
         { time: "7:00 AM Thu", title: "Arrive CPH → Scandic Nørreport", desc: "Metro M2 from Terminal 3 to Nørreport Station — 13 minutes, 30 DKK (~$4). Hotel directly across the street.", address: "Frederiksborggade 18", tags: ["🚇 M2 Metro · 13 min", "💰 30 DKK (~$4)"] },
         { time: "Hotel", title: "Scandic Nørreport · Your Base", desc: "Boutique 4-star hotel. Rooftop bar Level Six on 6th floor with panoramic views. Free happy hour 4–5 PM. Breakfast buffet included.", phone: "+45 7231 5001", tags: ["🍸 Rooftop Bar · Level Six", "🥐 Breakfast included", "🎉 Free happy hour 4–5 PM"] },
-        { time: "Charlotte", title: "Charlotte's Place · Amager", desc: "Holmbladsgade 70B, 2300 København S. Amagerbro neighborhood — 15 min from hotel by M2 metro to Amagerbro station then 5-min walk.", address: "Holmbladsgade 70B", tags: ["🚇 M2 → Amagerbro · 15 min"] },
+        { time: "Charlotte", title: "Charlotte's Place · Amager", desc: "Charlotte's place while studying in Copenhagen. Holmbladsgade 70B, 2300 København S. Amagerbro neighborhood — 15 min from hotel by M2 metro to Amagerbro station then 5-min walk.", address: "Holmbladsgade 70B", tags: ["🚇 M2 → Amagerbro · 15 min"] },
         { time: "Fri Evening", title: "Copenhagen → Zürich ✈", desc: "Fly CPH to ZRH Friday evening. M2 metro from Nørreport to airport takes 13 min.", tags: ["✈ CPH → ZRH", "🚇 M2 → Airport · 13 min"] }
       ]
     },
