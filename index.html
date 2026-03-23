@@ -3415,8 +3415,7 @@ if ('serviceWorker' in navigator) {
 <script>
 // ── CHAT ASSISTANT ────────────────────────────────────
 (function() {
-  var CHAT_API = '__PORT_3001__';
-  if (CHAT_API.indexOf('__') === 0) CHAT_API = 'http://localhost:3001';
+  var CHAT_API = 'https://cloudflare-worker.jhwiv-online.workers.dev';
 
   var chatFab = document.getElementById('chat-fab');
   var chatPanel = document.getElementById('chat-panel');
