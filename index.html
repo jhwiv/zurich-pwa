@@ -143,8 +143,8 @@ img{display:block;max-width:100%}
 }
 .nav-chip:active{transform:scale(.95);transition-duration:.05s}
 @media(max-width:420px){
-  .nav-chip{font-size:10px;padding:6px 12px;min-height:30px;border-radius:16px}
-  .hdr-row-2 .nav-chip{font-size:9px;padding:5px 10px;min-height:26px;border-radius:14px}
+  .nav-chip{font-size:9.5px;letter-spacing:.04em;padding:5px 8px;min-height:28px;border-radius:14px}
+  .hdr-row-2 .nav-chip{font-size:9px;padding:5px 8px;min-height:26px;border-radius:14px}
 }
 .hdr-section-label{display:none!important}
 
@@ -2534,10 +2534,35 @@ section[id]{
       </div>
 
       <!-- Pronunciation -->
-      <div class="pron-section open" id="pron-phrases">
-        <button class="pron-hdr" aria-expanded="true" aria-controls="pron-phrases-body">
+      <div class="pron-section open" id="pron-danish">
+        <button class="pron-hdr" aria-expanded="true" aria-controls="pron-danish-body">
+          Danish Cheat Sheet — Dansk
+          <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap to hear it &nbsp;&#x25BE;</span>
+        </button>
+        <div class="pron-body" id="pron-danish-body" role="region">
+          <div class="pron-hint">🔊 Tap 🔊 to hear any word spoken aloud. Opening with "Hej" and sprinkling in "Tak" goes a long way in Copenhagen.</div>
+          <table class="ptbl">
+            <thead><tr><th>Phrase</th><th>Say It</th><th>Usage</th></tr></thead>
+            <tbody>
+              <tr><td><button class="pron-link" onclick="speakWord('Hej','da-DK')">🔊</button> Hej</td><td class="phon">HI</td><td>Hello — same as English "hi". Say it once to greet.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Hej hej','da-DK')">🔊</button> Hej hej</td><td class="phon">HI HI</td><td>Goodbye — say it twice to leave. Confusing but true.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Tak','da-DK')">🔊</button> Tak</td><td class="phon">TAHK</td><td>Thank you — rhymes with "talk". The most useful Danish word.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Mange tak','da-DK')">🔊</button> Mange tak</td><td class="phon">MANG-uh TAHK</td><td>Many thanks — for when a simple tak isn't enough.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Nej tak','da-DK')">🔊</button> Nej tak</td><td class="phon">NY TAHK</td><td>No thank you — "nej" rhymes with "rye".</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Skål','da-DK')">🔊</button> Skål!</td><td class="phon">SKOHL</td><td>Cheers! Raise your glass, make eye contact, and say it.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Undskyld','da-DK')">🔊</button> Undskyld</td><td class="phon">OON-skyul</td><td>Excuse me / Sorry — use to get past people or get attention.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Velbekomme','da-DK')">🔊</button> Velbekomme</td><td class="phon">VEL-beh-KOM-uh</td><td>Bon appétit / You're welcome (after a meal).</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Hygge','da-DK')">🔊</button> Hygge</td><td class="phon">HOO-guh</td><td>Cosiness — the untranslatable Danish art of being cozy.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Regningen tak','da-DK')">🔊</button> Regningen, tak</td><td class="phon">RY-ning-en TAHK</td><td>The bill, please.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="pron-section" id="pron-phrases">
+        <button class="pron-hdr" aria-expanded="false" aria-controls="pron-phrases-body">
           Swiss German Cheat Sheet — Züritüütsch
-          <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap to hear it &nbsp;▾</span>
+          <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap to hear it &nbsp;&#x25BE;</span>
         </button>
         <div class="pron-body" id="pron-phrases-body" role="region">
           <div class="pron-hint">🔊 Tap 🔊 to hear any word spoken aloud — no internet needed. Opening with "Grüezi" transforms how locals respond to you.</div>
@@ -2561,10 +2586,22 @@ section[id]{
           <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap to hear it &nbsp;▾</span>
         </button>
         <div class="pron-body" id="pron-places-body" role="region">
-          <div class="pron-hint">Every German/Swiss-German place you'll visit, in order of appearance. Tap 🔊 to hear any word spoken aloud — works offline too.</div>
+          <div class="pron-hint">Every place you'll visit in Copenhagen and Zürich. Tap 🔊 to hear any word spoken aloud — works offline too.</div>
           <table class="ptbl">
             <thead><tr><th>Place</th><th>Say It</th><th>What It Is</th></tr></thead>
             <tbody>
+              <tr><td colspan="3" style="padding:10px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇩🇰 Copenhagen</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('København','da-DK')">🔊</button> København</td><td class="phon">kuh-ben-HOWN</td><td>Copenhagen in Danish. Literally "merchants' harbour".</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Nørreport','da-DK')">🔊</button> Nørreport</td><td class="phon">NUR-uh-port</td><td>Your metro station &amp; hotel. The city's busiest hub.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Torvehallerne','da-DK')">🔊</button> Torvehallerne</td><td class="phon">TOR-vuh-hal-AIR-nuh</td><td>The glass food market next to Nørreport. 1 min walk.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Nyhavn','da-DK')">🔊</button> Nyhavn</td><td class="phon">NOO-hown</td><td>The iconic colourful harbour. 10 min walk from hotel.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Strøget','da-DK')">🔊</button> Strøget</td><td class="phon">STROY-et</td><td>Europe's longest pedestrian shopping street.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Kongens Nytorv','da-DK')">🔊</button> Kongens Nytorv</td><td class="phon">KONG-ens NOO-tor</td><td>"The King's New Square" where Strøget ends at Nyhavn.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Rundetårn','da-DK')">🔊</button> Rundetårn</td><td class="phon">ROON-uh-torn</td><td>The Round Tower. Spiral ramp to the top, not stairs.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Amagerbro','da-DK')">🔊</button> Amagerbro</td><td class="phon">ah-MAH-er-bro</td><td>Charlotte's neighbourhood south of the centre.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Kastrup','da-DK')">🔊</button> Kastrup</td><td class="phon">KAS-trup</td><td>Where CPH airport is. The T is pronounced.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Frederiksborggade','da-DK')">🔊</button> Frederiksborggade</td><td class="phon">FRETH-riks-bor-GAH-thuh</td><td>The street your hotel is on. D's are soft in Danish.</td></tr>
+              <tr><td colspan="3" style="padding:14px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇨🇭 Zürich</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Zürich','de-DE')">🔊</button> Zürich</td><td class="phon">TSOO-rikh</td><td>The city. Not "ZOO-rick".</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Sihlquai','de-DE')">🔊</button> Sihlquai</td><td class="phon">ZEEL-ky</td><td>Tram stop near your hotel.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Uetliberg','de-DE')">🔊</button> Uetliberg</td><td class="phon">OOT-lee-berg</td><td>Zürich's local mountain. Saturday morning.</td></tr>
@@ -2596,16 +2633,24 @@ section[id]{
           <span style="font-size:9px;opacity:.4;letter-spacing:0">🔊 tap to hear it &nbsp;▾</span>
         </button>
         <div class="pron-body" id="pron-food-body" role="region">
-          <div class="pron-hint">Dishes and drinks you'll encounter at Zeughauskeller, Hiltl, and eCHo.</div>
+          <div class="pron-hint">Dishes and drinks you'll encounter in Copenhagen and Zürich.</div>
           <table class="ptbl">
             <thead><tr><th>Term</th><th>Say It</th><th>What It Is</th></tr></thead>
             <tbody>
+              <tr><td colspan="3" style="padding:10px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇩🇰 Danish Food &amp; Drink</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Smørrebrød','da-DK')">🔊</button> Smørrebrød</td><td class="phon">SMUR-bruth</td><td>Open-faced rye sandwich. Denmark's national lunch.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Wienerbrød','da-DK')">🔊</button> Wienerbrød</td><td class="phon">VEE-nuh-bruth</td><td>"Danish pastry" — what the Danes actually call it.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Kanelsnurrer','da-DK')">🔊</button> Kanelsnurrer</td><td class="phon">kah-NEL-snoo-uh</td><td>Cinnamon swirl pastry. Try at any bakery.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Rødgrød med fløde','da-DK')">🔊</button> Rødgrød med fløde</td><td class="phon">RUTH-gruth meth FLUH-thuh</td><td>Red berry pudding with cream. A Danish tongue-twister.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Rugbrød','da-DK')">🔊</button> Rugbrød</td><td class="phon">ROO-bruth</td><td>Dense dark rye bread. The base of all smørrebrød.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Øl','da-DK')">🔊</button> Øl</td><td class="phon">UHL</td><td>Beer. Carlsberg and Tuborg are Copenhagen originals.</td></tr>
+              <tr><td colspan="3" style="padding:14px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇨🇭 Swiss Food &amp; Drink</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Zürcher Geschnetzeltes','de-DE')">🔊</button> Zürcher Geschnetzeltes</td><td class="phon">TSOOR-kher geh-SHNET-tsel-tes</td><td>Zürich's signature veal dish in cream sauce.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Rösti','de-DE')">🔊</button> Rösti</td><td class="phon">RURR-shti</td><td>Swiss potato cake. Not "ROH-stee".</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Älplermagronen','de-DE')">🔊</button> Älplermagronen</td><td class="phon">ELP-ler-mah-GROH-nen</td><td>Alpine macaroni with cheese &amp; applesauce.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Züri Gschnätzlets','de-DE')">🔊</button> Züri Gschnätzlets</td><td class="phon">TSOO-ree g'SHNET-sletts</td><td>Swiss-German for Geschnetzeltes. eCHo menu.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Fondue','fr-FR')">🔊</button> Fondue</td><td class="phon">fon-DOO</td><td>Melted cheese pot. Stir in a figure-8.</td></tr>
-              <tr><td><button class="pron-link" onclick="speakWord('Birchermüesli','de-DE')">🔊</button> Birchermüesli</td><td class="phon">BEER-kher-MOOS-lee</td><td>The original Swiss muesli. Try it at Hiltl.</td></tr>
+              <tr><td><button class="pron-link" onclick="speakWord('Birchemüesli','de-DE')">🔊</button> Birchemüesli</td><td class="phon">BEER-kher-MOOS-lee</td><td>The original Swiss muesli. Try it at Hiltl.</td></tr>
             </tbody>
           </table>
         </div>
