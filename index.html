@@ -17,6 +17,8 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="icon" href="icon-192.png">
 <title>Zürich</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" as="style">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -581,6 +583,151 @@ img{display:block;max-width:100%}
 }
 
 
+/* ── MAP SECTION ───────────────────────────────── */
+#section-map .content-section{
+  background:var(--navy2);
+  padding:0;
+}
+#section-map .day-header{
+  background:linear-gradient(to bottom,rgba(200,168,75,.05),transparent);
+  border-bottom:2px solid var(--gold);
+}
+#section-map .day-title{color:var(--gold2)}
+#section-map .day-intro{color:rgba(220,225,235,.65)}
+#section-map .day-label{color:var(--gold)}
+.map-wrap{
+  position:relative;
+  width:100%;
+  height:calc(100vh - 200px);
+  min-height:480px;
+  max-height:800px;
+}
+.map-wrap .leaflet-container{
+  width:100%;height:100%;
+  background:var(--navy2);
+}
+/* Dark tile filter */
+.map-wrap .leaflet-tile-pane{
+  filter:saturate(.3) brightness(.55) contrast(1.1);
+}
+/* Custom control styling */
+.map-day-controls{
+  position:absolute;top:12px;left:12px;z-index:800;
+  display:flex;gap:6px;flex-wrap:wrap;
+}
+.map-day-btn{
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 14px;
+  border-radius:20px;
+  border:1px solid rgba(200,168,75,.3);
+  background:rgba(13,25,41,.88);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  color:rgba(255,255,255,.6);
+  cursor:pointer;
+  transition:all .2s;
+  white-space:nowrap;
+  font-weight:500;
+}
+.map-day-btn:hover{
+  background:rgba(200,168,75,.15);
+  border-color:rgba(200,168,75,.5);
+  color:rgba(255,255,255,.85);
+}
+.map-day-btn.active{
+  background:var(--gold);
+  color:var(--navy2);
+  border-color:var(--gold);
+  font-weight:700;
+}
+.map-day-btn:active{transform:scale(.95);transition-duration:.05s}
+/* Custom popup */
+.leaflet-popup-content-wrapper{
+  background:var(--navy)!important;
+  border:1px solid rgba(200,168,75,.25);
+  border-radius:10px!important;
+  box-shadow:0 6px 30px rgba(0,0,0,.5)!important;
+  padding:0!important;
+}
+.leaflet-popup-content{
+  margin:0!important;
+  font-family:'Crimson Pro',serif;
+  color:#fff;
+  min-width:180px;
+}
+.leaflet-popup-tip{
+  background:var(--navy)!important;
+  border:1px solid rgba(200,168,75,.25);
+  border-top:none;border-left:none;
+}
+.leaflet-popup-close-button{
+  color:var(--gold)!important;
+  font-size:18px!important;
+  top:6px!important;right:8px!important;
+}
+.map-popup{
+  padding:14px 16px;
+}
+.map-popup-num{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:4px;
+}
+.map-popup-name{
+  font-family:'Playfair Display',serif;
+  font-size:16px;font-weight:700;
+  color:var(--gold2);line-height:1.2;
+  margin-bottom:6px;
+}
+.map-popup-desc{
+  font-size:13px;color:rgba(220,225,235,.75);
+  line-height:1.5;
+}
+.map-popup-time{
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:.08em;
+  color:var(--gold);opacity:.8;
+  margin-top:6px;
+}
+/* Leaflet zoom control restyle */
+.map-wrap .leaflet-control-zoom a{
+  background:rgba(13,25,41,.88)!important;
+  color:var(--gold)!important;
+  border-color:rgba(200,168,75,.25)!important;
+  backdrop-filter:blur(8px);
+}
+.map-wrap .leaflet-control-zoom a:hover{
+  background:rgba(200,168,75,.2)!important;
+}
+.map-wrap .leaflet-control-attribution{
+  background:rgba(13,25,41,.7)!important;
+  color:rgba(255,255,255,.4)!important;
+  font-size:8px!important;
+}
+.map-wrap .leaflet-control-attribution a{
+  color:rgba(200,168,75,.6)!important;
+}
+.map-legend{
+  position:absolute;bottom:28px;left:12px;z-index:800;
+  background:rgba(13,25,41,.88);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(200,168,75,.2);
+  border-radius:8px;
+  padding:10px 14px;
+  display:flex;gap:12px;flex-wrap:wrap;
+}
+.map-legend-item{
+  display:flex;align-items:center;gap:5px;
+  font-family:'DM Mono',monospace;
+  font-size:8px;letter-spacing:.06em;
+  color:rgba(255,255,255,.55);
+  text-transform:uppercase;
+}
+.map-legend-dot{
+  width:10px;height:10px;
+  border-radius:50%;
+  flex-shrink:0;
+}
 /* btn-alt-toggle styles moved to responsive section */
 /* alt body */
 .alt-body{
@@ -1454,6 +1601,7 @@ section[id]{
       <button class="nav-chip" data-target="section-transit">Transit</button>
       <button class="nav-chip" data-target="section-history">History</button>
       <button class="nav-chip" data-target="section-streetview">Street Views</button>
+      <button class="nav-chip" data-target="section-map">Map</button>
     </nav>
   </div>
   <div class="hdr-section-label" id="hdr-section-label">Overview</div>
@@ -2725,6 +2873,36 @@ section[id]{
     </div>
   </div>
 </section>
+<!-- ── MAP ──────────────────────────────────────────── -->
+<span class="section-anchor" id="section-map-anchor"></span>
+<section id="section-map" aria-label="Interactive itinerary map">
+  <div class="content-section">
+    <div class="day-header" style="grid-template-columns:1fr">
+      <div>
+        <div class="day-label">Navigate · Visual Route</div>
+        <h2 class="day-title">Itinerary Map</h2>
+        <p class="day-intro">Every stop across Copenhagen and Zürich, plotted in order. Filter by day, tap markers for details.</p>
+      </div>
+    </div>
+    <div class="map-wrap">
+      <div id="itinerary-map"></div>
+      <div class="map-day-controls" id="map-day-controls">
+        <button class="map-day-btn active" data-day="all">All Days</button>
+        <button class="map-day-btn" data-day="denmark">🇩🇰 Copenhagen</button>
+        <button class="map-day-btn" data-day="fri">✈️ Friday</button>
+        <button class="map-day-btn" data-day="sat">🏔️ Saturday</button>
+        <button class="map-day-btn" data-day="sun">☀️ Sunday</button>
+      </div>
+      <div class="map-legend">
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#58A6FF"></div>Copenhagen</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#E8C96B"></div>Friday</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#F97316"></div>Saturday</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#A78BFA"></div>Sunday</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ── FOOTER ──────────────────────────────────────── -->
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
@@ -3002,6 +3180,7 @@ const jumpTargets = {
   'section-sun':        { label: 'Essentials',target: 'section-essentials' },
   'section-essentials': { label: 'Transit',   target: 'section-transit' },
   'section-transit':    { label: 'Top',       target: 'hero' },
+  'section-map':        { label: 'Top',       target: 'hero' },
 };
 let currentFabTarget = 'section-sat';
 
@@ -3036,6 +3215,7 @@ const sections = [
   { id: 'section-transit',    label: 'Transit' },
   { id: 'section-history',    label: 'History' },
   { id: 'section-streetview', label: 'Street View' },
+  { id: 'section-map',        label: 'Map' },
 ];
 
 let lastScroll = 0;
@@ -3207,6 +3387,169 @@ const fabJumpBtn = document.getElementById('fab-jump-btn');
 const fabTriggerBtn = document.getElementById('fab-trigger-btn');
 if (fabJumpBtn) fabJumpBtn.addEventListener('click', fabJump);
 if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
+</script>
+
+<script>
+// ── ITINERARY MAP (Leaflet) ─────────────────────────────
+(function() {
+  var mapEl = document.getElementById('itinerary-map');
+  if (!mapEl || typeof L === 'undefined') return;
+
+  var COLORS = {
+    denmark: '#58A6FF',
+    fri:     '#E8C96B',
+    sat:     '#F97316',
+    sun:     '#A78BFA'
+  };
+
+  var stops = [
+    // ── COPENHAGEN ────────────────────────
+    { day:'denmark', n:1, name:'Scandic N\u00f8rreport Hotel', desc:'Frederiksborggade 18 \u2014 your base in central Copenhagen', time:'Thu morning', lat:55.68391, lng:12.57112, icon:'\ud83c\udfe8' },
+    { day:'denmark', n:2, name:'Torvehallerne Market', desc:'Gourmet food hall \u2014 pastries, sm\u00f8rrebr\u00f8d, coffee', time:'Thu morning', lat:55.68347, lng:12.56994, icon:'\ud83e\uddc1' },
+    { day:'denmark', n:3, name:'Rundetrn (Round Tower)', desc:'17th-century observatory, 3 min walk from hotel', time:'Thu', lat:55.68150, lng:12.57637, icon:'\ud83c\udfdb\ufe0f' },
+    { day:'denmark', n:4, name:'Nyhavn', desc:'Iconic colorful waterfront', time:'Thu', lat:55.67990, lng:12.59100, icon:'\ud83c\udfa8' },
+    { day:'denmark', n:5, name:'Str\u00f8get', desc:'Europe\u2019s longest pedestrian shopping street', time:'Thu', lat:55.67871, lng:12.57798, icon:'\ud83d\udecd\ufe0f' },
+    { day:'denmark', n:6, name:'Kongens Nytorv', desc:'Grand royal square where Str\u00f8get meets Nyhavn', time:'Thu', lat:55.68104, lng:12.58668, icon:'\ud83d\udc51' },
+    { day:'denmark', n:7, name:'Charlotte\u2019s Place \u2014 Amagerbro', desc:'Holmbladsgade 70B \u2014 visiting Charlotte', time:'Thu', lat:55.66150, lng:12.60140, icon:'\ud83d\udc69' },
+    { day:'denmark', n:8, name:'Copenhagen Airport (CPH)', desc:'M2 metro from N\u00f8rreport \u2014 13 min to terminal', time:'Fri evening', lat:55.63106, lng:12.64609, icon:'\u2708\ufe0f' },
+    // ── FRIDAY (Z\u00fcrich arrival) ────────────
+    { day:'fri', n:1, name:'Z\u00fcrich Airport (ZRH)', desc:'Airport Express to HB \u2014 10 min, Z\u00fcrich Card covers it', time:'7:40 PM', lat:47.4582, lng:8.5555, icon:'\u2708\ufe0f' },
+    { day:'fri', n:2, name:'Z\u00fcrich Marriott Hotel', desc:'Neum\u00fchlequai 42 \u2014 home base on the Limmat', time:'~8:30 PM', lat:47.38180, lng:8.54150, icon:'\ud83c\udfe8' },
+    { day:'fri', n:3, name:'White Elephant', desc:'Michelin-listed Thai \u2014 on-site at Marriott since 1991', time:'9:00 PM', lat:47.38195, lng:8.54130, icon:'\ud83c\udf5c' },
+    { day:'fri', n:4, name:'Lenox Bar', desc:'NY-inspired bar \u2014 rare whiskies & craft cocktails', time:'10:30 PM (opt.)', lat:47.38170, lng:8.54165, icon:'\ud83e\udd43' },
+    // ── SATURDAY ──────────────────────────
+    { day:'sat', n:1, name:'Uetliberg Summit', desc:'871 m \u2014 S10 train from HB, 20 min \u2014 Alps panorama', time:'10:00 AM', lat:47.3497, lng:8.4919, icon:'\u26f0\ufe0f' },
+    { day:'sat', n:2, name:'Caf\u00e9 Spr\u00fcngli', desc:'Legendary confiserie since 1836 \u2014 hot chocolate & Luxemburgerli', time:'12:45 PM', lat:47.36953, lng:8.53925, icon:'\u2615' },
+    { day:'sat', n:3, name:'Kunsthaus Z\u00fcrich', desc:'Switzerland\u2019s largest art museum \u2014 Monet, Munch, Giacometti', time:'1:30 PM', lat:47.3705, lng:8.54887, icon:'\ud83c\udfa8' },
+    { day:'sat', n:4, name:'Augustinergasse & Old Town', desc:'Medieval lanes \u2192 Grossm\u00fcnster \u2192 Fraum\u00fcnster \u2192 M\u00fcnsterhof', time:'4:15 PM', lat:47.371, lng:8.5378, icon:'\ud83c\udfdb\ufe0f' },
+    { day:'sat', n:5, name:'Lindenhof Hill', desc:'Roman hilltop park \u2014 best Old Town panorama', time:'5:45 PM', lat:47.37300, lng:8.54350, icon:'\ud83c\udf05' },
+    { day:'sat', n:6, name:'Caf\u00e9 Bar M\u00fcnsterhof', desc:'Pre-dinner aperitivo \u2014 M\u00fcnsterhof 6', time:'6:30 PM', lat:47.3701, lng:8.54035, icon:'\ud83c\udf77' },
+    { day:'sat', n:7, name:'Zeughauskeller', desc:'15th-century armory beer-hall \u2014 Bahnhofstrasse 28A', time:'7:30 PM \u2713', lat:47.3703, lng:8.5399, icon:'\ud83c\udf7a' },
+    // ── SUNDAY ────────────────────────────
+    { day:'sun', n:1, name:'Hiltl', desc:'World\u2019s oldest vegetarian restaurant \u2014 Sunday brunch CHF 57', time:'10:00 AM', lat:47.37330, lng:8.53580, icon:'\ud83e\udd57' },
+    { day:'sun', n:2, name:'Lake Z\u00fcrich Promenade', desc:'Quaianlagen \u2014 swans, sailboats, Alps views', time:'11:15 AM', lat:47.3636, lng:8.5364, icon:'\ud83e\udea7' },
+    { day:'sun', n:3, name:'B\u00fcrkliplatz Boat Pier', desc:'Lake cruise departure \u2014 ~40 min Rundfahrt', time:'11:45 AM (opt.)', lat:47.367, lng:8.5395, icon:'\u26f5' },
+    { day:'sun', n:4, name:'Fischerstube Z\u00fcrihorn', desc:'Lakeside terrace \u2014 fresh Lake Z\u00fcrich fish', time:'1:00 PM', lat:47.35302, lng:8.55051, icon:'\ud83c\udf5f' },
+    { day:'sun', n:5, name:'Museum Rietberg', desc:'Asian, African & Oceanic art in Rieter Park', time:'2:30 PM', lat:47.3587, lng:8.5304, icon:'\ud83c\udfdb\ufe0f' },
+    { day:'sun', n:6, name:'eCHo Restaurant', desc:'Hotel\u2019s Swiss restaurant \u2014 farewell dinner', time:'5:15 PM', lat:47.38180, lng:8.54150, icon:'\ud83e\uddc0' },
+    { day:'sun', n:7, name:'Z\u00fcrich Airport (ZRH)', desc:'Flight departs 8:25 PM', time:'6:00 PM dep.', lat:47.4582, lng:8.5555, icon:'\ud83d\udee9\ufe0f' }
+  ];
+
+  var map = L.map('itinerary-map', {
+    center: [47.373, 8.540],
+    zoom: 14,
+    zoomControl: false,
+    scrollWheelZoom: true
+  });
+
+  L.control.zoom({ position: 'topright' }).addTo(map);
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  function makeIcon(num, color) {
+    return L.divIcon({
+      className: '',
+      html: '<div style="'
+        + 'width:28px;height:28px;border-radius:50%;'
+        + 'background:' + color + ';'
+        + 'border:2px solid rgba(255,255,255,.9);'
+        + 'box-shadow:0 2px 8px rgba(0,0,0,.4);'
+        + 'display:flex;align-items:center;justify-content:center;'
+        + 'font-family:DM Mono,monospace;font-size:11px;font-weight:700;'
+        + 'color:#0D1929;'
+        + '">' + num + '</div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+      popupAnchor: [0, -18]
+    });
+  }
+
+  var layers = { denmark:[], fri:[], sat:[], sun:[] };
+  var routeLines = {};
+  var allMarkers = [];
+
+  stops.forEach(function(s) {
+    var color = COLORS[s.day];
+    var marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.n, color) });
+    var popup = '<div class="map-popup">'
+      + '<div class="map-popup-num">' + s.icon + ' Stop ' + s.n + '</div>'
+      + '<div class="map-popup-name">' + s.name + '</div>'
+      + '<div class="map-popup-desc">' + s.desc + '</div>'
+      + '<div class="map-popup-time">' + s.time + '</div>'
+      + '</div>';
+    marker.bindPopup(popup, { maxWidth: 260, closeButton: true });
+    marker._dayTag = s.day;
+    layers[s.day].push(marker);
+    allMarkers.push(marker);
+  });
+
+  Object.keys(layers).forEach(function(day) {
+    var coords = layers[day].map(function(m) { return m.getLatLng(); });
+    if (coords.length > 1) {
+      routeLines[day] = L.polyline(coords, {
+        color: COLORS[day],
+        weight: 2.5,
+        opacity: 0.5,
+        dashArray: '6 8',
+        smoothFactor: 1.5
+      });
+    }
+  });
+
+  var flightLine = L.polyline(
+    [[55.63106, 12.64609], [47.4582, 8.5555]],
+    { color: '#E8C96B', weight: 1.5, opacity: 0.35, dashArray: '4 10' }
+  );
+
+  var currentDay = 'all';
+  var activeGroup = L.layerGroup().addTo(map);
+
+  function showDay(day) {
+    currentDay = day;
+    activeGroup.clearLayers();
+
+    if (day === 'all') {
+      allMarkers.forEach(function(m) { activeGroup.addLayer(m); });
+      Object.keys(routeLines).forEach(function(d) { activeGroup.addLayer(routeLines[d]); });
+      activeGroup.addLayer(flightLine);
+      var zurichBounds = L.latLngBounds(
+        allMarkers.filter(function(m) { return m._dayTag !== 'denmark'; })
+                  .map(function(m) { return m.getLatLng(); })
+      );
+      map.fitBounds(zurichBounds.pad(0.15));
+    } else {
+      layers[day].forEach(function(m) { activeGroup.addLayer(m); });
+      if (routeLines[day]) activeGroup.addLayer(routeLines[day]);
+      if (day === 'fri') activeGroup.addLayer(flightLine);
+      var bounds = L.latLngBounds(layers[day].map(function(m) { return m.getLatLng(); }));
+      map.fitBounds(bounds.pad(0.2));
+    }
+  }
+
+  document.getElementById('map-day-controls').addEventListener('click', function(e) {
+    var btn = e.target.closest('.map-day-btn');
+    if (!btn) return;
+    document.querySelectorAll('.map-day-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    showDay(btn.dataset.day);
+  });
+
+  showDay('all');
+
+  // Fix tile rendering when section scrolls into view
+  var mapObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        setTimeout(function() { map.invalidateSize(); }, 150);
+      }
+    });
+  }, { threshold: 0.1 });
+  mapObs.observe(document.getElementById('section-map'));
+})();
 </script>
 
 <script>
