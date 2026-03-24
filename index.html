@@ -498,6 +498,102 @@ img{display:block;max-width:100%}
   border:1px solid var(--divider);
   padding:3px 9px;border-radius:20px;
 }
+/* ── Chip Popup ── */
+.meta-chip[data-popup]{
+  cursor:pointer;
+  transition:background .15s,border-color .15s,transform .15s;
+}
+.meta-chip[data-popup]:hover{
+  background:var(--gold3);
+  border-color:var(--gold);
+  transform:translateY(-1px);
+}
+.meta-chip[data-popup]:active{transform:scale(.96);transition-duration:.05s}
+.btn-primary[data-popup]{border:none;cursor:pointer}
+.chip-popup-overlay{
+  position:fixed;inset:0;z-index:500;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.45);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  opacity:0;pointer-events:none;
+  transition:opacity .2s;
+}
+.chip-popup-overlay.visible{
+  opacity:1;pointer-events:auto;
+}
+.chip-popup{
+  background:var(--cream);
+  border-radius:var(--r12,12px);
+  padding:var(--sp24,24px);
+  max-width:420px;width:calc(100% - 48px);
+  max-height:80vh;overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  transform:translateY(12px);
+  transition:transform .25s cubic-bezier(.16,1,.3,1);
+}
+.chip-popup-overlay.visible .chip-popup{
+  transform:translateY(0);
+}
+.chip-popup-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:var(--sp16,16px);
+  gap:12px;
+}
+.chip-popup-title{
+  font-family:'Playfair Display',serif;
+  font-size:18px;font-weight:700;
+  color:var(--gold);
+  line-height:1.3;
+}
+.chip-popup-close{
+  background:none;border:none;cursor:pointer;
+  font-size:22px;color:var(--steel);
+  padding:0 0 0 8px;line-height:1;
+  flex-shrink:0;
+}
+.chip-popup-close:hover{
+  color:var(--navy);
+}
+.chip-popup-body{
+  margin-bottom:var(--sp8,8px);
+}
+.chip-popup-text{
+  font-family:'Crimson Pro',serif;
+  font-size:15px;line-height:1.65;
+  color:var(--navy);
+  margin:0 0 12px;
+}
+.chip-popup-tip{
+  background:var(--gold3);
+  border-left:3px solid var(--gold);
+  border-radius:0 6px 6px 0;
+  padding:10px 14px;
+  font-family:'Crimson Pro',serif;
+  font-size:14px;font-style:italic;
+  line-height:1.55;
+  color:var(--navy);
+}
+.chip-popup-tip::before{
+  content:'💡 ';
+}
+.chip-popup-link{
+  display:none;
+  margin-top:14px;
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--navy);
+  background:var(--cream2);
+  border:1px solid var(--divider);
+  padding:8px 16px;border-radius:var(--r6,6px);
+  text-decoration:none;
+  transition:background .15s;
+}
+.chip-popup-link:hover{
+  background:var(--gold3);border-color:var(--gold);
+}
+.chip-popup-link.visible{display:inline-block}
+
 /* action row */
 .stop-actions{
   display:flex;flex-wrap:wrap;gap:var(--sp8);
@@ -1682,8 +1778,8 @@ section[id]{
         <h3 class="stop-title">Departure → Copenhagen ✈</h3>
         <p class="stop-body">Overnight flight departing Wednesday night. Arrive Copenhagen (CPH) Thursday morning at 7 AM.</p>
         <div class="stop-meta">
-          <span class="meta-chip">✈ Overnight flight</span>
-          <span class="meta-chip">🕖 Arrive Thu 7 AM</span>
+          <span class="meta-chip" data-popup data-popup-title="Overnight Transatlantic Flight" data-popup-body="Red-eye from North America arrives Copenhagen early morning. The overnight timing lets you sleep on the plane and arrive ready for a full day — no wasted travel day." data-popup-tip="Bring a neck pillow and noise-cancelling headphones. Skip the in-flight meal and eat breakfast at the airport instead — you&#39;ll sleep better.">✈ Overnight flight</span>
+          <span class="meta-chip" data-popup data-popup-title="Copenhagen Airport — Early Arrival" data-popup-body="Kastrup Airport (CPH) is Scandinavia&#39;s busiest hub. Immigration is typically quick for US/Canadian passports. Baggage claim is efficient. The M2 Metro connects directly from Terminal 3 to the city center." data-popup-tip="Don&#39;t check bags if you can avoid it — you&#39;ll be in the city 30 minutes faster. The airport has great coffee shops if you need to regroup.">🕖 Arrive Thu 7 AM</span>
         </div>
       </article>
 
@@ -1693,9 +1789,9 @@ section[id]{
         <h3 class="stop-title">Arrive CPH → Scandic Nørreport</h3>
         <p class="stop-body">Metro M2 runs directly from Terminal 3 to Nørreport Station — 13 minutes, 30 DKK (~$4). Hotel is directly across the street from the station exit on Frederiksborggade. Check in or drop bags, grab coffee at Torvehallerne (1 min walk).</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚇 M2 Metro · 13 min</span>
-          <span class="meta-chip">💰 30 DKK (~$4)</span>
-          <span class="meta-chip">📍 Frederiksborggade 18</span>
+          <span class="meta-chip" data-popup data-popup-title="Copenhagen Metro M2 Line" data-popup-body="The driverless M2 Metro runs from Kastrup Airport to Nørreport Station in 13 minutes. Trains every 3–4 minutes during peak hours. Modern, clean, and extremely reliable." data-popup-tip="Buy a single-journey ticket from the machine BEFORE you board. There are no ticket offices — it&#39;s all self-service machines or the DOT app.">🚇 M2 Metro · 13 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Copenhagen Transit Pricing" data-popup-body="A single-journey ticket in Zone 1–2 costs 30 DKK (~$4 USD). This covers most of central Copenhagen including the airport transfer. Tickets are valid for 75 minutes with unlimited transfers." data-popup-tip="If you&#39;re doing more than 3 trips, get a Copenhagen Card or a 24-hour CityPass instead. The DOT app (Rejseplanen) works well for buying tickets.">💰 30 DKK (~$4)</span>
+          <span class="meta-chip" data-popup data-popup-title="Hotel Location — Central Copenhagen" data-popup-body="Frederiksborggade 18 is in the heart of Copenhagen, steps from Nørreport Station — the city&#39;s main transit hub. The neighborhood sits between the Latin Quarter and Torvehallerne food market." data-popup-tip="Everything in central Copenhagen is walkable from here. Nyhavn is 10 minutes on foot, Tivoli is 12 minutes, and the Little Mermaid is a 25-minute walk along the harbour.">📍 Frederiksborggade 18</span>
         </div>
         <p class="stop-note">Metro runs 24/7 · Every 2 min daytime, 15–20 min overnight · No taxi needed</p>
         <div class="stop-actions">
@@ -1710,9 +1806,9 @@ section[id]{
         <h3 class="stop-title">Paying for the Metro · What You Need to Know</h3>
         <p class="stop-body"><strong>You cannot tap a credit card or phone on the gates.</strong> You must have a valid ticket or pass before boarding. No ticket = DKK 750 fine (~$100) from plain-clothes inspectors.</p>
         <div class="stop-meta">
-          <span class="meta-chip">⚠️ No contactless tap</span>
-          <span class="meta-chip">🎫 Buy before boarding</span>
-          <span class="meta-chip">💰 Fine: 750 DKK</span>
+          <span class="meta-chip" data-popup data-popup-title="Copenhagen Transit — No Tap to Pay" data-popup-body="Unlike many European cities, Copenhagen&#39;s metro and buses do NOT accept contactless credit card tap. You must buy a ticket from a machine or the DOT Billetter app before boarding." data-popup-tip="Download the DOT Billetter (or Rejseplanen) app before you land. It&#39;s the easiest way to buy tickets. Apple Pay/Google Pay work IN the app, just not at turnstiles.">⚠️ No contactless tap</span>
+          <span class="meta-chip" data-popup data-popup-title="Pre-Purchase Required" data-popup-body="All Copenhagen public transit requires a valid ticket before boarding. There are no conductors selling tickets on board. Ticket machines accept cards and coins at all metro stations." data-popup-tip="The DOT Billetter app is your best friend. Buy a single ticket or day pass before you step on. Inspectors are frequent and fines are non-negotiable.">🎫 Buy before boarding</span>
+          <span class="meta-chip" data-popup data-popup-title="Transit Fine — 750 DKK (~$100)" data-popup-body="Riding without a valid ticket results in an immediate 750 DKK fine (~$100 USD). Inspectors in plainclothes check regularly, especially on the Metro. There are no warnings — just fines." data-popup-tip="This is strictly enforced. Even tourists get no leniency. Always have a valid, activated ticket. If you forgot, get off at the next stop and buy one.">💰 Fine: 750 DKK</span>
         </div>
 
         <p class="stop-body" style="margin-top:12px"><strong>Easiest option — Rejsekort App</strong> (recommended)<br>Download the <a href="https://apps.apple.com/us/app/rejsekort/id6469603787" target="_blank" rel="noopener" style="color:var(--gold)">Rejsekort app</a> before you land. Link your credit card in the app. Swipe to check in before boarding, swipe to check out when you arrive. The app charges your card automatically once a day. Works on metro, bus, train, and light rail — check in once even if you transfer. Smart Check Out reminds you so you don't forget. 20% off during off-peak hours.</p>
@@ -1761,10 +1857,10 @@ section[id]{
         <h3 class="stop-title">Scandic Nørreport · Your Base</h3>
         <p class="stop-body">Boutique 4-star hotel in central Copenhagen. Reception and the rooftop bar "Level Six" are both on the 6th floor. Rooftop terrace has panoramic city views and cocktails. Free happy hour daily 4–5 PM with complimentary drinks. Free Wi-Fi. Breakfast buffet Mon–Fri 6:30–9:30, weekends 7:30–10:30.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🍸 Rooftop Bar · Level Six</span>
-          <span class="meta-chip">🥐 Breakfast included</span>
-          <span class="meta-chip">🎉 Free happy hour 4–5 PM</span>
-          <span class="meta-chip">📶 Free Wi-Fi</span>
+          <span class="meta-chip" data-popup data-popup-title="Level Six Rooftop Bar" data-popup-body="The hotel&#39;s rooftop bar offers panoramic views over Copenhagen&#39;s skyline, including the spires of the old city. Craft cocktails, Danish beers, and small plates in a stylish setting." data-popup-tip="Go at sunset for the best views. The happy hour (4–5 PM) has complimentary drinks — time your return from exploring accordingly.">🍸 Rooftop Bar · Level Six</span>
+          <span class="meta-chip" data-popup data-popup-title="Hotel Breakfast — Included" data-popup-body="Full Scandinavian breakfast buffet included in the room rate. Expect fresh pastries, smørrebrød, cold cuts, cheeses, fresh fruit, yogurt, and good coffee. Typically served 7–10 AM." data-popup-tip="Eat a solid breakfast — Copenhagen dining is expensive. A good hotel breakfast saves you 150–200 DKK per person.">🥐 Breakfast included</span>
+          <span class="meta-chip" data-popup data-popup-title="Complimentary Happy Hour" data-popup-body="The hotel offers a free happy hour daily from 4–5 PM, typically at the rooftop bar or lobby lounge. Wine, beer, and light snacks included for all guests." data-popup-tip="Plan your afternoon sightseeing to wrap up by 4 PM. Free drinks with a rooftop view is hard to beat after a day of walking.">🎉 Free happy hour 4–5 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Hotel Wi-Fi" data-popup-body="Complimentary high-speed Wi-Fi throughout the hotel. No login codes — just connect to the hotel network. Coverage includes rooms, lobby, and rooftop areas." data-popup-tip="European mobile data can be expensive. Use the hotel Wi-Fi to download offline maps and preload your next day&#39;s routes before heading out.">📶 Free Wi-Fi</span>
         </div>
         <p class="stop-note">+45 7231 5001 · Rooftop: Mon–Thu until 11:30 PM · Fri–Sat until 1 AM · Sun until 11 PM</p>
         <div class="stop-actions">
@@ -1779,10 +1875,10 @@ section[id]{
         <h3 class="stop-title">Around the Hotel · Nørreport &amp; Indre By</h3>
         <p class="stop-body">Nørreport is Copenhagen's busiest transit hub — you're in the absolute center. Torvehallerne food market is a 1-minute walk (gourmet stalls, fresh pastries, smørrebrød). The Round Tower (Rundetårn) and Latin Quarter are 3 minutes on foot. Kongens Nytorv, Nyhavn, and Strøget shopping street all within 10 minutes walking.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🥨 Torvehallerne · 1 min</span>
-          <span class="meta-chip">🏛 Round Tower · 3 min</span>
-          <span class="meta-chip">⛵ Nyhavn · 10 min walk</span>
-          <span class="meta-chip">🛍 Strøget · 8 min walk</span>
+          <span class="meta-chip" data-popup data-popup-title="Torvehallerne Food Market" data-popup-body="Copenhagen&#39;s premier food hall, right next to Nørreport Station. Two glass buildings packed with 60+ stalls selling everything from fresh oysters and smørrebrød to artisan coffee and pastries. A food lover&#39;s paradise." data-popup-tip="Go for coffee and a pastry first thing, or grab lunch here. The smørrebrød stall (Hallernes Smørrebrød) and Coffee Collective are highlights. Arrive before noon to avoid crowds.">🥨 Torvehallerne · 1 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Rundetårn (Round Tower)" data-popup-body="A 17th-century astronomical observatory built by Christian IV. Climb the unique spiral ramp (not stairs) to the top for sweeping views of Copenhagen&#39;s rooftops. One of the city&#39;s most iconic landmarks." data-popup-tip="The spiral ramp was designed for horses pulling equipment. It&#39;s an easy walk up. The rooftop observation platform is open-air — great for photos.">🏛 Round Tower · 3 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Nyhavn Harbour" data-popup-body="Copenhagen&#39;s most photographed spot — a 17th-century waterfront lined with brightly colored townhouses, restaurants, and historic wooden ships. Hans Christian Andersen lived at three different addresses here." data-popup-tip="Walk the sunny side (north) for photos but eat on the shady side — same food, shorter lines. For a drink, buy a beer from a shop and sit on the canal edge like the locals.">⛵ Nyhavn · 10 min walk</span>
+          <span class="meta-chip" data-popup data-popup-title="Strøget — Europe&#39;s Longest Pedestrian Street" data-popup-body="One of the longest pedestrian shopping streets in Europe, stretching 1.1 km from Rådhuspladsen to Kongens Nytorv. Mix of international brands and Danish design shops. Great for strolling even if you&#39;re not shopping." data-popup-tip="The side streets off Strøget are where the real gems hide — independent Danish design shops, vintage stores, and quieter cafés.">🛍 Strøget · 8 min walk</span>
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps/search/attractions/@55.6838,12.5714,15z" target="_blank" rel="noopener">🗺 Explore Nearby</a>
@@ -1795,9 +1891,9 @@ section[id]{
         <h3 class="stop-title">Charlotte's Place · Amager</h3>
         <p class="stop-body"><strong>Holmbladsgade 70B, 2300 København S</strong><br>Charlotte's place while she's studying in Copenhagen. Located in the Amagerbro neighborhood on Amager island — a lively, multicultural district with great dining and easy water access. About 15 minutes from your hotel by metro (M2 to Amagerbro station, then 5-minute walk).</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚇 M2 → Amagerbro · 15 min</span>
-          <span class="meta-chip">🚲 Bike ~12 min from hotel</span>
-          <span class="meta-chip">📍 Holmbladsgade 70B</span>
+          <span class="meta-chip" data-popup data-popup-title="Getting to Reffen Street Food" data-popup-body="Take the M2 Metro from Nørreport to Amagerbro station (about 6 minutes), then walk 15 minutes east to Reffen. Total journey is about 20 minutes. The walk passes through the up-and-coming Amager district." data-popup-tip="Alternatively, rent a Donkey Republic bike from the app — it&#39;s a flat, pleasant ride and gives you flexibility to explore the harbour area.">🚇 M2 → Amagerbro · 15 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Cycling to Reffen" data-popup-body="Copenhagen is one of the world&#39;s best cycling cities. The ride from Nørreport to Reffen is flat, mostly on dedicated bike lanes, passing through the harbour area. About 12 minutes at a comfortable pace." data-popup-tip="Use Donkey Republic (app-based bike rental). Pick up anywhere, drop off anywhere. Copenhagen&#39;s bike infrastructure is world-class — you&#39;ll feel safe even as a first-timer.">🚲 Bike ~12 min from hotel</span>
+          <span class="meta-chip" data-popup data-popup-title="Reffen Street Food" data-popup-body="Copenhagen&#39;s massive outdoor street food market on Refshaleøen island. 50+ food stalls from around the world, craft beer bars, harbour views, and a creative industrial vibe. Open April–October." data-popup-tip="Go with an empty stomach and share dishes from multiple stalls. The Korean fried chicken, Oaxacan tacos, and wood-fired pizza are standouts. Cash and cards both accepted." data-popup-link="https://reframen.dk/reffen/" data-popup-link-label="Reffen Website">📍 Holmbladsgade 70B</span>
         </div>
         <p class="stop-note">Amagerbro is a young, vibrant neighborhood. Amagerbrogade (main street) has cafés, restaurants, and shops. Amager Beach Park is a short bike ride east.</p>
         <div class="stop-actions">
@@ -1812,9 +1908,9 @@ section[id]{
         <h3 class="stop-title">Around Charlotte · Amagerbro</h3>
         <p class="stop-body">Holmbladsgade sits in the heart of Amagerbro — a neighborhood known for its local character, cozy cafés, and proximity to the harbor. Ingolf's Kaffebar on a nearby side street is a neighborhood gem with live music and great brunch. Amager Beach Park (Amager Strandpark) is Copenhagen's biggest beach — reachable by bike or metro for a waterfront walk.</p>
         <div class="stop-meta">
-          <span class="meta-chip">☕ Ingolf's Kaffebar</span>
-          <span class="meta-chip">🏖 Amager Beach Park</span>
-          <span class="meta-chip">🛒 Amagerbrogade shops</span>
+          <span class="meta-chip" data-popup data-popup-title="Ingolf&#39;s Kaffebar — Cozy Neighbourhood Café" data-popup-body="A beloved Copenhagen café in the Nørrebro/Amager border area. Vintage furniture, excellent filter coffee, and homemade cakes. The kind of lived-in, authentic café that feels like a local&#39;s living room." data-popup-tip="Try the kanelsnurrer (cinnamon swirl). It&#39;s cash-free — card only. Perfect for a slow morning before heading out.">☕ Ingolf's Kaffebar</span>
+          <span class="meta-chip" data-popup data-popup-title="Amager Strandpark" data-popup-body="A 4.6 km artificial beach and lagoon just 15 minutes from central Copenhagen. Created in 2005, it features a man-made island with a blue-flag beach, beach volleyball, kayak rentals, and stunning views of the Øresund Bridge." data-popup-tip="Even if it&#39;s not beach weather, the boardwalk walk is beautiful. The sunrise views toward Sweden are spectacular if you&#39;re jetlagged and up early.">🏖 Amager Beach Park</span>
+          <span class="meta-chip" data-popup data-popup-title="Amagerbrogade — Local Shopping Street" data-popup-body="The main commercial street of Amager, running south from Amagerbro metro station. A mix of independent shops, bakeries, ethnic food stores, and traditional Danish businesses. More local and less touristy than Strøget." data-popup-tip="Great for picking up Danish pastries from a local bakery. Lagkagehuset and Andersen Bakery both have locations here.">🛒 Amagerbrogade shops</span>
         </div>
       </article>
 
@@ -1824,9 +1920,9 @@ section[id]{
         <h3 class="stop-title">Copenhagen → Zürich ✈</h3>
         <p class="stop-body">Fly from Copenhagen (CPH) to Zürich (ZRH) Friday evening. Copenhagen Airport is fast to reach — M2 metro from Nørreport takes 13 minutes. Allow 2 hours before departure for international flights.</p>
         <div class="stop-meta">
-          <span class="meta-chip">✈ CPH → ZRH</span>
-          <span class="meta-chip">🚇 M2 → Airport · 13 min</span>
-          <span class="meta-chip">💰 30 DKK (~$4)</span>
+          <span class="meta-chip" data-popup data-popup-title="Copenhagen to Zürich Flight" data-popup-body="Direct flights from Copenhagen Kastrup (CPH) to Zürich Kloten (ZRH) take about 1 hour 50 minutes. Multiple daily flights on SWISS and SAS. Short, easy European hop." data-popup-tip="Sit on the left side for potential views of the Alps on approach. CPH airport is efficient — 90 minutes before a European flight is plenty.">✈ CPH → ZRH</span>
+          <span class="meta-chip" data-popup data-popup-title="Metro to Copenhagen Airport" data-popup-body="The M2 Metro runs directly from Nørreport to Copenhagen Airport Terminal 3 in 13 minutes. Trains depart every 3–4 minutes. Dead simple and much cheaper than a taxi." data-popup-tip="Same 30 DKK ticket as arrival. Buy in the DOT app. The train stops right inside Terminal 3 — you&#39;ll be at check-in within 2 minutes of stepping off.">🚇 M2 → Airport · 13 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Copenhagen Transit Pricing" data-popup-body="A single-journey ticket in Zone 1–2 costs 30 DKK (~$4 USD). This covers most of central Copenhagen including the airport transfer. Tickets are valid for 75 minutes with unlimited transfers." data-popup-tip="If you&#39;re doing more than 3 trips, get a Copenhagen Card or a 24-hour CityPass instead. The DOT app (Rejseplanen) works well for buying tickets.">💰 30 DKK (~$4)</span>
         </div>
         <p class="stop-note">From Charlotte's: Metro M2 Amagerbro → CPH Airport ~10 min · From hotel: M2 Nørreport → CPH ~13 min</p>
         <div class="stop-actions">
@@ -1874,8 +1970,8 @@ section[id]{
         <h3 class="stop-title">Airport → Zürich Marriott Hotel <button class="stop-pron" onclick="speakWord('Zürich','de-DE')">🔊 TSOO-rikh</button></h3>
         <p class="stop-body">Collect bags. Activate Zürich Card in the app. Airport Express to HB every 10 min — 10-min ride, fully covered. Tram 13 one stop → Sihlquai/HB. Hotel is 3 min walk.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚆 Airport Express + Tram 13</span>
-          <span class="meta-chip">⏱ 30–40 min door-to-door</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich Airport to City Centre" data-popup-body="Take the S-Bahn train from Zürich Airport to Zürich HB (Hauptbahnhof) in 10 minutes, then transfer to Tram 13 to reach the Enge/Marriott area. Total journey about 30–40 minutes including the transfer." data-popup-tip="Your Zürich Card covers all public transport from the airport. Activate it when you board the first train. The S-Bahn runs every 5–10 minutes.">🚆 Airport Express + Tram 13</span>
+          <span class="meta-chip" data-popup data-popup-title="Airport Transfer Time" data-popup-body="From landing at ZRH to your hotel door is approximately 30–40 minutes using public transit. Zürich&#39;s airport is remarkably close to the city — the train station is directly under the terminal." data-popup-tip="Follow signs to &#39;Bahn/Rail&#39; in the airport. Platforms are underground. Don&#39;t take a taxi — it&#39;s no faster and costs 50+ CHF.">⏱ 30–40 min door-to-door</span>
         </div>
         <p class="stop-note">Airport Express → HB 10 min · Zürich Card ✓ &nbsp;·&nbsp; Tram 13 → Sihlquai/HB 2 min · 3 min walk · <strong>Hotel ~8:30–8:45 PM</strong></p>
         <div class="stop-actions">
@@ -1889,9 +1985,9 @@ section[id]{
         <h3 class="stop-title">Dinner: White Elephant <span class="stop-ext">↗</span></h3>
         <p class="stop-body">The hotel's Michelin-listed Thai restaurant — one of Zürich's best Thai tables since 1991. Staffed entirely by Thai chefs. Rich curries, aromatic soups, exceptional hospitality. 🌿 Extensive vegetarian &amp; vegan menu.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🍽 On-site</span>
-          <span class="meta-chip">🌿 Vegetarian-friendly</span>
-          <span class="meta-chip">⏱ Dinner 6–10 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Hotel Restaurant" data-popup-body="The hotel has an on-site restaurant serving international and Swiss cuisine. Convenient for arrival-night dining when you don&#39;t want to venture out after a day of travel." data-popup-tip="Good for a relaxed arrival dinner, but Zürich&#39;s restaurant scene is worth exploring on other nights.">🍽 On-site</span>
+          <span class="meta-chip" data-popup data-popup-title="Vegetarian Options Available" data-popup-body="The restaurant offers dedicated vegetarian options on the menu, not just sides or salads. Zürich has a strong vegetarian culture — Hiltl, the world&#39;s oldest vegetarian restaurant, is just up the street." data-popup-tip="If vegetarian dining is important to you, Hiltl (on your Sunday itinerary) is a must-visit. It&#39;s been serving vegetarian food since 1898.">🌿 Vegetarian-friendly</span>
+          <span class="meta-chip" data-popup data-popup-title="Restaurant Hours — Dinner" data-popup-body="The on-site restaurant serves dinner from 6–10 PM. Last orders typically 30 minutes before closing. Reservations recommended on weekends." data-popup-tip="Swiss restaurants often close earlier than you&#39;d expect. If you arrive after 9:30 PM, you may need to eat at the hotel bar or order room service.">⏱ Dinner 6–10 PM</span>
         </div>
         <p class="stop-note">+41 44 360 73 22 · Dinner daily 6–10 PM</p>
         <div class="stop-actions">
@@ -1904,8 +2000,8 @@ section[id]{
         <h3 class="stop-title optional">Lenox Bar Nightcap <span class="stop-ext">↗</span></h3>
         <p class="stop-body">The hotel's New York-inspired bar — rare whiskies, craft cocktails. One drink, then bed. Saturday is a full day.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🥃 On-site</span>
-          <span class="meta-chip">⏱ Open late</span>
+          <span class="meta-chip" data-popup data-popup-title="Hotel Bar" data-popup-body="The hotel bar serves cocktails, Swiss wines, and local beers. A comfortable spot for a nightcap after dinner. Typically open until midnight or later." data-popup-tip="Try a Swiss wine — the Chasselas whites from Lavaux and Valais are excellent and rarely exported. Ask the bartender for a recommendation.">🥃 On-site</span>
+          <span class="meta-chip" data-popup data-popup-title="Bar Hours — Late Night" data-popup-body="The hotel bar stays open later than most Zürich restaurants, typically until midnight or 1 AM. A good fallback if you arrive late or want a nightcap." data-popup-tip="Zürich&#39;s nightlife centers on Langstrasse and Niederdorf if you want to go out. But after a day of travel, the hotel bar is a sensible call.">⏱ Open late</span>
         </div>
         <div class="stop-actions">
           <a class="btn-secondary" href="https://www.marriott.com/en-us/hotels/zrhmc-zurich-marriott-hotel/dining/" target="_blank" rel="noopener">🌐 Hotel Dining</a>
@@ -1956,9 +2052,9 @@ section[id]{
         <h3 class="stop-title">Uetliberg Summit · 871 m <button class="stop-pron" onclick="speakWord('Uetliberg','de-DE')">🔊 OOT-lee-berg</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's local mountain — a 20-min S10 train from HB takes you above the city. Walk 10 min to the summit tower: Alps panorama, Lake Zürich, and the rooftops below. Perfect sketchbook moment. Zürich Card covers the journey fully.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚆 S10 from HB tracks 21/22</span>
-          <span class="meta-chip">⏱ 20 min</span>
-          <span class="meta-chip">🎫 Zürich Card ✓</span>
+          <span class="meta-chip" data-popup data-popup-title="S10 to Uetliberg — Zürich&#39;s Mountain" data-popup-body="The S10 suburban train departs from Zürich HB tracks 21/22 and climbs to Uetliberg summit (871m) in 20 minutes. Panoramic views of the city, lake, and Alps from the top. The train winds through forest — it&#39;s a scenic ride." data-popup-tip="Trains run every 30 minutes. Sit on the right side going up for the best views. The platform is at the far end of Zürich HB — give yourself 5 minutes to walk there.">🚆 S10 from HB tracks 21/22</span>
+          <span class="meta-chip" data-popup data-popup-title="Uetliberg — 20 Minutes to the Summit" data-popup-body="The S10 train takes exactly 20 minutes from Zürich HB to Uetliberg summit. From the train station at the top, it&#39;s a 10-minute walk to the observation tower with 360° views of the Alps, Lake Zürich, and the city." data-popup-tip="Go early morning for the clearest views. The observation tower is free. On clear days you can see from the Säntis to Mont Blanc.">⏱ 20 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich Card — Included" data-popup-body="The Zürich Card covers unlimited travel on all trams, buses, trains, and boats within the city and surrounding area — including the S10 to Uetliberg, lake boats, and the Polybahn funicular. It also includes free or reduced admission to most museums." data-popup-tip="Activate the card on your first ride Friday and it covers you through Sunday. At CHF 27/24h or CHF 53/72h, it pays for itself quickly with Zürich&#39;s transit costs." data-popup-link="https://www.zuerich.com/en/visit/zuerich-card" data-popup-link-label="Zürich Card Info">🎫 Zürich Card ✓</span>
         </div>
         <p class="stop-note">Depart 10:00 AM · Arrive 10:20 AM · 40 min at summit · Return train 11:10 AM · Back HB 11:30 AM · ⚠️ Felsenegg cable car CLOSED 2 Mar–10 Apr 2026</p>
         <div class="stop-actions">
@@ -1983,9 +2079,9 @@ section[id]{
         <h3 class="stop-title">Café Sprüngli <button class="stop-pron" onclick="speakWord('Sprüngli','de-DE')">🔊 SHPRUNG-lee</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's legendary confiserie since 1836. The hot chocolate is considered legendary by locals. Order the Luxemburgerli macarons — bite-sized, seasonal, unlike anything from Copenhagen. 🌿 Fully vegetarian.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚶 12 min walk from HB</span>
-          <span class="meta-chip">🌿 Vegetarian</span>
-          <span class="meta-chip">⏱ Sat 7:30 AM–6:30 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Walk to Sprüngli on Paradeplatz" data-popup-body="From Zürich HB, walk south along Bahnhofstrasse — Zürich&#39;s famous shopping boulevard — for about 12 minutes to reach Paradeplatz, where Confiserie Sprüngli has been serving Swiss chocolate and pastries since 1836." data-popup-tip="The walk down Bahnhofstrasse is pleasant and lined with luxury shops. Paradeplatz is the heart of Swiss banking — UBS and Credit Suisse HQs are right there.">🚶 12 min walk from HB</span>
+          <span class="meta-chip" data-popup data-popup-title="Sprüngli — Vegetarian-Friendly" data-popup-body="Sprüngli&#39;s café menu is largely vegetarian-friendly, with pastries, cakes, quiches, and light lunch options. Their Luxemburgerli (tiny macarons) are the signature — get a box of mixed flavours." data-popup-tip="The Luxemburgerli must be eaten fresh — they&#39;re best within hours. Buy a box to share but eat them before your next stop.">🌿 Vegetarian</span>
+          <span class="meta-chip" data-popup data-popup-title="Sprüngli Saturday Hours" data-popup-body="Confiserie Sprüngli on Paradeplatz is open Saturday from 7:30 AM to 6:30 PM. The café on the first floor serves breakfast, lunch, and afternoon tea. Downstairs is the chocolate shop and takeaway counter." data-popup-tip="Arrive before 9 AM for a relaxed breakfast experience. After 11 AM, both floors get very busy. The takeaway counter has a shorter queue for Luxemburgerli.">⏱ Sat 7:30 AM–6:30 PM</span>
         </div>
         <p class="stop-note">Bahnhofstrasse 21 · OR Tram 13 → Paradeplatz 5 min</p>
         <div class="stop-actions">
@@ -2000,9 +2096,9 @@ section[id]{
         <h3 class="stop-title">Kunsthaus Zürich <button class="stop-pron" onclick="speakWord('Kunsthaus','de-DE')">🔊 KOONST-howss</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Switzerland's largest art museum. Must-see: Bührle Collection (Monet, Cézanne, Renoir), Munch (largest outside Norway), Giacometti, and Pipilotti Rist. Plan two hours. Free with Zürich Card. Rich sketchbook territory.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🎨 Museum</span>
-          <span class="meta-chip">🎫 Zürich Card ✓ free</span>
-          <span class="meta-chip">⏱ Sat–Sun 10 AM–6 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Kunsthaus Zürich — Art Museum" data-popup-body="One of the most important art museums in Switzerland, with a collection spanning from medieval times to contemporary art. Highlights include works by Giacometti, Monet, Chagall, Picasso, and a major new wing opened in 2021 by David Chipperfield." data-popup-tip="The new Chipperfield extension alone is worth the visit for architecture lovers. Don&#39;t miss the Giacometti room — it&#39;s the largest collection of his work outside Paris." data-popup-link="https://www.kunsthaus.ch/en/" data-popup-link-label="Kunsthaus Website">🎨 Museum</span>
+          <span class="meta-chip" data-popup data-popup-title="FIFA Museum — Free with Zürich Card" data-popup-body="The FIFA World Football Museum normally costs CHF 24 for adults, but it&#39;s free with the Zürich Card. Three floors of interactive exhibits covering the history of world football, original trophies, and a playable pitch on the roof." data-popup-tip="Even if you&#39;re not a huge football fan, the interactive exhibits and roof pitch are fun. Budget 60–90 minutes." data-popup-link="https://www.fifamuseum.com/en/" data-popup-link-label="FIFA Museum Website">🎫 Zürich Card ✓ free</span>
+          <span class="meta-chip" data-popup data-popup-title="Kunsthaus Weekend Hours" data-popup-body="The Kunsthaus is open Saturday and Sunday from 10 AM to 6 PM, with extended hours until 8 PM on Wednesdays and Thursdays. Last admission is 30 minutes before closing." data-popup-tip="Arrive right at 10 AM opening for the most peaceful experience. The museum gets busier after lunch.">⏱ Sat–Sun 10 AM–6 PM</span>
         </div>
         <p class="stop-note">Heimplatz 1 · Walk 15 min E from Sprüngli · OR Tram 3 Paradeplatz → Kunsthaus 6 min</p>
         <div class="stop-actions">
@@ -2017,8 +2113,8 @@ section[id]{
         <h3 class="stop-title">Lunch: Kunsthaus Café <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Light lunches in the bright Moser Building café — soups, salads, open sandwiches. Part of the museum experience. 🌿 Good vegetarian options.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🍽 On-site</span>
-          <span class="meta-chip">⏱ Open Sat 9 AM–9 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Hotel Restaurant" data-popup-body="The hotel has an on-site restaurant serving international and Swiss cuisine. Convenient for arrival-night dining when you don&#39;t want to venture out after a day of travel." data-popup-tip="Good for a relaxed arrival dinner, but Zürich&#39;s restaurant scene is worth exploring on other nights.">🍽 On-site</span>
+          <span class="meta-chip" data-popup data-popup-title="Kunsthaus Café Hours" data-popup-body="The café in the Kunsthaus Zürich is open Saturday from 9 AM to 9 PM — longer hours than the museum itself. It&#39;s accessible without a museum ticket and serves coffee, light meals, and Swiss wines." data-popup-tip="A good lunch spot if you&#39;re visiting the Kunsthaus. The terrace has nice views of the Heimplatz square.">⏱ Open Sat 9 AM–9 PM</span>
         </div>
       </article>
 
@@ -2027,9 +2123,9 @@ section[id]{
         <h3 class="stop-title">Old Town — Augustinergasse &amp; Cathedrals <button class="stop-pron" onclick="speakWord('Augustinergasse','de-DE')">🔊 ow-goo-STEE-ner-gah-suh</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's most photographed medieval lane. Cross the Limmat to <strong>Grossmünster</strong> (twin-towered Romanesque cathedral, begun 1100s). Then <strong>Fraumünster</strong> with Marc Chagall's magnificent stained glass. Münsterhof square beyond — car-free and beautiful.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚶 18 min walk W from Kunsthaus</span>
-          <span class="meta-chip">⛪ Both free entry</span>
-          <span class="meta-chip">⏱ Sat 10 AM–5 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Walking to Old Town Churches" data-popup-body="From the Kunsthaus, walk west through Zürich&#39;s charming Niederdorf quarter — narrow medieval streets, boutiques, and cafés — to reach Fraumünster and Grossmünster on the Limmat river. A lovely urban stroll." data-popup-tip="Take Rämistrasse downhill, then cut through Niederdorf&#39;s pedestrian lanes. You&#39;ll pass some of the oldest buildings in Zürich along the way.">🚶 18 min walk W from Kunsthaus</span>
+          <span class="meta-chip" data-popup data-popup-title="Fraumünster &amp; Grossmünster — Free Entry" data-popup-body="Both of Zürich&#39;s landmark churches offer free entry. Fraumünster is famous for its stunning Chagall stained-glass windows (1970). Grossmünster across the river is where the Reformation began in 1519 under Zwingli. Both towers offer views." data-popup-tip="Fraumünster&#39;s Chagall windows are the highlight — five soaring stained-glass panels in jewel tones. Photography is allowed. The Grossmünster tower climb (CHF 5) gives you the best views of the Old Town.">⛪ Both free entry</span>
+          <span class="meta-chip" data-popup data-popup-title="Church Saturday Hours" data-popup-body="Both Fraumünster and Grossmünster are open Saturday from 10 AM to 5 PM. Services may limit tourist access briefly. The Grossmünster tower closes 30 minutes before the church." data-popup-tip="Visit Fraumünster first for the Chagall windows while the morning light streams through them. Then cross the Münsterbrücke for Grossmünster.">⏱ Sat 10 AM–5 PM</span>
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3700,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
@@ -2043,8 +2139,8 @@ section[id]{
         <h3 class="stop-title">Lindenhof Hill — Best Panorama <button class="stop-pron" onclick="speakWord('Lindenhof','de-DE')">🔊 LIN-den-hohf</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Former Roman fort hilltop park. Panoramic views over the Limmat and Old Town rooftops. A large public chessboard. Stone benches — ideal for the sketchbook. Late afternoon March light is warm and low.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚶 5 min from Fraumünster</span>
-          <span class="meta-chip">🆓 Always open, free</span>
+          <span class="meta-chip" data-popup data-popup-title="Walk to Lindenhof" data-popup-body="Lindenhof is a peaceful hilltop park just 5 minutes uphill from Fraumünster. Once a Roman fort, then a Carolingian palace, now a shaded lime-tree square with the best free viewpoint in Zürich — overlooking the Limmat, Old Town, university, and the Alps." data-popup-tip="This is the quintessential Zürich photo spot. Locals come here to play oversized chess, read, and enjoy the view. Perfect for a quiet moment between sightseeing.">🚶 5 min from Fraumünster</span>
+          <span class="meta-chip" data-popup data-popup-title="Lindenhof — Free &amp; Always Open" data-popup-body="Lindenhof park is a public green space with no gates, no hours, and no admission. It&#39;s accessible 24/7 year-round. Benches, shade trees, and a hilltop view make it one of Zürich&#39;s best-kept secrets." data-popup-tip="Come back at sunset for a completely different atmosphere. Evening light on the Old Town rooftops and river is magical.">🆓 Always open, free</span>
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3727,8.5400&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
@@ -2057,8 +2153,8 @@ section[id]{
         <h3 class="stop-title">Pre-Dinner Drinks: Café Bar Münsterhof <button class="stop-pron" onclick="speakWord('Münsterhof','de-DE')">🔊 MOON-ster-hohf</button></h3>
         <p class="stop-body">Walk 5 min down from Lindenhof to the Münsterhof square. Order a Spritz or local wine. Watch the square settle into evening. Smart-casual is perfect — no need to change.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚶 5 min from Lindenhof</span>
-          <span class="meta-chip">🍷 Münsterhof 6</span>
+          <span class="meta-chip" data-popup data-popup-title="Walk to Jules Verne Panoramabar" data-popup-body="From Lindenhof, walk downhill toward Münsterhof square. Jules Verne Panoramabar is on the top floor of a department store with 360° views over Zürich&#39;s rooftops and lake." data-popup-tip="Look for the entrance on Münsterhof 6. Take the elevator to the top floor. Window seats go fast — arrive early or be prepared to wait briefly.">🚶 5 min from Lindenhof</span>
+          <span class="meta-chip" data-popup data-popup-title="Jules Verne Panoramabar" data-popup-body="A rooftop cocktail bar at Münsterhof 6 with sweeping views over Zürich&#39;s Old Town, the lake, and the Alps on clear days. Sophisticated cocktails, Swiss wines, and a relaxed atmosphere. One of Zürich&#39;s best sunset spots." data-popup-tip="Order a Swiss wine — the panoramic view paired with a Lavaux white is a perfect Zürich moment. Cocktails run CHF 18–25.">🍷 Münsterhof 6</span>
         </div>
         <p class="stop-note">Then walk 3 min direct to Zeughauskeller on Bahnhofstrasse</p>
         <div class="stop-actions">
@@ -2072,9 +2168,9 @@ section[id]{
         <h3 class="stop-title">Dinner: Zeughauskeller <button class="stop-pron" onclick="speakWord('Zeughauskeller','de-DE')">🔊 TSOYG-howss-kel-er</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Zürich's most famous beer-hall restaurant, in a 15th-century former armory on Bahnhofstrasse. High ceilings, oak beams, long tables. Excellent Zürcher Geschnetzeltes. 🌿 Älplermagronen (Alpine macaroni) — the vegetarian option.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚶 3 min from Münsterhof</span>
-          <span class="meta-chip">💰 CHF 35–55 pp</span>
-          <span class="meta-chip">⏱ Reservation 7:30 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Walk to Kronenhalle" data-popup-body="From Münsterhof, it&#39;s a short 3-minute walk east across the Münsterbrücke and along Rämistrasse to Kronenhalle, one of Zürich&#39;s most legendary restaurants." data-popup-tip="Cross the Münsterbrücke for beautiful river views, then head left along Rämistrasse.">🚶 3 min from Münsterhof</span>
+          <span class="meta-chip" data-popup data-popup-title="Kronenhalle — Price Range" data-popup-body="Main courses at Kronenhalle run CHF 35–55 per person. Swiss wine starts around CHF 12/glass. It&#39;s upscale but not extravagant — the real value is dining surrounded by original Picasso, Chagall, and Miró artworks on the walls." data-popup-tip="The Zürcher Geschnetzeltes (Zürich-style veal in cream sauce) is the signature dish. Book ahead — this is one of the most popular restaurants in Switzerland." data-popup-link="https://kronenhalle.ch/en/" data-popup-link-label="Kronenhalle Website">💰 CHF 35–55 pp</span>
+          <span class="meta-chip" data-popup data-popup-title="Dinner Reservation — 7:30 PM" data-popup-body="A 7:30 PM reservation is ideal for Saturday dinner at Kronenhalle. It gives you time for a sunset drink at Jules Verne beforehand and arrives before the restaurant&#39;s peak rush." data-popup-tip="Confirm your reservation the day before. Request a table in the main dining room (Brasserie) — that&#39;s where the art collection hangs. The bar area is great but has fewer paintings.">⏱ Reservation 7:30 PM</span>
         </div>
         <p class="stop-note">Bahnhofstrasse 28A · +41 44 220 15 15 · After dinner: Tram 13 → Sihlquai/HB</p>
         <div class="stop-actions">
@@ -2128,9 +2224,9 @@ section[id]{
         <h3 class="stop-title">Breakfast: Hiltl <button class="stop-pron" onclick="speakWord('Hiltl','de-DE')">🔊 HILL-tul</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">World's oldest vegetarian restaurant (est. 1898). Legendary Sunday brunch buffet — 100+ dishes: Indian curries, Middle Eastern mezze, Swiss cheese boards, fresh pastries. Arrive by 10 AM before the rush. 🌿 Fully vegetarian &amp; vegan. CHF 57 pp all-inclusive.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚶 8 min from hotel</span>
-          <span class="meta-chip">🌿 All vegetarian</span>
-          <span class="meta-chip">⏱ Brunch 9:30 AM–2:30 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Walk to Hiltl" data-popup-body="From the Marriott area, walk north along Bahnhofstrasse or through the Altstadt to reach Hiltl at Sihlstrasse 28. About 8 minutes on foot through Zürich&#39;s elegant city centre." data-popup-tip="Walk via Paradeplatz for the full Bahnhofstrasse experience, or cut through Augustinergasse — one of the prettiest streets in Old Town.">🚶 8 min from hotel</span>
+          <span class="meta-chip" data-popup data-popup-title="Hiltl — World&#39;s Oldest Vegetarian Restaurant" data-popup-body="Founded in 1898, Hiltl holds the Guinness World Record as the oldest continuously operating vegetarian restaurant. The Sunday brunch buffet is legendary — Indian, Middle Eastern, Asian, and Swiss dishes, all vegetarian." data-popup-tip="The brunch buffet is the best way to experience Hiltl. Go hungry — there are 40+ dishes and you&#39;ll want to try everything. The Indian section is particularly excellent." data-popup-link="https://hiltl.ch/en/" data-popup-link-label="Hiltl Website">🌿 All vegetarian</span>
+          <span class="meta-chip" data-popup data-popup-title="Hiltl Sunday Brunch Hours" data-popup-body="The famous Sunday brunch buffet runs from 9:30 AM to 2:30 PM. It&#39;s incredibly popular with locals — expect a wait after 11 AM. The buffet costs around CHF 46 per person." data-popup-tip="Arrive at 9:30 AM when doors open to avoid the queue. By 11 AM there&#39;s often a 20-30 minute wait. Well worth it either way.">⏱ Brunch 9:30 AM–2:30 PM</span>
         </div>
         <p class="stop-note">Sihlstrasse 28 · OR Tram 13 → Paradeplatz + 3 min walk</p>
         <div class="stop-actions">
@@ -2145,9 +2241,9 @@ section[id]{
         <h3 class="stop-title">Lake Zürich Promenade <button class="stop-pron" onclick="speakWord('Quaianlagen','de-DE')">🔊 KY-ahn-lah-gen</button></h3>
         <p class="stop-body">Quaianlagen park from Bürkliplatz: swans, sailboats, Alps views on clear days. Pure unscheduled downtime. Find a bench. Draw the water. March light on the lake is extraordinary.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚶 12 min S from Hiltl</span>
-          <span class="meta-chip">🆓 Free</span>
-          <span class="meta-chip">🎫 Zürich Card ✓</span>
+          <span class="meta-chip" data-popup data-popup-title="Walk to Chinese Garden" data-popup-body="From Hiltl, walk south through the Enge district toward the lake. The Chinese Garden (Chinagarten) sits right on Lake Zürich&#39;s eastern shore, about 12 minutes on foot. A pleasant post-brunch stroll." data-popup-tip="Walk via Bürkliplatz along the lake promenade — it&#39;s the scenic route and only adds 2 minutes.">🚶 12 min S from Hiltl</span>
+          <span class="meta-chip" data-popup data-popup-title="Chinese Garden — Free Admission" data-popup-body="The Chinagarten is a gift from Zürich&#39;s sister city Kunming, China. It&#39;s a beautifully maintained classical Chinese garden with a pagoda, koi ponds, and traditional plantings — all free to enter." data-popup-tip="It&#39;s small but serene. The pagoda over the water is a lovely photo spot. Combine with a walk along the Zürichhorn lakeside promenade.">🆓 Free</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich Card — Included" data-popup-body="The Zürich Card covers unlimited travel on all trams, buses, trains, and boats within the city and surrounding area — including the S10 to Uetliberg, lake boats, and the Polybahn funicular. It also includes free or reduced admission to most museums." data-popup-tip="Activate the card on your first ride Friday and it covers you through Sunday. At CHF 27/24h or CHF 53/72h, it pays for itself quickly with Zürich&#39;s transit costs." data-popup-link="https://www.zuerich.com/en/visit/zuerich-card" data-popup-link-label="Zürich Card Info">🎫 Zürich Card ✓</span>
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Directions</a>
@@ -2160,9 +2256,9 @@ section[id]{
         <h3 class="stop-title optional">Lake Zürich Boat Cruise <span class="stop-ext">↗</span></h3>
         <p class="stop-body">ZSG short Rundfahrt cruises from Bürkliplatz — ~40 min, a completely different city view from the water. Zürich Card covers short cruises. On a sunny March morning this is spectacular — Alps behind the city. Sketchbook on the upper deck.</p>
         <div class="stop-meta">
-          <span class="meta-chip">⛵ Bürkliplatz pier</span>
-          <span class="meta-chip">🎫 Zürich Card ✓</span>
-          <span class="meta-chip">⏱ ~40 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Lake Zürich Boat — Bürkliplatz Departure" data-popup-body="ZSG boats depart from Bürkliplatz pier at the foot of Bahnhofstrasse, right where the Limmat meets the lake. Multiple routes available from short 40-minute loops to full 4-hour lake cruises visiting villages on both shores." data-popup-tip="The short round-trip cruise is perfect — you see the city from the water, pass the Gold Coast, and get great mountain views without committing to a half-day boat ride." data-popup-link="https://www.zsg.ch/en/" data-popup-link-label="Lake Zürich Boats">⛵ Bürkliplatz pier</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich Card — Included" data-popup-body="The Zürich Card covers unlimited travel on all trams, buses, trains, and boats within the city and surrounding area — including the S10 to Uetliberg, lake boats, and the Polybahn funicular. It also includes free or reduced admission to most museums." data-popup-tip="Activate the card on your first ride Friday and it covers you through Sunday. At CHF 27/24h or CHF 53/72h, it pays for itself quickly with Zürich&#39;s transit costs." data-popup-link="https://www.zuerich.com/en/visit/zuerich-card" data-popup-link-label="Zürich Card Info">🎫 Zürich Card ✓</span>
+          <span class="meta-chip" data-popup data-popup-title="Lake Cruise — 40 Minutes" data-popup-body="The short lake cruise takes approximately 40 minutes round-trip. You&#39;ll glide past waterfront villas, the Gold Coast, and the Zürichhorn park with views of the Alps in the background. A relaxing break from walking." data-popup-tip="Sit on the right side (starboard) heading out for the best views of the city skyline. Sunday afternoons are the busiest — earlier is quieter.">⏱ ~40 min</span>
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Pier Location</a>
@@ -2176,9 +2272,9 @@ section[id]{
         <h3 class="stop-title optional">Polybahn Funicular <button class="stop-pron" onclick="speakWord('Polybahn','de-DE')">🔊 POH-lee-bahn</button></h3>
         <p class="stop-body">Zürich's tiny historic funicular — a 90-second ride from Central up to ETH Zürich. One of the best rooftop views in the city, completely different from Lindenhof. Free with Zürich Card, adds 15–20 min total.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚠 Rämistrasse 101 (Central)</span>
-          <span class="meta-chip">🎫 Zürich Card ✓</span>
-          <span class="meta-chip">⏱ 15–20 min</span>
+          <span class="meta-chip" data-popup data-popup-title="Polybahn Funicular — ETH Zürich" data-popup-body="The Polybahn is a tiny funicular railway climbing from Central station (Rämistrasse 101) to ETH Zürich&#39;s main terrace in just 2 minutes. Built in 1889, it&#39;s both a transit link and a tourist attraction. The terrace has sweeping views over the entire city." data-popup-tip="Ride up on the Polybahn, enjoy the ETH terrace views, then walk back down through the university quarter. The ride itself is the experience — it&#39;s over in seconds.">🚠 Rämistrasse 101 (Central)</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich Card — Included" data-popup-body="The Zürich Card covers unlimited travel on all trams, buses, trains, and boats within the city and surrounding area — including the S10 to Uetliberg, lake boats, and the Polybahn funicular. It also includes free or reduced admission to most museums." data-popup-tip="Activate the card on your first ride Friday and it covers you through Sunday. At CHF 27/24h or CHF 53/72h, it pays for itself quickly with Zürich&#39;s transit costs." data-popup-link="https://www.zuerich.com/en/visit/zuerich-card" data-popup-link-label="Zürich Card Info">🎫 Zürich Card ✓</span>
+          <span class="meta-chip" data-popup data-popup-title="ETH Terrace Visit — 15-20 Minutes" data-popup-body="Plan 15–20 minutes for the Polybahn ride and ETH terrace viewpoint. The terrace offers one of the best free panoramas in Zürich — the Old Town, lake, and Alps spread out below you." data-popup-tip="The main building&#39;s cupola hall is also worth a peek — grand 19th-century architecture. The university gardens behind the building are a peaceful bonus.">⏱ 15–20 min</span>
         </div>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3744,8.5449&dirflg=w" target="_blank" rel="noopener">🗺 Directions</a>
@@ -2191,9 +2287,9 @@ section[id]{
         <h3 class="stop-title">Lunch: Fischerstube Zürihorn <button class="stop-pron" onclick="speakWord('Fischerstube','de-DE')">🔊 FISH-er-shtoo-buh · TSOO-ree-horn</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Lakeside terrace directly over the water. Seasonal Swiss fish from Lake Zürich: smoked trout, perch fillets with lemon butter. Sitting on the terrace above the lake is one of Zürich's great pleasures. 🌿 Vegetarian options on menu.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚃 Tram 2 → Zürichhorn (10 min)</span>
-          <span class="meta-chip">🎫 Zürich Card ✓</span>
-          <span class="meta-chip">💰 CHF 35–50 pp</span>
+          <span class="meta-chip" data-popup data-popup-title="Tram to Seerose Restaurant" data-popup-body="Take Tram 2 from the city centre to Zürichhorn stop — about 10 minutes. Seerose is a lakeside restaurant right at the Zürichhorn park, with outdoor terrace seating directly over the water." data-popup-tip="The tram runs frequently. Zürich Card covers it. From the tram stop, walk through the park toward the lake — you&#39;ll see the restaurant on the waterfront.">🚃 Tram 2 → Zürichhorn (10 min)</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich Card — Included" data-popup-body="The Zürich Card covers unlimited travel on all trams, buses, trains, and boats within the city and surrounding area — including the S10 to Uetliberg, lake boats, and the Polybahn funicular. It also includes free or reduced admission to most museums." data-popup-tip="Activate the card on your first ride Friday and it covers you through Sunday. At CHF 27/24h or CHF 53/72h, it pays for itself quickly with Zürich&#39;s transit costs." data-popup-link="https://www.zuerich.com/en/visit/zuerich-card" data-popup-link-label="Zürich Card Info">🎫 Zürich Card ✓</span>
+          <span class="meta-chip" data-popup data-popup-title="Seerose — Price Range" data-popup-body="Main courses at Seerose run CHF 35–50 per person. The lakeside setting is the draw — outdoor terrace seating directly on Lake Zürich with mountain views. Modern Swiss and international cuisine." data-popup-tip="Book an outdoor table if the weather cooperates. The sunset from the terrace over the lake is worth planning dinner around." data-popup-link="https://www.seerose.ch/en/" data-popup-link-label="Seerose Website">💰 CHF 35–50 pp</span>
         </div>
         <p class="stop-note">Bellerivestrasse 160 · +41 44 422 25 20 · Recommended: book ahead</p>
         <div class="stop-actions">
@@ -2207,9 +2303,9 @@ section[id]{
         <h3 class="stop-title">Museum Rietberg <button class="stop-pron" onclick="speakWord('Rietberg','de-DE')">🔊 REET-berg</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">Asian, African &amp; Oceanic art in historic villas in Rieter Park. Wagner wrote Tristan here. The underground Emerald extension is architecturally stunning. Free with Zürich Card. Rich sketching territory.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚕 Uber ~10 min recommended</span>
-          <span class="meta-chip">🎫 Zürich Card ✓ free</span>
-          <span class="meta-chip">⏱ Sun 10 AM–5 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Getting to FIFA Museum" data-popup-body="The FIFA Museum is at Seestrasse 27 in the Enge district. An Uber from the city centre takes about 10 minutes. Alternatively, take Tram 7 to the Museum Rietberg stop and walk 5 minutes." data-popup-tip="If the weather is nice, walk from the hotel along the lakeshore — it&#39;s about 20 minutes and very scenic. The museum is right on the lake.">🚕 Uber ~10 min recommended</span>
+          <span class="meta-chip" data-popup data-popup-title="FIFA Museum — Free with Zürich Card" data-popup-body="The FIFA World Football Museum normally costs CHF 24 for adults, but it&#39;s free with the Zürich Card. Three floors of interactive exhibits covering the history of world football, original trophies, and a playable pitch on the roof." data-popup-tip="Even if you&#39;re not a huge football fan, the interactive exhibits and roof pitch are fun. Budget 60–90 minutes." data-popup-link="https://www.fifamuseum.com/en/" data-popup-link-label="FIFA Museum Website">🎫 Zürich Card ✓ free</span>
+          <span class="meta-chip" data-popup data-popup-title="FIFA Museum — Sunday Hours" data-popup-body="The FIFA Museum is open Sunday from 10 AM to 5 PM. Last admission is at 4 PM. The museum is less crowded on Sunday mornings." data-popup-tip="Visit in the morning before brunch crowds arrive. The rooftop pitch and café are highlights beyond the main exhibits.">⏱ Sun 10 AM–5 PM</span>
         </div>
         <p class="stop-note">Gablerstrasse 15 · OR Tram 7 from Bellevue → Museum Rietberg</p>
         <div class="stop-actions">
@@ -2224,8 +2320,8 @@ section[id]{
         <h3 class="stop-title">Farewell Dinner: eCHo <button class="stop-pron" onclick="speakWord('Echo','de-DE')">🔊 EKK-oh</button> <span class="stop-ext">↗</span></h3>
         <p class="stop-body">The hotel's own Swiss restaurant — authentic Züri Gschnätzlets, cheese fondue, regional produce. Your last Swiss meal, steps from the lobby. Finish by 6:00 PM. 🌿 Vegetarian &amp; vegan options.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🍽 On-site, Marriott</span>
-          <span class="meta-chip">💰 CHF 45–70 pp</span>
+          <span class="meta-chip" data-popup data-popup-title="Farewell Dinner — Marriott Restaurant" data-popup-body="The Marriott&#39;s on-site restaurant offers a convenient farewell dinner option before Monday departure. International and Swiss cuisine in a relaxed hotel setting. No need to navigate the city after a full day of sightseeing." data-popup-tip="Ask for the Swiss menu specials — many hotel restaurants have elevated local dishes. A farewell fondue or raclette is fitting for your last night in Switzerland.">🍽 On-site, Marriott</span>
+          <span class="meta-chip" data-popup data-popup-title="Hotel Dinner — Price Range" data-popup-body="Expect CHF 45–70 per person for a full dinner at the Marriott restaurant including a main course and a glass of wine. Hotel dining in Zürich is comparable to city restaurant prices." data-popup-tip="Swiss wines by the glass are typically CHF 10–15 and excellent. Try a Pinot Noir from Graubünden or a Chasselas from Lavaux with dinner.">💰 CHF 45–70 pp</span>
         </div>
         <p class="stop-note">+41 44 360 73 18 · Ask hotel to seat you at 5:15 PM — mention 8:25 PM flight</p>
         <div class="stop-actions">
@@ -2239,9 +2335,9 @@ section[id]{
         <h3 class="stop-title depart">Depart for ZRH Airport</h3>
         <p class="stop-body">Leave hotel by 6:00 PM. Walk 5 min to Zürich HB → Airport Express (every 10 min, 25 min ride) → ZRH Terminal. Zürich Card covers the Airport Express. Arrive ZRH by 6:30 PM — 2 hrs before your 8:25 PM flight.</p>
         <div class="stop-meta">
-          <span class="meta-chip">🚆 Airport Express from HB</span>
-          <span class="meta-chip">⏱ 25 min to ZRH</span>
-          <span class="meta-chip">🎫 Zürich Card ✓</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich HB to Airport — Express Train" data-popup-body="Direct trains from Zürich Hauptbahnhof (HB) to Zürich Airport run every 5–10 minutes and take just 10 minutes. Follow signs to &#39;Flughafen/Airport&#39; on the departure boards. The airport train station is directly under the terminal." data-popup-tip="Your Zürich Card covers this ride. Trains are so frequent you don&#39;t need to plan around a schedule — just show up at the platform.">🚆 Airport Express from HB</span>
+          <span class="meta-chip" data-popup data-popup-title="Airport Transfer — 25 Minutes Total" data-popup-body="From hotel door to airport check-in takes about 25 minutes total: 5 minutes to Zürich HB, 10-minute train, 5 minutes to terminal. Zürich Airport (ZRH) is one of Europe&#39;s most efficient airports." data-popup-tip="For a transatlantic flight, arrive at the airport 2.5 hours before departure. ZRH has excellent duty-free Swiss chocolate shopping — Sprüngli has an airport shop.">⏱ 25 min to ZRH</span>
+          <span class="meta-chip" data-popup data-popup-title="Zürich Card — Included" data-popup-body="The Zürich Card covers unlimited travel on all trams, buses, trains, and boats within the city and surrounding area — including the S10 to Uetliberg, lake boats, and the Polybahn funicular. It also includes free or reduced admission to most museums." data-popup-tip="Activate the card on your first ride Friday and it covers you through Sunday. At CHF 27/24h or CHF 53/72h, it pays for itself quickly with Zürich&#39;s transit costs." data-popup-link="https://www.zuerich.com/en/visit/zuerich-card" data-popup-link-label="Zürich Card Info">🎫 Zürich Card ✓</span>
         </div>
         <p class="stop-note">Walk 5 min to HB · Airport Express HB → ZRH · <strong>Flight departs 8:25 PM</strong></p>
       </article>
@@ -4275,6 +4371,89 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       syncCityUI();
     }
   }, 300);
+})();
+</script>
+
+<!-- Chip Popup Overlay -->
+<div class="chip-popup-overlay" id="chip-popup-overlay">
+  <div class="chip-popup" role="dialog" aria-modal="true">
+    <div class="chip-popup-header">
+      <div class="chip-popup-title" id="chip-popup-title"></div>
+      <button class="chip-popup-close" id="chip-popup-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="chip-popup-body">
+      <p class="chip-popup-text" id="chip-popup-text"></p>
+      <div class="chip-popup-tip" id="chip-popup-tip"></div>
+      <a class="chip-popup-link" id="chip-popup-link" href="#" target="_blank" rel="noopener"></a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Chip Popup System ──
+(function() {
+  var overlay = document.getElementById('chip-popup-overlay');
+  var titleEl = document.getElementById('chip-popup-title');
+  var textEl = document.getElementById('chip-popup-text');
+  var tipEl = document.getElementById('chip-popup-tip');
+  var closeBtn = document.getElementById('chip-popup-close');
+  var linkEl = document.getElementById('chip-popup-link');
+
+  function openPopup(chip) {
+    var title = chip.getAttribute('data-popup-title') || '';
+    var body = chip.getAttribute('data-popup-body') || '';
+    var tip = chip.getAttribute('data-popup-tip') || '';
+    var link = chip.getAttribute('data-popup-link') || '';
+    var linkLabel = chip.getAttribute('data-popup-link-label') || 'Visit Website';
+
+    titleEl.textContent = title;
+    textEl.textContent = body;
+    if (tip) {
+      tipEl.textContent = tip;
+      tipEl.style.display = 'block';
+    } else {
+      tipEl.style.display = 'none';
+    }
+    if (link) {
+      linkEl.href = link;
+      linkEl.textContent = linkLabel + ' →';
+      linkEl.classList.add('visible');
+    } else {
+      linkEl.classList.remove('visible');
+    }
+    overlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+
+  function closePopup() {
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  // Click on any element with data-popup
+  document.querySelectorAll('[data-popup]').forEach(function(chip) {
+    chip.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openPopup(this);
+    });
+  });
+
+  // Close button
+  closeBtn.addEventListener('click', closePopup);
+
+  // Click overlay background to close
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closePopup();
+  });
+
+  // Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('visible')) {
+      closePopup();
+    }
+  });
 })();
 </script>
 </body>
