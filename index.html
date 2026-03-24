@@ -1897,6 +1897,64 @@ section[id]{
   .phone-mock{width:320px;height:640px;border-radius:40px}
   .phone-screen{top:8px;left:8px;right:8px;bottom:8px;border-radius:33px}
 }
+
+/* ── WEATHER EXPANDED MODAL ──────────────────── */
+.wx-modal-overlay{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(10,14,26,.92);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  display:none;align-items:center;justify-content:center;
+  flex-direction:column;
+  padding:24px 16px;
+  opacity:0;
+  transition:opacity .3s ease;
+  overflow-y:auto;
+}
+.wx-modal-overlay.open{
+  display:flex;
+  opacity:1;
+}
+.wx-modal-overlay.entering{opacity:0}
+.wx-modal-close{
+  position:fixed;top:16px;left:16px;z-index:10000;
+  width:40px;height:40px;
+  border-radius:50%;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.8);
+  font-size:18px;
+  display:none;align-items:center;justify-content:center;
+  cursor:pointer;
+  transition:background .2s,transform .2s;
+  backdrop-filter:blur(8px);
+}
+.wx-modal-close.open{display:flex}
+.wx-modal-close:hover{background:rgba(255,255,255,.14)}
+.wx-modal-close:active{transform:scale(.9)}
+.wx-modal-ext{
+  margin-top:16px;
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(200,168,75,.6);
+  text-decoration:none;
+  transition:color .2s;
+}
+.wx-modal-ext:hover{color:var(--gold)}
+/* Override phone-mock sizing inside modal for larger display */
+.wx-modal-overlay .phone-mock{
+  width:min(340px,calc(100vw - 48px));
+  height:min(680px,calc(100vh - 140px));
+}
+@media(min-width:420px){
+  .wx-modal-overlay .phone-mock{
+    width:360px;
+    height:720px;
+  }
+}
+/* Make wx-card look tappable */
+.wx-card{cursor:pointer}
+.wx-card .wx-tap{color:var(--gold)}
 </style>
 </head>
 <body>
@@ -1980,7 +2038,7 @@ section[id]{
         <h2 class="day-title">Denmark</h2>
         <p class="day-intro">Charlotte is studying in Copenhagen — a chance to visit her before flying on to Zürich Friday evening.</p>
       </div>
-      <a class="wx-card" href="https://www.accuweather.com/en/dk/copenhagen/123094/weather-forecast/123094" target="_blank" rel="noopener" aria-label="Copenhagen weather — tap for live forecast" id="wx-dk">
+      <div class="wx-card" role="button" tabindex="0" aria-label="Copenhagen weather — tap for expanded view" id="wx-dk" data-wx-day="dk" data-wx-date="Thursday, March 26" data-wx-city="Copenhagen, Denmark" data-wx-lat="55.6761" data-wx-lng="12.5683" data-wx-datestr="2026-03-26" data-wx-ext="https://www.accuweather.com/en/dk/copenhagen/123094/weather-forecast/123094" onclick="openWxModal(this)">
         <div class="wx-top"><span class="wx-hi">43°</span><span class="wx-lo">Lo 34°F (6°C / 1°C)</span></div>
         <div class="wx-c">6°C / 1°C</div>
         <div class="wx-cond">Partly Cloudy. Hi 43°F.</div>
@@ -1992,8 +2050,8 @@ section[id]{
           <span class="wx-stat">☀ 6:15</span>
           <span class="wx-stat">☾ 6:30</span>
         </div>
-        <div class="wx-tap">Tap · Live Forecast ↗</div>
-      </a>
+        <div class="wx-tap">Tap · Expanded View ↗</div>
+      </div>
     </div>
     <div class="stops" role="list">
 
@@ -2173,7 +2231,7 @@ section[id]{
         <h2 class="day-title">Arrival &amp;<br>White Elephant</h2>
         <p class="day-intro">A gentle landing. Activate your Zürich Card in the app at the airport. Nothing to prove on the first evening.</p>
       </div>
-      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Friday weather — tap for live forecast" id="wx-fri">
+      <div class="wx-card" role="button" tabindex="0" aria-label="Friday weather — tap for expanded view" id="wx-fri" data-wx-day="fri" data-wx-date="Friday, March 27" data-wx-city="Zurich, Switzerland" data-wx-lat="47.3769" data-wx-lng="8.5417" data-wx-datestr="2026-03-27" data-wx-ext="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" onclick="openWxModal(this)">
         <div class="wx-top"><span class="wx-hi">47°</span><span class="wx-lo">Lo 37°F (8°C / 3°C)</span></div>
         <div class="wx-c">8°C / 3°C</div>
         <div class="wx-cond">Partly Cloudy. Hi 47°F.</div>
@@ -2185,8 +2243,8 @@ section[id]{
           <span class="wx-stat">△ 6:48</span>
           <span class="wx-stat">▽ 7:32</span>
         </div>
-        <div class="wx-tap">Tap · Live Forecast ↗</div>
-      </a>
+        <div class="wx-tap">Tap · Expanded View ↗</div>
+      </div>
     </div>
     <div class="stops" role="list">
 
@@ -2255,7 +2313,7 @@ section[id]{
         <h2 class="day-title">Mountain, Art<br>&amp; Old Town</h2>
         <p class="day-intro">Uetliberg → Sprüngli → Kunsthaus → Old Town → Lindenhof → aperitivo → Zeughauskeller. No hotel return before dinner. Leave hotel at 10:00 AM.</p>
       </div>
-      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Saturday weather — tap for live forecast" id="wx-sat">
+      <div class="wx-card" role="button" tabindex="0" aria-label="Saturday weather — tap for expanded view" id="wx-sat" data-wx-day="sat" data-wx-date="Saturday, March 28" data-wx-city="Zurich, Switzerland" data-wx-lat="47.3769" data-wx-lng="8.5417" data-wx-datestr="2026-03-28" data-wx-ext="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" onclick="openWxModal(this)">
         <div class="wx-top"><span class="wx-hi">49°</span><span class="wx-lo">Lo 36°F (9°C / 2°C)</span></div>
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Mostly Cloudy. Hi 49°F.</div>
@@ -2267,8 +2325,8 @@ section[id]{
           <span class="wx-stat">△ 6:46</span>
           <span class="wx-stat">▽ 7:34</span>
         </div>
-        <div class="wx-tap">Tap · Live Forecast ↗</div>
-      </a>
+        <div class="wx-tap">Tap · Expanded View ↗</div>
+      </div>
     </div>
     <div class="stops" role="list">
 
@@ -2427,7 +2485,7 @@ section[id]{
         <h2 class="day-title">Slow Morning<br>&amp; Farewell</h2>
         <p class="day-intro">The breathing day — unhurried and beautiful. <strong style="color:var(--red)">Leave hotel by 6:00 PM sharp.</strong> Full city window: 10 AM–4:30 PM.</p>
       </div>
-      <a class="wx-card" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener" aria-label="Sunday weather — tap for live forecast" id="wx-sun">
+      <div class="wx-card" role="button" tabindex="0" aria-label="Sunday weather — tap for expanded view" id="wx-sun" data-wx-day="sun" data-wx-date="Sunday, March 29" data-wx-city="Zurich, Switzerland" data-wx-lat="47.3769" data-wx-lng="8.5417" data-wx-datestr="2026-03-29" data-wx-ext="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" onclick="openWxModal(this)">
         <div class="wx-top"><span class="wx-hi">48°</span><span class="wx-lo">Lo 35°F (9°C / 2°C)</span></div>
         <div class="wx-c">9°C / 2°C</div>
         <div class="wx-cond">Partly Cloudy. Hi 47°F.</div>
@@ -2439,8 +2497,8 @@ section[id]{
           <span class="wx-stat">△ 6:44</span>
           <span class="wx-stat">▽ 7:35</span>
         </div>
-        <div class="wx-tap">Tap · Live Forecast ↗</div>
-      </a>
+        <div class="wx-tap">Tap · Expanded View ↗</div>
+      </div>
     </div>
     <div class="stops" role="list">
 
@@ -4937,6 +4995,199 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     if (e.key === 'Escape' && overlay.classList.contains('visible')) {
       closePopup();
     }
+  });
+})();
+</script>
+
+<!-- ── WEATHER EXPANDED MODAL ───────────────── -->
+<div class="wx-modal-overlay" id="wx-modal-overlay" role="dialog" aria-label="Expanded weather view" aria-modal="true">
+  <div class="phone-mock">
+    <div class="phone-screen">
+      <div class="wx-mock" id="wx-modal-content">
+        <div class="wx-mock-loc" id="wxm-city">Zurich, Switzerland</div>
+        <div class="wx-mock-date" id="wxm-date">Saturday, March 28</div>
+        <div class="wx-mock-main">
+          <div class="wx-mock-temp" id="wxm-temp">9<sup>°C</sup></div>
+          <svg class="wx-mock-icon" id="wxm-icon" viewBox="0 0 64 64" fill="none">
+            <circle cx="30" cy="26" r="10" fill="var(--gold)" opacity=".9"/>
+            <g stroke="var(--gold)" stroke-width="2" stroke-linecap="round" opacity=".7">
+              <line x1="30" y1="10" x2="30" y2="14"/><line x1="30" y1="38" x2="30" y2="42"/>
+              <line x1="14" y1="26" x2="18" y2="26"/><line x1="42" y1="26" x2="46" y2="26"/>
+              <line x1="18.7" y1="14.7" x2="21.5" y2="17.5"/><line x1="38.5" y1="34.5" x2="41.3" y2="37.3"/>
+              <line x1="41.3" y1="14.7" x2="38.5" y2="17.5"/><line x1="21.5" y1="34.5" x2="18.7" y2="37.3"/>
+            </g>
+            <path d="M44 40a8 8 0 00-7.5-8 10 10 0 00-19 3.5A6 6 0 0018 48h26a8 8 0 000-8z" fill="var(--cream)" opacity=".85"/>
+          </svg>
+        </div>
+        <div class="wx-mock-feels" id="wxm-feels">Feels like 7°C</div>
+        <div class="wx-mock-desc" id="wxm-desc">&ldquo;Sunshine and chilly through the day.&rdquo;</div>
+        <div class="wx-mock-dress">
+          <svg class="wx-dress-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6.5 6.5L3 3M17.5 6.5L21 3M8.5 8.5L6 21h12l-2.5-12.5M8 8a4 4 0 018 0"/>
+          </svg>
+          <div>
+            <div class="wx-dress-label">Dinner Dress Code</div>
+            <div class="wx-dress-title" id="wxm-dress-title">Smart Casual</div>
+            <div class="wx-dress-desc" id="wxm-dress-desc">Stylish, layered attire suitable for dining</div>
+          </div>
+        </div>
+        <div class="wx-mock-hourly" id="wxm-hourly"></div>
+        <nav class="wx-mock-bnav">
+          <div class="wx-bnav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></div>
+          <div class="wx-bnav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span>Explore</span></div>
+          <div class="wx-bnav-i on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.76 4.84l-1.8-1.79-1.41 1.41 1.79 1.79 1.42-1.41zM4 10.5H1v2h3v-2zm9-9.95h-2V3.5h2V.55zm7.45 3.91l-1.41-1.41-1.79 1.79 1.41 1.41 1.79-1.79zm-3.21 13.7l1.79 1.8 1.41-1.41-1.8-1.79-1.4 1.4zM20 10.5v2h3v-2h-3zm-8-5c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm-1 16.95h2V19.5h-2v2.95zm-7.45-3.91l1.41 1.41 1.79-1.8-1.41-1.41-1.79 1.8z"/></svg><span>Weather</span></div>
+          <div class="wx-bnav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>Map</span></div>
+          <div class="wx-bnav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <a class="wx-modal-ext" id="wxm-ext-link" href="#" target="_blank" rel="noopener">Live Forecast ↗</a>
+</div>
+<button class="wx-modal-close" id="wx-modal-close" aria-label="Close expanded view" onclick="closeWxModal()">&times;</button>
+
+<script>
+// ── WEATHER EXPANDED MODAL LOGIC ───────────────
+(function() {
+  var overlay = document.getElementById('wx-modal-overlay');
+  var closeBtn = document.getElementById('wx-modal-close');
+  var WXM = {
+    0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+    45:'Foggy',48:'Rime fog',51:'Light drizzle',53:'Drizzle',55:'Dense drizzle',
+    61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',75:'Heavy snow',
+    80:'Light showers',81:'Showers',82:'Heavy showers',95:'Thunderstorm'
+  };
+
+  function sunIcon() {
+    return '<svg class="wx-hr-icon" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="5"/><g stroke="currentColor" stroke-width="1.5" fill="none"><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></g></svg>';
+  }
+  function cloudIcon() {
+    return '<svg class="wx-hr-icon" viewBox="0 0 24 24" fill="none"><path d="M18 14a5 5 0 00-4.5-5 6 6 0 00-11 2A4 4 0 003 18h14a5 5 0 001-4z" fill="currentColor" opacity=".6"/></svg>';
+  }
+  function partCloudIcon() {
+    return '<svg class="wx-hr-icon" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="10" r="4" fill="currentColor"/><path d="M18 14a5 5 0 00-4.5-5 6 6 0 00-11 2A4 4 0 003 18h14a5 5 0 001-4z" fill="currentColor" opacity=".5"/></svg>';
+  }
+  function rainIcon() {
+    return '<svg class="wx-hr-icon" viewBox="0 0 24 24" fill="none"><path d="M18 12a5 5 0 00-4.5-5 6 6 0 00-11 2A4 4 0 003 16h14a5 5 0 001-4z" fill="currentColor" opacity=".5"/><g stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".4"><line x1="8" y1="18" x2="8" y2="21"/><line x1="12" y1="18" x2="12" y2="21"/><line x1="16" y1="18" x2="16" y2="21"/></g></svg>';
+  }
+  function snowIcon() {
+    return '<svg class="wx-hr-icon" viewBox="0 0 24 24" fill="none"><path d="M18 12a5 5 0 00-4.5-5 6 6 0 00-11 2A4 4 0 003 16h14a5 5 0 001-4z" fill="currentColor" opacity=".5"/><g fill="currentColor" opacity=".5"><circle cx="9" cy="19" r="1"/><circle cx="13" cy="20" r="1"/><circle cx="16" cy="18" r="1"/></g></svg>';
+  }
+  function iconFor(code) {
+    if (code <= 1) return sunIcon();
+    if (code <= 2) return partCloudIcon();
+    if (code <= 3) return cloudIcon();
+    if (code >= 71 && code <= 77) return snowIcon();
+    if (code >= 85 && code <= 86) return snowIcon();
+    if (code >= 51) return rainIcon();
+    return cloudIcon();
+  }
+
+  function mainIconSvg(code) {
+    if (code <= 1) return '<circle cx="30" cy="28" r="12" fill="var(--gold)" opacity=".9"/><g stroke="var(--gold)" stroke-width="2" stroke-linecap="round" opacity=".7"><line x1="30" y1="8" x2="30" y2="13"/><line x1="30" y1="43" x2="30" y2="48"/><line x1="10" y1="28" x2="15" y2="28"/><line x1="45" y1="28" x2="50" y2="28"/><line x1="15.9" y1="13.9" x2="19.4" y2="17.4"/><line x1="40.6" y1="38.6" x2="44.1" y2="42.1"/><line x1="44.1" y1="13.9" x2="40.6" y2="17.4"/><line x1="19.4" y1="38.6" x2="15.9" y2="42.1"/></g>';
+    if (code <= 2) return '<circle cx="24" cy="22" r="10" fill="var(--gold)" opacity=".9"/><g stroke="var(--gold)" stroke-width="2" stroke-linecap="round" opacity=".6"><line x1="24" y1="6" x2="24" y2="10"/><line x1="8" y1="22" x2="12" y2="22"/><line x1="14" y1="10.7" x2="16.8" y2="13.5"/><line x1="34" y1="10.7" x2="31.2" y2="13.5"/></g><path d="M48 42a9 9 0 00-8.5-9 11 11 0 00-21 4A7 7 0 0020 50h28a9 9 0 000-8z" fill="var(--cream)" opacity=".8"/>';
+    if (code <= 3) return '<path d="M46 36a10 10 0 00-9-10 12 12 0 00-23 4A8 8 0 0015 46h31a10 10 0 000-10z" fill="var(--cream)" opacity=".75"/>';
+    if (code >= 71 && code <= 77) return '<path d="M46 32a9 9 0 00-8-9 11 11 0 00-21 3.5A7 7 0 0018 42h28a9 9 0 000-8z" fill="var(--cream)" opacity=".7"/><g fill="var(--cream)" opacity=".5"><circle cx="22" cy="50" r="2"/><circle cx="32" cy="52" r="2"/><circle cx="42" cy="49" r="2"/></g>';
+    if (code >= 51) return '<path d="M46 32a9 9 0 00-8-9 11 11 0 00-21 3.5A7 7 0 0018 42h28a9 9 0 000-8z" fill="var(--cream)" opacity=".7"/><g stroke="var(--cream)" stroke-width="2.5" stroke-linecap="round" opacity=".45"><line x1="22" y1="46" x2="22" y2="54"/><line x1="32" y1="46" x2="32" y2="54"/><line x1="42" y1="46" x2="42" y2="54"/></g>';
+    return '<path d="M46 36a10 10 0 00-9-10 12 12 0 00-23 4A8 8 0 0015 46h31a10 10 0 000-10z" fill="var(--cream)" opacity=".75"/>';
+  }
+
+  window.openWxModal = function(el) {
+    var city = el.getAttribute('data-wx-city');
+    var dateLabel = el.getAttribute('data-wx-date');
+    var dateStr = el.getAttribute('data-wx-datestr');
+    var lat = el.getAttribute('data-wx-lat');
+    var lng = el.getAttribute('data-wx-lng');
+    var extUrl = el.getAttribute('data-wx-ext');
+
+    // Set static content immediately
+    document.getElementById('wxm-city').textContent = city;
+    document.getElementById('wxm-date').textContent = dateLabel;
+    document.getElementById('wxm-ext-link').href = extUrl;
+
+    // Dress code varies by city
+    var isDK = city.indexOf('Copenhagen') >= 0;
+    document.getElementById('wxm-dress-title').textContent = isDK ? 'Casual Smart' : 'Smart Casual';
+    document.getElementById('wxm-dress-desc').textContent = isDK ? 'Relaxed Danish style, layered for the cold' : 'Stylish, layered attire suitable for Zurich dining';
+
+    // Show modal with animation
+    overlay.classList.add('open', 'entering');
+    closeBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.classList.remove('entering');
+      });
+    });
+
+    // Fetch live weather for this day
+    var api = 'https://api.open-meteo.com/v1/forecast'
+      + '?latitude=' + lat + '&longitude=' + lng
+      + '&hourly=temperature_2m,weather_code,apparent_temperature'
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max'
+      + '&temperature_unit=celsius&wind_speed_unit=mph'
+      + '&timezone=' + (isDK ? 'Europe/Copenhagen' : 'Europe/Zurich')
+      + '&start_date=' + dateStr + '&end_date=' + dateStr;
+
+    fetch(api)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.daily || !data.hourly) return;
+        var hi = Math.round(data.daily.temperature_2m_max[0]);
+        var lo = Math.round(data.daily.temperature_2m_min[0]);
+        var feels = Math.round(data.daily.apparent_temperature_max[0]);
+        var code = data.daily.weather_code[0];
+        var cond = WXM[code] || 'Mixed';
+
+        document.getElementById('wxm-temp').innerHTML = hi + '<sup>\u00b0C</sup>';
+        document.getElementById('wxm-feels').textContent = 'Feels like ' + feels + '\u00b0C \u00b7 Lo ' + lo + '\u00b0C';
+
+        var isRain = code >= 51 && code < 71;
+        var isSnow = code >= 71 && code <= 77;
+        var desc = isSnow ? '\u201c' + cond + '. Bundle up warmly and watch for slippery cobblestones.\u201d'
+          : isRain ? '\u201c' + cond + ' expected. Pack an umbrella and waterproof layer.\u201d'
+          : '\u201c' + cond + ' and chilly. A warm coat and layers are essential for evening strolls.\u201d';
+        document.getElementById('wxm-desc').textContent = desc;
+
+        // Update main icon
+        document.getElementById('wxm-icon').innerHTML = mainIconSvg(code);
+
+        // Update hourly
+        var hours = [10, 12, 14, 16, 18];
+        var labels = ['10AM', 'Noon', '2PM', '4PM', '6PM'];
+        var hourlyEl = document.getElementById('wxm-hourly');
+        if (hourlyEl && data.hourly.time) {
+          var html = '';
+          hours.forEach(function(h, idx) {
+            var key = dateStr + 'T' + (h < 10 ? '0' : '') + h + ':00';
+            var hIdx = data.hourly.time.indexOf(key);
+            var t = hIdx >= 0 ? Math.round(data.hourly.temperature_2m[hIdx]) : '--';
+            var c = hIdx >= 0 ? data.hourly.weather_code[hIdx] : 3;
+            html += '<div class="wx-hr"><span class="wx-hr-time">' + labels[idx] + '</span>' + iconFor(c) + '<span class="wx-hr-temp">' + t + '\u00b0C</span></div>';
+          });
+          hourlyEl.innerHTML = html;
+        }
+      })
+      .catch(function() {});
+  };
+
+  window.closeWxModal = function() {
+    overlay.classList.add('entering');
+    setTimeout(function() {
+      overlay.classList.remove('open', 'entering');
+      closeBtn.classList.remove('open');
+      document.body.style.overflow = '';
+    }, 300);
+  };
+
+  // Close on overlay background click
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeWxModal();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeWxModal();
   });
 })();
 </script>
