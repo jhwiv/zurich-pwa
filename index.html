@@ -51,7 +51,7 @@
   --amber2:#FEF3C7;
   --sp4:4px;--sp8:8px;--sp12:12px;--sp16:16px;--sp24:24px;--sp32:32px;--sp48:48px;
   --r6:6px;--r9:9px;--r12:12px;
-  --hdr:78px;
+  --hdr:78px; /* fallback; JS will update after wrap */
 }
 html{-webkit-text-size-adjust:100%}
 body{
@@ -72,25 +72,20 @@ img{display:block;max-width:100%}
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(200,168,75,.18);
   transition:box-shadow .25s ease;
-  padding:0 var(--sp16);
-  height:var(--hdr);
+  padding:6px var(--sp16) 4px;
   display:flex;flex-direction:column;
   justify-content:center;
 }
 .hdr-rows{
-  display:flex;flex-direction:column;gap:2px;
-  overflow:hidden;
-  padding:0 0 4px;
+  display:flex;flex-direction:column;gap:4px;
+  padding:0 0 2px;
 }
 .hdr-row-1,.hdr-row-2{
   display:flex;align-items:center;
-  gap:var(--sp4);
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  padding:0 var(--sp4);
+  gap:4px 6px;
+  flex-wrap:wrap;
+  padding:0;
 }
-.hdr-row-1::-webkit-scrollbar,.hdr-row-2::-webkit-scrollbar{display:none}
 .hdr-row-2 .nav-chip{
   font-size:10px;
   font-weight:600;
@@ -111,14 +106,11 @@ img{display:block;max-width:100%}
 
 .hdr-nav{
   display:flex;align-items:center;
-  gap:var(--sp8);
-  overflow-x:auto;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
+  gap:4px 6px;
+  flex-wrap:wrap;
   flex:1;
-  padding:0 var(--sp4);
+  padding:0;
 }
-.hdr-nav::-webkit-scrollbar{display:none}
 .nav-chip{
   font-family:'DM Mono',monospace;
   font-size:11px;letter-spacing:.06em;
@@ -150,6 +142,10 @@ img{display:block;max-width:100%}
   background:var(--gold2);
 }
 .nav-chip:active{transform:scale(.95);transition-duration:.05s}
+@media(max-width:420px){
+  .nav-chip{font-size:10px;padding:6px 12px;min-height:30px;border-radius:16px}
+  .hdr-row-2 .nav-chip{font-size:9px;padding:5px 10px;min-height:26px;border-radius:14px}
+}
 .hdr-section-label{display:none!important}
 
 /* ── FLIGHT ALERT BAR ───────────────────────────── */
@@ -1325,20 +1321,8 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   #float-menu .float-row.fab-trigger{display:none}
 }
 
-/* ── NAV SCROLL FADE INDICATOR ─────────────────── */
-.hdr-nav{
-  -webkit-mask-image:linear-gradient(to right,#000 85%,transparent 100%);
-  mask-image:linear-gradient(to right,#000 85%,transparent 100%);
-}
-.hdr-nav.scrolled-end{
-  -webkit-mask-image:linear-gradient(to left,#000 85%,transparent 100%);
-  mask-image:linear-gradient(to left,#000 85%,transparent 100%);
-}
-.hdr-nav.scrolled-mid{
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 8%,#000 85%,transparent 100%);
-  mask-image:linear-gradient(to right,transparent 0%,#000 8%,#000 85%,transparent 100%);
-}
-.hdr-nav.no-overflow{
+/* -- NAV SCROLL FADE INDICATOR (disabled - tabs now wrap) */
+.hdr-nav,.hdr-nav.scrolled-end,.hdr-nav.scrolled-mid,.hdr-nav.no-overflow{
   -webkit-mask-image:none;
   mask-image:none;
 }
@@ -3111,6 +3095,21 @@ section[id]{
 <div id="page-fade" aria-hidden="true"></div>
 
 <script>
+// ── DYNAMIC HEADER HEIGHT ────────────────────────────
+(function(){
+  function syncHdr(){
+    var h = document.getElementById('site-header');
+    if(!h) return;
+    var px = h.offsetHeight;
+    document.documentElement.style.setProperty('--hdr', px + 'px');
+  }
+  syncHdr();
+  window.addEventListener('resize', syncHdr);
+  window.addEventListener('load', syncHdr);
+  // run again after fonts load (may change chip size)
+  if(document.fonts && document.fonts.ready) document.fonts.ready.then(syncHdr);
+})();
+
 // ── ACCORDION TOGGLES (with keyboard a11y) ─────────────
 function toggleAcc(btn) {
   const acc = btn.closest('.accordion');
@@ -3218,27 +3217,9 @@ function navTo(sectionId, btn) {
 }
 let navTapTimer;
 
-// ── NAV SCROLL FADE INDICATOR ──────────────────────────
+// ── NAV SCROLL FADE INDICATOR (disabled — tabs now wrap) ──
 const navEl = document.querySelector('.hdr-row-1') || document.querySelector('.hdr-nav');
-function updateNavFade() {
-  if (!navEl) return;
-  const sl = navEl.scrollLeft;
-  const maxScroll = navEl.scrollWidth - navEl.clientWidth;
-  if (maxScroll <= 2) {
-    navEl.className = 'hdr-nav no-overflow';
-  } else if (sl < 4) {
-    navEl.className = 'hdr-nav'; // fade on right
-  } else if (sl >= maxScroll - 4) {
-    navEl.className = 'hdr-nav scrolled-end'; // fade on left
-  } else {
-    navEl.className = 'hdr-nav scrolled-mid'; // fade both
-  }
-}
-if (navEl) {
-  navEl.addEventListener('scroll', updateNavFade, { passive: true });
-  window.addEventListener('resize', updateNavFade);
-  updateNavFade();
-}
+function updateNavFade() { /* no-op: tabs wrap instead of scroll */ }
 
 // ── FLIGHT BAR DISMISS + RESURFACE ─────────────────────
 let flightBarDismissed = false;
