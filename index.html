@@ -1491,14 +1491,7 @@ section[id]{
     <div class="hero-dates">26 – 29 March 2026</div>
     <div class="hero-rule"></div>
     <div class="hero-desc">Father–daughter trip — visiting Charlotte while she's studying in Copenhagen, then on to a Zürich weekend. Culture, mountain air, great food, and easy logistics.</div>
-    <div class="hero-actions">
-      <a class="hero-btn hero-btn-primary" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">
-        🏨 Open Hotel in Maps
-      </a>
-      <button class="hero-btn hero-btn-secondary" id="hero-jump-sat">
-        ✦ Jump to Saturday
-      </button>
-    </div>
+
     <div class="hero-countdown" id="hero-countdown" aria-label="Trip countdown"></div>
     <div class="hero-wx-strip" id="hero-wx-strip">
       <div id="hero-wx-fri"><div class="hero-wx-day">Fri 27</div><div class="hero-wx-temp">47°/37°F · Partly cloudy</div></div>
@@ -3186,11 +3179,6 @@ if (flightChip) flightChip.addEventListener('click', function() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// Hero Jump to Saturday
-const heroJumpSat = document.getElementById('hero-jump-sat');
-if (heroJumpSat) heroJumpSat.addEventListener('click', function() {
-  navTo('section-sat', null);
-});
 
 // Accordion headers
 document.querySelectorAll('.accordion-hdr').forEach(btn => {
