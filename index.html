@@ -5007,7 +5007,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         <div class="wx-mock-loc" id="wxm-city">Zurich, Switzerland</div>
         <div class="wx-mock-date" id="wxm-date">Saturday, March 28</div>
         <div class="wx-mock-main">
-          <div class="wx-mock-temp" id="wxm-temp">9<sup>°C</sup></div>
+          <div class="wx-mock-temp" id="wxm-temp">48<sup>°F</sup></div>
           <svg class="wx-mock-icon" id="wxm-icon" viewBox="0 0 64 64" fill="none">
             <circle cx="30" cy="26" r="10" fill="var(--gold)" opacity=".9"/>
             <g stroke="var(--gold)" stroke-width="2" stroke-linecap="round" opacity=".7">
@@ -5019,7 +5019,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
             <path d="M44 40a8 8 0 00-7.5-8 10 10 0 00-19 3.5A6 6 0 0018 48h26a8 8 0 000-8z" fill="var(--cream)" opacity=".85"/>
           </svg>
         </div>
-        <div class="wx-mock-feels" id="wxm-feels">Feels like 7°C</div>
+        <div class="wx-mock-feels" id="wxm-feels">Feels like 44°F</div>
         <div class="wx-mock-desc" id="wxm-desc">&ldquo;Sunshine and chilly through the day.&rdquo;</div>
         <div class="wx-mock-dress">
           <svg class="wx-dress-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -5125,7 +5125,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       + '?latitude=' + lat + '&longitude=' + lng
       + '&hourly=temperature_2m,weather_code,apparent_temperature'
       + '&daily=weather_code,temperature_2m_max,temperature_2m_min,apparent_temperature_max'
-      + '&temperature_unit=celsius&wind_speed_unit=mph'
+      + '&temperature_unit=fahrenheit&wind_speed_unit=mph'
       + '&timezone=' + (isDK ? 'Europe/Copenhagen' : 'Europe/Zurich')
       + '&start_date=' + dateStr + '&end_date=' + dateStr;
 
@@ -5139,8 +5139,8 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         var code = data.daily.weather_code[0];
         var cond = WXM[code] || 'Mixed';
 
-        document.getElementById('wxm-temp').innerHTML = hi + '<sup>\u00b0C</sup>';
-        document.getElementById('wxm-feels').textContent = 'Feels like ' + feels + '\u00b0C \u00b7 Lo ' + lo + '\u00b0C';
+        document.getElementById('wxm-temp').innerHTML = hi + '<sup>\u00b0F</sup>';
+        document.getElementById('wxm-feels').textContent = 'Feels like ' + feels + '\u00b0F \u00b7 Lo ' + lo + '\u00b0F';
 
         var isRain = code >= 51 && code < 71;
         var isSnow = code >= 71 && code <= 77;
@@ -5163,7 +5163,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
             var hIdx = data.hourly.time.indexOf(key);
             var t = hIdx >= 0 ? Math.round(data.hourly.temperature_2m[hIdx]) : '--';
             var c = hIdx >= 0 ? data.hourly.weather_code[hIdx] : 3;
-            html += '<div class="wx-hr"><span class="wx-hr-time">' + labels[idx] + '</span>' + iconFor(c) + '<span class="wx-hr-temp">' + t + '\u00b0C</span></div>';
+            html += '<div class="wx-hr"><span class="wx-hr-time">' + labels[idx] + '</span>' + iconFor(c) + '<span class="wx-hr-temp">' + t + '\u00b0F</span></div>';
           });
           hourlyEl.innerHTML = html;
         }
