@@ -1679,9 +1679,9 @@ section[id]{
     <nav class="hdr-nav hdr-row-2" aria-label="Reference sections">
       <button class="nav-chip" data-target="section-essentials">Essentials</button>
       <button class="nav-chip" data-target="section-transit">Transit</button>
-      <button class="nav-chip" data-target="section-history">History</button>
       <button class="nav-chip" data-target="section-streetview">Street Views</button>
       <button class="nav-chip" data-target="section-map">Map</button>
+      <button class="nav-chip" data-target="section-history">History</button>
     </nav>
   </div>
   <div class="hdr-section-label" id="hdr-section-label">Overview</div>
@@ -3301,8 +3301,10 @@ const jumpTargets = {
   'section-sat':        { label: 'Sunday',    target: 'section-sun' },
   'section-sun':        { label: 'Essentials',target: 'section-essentials' },
   'section-essentials': { label: 'Transit',   target: 'section-transit' },
-  'section-transit':    { label: 'Top',       target: 'hero' },
-  'section-map':        { label: 'Top',       target: 'hero' },
+  'section-transit':    { label: 'Street View', target: 'section-streetview' },
+  'section-streetview':  { label: 'Map',       target: 'section-map' },
+  'section-map':        { label: 'History',   target: 'section-history' },
+  'section-history':    { label: 'Top',       target: 'hero' },
 };
 let currentFabTarget = 'section-sat';
 
@@ -3335,9 +3337,9 @@ const sections = [
   { id: 'section-sun',        label: 'Sunday' },
   { id: 'section-essentials', label: 'Essentials' },
   { id: 'section-transit',    label: 'Transit' },
-  { id: 'section-history',    label: 'History' },
   { id: 'section-streetview', label: 'Street View' },
   { id: 'section-map',        label: 'Map' },
+  { id: 'section-history',    label: 'History' },
 ];
 
 let lastScroll = 0;
