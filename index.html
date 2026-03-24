@@ -3135,17 +3135,6 @@ section[id]{
               &ldquo;Sunshine and chilly through the day. Bring a warm layer for evening strolls.&rdquo;
             </div>
 
-            <div class="wx-mock-dress">
-              <svg class="wx-dress-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <path d="M6.5 6.5L3 3M17.5 6.5L21 3M8.5 8.5L6 21h12l-2.5-12.5M8 8a4 4 0 018 0"/>
-              </svg>
-              <div>
-                <div class="wx-dress-label">Dinner Dress Code</div>
-                <div class="wx-dress-title">Smart Casual</div>
-                <div class="wx-dress-desc">Stylish, layered attire suitable for Zurich dining</div>
-              </div>
-            </div>
-
             <div class="wx-mock-hourly" id="wx-mock-hourly">
               <div class="wx-hr">
                 <span class="wx-hr-time">Noon</span>
@@ -5021,16 +5010,6 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         </div>
         <div class="wx-mock-feels" id="wxm-feels">Feels like 44°F</div>
         <div class="wx-mock-desc" id="wxm-desc">&ldquo;Sunshine and chilly through the day.&rdquo;</div>
-        <div class="wx-mock-dress">
-          <svg class="wx-dress-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M6.5 6.5L3 3M17.5 6.5L21 3M8.5 8.5L6 21h12l-2.5-12.5M8 8a4 4 0 018 0"/>
-          </svg>
-          <div>
-            <div class="wx-dress-label">Dinner Dress Code</div>
-            <div class="wx-dress-title" id="wxm-dress-title">Smart Casual</div>
-            <div class="wx-dress-desc" id="wxm-dress-desc">Stylish, layered attire suitable for dining</div>
-          </div>
-        </div>
         <div class="wx-mock-hourly" id="wxm-hourly"></div>
         <nav class="wx-mock-bnav">
           <div class="wx-bnav-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Home</span></div>
@@ -5105,10 +5084,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     document.getElementById('wxm-date').textContent = dateLabel;
     document.getElementById('wxm-ext-link').href = extUrl;
 
-    // Dress code varies by city
     var isDK = city.indexOf('Copenhagen') >= 0;
-    document.getElementById('wxm-dress-title').textContent = isDK ? 'Casual Smart' : 'Smart Casual';
-    document.getElementById('wxm-dress-desc').textContent = isDK ? 'Relaxed Danish style, layered for the cold' : 'Stylish, layered attire suitable for Zurich dining';
 
     // Show modal with animation
     overlay.classList.add('open', 'entering');
