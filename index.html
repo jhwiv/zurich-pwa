@@ -723,7 +723,19 @@ img{display:block;max-width:100%}
   color:var(--gold);
   white-space:nowrap;
 }
-/* ── Street View popup window helper ── */
+/* ── Street View iframe modal ── */
+.sv-iframe-wrap{
+  width:min(960px,calc(100vw - 32px));
+  height:min(680px,calc(100vh - 80px));
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid rgba(200,168,75,.2);
+  box-shadow:0 24px 64px rgba(0,0,0,.6);
+  background:#0a0e1a;
+}
+.sv-iframe-wrap iframe{
+  width:100%;height:100%;border:none;display:block;
+}
 
 
 /* ── MAP SECTION ───────────────────────────────── */
@@ -3519,7 +3531,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.18 · Updated 25 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.19 · Updated 25 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5099,6 +5111,14 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 </div>
 <button class="wx-modal-close" id="wx-modal-close" aria-label="Close expanded view" onclick="closeWxModal()">&times;</button>
 
+<!-- ── STREET VIEW IFRAME MODAL (Google Street View embed) ── -->
+<div class="wx-modal-overlay" id="sv-iframe-overlay" role="dialog" aria-label="Google Street View" aria-modal="true">
+  <div class="sv-iframe-wrap">
+    <iframe id="sv-iframe" src="" allow="accelerometer;gyroscope" allowfullscreen></iframe>
+  </div>
+</div>
+<button class="wx-modal-close" id="sv-iframe-close" aria-label="Close Street View" onclick="closeSvIframe()">&times;</button>
+
 <!-- ── STREET VIEW EXPANDED MODAL ───────────── -->
 <div class="wx-modal-overlay" id="sv-modal-overlay" role="dialog" aria-label="Expanded street view" aria-modal="true">
   <div class="phone-mock">
@@ -5136,14 +5156,42 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 <button class="wx-modal-close" id="sv-modal-close" aria-label="Close expanded view" onclick="closeSvModal()">&times;</button>
 
 <script>
-// ── STREET VIEW POPUP WINDOW ───────────────────
-window.openStreetViewPopup = function(url) {
-  var w = Math.min(960, screen.width - 80);
-  var h = Math.min(720, screen.height - 80);
-  var left = (screen.width - w) / 2;
-  var top = (screen.height - h) / 2;
-  window.open(url, 'streetview', 'width=' + w + ',height=' + h + ',left=' + left + ',top=' + top + ',scrollbars=yes,resizable=yes');
-};
+// ── STREET VIEW IFRAME MODAL ──────────────────
+(function() {
+  var overlay = document.getElementById('sv-iframe-overlay');
+  var closeBtn = document.getElementById('sv-iframe-close');
+  var iframe = document.getElementById('sv-iframe');
+
+  window.openStreetViewPopup = function(url) {
+    // The url comes without output=svembed — add it back for embedding
+    iframe.src = url + '&output=svembed';
+    overlay.classList.add('open','entering');
+    closeBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.classList.remove('entering');
+      });
+    });
+  };
+
+  window.closeSvIframe = function() {
+    overlay.classList.add('entering');
+    setTimeout(function() {
+      overlay.classList.remove('open','entering');
+      closeBtn.classList.remove('open');
+      document.body.style.overflow = '';
+      iframe.src = ''; // kill the iframe to stop loading
+    }, 300);
+  };
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeSvIframe();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeSvIframe();
+  });
+})();
 
 // ── STREET VIEW EXPANDED MODAL LOGIC ───────────
 (function() {
