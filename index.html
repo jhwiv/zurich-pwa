@@ -4984,7 +4984,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 <script>
 // ── CHAT ASSISTANT ────────────────────────────────────
 (function() {
-  var CHAT_API = 'https://cloudflare-worker.jhwiv-online.workers.dev';
+  var CHAT_API = 'https://cloudflare-worker.jhwiv-online.workers.dev/api/chat/zurich';
 
   var chatFab = document.getElementById('chat-fab');
   var chatPanel = document.getElementById('chat-panel');
@@ -5155,7 +5155,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     chatHistory.push({ role: 'user', content: text });
     showTyping();
 
-    fetch(CHAT_API + '/api/chat', {
+    fetch(CHAT_API, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
