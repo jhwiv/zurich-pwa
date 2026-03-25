@@ -5107,21 +5107,50 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         history: chatHistory.slice(-8)
       })
     })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
       hideTyping();
-      if (data.reply) {
-        addMessage('assistant', data.reply);
-        chatHistory.push({ role: 'assistant', content: data.reply });
-      } else if (data.error) {
-        addMessage('system', data.error);
+      var msgDiv = addMessage('assistant', '');
+      var fullText = '';
+      var reader = r.body.getReader();
+      var decoder = new TextDecoder();
+      var buf = '';
+      function pump() {
+        return reader.read().then(function(result) {
+          if (result.done) {
+            chatHistory.push({ role: 'assistant', content: fullText });
+            isSending = false;
+            chatSend.disabled = false;
+            chatInput.focus();
+            return;
+          }
+          buf += decoder.decode(result.value, { stream: true });
+          var lines = buf.split('\n');
+          buf = lines.pop();
+          for (var i = 0; i < lines.length; i++) {
+            var line = lines[i].trim();
+            if (line.indexOf('data: ') !== 0) continue;
+            var payload = line.slice(6);
+            if (payload === '[DONE]') continue;
+            try {
+              var chunk = JSON.parse(payload);
+              var token = chunk.response || '';
+              if (token) {
+                fullText += token;
+                var rendered = fullText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                msgDiv.innerHTML = rendered;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+              }
+            } catch(e) {}
+          }
+          return pump();
+        });
       }
+      return pump();
     })
     .catch(function() {
       hideTyping();
       addMessage('system', 'Connection error \u2014 check your internet');
-    })
-    .finally(function() {
       isSending = false;
       chatSend.disabled = false;
       chatInput.focus();
