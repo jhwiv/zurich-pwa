@@ -4997,6 +4997,10 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 
   var chatHistory = [];
   var chatLat = null, chatLng = null;
+  function getActiveTabLabel() {
+    var active = document.querySelector('.nav-chip.active');
+    return active ? active.textContent.trim() : 'Overview';
+  }
   var isSending = false;
 
   function getChatLocation() {
@@ -5166,6 +5170,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         message: text,
+        activeTab: getActiveTabLabel(),
         lat: chatLat,
         lng: chatLng,
         history: chatHistory.slice(-8)
