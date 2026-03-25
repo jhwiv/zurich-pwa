@@ -775,6 +775,14 @@ img{display:block;max-width:100%}
 .wc-iframe-wrap iframe{
   width:100%;height:100%;border:0;display:block;
 }
+/* ── Search results iframe modal ── */
+.search-iframe-wrap{
+  width:100vw;height:100vh;
+  position:relative;
+}
+.search-iframe-wrap iframe{
+  width:100%;height:100%;border:none;display:block;
+}
 /* ── Street View iframe modal ── */
 .sv-iframe-wrap{
   width:min(960px,calc(100vw - 32px));
@@ -5296,7 +5304,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         c.className = 'search-poi-card';
         c.innerHTML = '<div class="search-poi-img"><img src="' + poi.img + '" alt="' + poi.name + '" loading="lazy"><div class="search-poi-rating">' + poi.rating + ' ★</div></div><div class="search-poi-name">' + poi.name + '</div>';
         c.addEventListener('click', function() {
-          window.open('https://www.google.com/maps/search/' + encodeURIComponent(poi.q), '_blank', 'noopener');
+          openSearchIframe('https://www.google.com/maps/search/' + encodeURIComponent(poi.q));
         });
         exploreScroll.appendChild(c);
       });
@@ -5373,7 +5381,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     var lng = geoGranted ? userLng : city.lng;
     var url = 'https://www.google.com/maps/search/' + encodeURIComponent(query)
       + '/@' + lat + ',' + lng + ',15z';
-    window.open(url, '_blank', 'noopener');
+    openSearchIframe(url);
     closeSearch();
     input.value = '';
   }
@@ -5542,6 +5550,52 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 <button class="wx-modal-close" id="wx-modal-close" aria-label="Close expanded view" onclick="closeWxModal()">&times;</button>
 
 <!-- ── STREET VIEW IFRAME MODAL (Google Street View embed) ── -->
+<!-- ── SEARCH RESULTS IFRAME MODAL ── -->
+<div class="wx-modal-overlay" id="search-iframe-overlay" role="dialog" aria-label="Search results map" aria-modal="true" style="display:none">
+  <div class="search-iframe-wrap">
+    <iframe id="search-iframe" src="" allow="geolocation" allowfullscreen></iframe>
+  </div>
+</div>
+<button class="wx-modal-close" id="search-iframe-close" aria-label="Close search results" onclick="closeSearchIframe()">&times;</button>
+<script>
+(function() {
+  var overlay = document.getElementById('search-iframe-overlay');
+  var iframe = document.getElementById('search-iframe');
+  var closeBtn = document.getElementById('search-iframe-close');
+  if (!overlay || !iframe) return;
+
+  window.openSearchIframe = function(url) {
+    iframe.src = url;
+    overlay.style.display = '';
+    overlay.classList.add('open','entering');
+    closeBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.classList.remove('entering');
+      });
+    });
+  };
+
+  window.closeSearchIframe = function() {
+    overlay.classList.add('entering');
+    setTimeout(function() {
+      overlay.classList.remove('open','entering');
+      closeBtn.classList.remove('open');
+      document.body.style.overflow = '';
+      iframe.src = '';
+    }, 300);
+  };
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeSearchIframe();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeSearchIframe();
+  });
+})();
+</script>
+
 <div class="wx-modal-overlay" id="sv-iframe-overlay" role="dialog" aria-label="Google Street View" aria-modal="true">
   <div class="sv-iframe-wrap">
     <iframe id="sv-iframe" src="" allow="accelerometer;gyroscope" allowfullscreen></iframe>
