@@ -1356,70 +1356,198 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
 
-/* ── FLOATING SEARCH ────────────────────────────── */
-/* search-fab styling now handled by .fab-btn */
+/* ── FLOATING SEARCH (full-screen overlay) ──────────── */
 #search-card{
   display:none;
-  position:fixed;bottom:calc(86px + env(safe-area-inset-bottom,0px));
-  left:var(--sp16);right:var(--sp16);
-  max-width:400px;z-index:191;
-  background:#1B2A4A;
-  border:1px solid rgba(200,168,75,.25);
-  border-radius:var(--r12);
-  box-shadow:0 8px 40px rgba(0,0,0,.7);
-  padding:var(--sp16);
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  z-index:200;
+  background:linear-gradient(180deg,#0D1929 0%,#152238 100%);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
-#search-card.open{display:block}
-.search-input-row{
-  display:flex;gap:var(--sp8);margin-bottom:var(--sp12);
+#search-card.open{display:flex;flex-direction:column}
+
+/* Close button */
+.search-close{
+  position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:16px;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.7);font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:5;transition:all .15s;
 }
+.search-close:hover{background:rgba(255,255,255,.14);color:#fff}
+
+/* Inner container */
+.search-inner{
+  flex:1;padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;
+  max-width:420px;width:100%;margin:0 auto;
+}
+
+/* Search bar */
+.search-bar{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(200,168,75,.2);
+  border-radius:28px;
+  padding:10px 16px;
+  margin-bottom:20px;
+  transition:border-color .2s;
+}
+.search-bar:focus-within{border-color:var(--gold)}
+.search-bar svg{flex-shrink:0;color:rgba(200,168,75,.5)}
 #search-input{
-  flex:1;
-  font-family:'Crimson Pro',serif;font-size:15px;
-  background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:var(--r6);
-  padding:10px 14px;
-  color:#fff;
-  outline:none;
+  flex:1;background:none;border:none;outline:none;
+  font-family:'Crimson Pro',serif;font-size:16px;
+  color:#fff;padding:0;
 }
-#search-input::placeholder{color:rgba(255,255,255,.35)}
-#search-input:focus{border-color:var(--gold);background:rgba(255,255,255,.1)}
-#search-go{
-  background:var(--gold);color:var(--navy2);
-  border:none;border-radius:var(--r6);
-  padding:10px 16px;cursor:pointer;
+#search-input::placeholder{color:rgba(255,255,255,.3)}
+.search-mic{background:none;border:none;cursor:pointer;padding:0;display:flex;color:var(--gold);opacity:.6}
+.search-mic:hover{opacity:1}
+
+/* Category grid — 3 columns */
+.search-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-bottom:20px;
+}
+.search-grid-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(200,168,75,.15);
+  border-radius:14px;
+  padding:18px 8px 14px;
+  cursor:pointer;
+  transition:all .18s;
+  color:rgba(200,168,75,.75);
+}
+.search-grid-btn:hover{
+  background:rgba(200,168,75,.1);
+  border-color:rgba(200,168,75,.35);
+  color:var(--gold);
+  transform:translateY(-1px);
+}
+.search-grid-btn:active{transform:scale(.96)}
+.search-grid-btn svg{
+  width:28px;height:28px;
+  stroke:currentColor;fill:none;
+  stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;
+}
+.search-grid-label{
   font-family:'DM Mono',monospace;font-size:10px;
-  font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);
+}
+
+/* Map preview */
+.search-map-wrap{
+  border-radius:14px;overflow:hidden;
+  height:140px;position:relative;
+  margin-bottom:10px;
+  border:1px solid rgba(200,168,75,.12);
+}
+.search-map-wrap iframe{
+  width:100%;height:100%;border:none;
+  filter:invert(90%) hue-rotate(180deg) saturate(.7) brightness(.85);
+}
+.search-map-pin{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);
+  font-size:24px;text-shadow:0 2px 6px rgba(0,0,0,.5);
+  pointer-events:none;
+}
+.search-map-label{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.06em;text-transform:uppercase;
+  color:rgba(255,255,255,.75);
+  background:rgba(13,25,41,.8);backdrop-filter:blur(6px);
+  padding:4px 12px;border-radius:10px;
   white-space:nowrap;
 }
-#search-go:hover{background:var(--gold2)}
-.search-presets{
-  display:flex;flex-wrap:wrap;gap:6px;
+
+/* Location status */
+.search-loc-status{
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:rgba(255,255,255,.35);
+  text-align:center;
+  margin:8px 0 20px;
+  letter-spacing:.04em;
+  display:flex;align-items:center;justify-content:center;gap:6px;
 }
-.search-preset{
+.search-loc-status .loc-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--gold);display:inline-block;
+}
+.search-loc-status.denied .loc-dot{background:#e8985a}
+
+/* Explore section */
+.search-explore-title{
+  font-family:'Playfair Display',serif;font-size:18px;
+  color:#fff;margin:0 0 14px;
+  font-weight:500;
+}
+.search-explore-scroll{
+  display:flex;gap:12px;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  padding-bottom:10px;
+  scrollbar-width:none;
+}
+.search-explore-scroll::-webkit-scrollbar{display:none}
+.search-poi-card{
+  flex-shrink:0;width:120px;cursor:pointer;
+  transition:transform .15s;
+}
+.search-poi-card:hover{transform:translateY(-2px)}
+.search-poi-img{
+  width:120px;height:80px;border-radius:10px;
+  object-fit:cover;
+  border:1px solid rgba(200,168,75,.12);
+  position:relative;
+  overflow:hidden;
+  background:rgba(255,255,255,.04);
+}
+.search-poi-img img{
+  width:100%;height:100%;object-fit:cover;
+}
+.search-poi-rating{
+  position:absolute;top:6px;left:6px;
+  background:rgba(13,25,41,.85);backdrop-filter:blur(4px);
+  padding:2px 6px;border-radius:6px;
+  font-family:'DM Mono',monospace;font-size:9px;
+  color:var(--gold);
+  display:flex;align-items:center;gap:3px;
+}
+.search-poi-name{
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.04em;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:20px;
-  padding:7px 12px;
   color:rgba(255,255,255,.6);
-  cursor:pointer;
-  transition:all .15s;
-  white-space:nowrap;
+  margin-top:6px;
+  text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
-.search-preset:hover{
-  background:rgba(200,168,75,.12);
-  border-color:rgba(200,168,75,.3);
-  color:var(--gold2);
+
+/* Bottom navigation */
+.search-bottom-nav{
+  display:flex;justify-content:space-around;align-items:center;
+  padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px));
+  border-top:1px solid rgba(200,168,75,.1);
+  background:#0D1929;
+  margin-top:auto;
 }
-.search-preset:active{transform:scale(.95)}
-.search-loc-status{
+.search-nav-tab{
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  background:none;border:none;cursor:pointer;
+  color:rgba(255,255,255,.35);
+  transition:color .15s;
+  padding:4px 16px;
+}
+.search-nav-tab.active{color:var(--gold)}
+.search-nav-tab:hover{color:rgba(200,168,75,.7)}
+.search-nav-tab svg{width:22px;height:22px}
+.search-nav-label{
   font-family:'DM Mono',monospace;font-size:8px;
-  color:rgba(255,255,255,.3);
-  margin-top:var(--sp8);
-  letter-spacing:.04em;
+  letter-spacing:.08em;text-transform:uppercase;
 }
 
 /* ── RESPONSIVE ─────────────────────────────────── */
@@ -3594,7 +3722,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.22 · Updated 25 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.23 · Updated 25 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -3653,25 +3781,92 @@ section[id]{
   <span class="fab-label">Chat</span>
 </div>
 
-<!-- SEARCH CARD (unchanged) -->
+<!-- SEARCH OVERLAY (full-screen app-style) -->
 <div id="search-card" role="dialog" aria-label="Search nearby places">
-  <div class="search-input-row">
-    <input id="search-input" type="text" placeholder="Search Zürich…" autocomplete="off">
-    <button id="search-go">Go</button>
+  <button class="search-close" id="search-close" aria-label="Close search">✕</button>
+  <div class="search-inner">
+    <!-- Search bar -->
+    <div class="search-bar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="search-input" type="text" placeholder="Search Zürich…" autocomplete="off">
+      <button class="search-mic" id="search-mic" aria-label="Voice search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </button>
+    </div>
+
+    <!-- Category grid -->
+    <div class="search-grid">
+      <button class="search-grid-btn" data-q="coffee shop">
+        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        <span class="search-grid-label">Coffee</span>
+      </button>
+      <button class="search-grid-btn" data-q="restaurant">
+        <svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><line x1="7" y1="2" x2="7" y2="22"/><path d="M21 15V2v0a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+        <span class="search-grid-label">Restaurant</span>
+      </button>
+      <button class="search-grid-btn" data-q="pharmacy">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><line x1="12" y1="7" x2="12" y2="12"/><line x1="9.5" y1="9.5" x2="14.5" y2="9.5"/><rect x="4" y="12" width="16" height="8" rx="2"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>
+        <span class="search-grid-label">Pharmacy</span>
+      </button>
+      <button class="search-grid-btn" data-q="ATM">
+        <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="14" x2="6" y2="14.01"/><line x1="10" y1="14" x2="10" y2="14.01"/></svg>
+        <span class="search-grid-label">ATM</span>
+      </button>
+      <button class="search-grid-btn" data-q="bar pub">
+        <svg viewBox="0 0 24 24"><path d="M8 22h8"/><path d="M12 11v11"/><path d="M19.5 2L9.3 12.7a1 1 0 0 0 .7 1.7h8.5a1 1 0 0 0 .7-1.7L9.5 2"/><circle cx="6" cy="5" r="3"/></svg>
+        <span class="search-grid-label">Bar</span>
+      </button>
+      <button class="search-grid-btn" data-q="gelato ice cream">
+        <svg viewBox="0 0 24 24"><path d="M12 22L7 13h10l-5 9z"/><circle cx="12" cy="8" r="5"/><circle cx="8" cy="7" r="3"/><circle cx="16" cy="7" r="3"/></svg>
+        <span class="search-grid-label">Gelato</span>
+      </button>
+      <button class="search-grid-btn" data-q="public toilet restroom">
+        <svg viewBox="0 0 24 24"><path d="M5 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/><path d="M2.5 9h5l.5 7H2l.5-7z"/><line x1="5" y1="16" x2="5" y2="22"/><path d="M19 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/><path d="M16 9h6l-1.5 4h-3L16 9z"/><line x1="17" y1="13" x2="16.5" y2="22"/><line x1="21" y1="13" x2="21.5" y2="22"/><line x1="12" y1="2" x2="12" y2="22"/></svg>
+        <span class="search-grid-label">WC</span>
+      </button>
+      <button class="search-grid-btn" data-q="bookstore">
+        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span class="search-grid-label">Books</span>
+      </button>
+      <button class="search-grid-btn" data-q="souvenir gift shop">
+        <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8V2"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C9 3 12 6 12 8"/><path d="M16.5 8a2.5 2.5 0 0 0 0-5C15 3 12 6 12 8"/></svg>
+        <span class="search-grid-label">Souvenirs</span>
+      </button>
+    </div>
+
+    <!-- Map preview -->
+    <div class="search-map-wrap" id="search-map-wrap">
+      <iframe id="search-map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src=""></iframe>
+      <span class="search-map-label" id="search-map-label">Zürich Center</span>
+    </div>
+
+    <!-- Location status -->
+    <div class="search-loc-status" id="search-loc-status">
+      <span class="loc-dot"></span> Tap to allow location for nearby results
+    </div>
+
+    <!-- Explore section -->
+    <h3 class="search-explore-title" id="search-explore-title">Exploring Zürich Center</h3>
+    <div class="search-explore-scroll" id="search-explore-scroll">
+      <!-- POI cards populated by JS -->
+    </div>
   </div>
-  <div class="search-presets">
-    <button class="search-preset" data-q="coffee shop">☕ Coffee</button>
-    <button class="search-preset" data-q="restaurant">🍽 Restaurant</button>
-    <button class="search-preset" data-q="supermarket grocery">🛒 Grocery</button>
-    <button class="search-preset" data-q="pharmacy">💊 Pharmacy</button>
-    <button class="search-preset" data-q="ATM">🏧 ATM</button>
-    <button class="search-preset" data-q="gas station">⛽ Gas</button>
-    <button class="search-preset" data-q="bar pub">🍺 Bar</button>
-    <button class="search-preset" data-q="liquor store wine beer">🍷 Liquor</button>
-    <button class="search-preset" data-q="public toilet restroom">🚻 WC</button>
-    <button class="search-preset" data-q="hiking trail">🥾 Hiking</button>
-  </div>
-  <div class="search-loc-status" id="search-loc-status">📍 Tap to allow location for nearby results</div>
+
+  <!-- Bottom nav -->
+  <nav class="search-bottom-nav">
+    <button class="search-nav-tab active" id="search-tab-explore">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <span class="search-nav-label">Explore</span>
+    </button>
+    <button class="search-nav-tab" id="search-tab-saved">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+      <span class="search-nav-label">Saved</span>
+    </button>
+    <button class="search-nav-tab" id="search-tab-profile">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="search-nav-label">Profile</span>
+    </button>
+  </nav>
 </div>
 
 <!-- CHAT PANEL -->
@@ -4932,90 +5127,141 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 </script>
 
 <script>
-// ── FLOATING SEARCH (location-aware) ──────────────────
+// ── FLOATING SEARCH (full-screen overlay, location-aware) ─────
 (function() {
   var fab = document.getElementById('search-fab');
   var card = document.getElementById('search-card');
   var input = document.getElementById('search-input');
-  var goBtn = document.getElementById('search-go');
+  var closeBtn = document.getElementById('search-close');
   var status = document.getElementById('search-loc-status');
+  var mapIframe = document.getElementById('search-map-iframe');
+  var mapLabel = document.getElementById('search-map-label');
+  var exploreTitle = document.getElementById('search-explore-title');
+  var exploreScroll = document.getElementById('search-explore-scroll');
   if (!fab || !card) return;
 
   var userLat = null, userLng = null;
-  var geoGranted = false; // true once real GPS acquired
+  var geoGranted = false;
 
-  // City configs keyed by context
   var cities = {
-    copenhagen: { name: 'Copenhagen', lat: 55.6761, lng: 12.5683 },
-    zurich:     { name: 'Zürich',     lat: 47.3769, lng: 8.5417  }
+    copenhagen: {
+      name: 'Copenhagen', lat: 55.6761, lng: 12.5683,
+      pois: [
+        { name: 'Nyhavn Canal', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Nyhavn_MichaD.jpg/320px-Nyhavn_MichaD.jpg', q: 'Nyhavn Copenhagen' },
+        { name: 'Tivoli Gardens', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Tivoli_Gardens_-_main_entrance.jpg/320px-Tivoli_Gardens_-_main_entrance.jpg', q: 'Tivoli Gardens Copenhagen' },
+        { name: 'Strøget', rating: '4.5', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/K%C3%B8benhavn_%28DK%29%2C_Str%C3%B8get_--_2017_--_0224.jpg/320px-K%C3%B8benhavn_%28DK%29%2C_Str%C3%B8get_--_2017_--_0224.jpg', q: 'Stroget Copenhagen' },
+        { name: 'Round Tower', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Rundetaarn_fra_Trinitatis_Kirke.jpg/320px-Rundetaarn_fra_Trinitatis_Kirke.jpg', q: 'Rundetaarn Copenhagen' }
+      ]
+    },
+    zurich: {
+      name: 'Zürich', lat: 47.3769, lng: 8.5417,
+      pois: [
+        { name: 'Bahnhofstrasse', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Bahnhofstrasse_Zurich.jpg/320px-Bahnhofstrasse_Zurich.jpg', q: 'Bahnhofstrasse Zurich' },
+        { name: 'Old Town', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Augustinergasse_in_Z%C3%BCrich.JPG/320px-Augustinergasse_in_Z%C3%BCrich.JPG', q: 'Altstadt Zurich' },
+        { name: 'Lake Zürich', rating: '4.9', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Z%C3%BCrich_-_Z%C3%BCrichsee_IMG_1230.JPG/320px-Z%C3%BCrich_-_Z%C3%BCrichsee_IMG_1230.JPG', q: 'Lake Zurich' },
+        { name: 'Lindenhof', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Lindenhof_-_Limmat_-_Schipfe_2012-09-26_17-42-15_%28P7000%29.JPG/320px-Lindenhof_-_Limmat_-_Schipfe_2012-09-26_17-42-15_%28P7000%29.JPG', q: 'Lindenhof Zurich' },
+        { name: 'Sprüngli', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Caf%C3%A9_Spr%C3%BCngli_am_Paradeplatz_2012-03-10_17-10-22_%28P7000%29.JPG/320px-Caf%C3%A9_Spr%C3%BCngli_am_Paradeplatz_2012-03-10_17-10-22_%28P7000%29.JPG', q: 'Confiserie Sprungli Zurich' }
+      ]
+    }
   };
 
-  // Map scroll-spy section IDs to a city
   function getActiveCity() {
     var sec = (typeof lastActiveSection !== 'undefined') ? lastActiveSection : 'hero';
     if (sec === 'section-denmark' || sec === 'hero') return cities.copenhagen;
     return cities.zurich;
   }
 
-  // Update placeholder and status text to match active city
   function syncCityUI() {
     var city = getActiveCity();
     input.placeholder = 'Search ' + city.name + '…';
-    if (!geoGranted) {
-      if (userLat) {
-        status.textContent = '📍 Location denied — searching ' + city.name + ' center';
-      }
+    if (mapLabel) mapLabel.textContent = city.name + ' Center';
+    if (exploreTitle) exploreTitle.textContent = 'Exploring ' + city.name + ' Center';
+
+    // Update map
+    if (mapIframe) {
+      var mapSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='
+        + (city.lng - 0.015) + '%2C' + (city.lat - 0.008) + '%2C'
+        + (city.lng + 0.015) + '%2C' + (city.lat + 0.008)
+        + '&layer=mapnik&marker=' + city.lat + '%2C' + city.lng;
+      if (mapIframe.getAttribute('src') !== mapSrc) mapIframe.setAttribute('src', mapSrc);
+    }
+
+    // Update POI cards
+    if (exploreScroll) {
+      exploreScroll.innerHTML = '';
+      city.pois.forEach(function(poi) {
+        var c = document.createElement('div');
+        c.className = 'search-poi-card';
+        c.innerHTML = '<div class="search-poi-img"><img src="' + poi.img + '" alt="' + poi.name + '" loading="lazy"><div class="search-poi-rating">' + poi.rating + ' ★</div></div><div class="search-poi-name">' + poi.name + '</div>';
+        c.addEventListener('click', function() {
+          window.open('https://www.google.com/maps/search/' + encodeURIComponent(poi.q), '_blank', 'noopener');
+        });
+        exploreScroll.appendChild(c);
+      });
+    }
+
+    if (!geoGranted && userLat) {
+      status.innerHTML = '<span class="loc-dot"></span> Location denied — searching ' + city.name + ' center';
+      status.className = 'search-loc-status denied';
     }
   }
 
-  // Toggle card
+  function openSearch() {
+    card.classList.add('open');
+    fab.textContent = '✕';
+    document.body.style.overflow = 'hidden';
+    syncCityUI();
+    getLocation();
+    var cp = document.getElementById('chat-panel');
+    if (cp) { cp.style.display = 'none'; cp.classList.remove('open'); }
+  }
+
+  function closeSearch() {
+    card.classList.remove('open');
+    fab.textContent = '🔍';
+    document.body.style.overflow = '';
+  }
+
   fab.addEventListener('click', function() {
-    var isOpen = card.classList.toggle('open');
-    fab.textContent = isOpen ? '✕' : '🔍';
-    if (isOpen) {
-      syncCityUI();
-      getLocation();
-      // Close chat if open
-      var cp = document.getElementById('chat-panel');
-      if (cp) cp.classList.remove('open');
-    }
+    if (card.classList.contains('open')) closeSearch();
+    else openSearch();
   });
 
-  // Close on outside click
-  document.addEventListener('click', function(e) {
-    if (card.classList.contains('open') && !e.target.closest('#search-card') && !e.target.closest('#search-fab')) {
-      card.classList.remove('open');
-      fab.textContent = '🔍';
-    }
+  if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && card.classList.contains('open')) closeSearch();
   });
 
-  // Get user location
   function getLocation() {
     if (geoGranted) return;
     if (!navigator.geolocation) {
       var c = getActiveCity();
-      status.textContent = '📍 Location not available — searching ' + c.name + ' center';
+      status.innerHTML = '<span class="loc-dot"></span> Location not available — searching ' + c.name + ' center';
+      status.className = 'search-loc-status denied';
       userLat = c.lat; userLng = c.lng;
       return;
     }
-    status.textContent = '📍 Getting your location…';
+    status.innerHTML = '<span class="loc-dot"></span> Getting your location…';
+    status.className = 'search-loc-status';
     navigator.geolocation.getCurrentPosition(
       function(pos) {
         userLat = pos.coords.latitude;
         userLng = pos.coords.longitude;
         geoGranted = true;
-        status.textContent = '📍 Location found — results will be nearby';
+        status.innerHTML = '<span class="loc-dot"></span> Location found — results will be nearby';
+        status.className = 'search-loc-status';
       },
       function() {
         var c = getActiveCity();
-        status.textContent = '📍 Location denied — searching ' + c.name + ' center';
+        status.innerHTML = '<span class="loc-dot"></span> Location denied — searching ' + c.name + ' center';
+        status.className = 'search-loc-status denied';
         userLat = c.lat; userLng = c.lng;
       },
       { timeout: 8000, maximumAge: 60000 }
     );
   }
 
-  // Search — uses real GPS if granted, otherwise falls back to active city center
   function doSearch(query) {
     if (!query.trim()) return;
     var city = getActiveCity();
@@ -5024,29 +5270,46 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     var url = 'https://www.google.com/maps/search/' + encodeURIComponent(query)
       + '/@' + lat + ',' + lng + ',15z';
     window.open(url, '_blank', 'noopener');
-    card.classList.remove('open');
-    fab.textContent = '🔍';
+    closeSearch();
     input.value = '';
   }
 
-  // Go button
-  goBtn.addEventListener('click', function() { doSearch(input.value); });
   input.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') doSearch(input.value);
   });
 
-  // Preset buttons
-  document.querySelectorAll('.search-preset').forEach(function(btn) {
+  // Grid buttons
+  document.querySelectorAll('.search-grid-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       doSearch(btn.dataset.q);
     });
   });
 
-  // Keep search card in sync with scroll-spy section changes
+  // Microphone (voice search)
+  var micBtn = document.getElementById('search-mic');
+  if (micBtn && ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    micBtn.addEventListener('click', function() {
+      var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      var rec = new SR();
+      rec.lang = 'en-US';
+      rec.interimResults = false;
+      rec.maxAlternatives = 1;
+      rec.onresult = function(e) {
+        var t = e.results[0][0].transcript;
+        input.value = t;
+        doSearch(t);
+      };
+      rec.start();
+    });
+  } else if (micBtn) {
+    micBtn.style.display = 'none';
+  }
+
+  // Scroll-spy sync
   var lastSyncedSection = '';
   setInterval(function() {
     var sec = (typeof lastActiveSection !== 'undefined') ? lastActiveSection : 'hero';
-    if (sec !== lastSyncedSection) {
+    if (sec !== lastSyncedSection && card.classList.contains('open')) {
       lastSyncedSection = sec;
       syncCityUI();
     }

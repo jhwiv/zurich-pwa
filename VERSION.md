@@ -3,7 +3,7 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v3.22
+**Current:** v3.23
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
@@ -14,3 +14,4 @@
 | v3.20 | 2026-03-25 | Live webcam buttons (11 destinations) | `WEBCAM_BTN` |
 | v3.21 | 2026-03-25 | Webcam iframe overlay for embeddable cams | `WEBCAM_IFRAME` |
 | v3.22 | 2026-03-25 | Local search presets match Maritimes style | `LOCAL_PRESETS` |
+| v3.23 | 2026-03-25 | Full-screen local search overlay with grid buttons, map, POI cards | `LOCAL_FULLSCREEN` |
