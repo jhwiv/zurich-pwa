@@ -1534,7 +1534,11 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   border-top:1px solid rgba(200,168,75,.1);
   background:#0D1929;
   margin-top:auto;
+  flex-shrink:0;
 }
+/* Hide A2HS banner when search overlay is open */
+#search-card.open ~ #a2hs-banner,
+body:has(#search-card.open) #a2hs-banner{display:none!important}
 .search-nav-tab{
   display:flex;flex-direction:column;align-items:center;gap:4px;
   background:none;border:none;cursor:pointer;
@@ -5214,6 +5218,8 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     getLocation();
     var cp = document.getElementById('chat-panel');
     if (cp) { cp.style.display = 'none'; cp.classList.remove('open'); }
+    var a2hs = document.getElementById('a2hs-banner');
+    if (a2hs) a2hs.style.display = 'none';
   }
 
   function closeSearch() {
