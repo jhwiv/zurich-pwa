@@ -775,14 +775,6 @@ img{display:block;max-width:100%}
 .wc-iframe-wrap iframe{
   width:100%;height:100%;border:0;display:block;
 }
-/* ── Search results iframe modal ── */
-.search-iframe-wrap{
-  width:100vw;height:100vh;
-  position:relative;
-}
-.search-iframe-wrap iframe{
-  width:100%;height:100%;border:none;display:block;
-}
 /* ── Street View iframe modal ── */
 .sv-iframe-wrap{
   width:min(960px,calc(100vw - 32px));
@@ -5550,48 +5542,154 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 <button class="wx-modal-close" id="wx-modal-close" aria-label="Close expanded view" onclick="closeWxModal()">&times;</button>
 
 <!-- ── STREET VIEW IFRAME MODAL (Google Street View embed) ── -->
-<!-- ── SEARCH RESULTS IFRAME MODAL ── -->
-<div class="wx-modal-overlay" id="search-iframe-overlay" role="dialog" aria-label="Search results map" aria-modal="true" style="display:none">
-  <div class="search-iframe-wrap">
-    <iframe id="search-iframe" src="" allow="geolocation" allowfullscreen></iframe>
+<!-- ── SEARCH RESULTS MAP OVERLAY ── -->
+<div class="wx-modal-overlay" id="search-map-overlay" role="dialog" aria-label="Nearby search results" aria-modal="true" style="display:none">
+  <div style="width:100%;height:100%;position:relative">
+    <div id="search-results-map" style="width:100%;height:100%"></div>
+    <div id="search-results-status" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#C8A84B;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;z-index:1000;pointer-events:none">Searching…</div>
   </div>
 </div>
-<button class="wx-modal-close" id="search-iframe-close" aria-label="Close search results" onclick="closeSearchIframe()">&times;</button>
+<button class="wx-modal-close" id="search-map-close" aria-label="Close search results" onclick="closeSearchMap()">&times;</button>
 <script>
 (function() {
-  var overlay = document.getElementById('search-iframe-overlay');
-  var iframe = document.getElementById('search-iframe');
-  var closeBtn = document.getElementById('search-iframe-close');
-  if (!overlay || !iframe) return;
+  var overlay = document.getElementById('search-map-overlay');
+  var mapDiv = document.getElementById('search-results-map');
+  var statusEl = document.getElementById('search-results-status');
+  var closeBtn = document.getElementById('search-map-close');
+  var searchMap = null;
+  var markers = [];
+  if (!overlay || !mapDiv) return;
 
-  window.openSearchIframe = function(url) {
-    iframe.src = url;
-    overlay.style.display = '';
-    overlay.classList.add('open','entering');
-    closeBtn.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        overlay.classList.remove('entering');
-      });
-    });
+  // Map search queries to Overpass amenity/shop tags
+  var TAG_MAP = {
+    'coffee shop': '["amenity"~"cafe"]',
+    'restaurant': '["amenity"="restaurant"]',
+    'pharmacy': '["amenity"="pharmacy"]',
+    'ATM': '["amenity"="atm"]',
+    'bar pub': '["amenity"~"bar|pub"]',
+    'gelato ice cream': '["amenity"="ice_cream"]',
+    'public toilet restroom': '["amenity"="toilets"]',
+    'bookstore': '["shop"="books"]',
+    'souvenir gift shop': '["shop"~"gift|souvenir"]'
   };
 
-  window.closeSearchIframe = function() {
-    overlay.classList.add('entering');
-    setTimeout(function() {
-      overlay.classList.remove('open','entering');
-      closeBtn.classList.remove('open');
-      document.body.style.overflow = '';
-      iframe.src = '';
-    }, 300);
+  function getOverpassQuery(query, lat, lng) {
+    var tags = TAG_MAP[query.toLowerCase()];
+    if (!tags) {
+      // Generic name search
+      tags = '["name"~"' + query.replace(/"/g, '') + '",i]';
+    }
+    var r = 1500; // 1.5km radius
+    return '[out:json][timeout:10];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + '););out body 40;';
+  }
+
+  function goldIcon() {
+    return L.divIcon({
+      className: '',
+      html: '<div style="width:28px;height:28px;background:#C8A84B;border:2px solid #0D1929;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center"><div style="width:8px;height:8px;background:#0D1929;border-radius:50%"></div></div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+      popupAnchor: [0, -16]
+    });
+  }
+
+  function userIcon() {
+    return L.divIcon({
+      className: '',
+      html: '<div style="width:16px;height:16px;background:#4A90D9;border:3px solid #fff;border-radius:50%;box-shadow:0 0 8px rgba(74,144,217,.6)"></div>',
+      iconSize: [16, 16],
+      iconAnchor: [8, 8]
+    });
+  }
+
+  window.openSearchIframe = function(url, lat, lng, query) {
+    overlay.style.display = '';
+    overlay.classList.add('open');
+    closeBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    statusEl.style.display = '';
+    statusEl.textContent = 'Searching…';
+
+    // Parse lat/lng from the URL if not passed directly
+    if (!lat || !lng) {
+      var m = url.match(/@([\d.-]+),([\d.-]+)/);
+      if (m) { lat = parseFloat(m[1]); lng = parseFloat(m[2]); }
+      else { lat = 47.3769; lng = 8.5417; }
+    }
+    if (!query) {
+      var qm = url.match(/search\/([^/@]+)/);
+      query = qm ? decodeURIComponent(qm[1]) : 'place';
+    }
+
+    // Init or reset map
+    if (!searchMap) {
+      searchMap = L.map(mapDiv, { zoomControl: true }).setView([lat, lng], 15);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OSM &amp; CartoDB',
+        maxZoom: 19
+      }).addTo(searchMap);
+    } else {
+      searchMap.setView([lat, lng], 15);
+    }
+    markers.forEach(function(m) { searchMap.removeLayer(m); });
+    markers = [];
+
+    // Add user location marker
+    var um = L.marker([lat, lng], { icon: userIcon() }).addTo(searchMap);
+    um.bindPopup('<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:#333">Your location</div>');
+    markers.push(um);
+
+    // Query Overpass
+    var oq = getOverpassQuery(query, lat, lng);
+    fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(oq))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        statusEl.style.display = 'none';
+        if (!data.elements || data.elements.length === 0) {
+          statusEl.textContent = 'No results nearby';
+          statusEl.style.display = '';
+          return;
+        }
+        var bounds = L.latLngBounds([[lat, lng]]);
+        data.elements.forEach(function(el) {
+          if (!el.lat || !el.lon) return;
+          var name = (el.tags && el.tags.name) || query;
+          var addr = (el.tags && (el.tags['addr:street'] || '')) || '';
+          var phone = (el.tags && el.tags.phone) || '';
+          var hours = (el.tags && el.tags.opening_hours) || '';
+          var popup = '<div style="font-family:\'Crimson Pro\',serif;min-width:160px">';
+          popup += '<div style="font-weight:700;font-size:14px;color:#1a1a2e;margin-bottom:4px">' + name + '</div>';
+          if (addr) popup += '<div style="font-size:12px;color:#555">' + addr + '</div>';
+          if (phone) popup += '<div style="font-size:12px;color:#555">' + phone + '</div>';
+          if (hours) popup += '<div style="font-size:11px;color:#777;margin-top:4px">' + hours + '</div>';
+          popup += '<div style="margin-top:6px"><a href="https://www.google.com/maps/dir/?api=1&destination=' + el.lat + ',' + el.lon + '" target="_blank" style="font-family:\'DM Mono\',monospace;font-size:10px;color:#C8A84B;text-decoration:none;letter-spacing:.04em">DIRECTIONS →</a></div>';
+          popup += '</div>';
+          var mk = L.marker([el.lat, el.lon], { icon: goldIcon() }).addTo(searchMap);
+          mk.bindPopup(popup);
+          markers.push(mk);
+          bounds.extend([el.lat, el.lon]);
+        });
+        searchMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
+      })
+      .catch(function() {
+        statusEl.textContent = 'Search unavailable';
+        statusEl.style.display = '';
+      });
+
+    setTimeout(function() { searchMap.invalidateSize(); }, 100);
+  };
+
+  window.closeSearchMap = function() {
+    overlay.classList.remove('open');
+    closeBtn.classList.remove('open');
+    document.body.style.overflow = '';
   };
 
   overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) closeSearchIframe();
+    if (e.target === overlay) closeSearchMap();
   });
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeSearchIframe();
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeSearchMap();
   });
 })();
 </script>
