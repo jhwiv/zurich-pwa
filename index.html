@@ -5658,10 +5658,10 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
           var phone = (el.tags && el.tags.phone) || '';
           var hours = (el.tags && el.tags.opening_hours) || '';
           var popup = '<div style="font-family:\'Crimson Pro\',serif;min-width:160px">';
-          popup += '<div style="font-weight:700;font-size:14px;color:#1a1a2e;margin-bottom:4px">' + name + '</div>';
-          if (addr) popup += '<div style="font-size:12px;color:#555">' + addr + '</div>';
-          if (phone) popup += '<div style="font-size:12px;color:#555">' + phone + '</div>';
-          if (hours) popup += '<div style="font-size:11px;color:#777;margin-top:4px">' + hours + '</div>';
+          popup += '<div style="font-weight:700;font-size:15px;color:#C8A84B;margin-bottom:4px">' + name + '</div>';
+          if (addr) popup += '<div style="font-size:12px;color:#ccc">' + addr + '</div>';
+          if (phone) popup += '<div style="font-size:12px;color:#ccc">' + phone + '</div>';
+          if (hours) popup += '<div style="font-size:11px;color:#999;margin-top:4px">' + hours + '</div>';
           popup += '<div style="margin-top:6px"><a href="https://www.google.com/maps/dir/?api=1&destination=' + el.lat + ',' + el.lon + '" target="_blank" style="font-family:\'DM Mono\',monospace;font-size:10px;color:#C8A84B;text-decoration:none;letter-spacing:.04em">DIRECTIONS →</a></div>';
           popup += '</div>';
           var mk = L.marker([el.lat, el.lon], { icon: goldIcon() }).addTo(searchMap);
