@@ -4982,6 +4982,11 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
   var chatBaseBottom = 86; // px above safe area
 
   function openChat() {
+    // Reset conversation on every open
+    chatMessages.innerHTML = '';
+    chatHistory = [];
+    chatSuggestions.style.display = '';
+    chatInput.value = '';
     chatPanel.style.display = 'flex';
     chatPanel.style.flexDirection = 'column';
     getChatLocation();
