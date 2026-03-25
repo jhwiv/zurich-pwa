@@ -6,8 +6,8 @@ Last updated: 25 March 2026
 
 | Site | URL | Repo | Version | Updated |
 |------|-----|------|---------|---------|
-| Zürich Weekend | [zurich-weekend.com](https://www.zurich-weekend.com) | `jhwiv/zurich-pwa` | **v3.20** | 25 Mar 2026 |
-| Maritimes Grand Loop | [maritimesgrandloop.com](https://maritimesgrandloop.com) | `jhwiv/maritimes-pwa` | **v1.2** | 25 Mar 2026 |
+| Zürich Weekend | [zurich-weekend.com](https://www.zurich-weekend.com) | `jhwiv/zurich-pwa` | **v3.21** | 25 Mar 2026 |
+| Maritimes Grand Loop | [maritimesgrandloop.com](https://maritimesgrandloop.com) | `jhwiv/maritimes-pwa` | **v1.3** | 25 Mar 2026 |
 
 ## Shared Feature Parity
 
@@ -24,6 +24,7 @@ Features that exist on both sites. If a cell shows ✗, that feature hasn't been
 | Interest chip popups | `CHIP_POPUPS` | ✓ | ✓ | Tap chip → info modal |
 | Trip Concierge chat | `CHAT_CONCIERGE` | ✓ | ✓ | AI chat FAB button |
 | Live webcam buttons | `WEBCAM_BTN` | ✓ v3.20 | ✓ v1.2 | New-tab links where webcam available |
+| Webcam iframe overlay | `WEBCAM_IFRAME` | ✓ v3.21 | ✓ v1.3 | Inline embed for roundshot + NS Webcams; new-tab fallback |
 | Alterra branding | `BRANDING` | ✓ | ✓ | Hero + footer |
 | History tab (accordion) | `HISTORY_TAB` | ✓ | ✓ | Collapsible entries |
 | Pronunciation guide | `PRONUNCIATION` | ✓ | ✗ | Danish + Swiss German |

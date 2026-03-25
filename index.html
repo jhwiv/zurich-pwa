@@ -765,6 +765,16 @@ img{display:block;max-width:100%}
   color:var(--gold);
   white-space:nowrap;
 }
+/* ── Webcam iframe modal ── */
+.wc-iframe-wrap{
+  position:relative;width:92vw;max-width:1100px;height:80vh;max-height:750px;
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  background:#0a0e1a;
+}
+.wc-iframe-wrap iframe{
+  width:100%;height:100%;border:0;display:block;
+}
 /* ── Street View iframe modal ── */
 .sv-iframe-wrap{
   width:min(960px,calc(100vw - 32px));
@@ -3405,7 +3415,7 @@ section[id]{
         <div class="sv-panel sv-img-panel" id="sv-2" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3497,8.4919&cbp=11,180,0,0,0&output=svembed" data-sv-img="sv-img/uetliberg.jpg" data-sv-title="Uetliberg Summit" role="button" tabindex="0" onclick="openSvModal(this)" aria-label="View Uetliberg Summit">
           <img src="sv-img/uetliberg.jpg" alt="Uetliberg Summit" loading="lazy">
           <button class="sv-gsv-btn" onclick="event.stopPropagation();openStreetViewPopup('https://www.google.com/maps?layer=c&cbll=47.3497,8.4919&cbp=11,180,0,0,0')" aria-label="Open in Google Street View"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--gold)" opacity=".85"/><circle cx="12" cy="9" r="2.5" fill="var(--navy)"/></svg><span>Street View</span></button>
-          <a class="sv-webcam-btn" href="https://uetliberg.roundshot.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></a>
+          <button class="sv-webcam-btn" onclick="event.stopPropagation();openWebcamEmbed('https://uetliberg.roundshot.com')" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></button>
           <div class="sv-panel-hint">Tap to explore · 360°</div>
         </div>
       </article>
@@ -3416,7 +3426,7 @@ section[id]{
         <div class="sv-panel sv-img-panel" id="sv-3" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.36953,8.53925&cbp=11,240,0,0,0&output=svembed" data-sv-img="sv-img/sprungli.jpeg" data-sv-title="Confiserie Sprüngli" role="button" tabindex="0" onclick="openSvModal(this)" aria-label="View Confiserie Sprüngli">
           <img src="sv-img/sprungli.jpeg" alt="Confiserie Sprüngli" loading="lazy">
           <button class="sv-gsv-btn" onclick="event.stopPropagation();openStreetViewPopup('https://www.google.com/maps?layer=c&cbll=47.36953,8.53925&cbp=11,240,0,0,0')" aria-label="Open in Google Street View"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--gold)" opacity=".85"/><circle cx="12" cy="9" r="2.5" fill="var(--navy)"/></svg><span>Street View</span></button>
-          <a class="sv-webcam-btn" href="https://zuerichtourismus.roundshot.com/stadthaus/" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></a>
+          <button class="sv-webcam-btn" onclick="event.stopPropagation();openWebcamEmbed('https://zuerichtourismus.roundshot.com/stadthaus/')" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></button>
           <div class="sv-panel-hint">Tap to explore · 360°</div>
         </div>
       </article>
@@ -3437,7 +3447,7 @@ section[id]{
         <div class="sv-panel sv-img-panel" id="sv-5" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.371,8.5378&cbp=11,0,0,0,0&output=svembed" data-sv-img="sv-img/augustinergasse.jpg" data-sv-title="Augustinergasse" role="button" tabindex="0" onclick="openSvModal(this)" aria-label="View Augustinergasse">
           <img src="sv-img/augustinergasse.jpg" alt="Augustinergasse" loading="lazy">
           <button class="sv-gsv-btn" onclick="event.stopPropagation();openStreetViewPopup('https://www.google.com/maps?layer=c&cbll=47.371,8.5378&cbp=11,0,0,0,0')" aria-label="Open in Google Street View"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--gold)" opacity=".85"/><circle cx="12" cy="9" r="2.5" fill="var(--navy)"/></svg><span>Street View</span></button>
-          <a class="sv-webcam-btn" href="https://zuerichtourismus.roundshot.com/stadthaus/" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></a>
+          <button class="sv-webcam-btn" onclick="event.stopPropagation();openWebcamEmbed('https://zuerichtourismus.roundshot.com/stadthaus/')" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></button>
           <div class="sv-panel-hint">Tap to explore · 360°</div>
         </div>
       </article>
@@ -3448,7 +3458,7 @@ section[id]{
         <div class="sv-panel sv-img-panel" id="sv-6" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.37300,8.54350&cbp=11,270,0,0,0&output=svembed" data-sv-img="sv-img/lindenhof.jpg" data-sv-title="Lindenhof" role="button" tabindex="0" onclick="openSvModal(this)" aria-label="View Lindenhof">
           <img src="sv-img/lindenhof.jpg" alt="Lindenhof" loading="lazy">
           <button class="sv-gsv-btn" onclick="event.stopPropagation();openStreetViewPopup('https://www.google.com/maps?layer=c&cbll=47.37300,8.54350&cbp=11,270,0,0,0')" aria-label="Open in Google Street View"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--gold)" opacity=".85"/><circle cx="12" cy="9" r="2.5" fill="var(--navy)"/></svg><span>Street View</span></button>
-          <a class="sv-webcam-btn" href="https://zuerichtourismus.roundshot.com/stadthaus/" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></a>
+          <button class="sv-webcam-btn" onclick="event.stopPropagation();openWebcamEmbed('https://zuerichtourismus.roundshot.com/stadthaus/')" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></button>
           <div class="sv-panel-hint">Tap to explore · 360°</div>
         </div>
       </article>
@@ -3469,7 +3479,7 @@ section[id]{
         <div class="sv-panel sv-img-panel" id="sv-8" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.3703,8.5399&cbp=11,90,0,0,0&output=svembed" data-sv-img="sv-img/zeughauskeller.jpg" data-sv-title="Zeughauskeller" role="button" tabindex="0" onclick="openSvModal(this)" aria-label="View Zeughauskeller">
           <img src="sv-img/zeughauskeller.jpg" alt="Zeughauskeller" loading="lazy">
           <button class="sv-gsv-btn" onclick="event.stopPropagation();openStreetViewPopup('https://www.google.com/maps?layer=c&cbll=47.3703,8.5399&cbp=11,90,0,0,0')" aria-label="Open in Google Street View"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--gold)" opacity=".85"/><circle cx="12" cy="9" r="2.5" fill="var(--navy)"/></svg><span>Street View</span></button>
-          <a class="sv-webcam-btn" href="https://zuerichtourismus.roundshot.com/stadthaus/" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></a>
+          <button class="sv-webcam-btn" onclick="event.stopPropagation();openWebcamEmbed('https://zuerichtourismus.roundshot.com/stadthaus/')" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></button>
           <div class="sv-panel-hint">Tap to explore · 360°</div>
         </div>
       </article>
@@ -3501,7 +3511,7 @@ section[id]{
         <div class="sv-panel sv-img-panel" id="sv-11" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.367,8.5395&cbp=11,90,0,0,0&output=svembed" data-sv-img="sv-img/burkliplatz.jpg" data-sv-title="Bürkliplatz" role="button" tabindex="0" onclick="openSvModal(this)" aria-label="View Bürkliplatz">
           <img src="sv-img/burkliplatz.jpg" alt="Bürkliplatz" loading="lazy">
           <button class="sv-gsv-btn" onclick="event.stopPropagation();openStreetViewPopup('https://www.google.com/maps?layer=c&cbll=47.367,8.5395&cbp=11,90,0,0,0')" aria-label="Open in Google Street View"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--gold)" opacity=".85"/><circle cx="12" cy="9" r="2.5" fill="var(--navy)"/></svg><span>Street View</span></button>
-          <a class="sv-webcam-btn" href="https://nzz.roundshot.com" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></a>
+          <button class="sv-webcam-btn" onclick="event.stopPropagation();openWebcamEmbed('https://nzz.roundshot.com')" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></button>
           <div class="sv-panel-hint">Tap to explore · 360°</div>
         </div>
       </article>
@@ -3512,7 +3522,7 @@ section[id]{
         <div class="sv-panel sv-img-panel" id="sv-12" data-sv-url="https://www.google.com/maps?layer=c&cbll=47.37625,8.5437&cbp=11,20,0,0,0&output=svembed" data-sv-img="sv-img/polybahn.jpg" data-sv-title="Polybahn" role="button" tabindex="0" onclick="openSvModal(this)" aria-label="View Polybahn">
           <img src="sv-img/polybahn.jpg" alt="Polybahn" loading="lazy">
           <button class="sv-gsv-btn" onclick="event.stopPropagation();openStreetViewPopup('https://www.google.com/maps?layer=c&cbll=47.37625,8.5437&cbp=11,20,0,0,0')" aria-label="Open in Google Street View"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="var(--gold)" opacity=".85"/><circle cx="12" cy="9" r="2.5" fill="var(--navy)"/></svg><span>Street View</span></button>
-          <a class="sv-webcam-btn" href="https://zuerichtourismus.roundshot.com/zuerichwest/" target="_blank" rel="noopener" onclick="event.stopPropagation()" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></a>
+          <button class="sv-webcam-btn" onclick="event.stopPropagation();openWebcamEmbed('https://zuerichtourismus.roundshot.com/zuerichwest/')" aria-label="Open Live Webcam"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="15" height="12" rx="2" fill="var(--gold)" opacity=".85"/><path d="M22 8l-5 3.5v-1L22 8zM22 16l-5-3.5v1L22 16z" fill="var(--gold)" opacity=".85"/><polygon points="17,8.5 22,6 22,18 17,15.5" fill="var(--gold)" opacity=".85"/></svg><span>Webcam</span></button>
           <div class="sv-panel-hint">Tap to explore · 360°</div>
         </div>
       </article>
@@ -3584,7 +3594,7 @@ section[id]{
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.20 · Updated 25 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.21 · Updated 25 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5171,6 +5181,14 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
   </div>
 </div>
 <button class="wx-modal-close" id="sv-iframe-close" aria-label="Close Street View" onclick="closeSvIframe()">&times;</button>
+<!-- ── WEBCAM IFRAME MODAL ── -->
+<div class="wx-modal-overlay" id="wc-iframe-overlay" role="dialog" aria-label="Live Webcam" aria-modal="true">
+  <div class="wc-iframe-wrap">
+    <iframe id="wc-iframe" src="" allow="accelerometer;gyroscope" allowfullscreen></iframe>
+  </div>
+</div>
+<button class="wx-modal-close" id="wc-iframe-close" aria-label="Close Webcam" onclick="closeWcIframe()">&times;</button>
+
 
 
 <!-- ── STREET VIEW EXPANDED MODAL ───────────── -->
@@ -5246,6 +5264,42 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeSvIframe();
   });
 })();
+// ── WEBCAM IFRAME MODAL ──────────────────────
+(function() {
+  var overlay = document.getElementById('wc-iframe-overlay');
+  var closeBtn = document.getElementById('wc-iframe-close');
+  var iframe = document.getElementById('wc-iframe');
+
+  window.openWebcamEmbed = function(url) {
+    iframe.src = url;
+    overlay.classList.add('open','entering');
+    closeBtn.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.classList.remove('entering');
+      });
+    });
+  };
+
+  window.closeWcIframe = function() {
+    overlay.classList.add('entering');
+    setTimeout(function() {
+      overlay.classList.remove('open','entering');
+      closeBtn.classList.remove('open');
+      document.body.style.overflow = '';
+      iframe.src = '';
+    }, 300);
+  };
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeWcIframe();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeWcIframe();
+  });
+})();
+
 
 
 // ── STREET VIEW EXPANDED MODAL LOGIC ───────────
