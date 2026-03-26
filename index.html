@@ -1747,58 +1747,52 @@ section[id]{
   pointer-events:none;
 }
 #chat-panel{
-  position:fixed;
-  bottom:calc(86px + env(safe-area-inset-bottom,0px));
-  left:var(--sp16);right:var(--sp16);
-  max-width:420px;z-index:191;
-  background:linear-gradient(170deg,#0f1e35 0%,#0a1525 100%);
-  border:1px solid rgba(200,168,75,.2);
-  border-radius:16px;
-  box-shadow:0 12px 48px rgba(0,0,0,.8),0 0 0 1px rgba(200,168,75,.08);
-  max-height:min(460px, calc(100vh - 160px));
-  overflow:hidden;
   display:none;
+  position:fixed;top:0;left:0;right:0;bottom:0;
+  z-index:200;
+  background:linear-gradient(180deg,#0D1929 0%,#152238 100%);
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
 }
-#chat-panel.open{
-  display:flex;
-  flex-direction:column;
+#chat-panel.open{display:flex;flex-direction:column}
+.chat-close{
+  position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:16px;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.7);font-size:18px;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:5;transition:all .15s;
+}
+.chat-close:hover{background:rgba(255,255,255,.14);color:#fff}
+.chat-inner{
+  flex:1;padding:calc(16px + env(safe-area-inset-top,0px)) 20px 0;
+  max-width:420px;width:100%;margin:0 auto;
+  display:flex;flex-direction:column;
 }
 .chat-header{
-  padding:16px 16px 0;
-  display:flex;flex-direction:column;align-items:center;
-  position:relative;
+  text-align:center;margin-bottom:16px;
 }
 .chat-header-title{
   font-family:'DM Mono',monospace;
-  font-size:13px;letter-spacing:.14em;
+  font-size:12px;letter-spacing:.14em;
   text-transform:uppercase;
-  color:#fff;
+  color:var(--gold);
   font-weight:700;
-  text-align:center;
 }
 .chat-header-sub{
   font-family:'Crimson Pro',serif;
   font-size:13px;
-  color:rgba(255,255,255,.5);
-  text-align:center;
-  margin-top:4px;
-  line-height:1.4;
+  color:rgba(255,255,255,.45);
+  margin-top:4px;line-height:1.4;
 }
-.chat-header-close{
-  position:absolute;top:12px;right:12px;
-  width:28px;height:28px;
-  display:flex;align-items:center;justify-content:center;
-  border-radius:50%;font-size:16px;
-  color:rgba(255,255,255,.6);
-  transition:all .15s;
-}
-.chat-header-close:hover{color:#fff;background:rgba(255,255,255,.1)}
 .chat-messages{
+  flex:1;
   overflow-y:auto;
-  padding:12px 16px;
+  padding:0 0 12px;
   display:flex;flex-direction:column;gap:6px;
   scrollbar-width:thin;
   scrollbar-color:rgba(200,168,75,.2) transparent;
+  min-height:0;
 }
 .chat-messages::-webkit-scrollbar{width:4px}
 .chat-messages::-webkit-scrollbar-track{background:transparent}
@@ -1862,60 +1856,51 @@ section[id]{
 .chat-typing span:nth-child(2){animation-delay:.15s}
 .chat-typing span:nth-child(3){animation-delay:.3s}
 @keyframes chatBounce{from{opacity:.3;transform:translateY(0)}to{opacity:1;transform:translateY(-4px)}}
-.chat-input-row{
-  padding:10px 14px;
-  border-top:1px solid rgba(200,168,75,.08);
-  display:flex;gap:8px;align-items:center;
-  background:rgba(0,0,0,.2);
-  border-radius:0 0 16px 16px;
+/* Chat input bar — matches search bar style */
+.chat-bar{
+  display:flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(200,168,75,.2);
+  border-radius:28px;
+  padding:10px 16px;
+  margin-bottom:16px;
+  transition:border-color .2s;
 }
-.chat-input-mic{
-  flex-shrink:0;width:32px;height:32px;
-  display:flex;align-items:center;justify-content:center;
-  color:rgba(255,255,255,.35);font-size:16px;
-}
+.chat-bar:focus-within{border-color:var(--gold)}
+.chat-bar svg{flex-shrink:0;color:rgba(200,168,75,.5)}
 #chat-input{
-  flex:1;
-  font-family:'Crimson Pro',serif;font-size:14px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  border-radius:20px;
-  padding:9px 14px;
-  color:#fff;
-  outline:none;
-  resize:none;
-  min-height:38px;
-  max-height:80px;
+  flex:1;background:none;border:none;outline:none;
+  font-family:'Crimson Pro',serif;font-size:16px;
+  color:#fff;padding:0;resize:none;
+  min-height:22px;max-height:80px;
 }
-#chat-input::placeholder{color:rgba(255,255,255,.4)}
-#chat-input:focus{border-color:rgba(200,168,75,.4);background:rgba(255,255,255,.08)}
+#chat-input::placeholder{color:rgba(255,255,255,.3)}
 #chat-send{
   background:var(--gold);color:var(--navy2);
   border:none;border-radius:20px;
-  padding:9px 16px;cursor:pointer;
+  padding:8px 14px;cursor:pointer;
   font-family:'DM Mono',monospace;font-size:10px;
   font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  white-space:nowrap;
-  min-height:38px;
+  white-space:nowrap;min-height:34px;
   transition:background .15s;
 }
 #chat-send:hover{background:var(--gold2)}
 #chat-send:disabled{opacity:.4;cursor:default}
+/* Suggestion grid — matches search category grid */
 .chat-suggestions{
-  display:flex;flex-wrap:wrap;gap:8px;
-  padding:12px 16px 8px;
-  justify-content:center;
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:8px;margin-bottom:16px;
 }
 .chat-suggest-btn{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.06em;
-  background:transparent;
-  border:1px solid rgba(200,168,75,.35);
-  border-radius:20px;
-  padding:8px 16px;
-  color:var(--gold);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:5px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(200,168,75,.15);
+  border-radius:12px;
+  padding:14px 8px 12px;
+  color:rgba(200,168,75,.75);
   cursor:pointer;
-  transition:all .15s;
+  transition:all .18s;
   white-space:nowrap;
 }
 .chat-suggest-btn:hover{
@@ -3904,22 +3889,51 @@ section[id]{
 
 <!-- CHAT PANEL -->
 <div id="chat-panel" role="dialog" aria-label="Trip assistant chat">
-  <div class="chat-header">
-    <span class="chat-header-title">Trip Concierge</span>
-    <span class="chat-header-sub">Ask about your itinerary, weather<br>or what to do next</span>
-    <button class="chat-header-close" id="chat-close" aria-label="Close chat">✕</button>
-  </div>
-  <div class="chat-suggestions" id="chat-suggestions">
-    <button class="chat-suggest-btn" data-q="What should I do next?">What's next</button>
-    <button class="chat-suggest-btn" data-q="Will it rain today?">Rain today</button>
-    <button class="chat-suggest-btn" data-q="Best restaurant tonight?">Dinner</button>
-    <button class="chat-suggest-btn" data-q="How do I get to Uetliberg?">Uetliberg</button>
-  </div>
-  <div class="chat-messages" id="chat-messages"></div>
-  <div class="chat-input-row">
-    <span class="chat-input-mic">🎙</span>
-    <textarea id="chat-input" placeholder="Ask anything about the trip" rows="1"></textarea>
-    <button id="chat-send">Send</button>
+  <button class="chat-close" id="chat-close" aria-label="Close chat">✕</button>
+  <div class="chat-inner">
+    <!-- Header -->
+    <div class="chat-header">
+      <span class="chat-header-title">Trip Concierge</span>
+      <span class="chat-header-sub">Ask about your itinerary, weather, or what to do next</span>
+    </div>
+
+    <!-- Chat input bar (search-bar style) -->
+    <div class="chat-bar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <textarea id="chat-input" placeholder="Ask anything about the trip…" rows="1"></textarea>
+      <button id="chat-send">Send</button>
+    </div>
+
+    <!-- Quick prompt grid (category grid style) -->
+    <div class="chat-suggestions" id="chat-suggestions">
+      <button class="chat-suggest-btn" data-q="What should I do next?">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65)">What’s Next</span>
+      </button>
+      <button class="chat-suggest-btn" data-q="Will it rain today?">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65)">Weather</span>
+      </button>
+      <button class="chat-suggest-btn" data-q="Best restaurant for dinner tonight?">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/><line x1="7" y1="2" x2="7" y2="22"/><path d="M21 15V2a5 5 0 00-5 5v6c0 1.1.9 2 2 2h3zm0 0v7"/></svg>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65)">Dinner</span>
+      </button>
+      <button class="chat-suggest-btn" data-q="How do I get to Uetliberg?">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65)">Directions</span>
+      </button>
+      <button class="chat-suggest-btn" data-q="What time is the Zeughauskeller dinner reservation?">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65)">Schedule</span>
+      </button>
+      <button class="chat-suggest-btn" data-q="Tell me about the history of this area">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <span style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.65)">History</span>
+      </button>
+    </div>
+
+    <!-- Chat messages -->
+    <div class="chat-messages" id="chat-messages"></div>
   </div>
 </div>
 
@@ -5012,53 +5026,27 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     );
   }
 
-  var chatBaseBottom = 86; // px above safe area
-
   function openChat() {
-    // Reset conversation on every open
     chatMessages.innerHTML = '';
     chatHistory = [];
     chatSuggestions.style.display = '';
     chatInput.value = '';
-    chatPanel.style.display = 'flex';
-    chatPanel.style.flexDirection = 'column';
+    chatPanel.classList.add('open');
+    chatFab.textContent = '\u2715';
+    document.body.style.overflow = 'hidden';
     getChatLocation();
-    // Don't auto-focus input — let user tap it when ready
-    // This prevents the keyboard from popping up immediately
     var sc = document.getElementById('search-card');
     if (sc) sc.classList.remove('open');
     var sf = document.getElementById('search-fab');
     if (sf) sf.textContent = '\uD83D\uDD0D';
   }
   function closeChat() {
-    chatPanel.style.display = 'none';
-    chatPanel.style.bottom = 'calc(' + chatBaseBottom + 'px + env(safe-area-inset-bottom,0px))';
+    chatPanel.classList.remove('open');
+    chatFab.textContent = '\uD83D\uDCAC';
+    document.body.style.overflow = '';
   }
   function isChatOpen() {
-    return chatPanel.style.display === 'flex';
-  }
-
-  // Move chat panel above iOS keyboard when it opens
-  function repositionChat() {
-    if (!isChatOpen()) return;
-    var vv = window.visualViewport;
-    if (!vv) return;
-    var keyboardHeight = window.innerHeight - vv.height - vv.offsetTop;
-    if (keyboardHeight > 100) {
-      // Keyboard is open — anchor panel just above keyboard
-      chatPanel.style.position = 'fixed';
-      chatPanel.style.bottom = keyboardHeight + 'px';
-      chatPanel.style.top = 'auto';
-      chatPanel.style.maxHeight = Math.min(vv.height - 20, 400) + 'px';
-    } else {
-      // Keyboard closed — restore original position
-      chatPanel.style.bottom = 'calc(' + chatBaseBottom + 'px + env(safe-area-inset-bottom,0px))';
-      chatPanel.style.maxHeight = 'min(460px, calc(100vh - 160px))';
-    }
-  }
-  if (window.visualViewport) {
-    window.visualViewport.addEventListener('resize', repositionChat);
-    window.visualViewport.addEventListener('scroll', repositionChat);
+    return chatPanel.classList.contains('open');
   }
 
   chatFab.addEventListener('click', function() {
@@ -5069,12 +5057,8 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     closeChat();
   });
 
-  document.addEventListener('click', function(e) {
-    if (isChatOpen()
-      && !e.target.closest('#chat-panel')
-      && !e.target.closest('#chat-fab')) {
-      closeChat();
-    }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isChatOpen()) closeChat();
   });
 
   chatInput.addEventListener('input', function() {
@@ -5371,9 +5355,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     var city = getActiveCity();
     var lat = geoGranted ? userLat : city.lat;
     var lng = geoGranted ? userLng : city.lng;
-    var url = 'https://www.google.com/maps/search/' + encodeURIComponent(query)
-      + '/@' + lat + ',' + lng + ',15z';
-    openSearchIframe(url);
+    openSearchIframe(null, lat, lng, query.trim());
     closeSearch();
     input.value = '';
   }
@@ -5563,24 +5545,88 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
   // Map search queries to Overpass amenity/shop tags
   var TAG_MAP = {
     'coffee shop': '["amenity"~"cafe"]',
+    'coffee': '["amenity"~"cafe"]',
+    'cafe': '["amenity"~"cafe"]',
     'restaurant': '["amenity"="restaurant"]',
+    'food': '["amenity"~"restaurant|fast_food|cafe"]',
+    'eat': '["amenity"~"restaurant|fast_food|cafe"]',
     'pharmacy': '["amenity"="pharmacy"]',
-    'ATM': '["amenity"="atm"]',
+    'drug store': '["amenity"="pharmacy"]',
+    'atm': '["amenity"="atm"]',
+    'bank': '["amenity"~"bank|atm"]',
     'bar pub': '["amenity"~"bar|pub"]',
+    'bar': '["amenity"~"bar|pub"]',
+    'pub': '["amenity"~"bar|pub"]',
+    'beer': '["amenity"~"bar|pub|biergarten"]',
+    'wine': '["amenity"~"bar|wine_bar"]',
     'gelato ice cream': '["amenity"="ice_cream"]',
+    'ice cream': '["amenity"="ice_cream"]',
+    'gelato': '["amenity"="ice_cream"]',
     'public toilet restroom': '["amenity"="toilets"]',
+    'toilet': '["amenity"="toilets"]',
+    'wc': '["amenity"="toilets"]',
+    'bathroom': '["amenity"="toilets"]',
     'bookstore': '["shop"="books"]',
-    'souvenir gift shop': '["shop"~"gift|souvenir"]'
+    'books': '["shop"="books"]',
+    'souvenir gift shop': '["shop"~"gift|souvenir"]',
+    'souvenir': '["shop"~"gift|souvenir"]',
+    'gift': '["shop"~"gift|souvenir"]',
+    'shopping': '["shop"~"supermarket|department_store|mall|clothes"]',
+    'supermarket': '["shop"="supermarket"]',
+    'grocery': '["shop"~"supermarket|convenience"]',
+    'hotel': '["tourism"~"hotel|hostel"]',
+    'museum': '["tourism"="museum"]',
+    'parking': '["amenity"="parking"]',
+    'gas': '["amenity"="fuel"]',
+    'petrol': '["amenity"="fuel"]',
+    'hospital': '["amenity"~"hospital|clinic"]',
+    'doctor': '["amenity"~"doctors|clinic"]',
+    'police': '["amenity"="police"]',
+    'post office': '["amenity"="post_office"]',
+    'post': '["amenity"="post_office"]',
+    'taxi': '["amenity"="taxi"]',
+    'train': '["railway"="station"]',
+    'bus': '["highway"="bus_stop"]',
+    'church': '["amenity"="place_of_worship"]',
+    'park': '["leisure"="park"]',
+    'playground': '["leisure"="playground"]',
+    'pizza': '["cuisine"="pizza"]',
+    'sushi': '["cuisine"~"sushi|japanese"]',
+    'chinese': '["cuisine"="chinese"]',
+    'indian': '["cuisine"="indian"]',
+    'italian': '["cuisine"="italian"]',
+    'bakery': '["shop"="bakery"]',
+    'bread': '["shop"="bakery"]',
+    'chocolate': '["shop"~"chocolate|confectionery"]',
+    'wifi': '["internet_access"="wlan"]'
   };
 
   function getOverpassQuery(query, lat, lng) {
-    var tags = TAG_MAP[query.toLowerCase()];
+    var q = query.toLowerCase().trim();
+    var tags = TAG_MAP[q];
     if (!tags) {
-      // Generic name search
-      tags = '["name"~"' + query.replace(/"/g, '') + '",i]';
+      // Try partial match: check if query contains any known key
+      var keys = Object.keys(TAG_MAP);
+      for (var k = 0; k < keys.length; k++) {
+        if (q.indexOf(keys[k]) >= 0 || keys[k].indexOf(q) >= 0) {
+          tags = TAG_MAP[keys[k]];
+          break;
+        }
+      }
     }
-    var r = 1500; // 1.5km radius
-    return '[out:json][timeout:10];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + '););out body 40;';
+    if (!tags) {
+      // Fallback: search name OR cuisine across all amenities
+      var safe = q.replace(/["\\]/g, '');
+      tags = '["name"~"' + safe + '",i]';
+      // Also search by cuisine for food-related terms
+      var r = 1500;
+      return '[out:json][timeout:12];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + ');'
+        + 'node["cuisine"~"' + safe + '",i](around:' + r + ',' + lat + ',' + lng + ');'
+        + 'node["amenity"]["name"~"' + safe + '",i](around:' + r + ',' + lat + ',' + lng + ');'
+        + 'way["name"~"' + safe + '",i](around:' + r + ',' + lat + ',' + lng + '););out center 40;';
+    }
+    var r = 1500;
+    return '[out:json][timeout:12];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + '););out body 40;';
   }
 
   function goldIcon() {
@@ -5612,13 +5658,19 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 
     // Parse lat/lng from the URL if not passed directly
     if (!lat || !lng) {
-      var m = url.match(/@([\d.-]+),([\d.-]+)/);
-      if (m) { lat = parseFloat(m[1]); lng = parseFloat(m[2]); }
-      else { lat = 47.3769; lng = 8.5417; }
+      if (url) {
+        var m = url.match(/@([\d.-]+),([\d.-]+)/);
+        if (m) { lat = parseFloat(m[1]); lng = parseFloat(m[2]); }
+      }
+      if (!lat || !lng) { lat = 47.3769; lng = 8.5417; }
     }
     if (!query) {
-      var qm = url.match(/search\/([^/@]+)/);
-      query = qm ? decodeURIComponent(qm[1]) : 'place';
+      if (url) {
+        var qm = url.match(/search\/([^/@]+)/);
+        query = qm ? decodeURIComponent(qm[1]) : 'place';
+      } else {
+        query = 'place';
+      }
     }
 
     // Init or reset map
