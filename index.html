@@ -5755,29 +5755,33 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     um.bindPopup('<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:#333">Your location</div>');
     markers.push(um);
 
-    // Query Overpass (POST with fallback to GET, then Google Maps)
+    // Query Overpass with retry on rate-limit
     var oq = getOverpassQuery(query, lat, lng);
-    var endpoints = [
-      'https://overpass-api.de/api/interpreter',
-      'https://overpass.kumi.systems/api/interpreter'
-    ];
-    function tryEndpoint(idx) {
-      if (idx >= endpoints.length) return Promise.reject(new Error('All endpoints failed'));
-      return fetch(endpoints[idx], {
+    function queryOverpass(attempt) {
+      return fetch('https://overpass-api.de/api/interpreter', {
         method:'POST',
         headers:{'Content-Type':'application/x-www-form-urlencoded'},
         body:'data='+encodeURIComponent(oq)
       }).then(function(r) {
+        if (r.status === 429 || r.status === 504 || r.status === 503) throw new Error('rate-limited');
         if (!r.ok) throw new Error('HTTP '+r.status);
         return r.text();
       }).then(function(text) {
-        try { return JSON.parse(text); }
-        catch(e) { throw new Error('Invalid JSON'); }
-      }).catch(function() {
-        return tryEndpoint(idx + 1);
+        if (text.charAt(0) !== '{') throw new Error('not-json');
+        return JSON.parse(text);
+      }).catch(function(err) {
+        if (attempt < 3) {
+          // Wait longer between retries: 1.5s, 3s, 5s
+          var delay = attempt * 1500 + 500;
+          statusEl.textContent = 'Searching… (retry ' + attempt + ')';
+          return new Promise(function(resolve) {
+            setTimeout(function() { resolve(queryOverpass(attempt + 1)); }, delay);
+          });
+        }
+        throw err;
       });
     }
-    tryEndpoint(0)
+    queryOverpass(1)
       .then(function(data) {
         statusEl.style.display = 'none';
         if (!data || !data.elements || data.elements.length === 0) {
