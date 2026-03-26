@@ -5694,9 +5694,13 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     um.bindPopup('<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:#333">Your location</div>');
     markers.push(um);
 
-    // Query Overpass
+    // Query Overpass (POST is more reliable than GET for Overpass API)
     var oq = getOverpassQuery(query, lat, lng);
-    fetch('https://overpass-api.de/api/interpreter?data=' + encodeURIComponent(oq))
+    fetch('https://overpass-api.de/api/interpreter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'data=' + encodeURIComponent(oq)
+    })
       .then(function(r) { return r.json(); })
       .then(function(data) {
         statusEl.style.display = 'none';
@@ -5727,8 +5731,12 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         searchMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
       })
       .catch(function() {
-        statusEl.textContent = 'Search unavailable';
+        // Fallback: open Google Maps search in a new tab
+        statusEl.textContent = 'Opening Google Maps…';
         statusEl.style.display = '';
+        var gmUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(query) + '/@' + lat + ',' + lng + ',15z';
+        window.open(gmUrl, '_blank');
+        setTimeout(function() { closeSearchMap(); }, 1000);
       });
 
     setTimeout(function() { searchMap.invalidateSize(); }, 100);
