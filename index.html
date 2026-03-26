@@ -1722,7 +1722,7 @@ section[id]{
 /* ── CHAT FAB & PANEL ──────────────────────────── */
 .fab-wrap{
   position:fixed;bottom:calc(var(--sp16) + env(safe-area-inset-bottom,0px));
-  z-index:190;
+  z-index:220;
   display:flex;flex-direction:column;align-items:center;gap:4px;
 }
 #search-fab-wrap{left:var(--sp16)}
@@ -1754,7 +1754,10 @@ section[id]{
   overflow-y:auto;
   -webkit-overflow-scrolling:touch;
 }
-#chat-panel.open{display:flex;flex-direction:column}
+#chat-panel.open{display:flex!important;flex-direction:column}
+#chat-panel.open ~ #a2hs-banner,
+body:has(#chat-panel.open) #a2hs-banner{display:none!important}
+body:has(#chat-panel.open) .fab-wrap{display:none!important}
 .chat-close{
   position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:16px;
   width:36px;height:36px;border-radius:50%;
