@@ -5342,7 +5342,8 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         c.className = 'search-poi-card';
         c.innerHTML = '<div class="search-poi-img"><img src="' + poi.img + '" alt="' + poi.name + '" loading="lazy"><div class="search-poi-rating">' + poi.rating + ' ★</div></div><div class="search-poi-name">' + poi.name + '</div>';
         c.addEventListener('click', function() {
-          openSearchIframe('https://www.google.com/maps/search/' + encodeURIComponent(poi.q));
+          openSearchIframe(null, city.lat, city.lng, poi.q);
+          closeSearch();
         });
         exploreScroll.appendChild(c);
       });
@@ -5753,17 +5754,32 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     um.bindPopup('<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:#333">Your location</div>');
     markers.push(um);
 
-    // Query Overpass (POST is more reliable than GET for Overpass API)
+    // Query Overpass (POST with fallback to GET, then Google Maps)
     var oq = getOverpassQuery(query, lat, lng);
-    fetch('https://overpass-api.de/api/interpreter', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: 'data=' + encodeURIComponent(oq)
-    })
-      .then(function(r) { return r.json(); })
+    var endpoints = [
+      'https://overpass-api.de/api/interpreter',
+      'https://overpass.kumi.systems/api/interpreter'
+    ];
+    function tryEndpoint(idx) {
+      if (idx >= endpoints.length) return Promise.reject(new Error('All endpoints failed'));
+      return fetch(endpoints[idx], {
+        method:'POST',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:'data='+encodeURIComponent(oq)
+      }).then(function(r) {
+        if (!r.ok) throw new Error('HTTP '+r.status);
+        return r.text();
+      }).then(function(text) {
+        try { return JSON.parse(text); }
+        catch(e) { throw new Error('Invalid JSON'); }
+      }).catch(function() {
+        return tryEndpoint(idx + 1);
+      });
+    }
+    tryEndpoint(0)
       .then(function(data) {
         statusEl.style.display = 'none';
-        if (!data.elements || data.elements.length === 0) {
+        if (!data || !data.elements || data.elements.length === 0) {
           statusEl.textContent = 'No results nearby';
           statusEl.style.display = '';
           return;
@@ -5789,13 +5805,12 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         });
         searchMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
       })
-      .catch(function() {
-        // Fallback: open Google Maps search in a new tab
-        statusEl.textContent = 'Opening Google Maps…';
+      .catch(function(err) {
+        // Final fallback: show error with option to try Google Maps
+        console.error('Overpass search failed:', err);
+        statusEl.innerHTML = 'Search unavailable<br><a href="https://www.google.com/maps/search/' + encodeURIComponent(query) + '/@' + lat + ',' + lng + ',15z" target="_blank" style="color:#C8A84B;font-size:11px;text-decoration:underline;margin-top:8px;display:inline-block">Try Google Maps →</a>';
         statusEl.style.display = '';
-        var gmUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(query) + '/@' + lat + ',' + lng + ',15z';
-        window.open(gmUrl, '_blank');
-        setTimeout(function() { closeSearchMap(); }, 1000);
+        statusEl.style.pointerEvents = 'auto';
       });
 
     setTimeout(function() { searchMap.invalidateSize(); }, 100);
