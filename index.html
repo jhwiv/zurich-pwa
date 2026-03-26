@@ -5589,8 +5589,8 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 <!-- ── STREET VIEW IFRAME MODAL (Google Street View embed) ── -->
 <!-- ── SEARCH RESULTS MAP OVERLAY ── -->
 <div class="wx-modal-overlay" id="search-map-overlay" role="dialog" aria-label="Nearby search results" aria-modal="true" style="display:none">
-  <div style="width:100%;height:100%;position:relative">
-    <div id="search-results-map" style="width:100%;height:100%"></div>
+  <div style="flex:1;width:100%;position:relative;min-height:0">
+    <div id="search-results-map" style="position:absolute;top:0;left:0;right:0;bottom:0"></div>
     <div id="search-results-status" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#C8A84B;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;z-index:1000;pointer-events:none">Searching…</div>
   </div>
 </div>
@@ -5712,11 +5712,13 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
   }
 
   window.openSearchIframe = function(url, lat, lng, query) {
-    overlay.style.display = '';
+    // Make overlay visible BEFORE initializing map
+    overlay.style.display = 'flex';
     overlay.classList.add('open');
     closeBtn.classList.add('open');
     document.body.style.overflow = 'hidden';
     statusEl.style.display = '';
+    statusEl.style.pointerEvents = 'none';
     statusEl.textContent = 'Searching…';
 
     // Parse lat/lng from the URL if not passed directly
@@ -5736,18 +5738,17 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       }
     }
 
-    // Init or reset map
-    if (!searchMap) {
-      searchMap = L.map(mapDiv, { zoomControl: true }).setView([lat, lng], 15);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OSM &amp; CartoDB',
-        maxZoom: 19
-      }).addTo(searchMap);
-    } else {
-      searchMap.setView([lat, lng], 15);
+    // Destroy previous map and create fresh (avoids stale-container rendering issues)
+    if (searchMap) {
+      searchMap.remove();
+      searchMap = null;
     }
-    markers.forEach(function(m) { searchMap.removeLayer(m); });
     markers = [];
+    searchMap = L.map(mapDiv, { zoomControl: true }).setView([lat, lng], 15);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OSM &amp; CartoDB',
+      maxZoom: 19
+    }).addTo(searchMap);
 
     // Add user location marker
     var um = L.marker([lat, lng], { icon: userIcon() }).addTo(searchMap);
@@ -5813,7 +5814,10 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         statusEl.style.pointerEvents = 'auto';
       });
 
-    setTimeout(function() { searchMap.invalidateSize(); }, 100);
+    // Leaflet needs multiple invalidateSize calls after container becomes visible
+    setTimeout(function() { if(searchMap) searchMap.invalidateSize(); }, 100);
+    setTimeout(function() { if(searchMap) searchMap.invalidateSize(); }, 300);
+    setTimeout(function() { if(searchMap) searchMap.invalidateSize(); }, 600);
   };
 
   window.closeSearchMap = function() {
