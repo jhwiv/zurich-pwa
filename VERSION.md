@@ -3,7 +3,7 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v3.30
+**Current:** v3.31
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
@@ -22,3 +22,4 @@
 | v3.28 | 2026-03-27 | Floating time pill widget — shows away vs home timezone when offset differs | `TIME_PILL` |
 | v3.29 | 2026-03-27 | Time pill: home = US Eastern; away follows itinerary (CPH → Zürich) | `TIME_PILL` |
 | v3.30 | 2026-03-27 | Time pill: raise above FABs to avoid overlap on mobile | `TIME_PILL` |
+| v3.31 | 2026-03-27 | Time pill: more clearance above FABs on mobile | `TIME_PILL` |
