@@ -2219,6 +2219,53 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 /* Make wx-card look tappable */
 .wx-card{cursor:pointer}
 .wx-card .wx-tap{color:var(--gold)}
+
+/* ── FLOATING TIME PILL ─────────────────────────── */
+#time-pill{
+  position:fixed;
+  bottom:calc(20px + env(safe-area-inset-bottom,0px));
+  left:50%;transform:translateX(-50%);
+  z-index:175;
+  display:none;
+  align-items:center;gap:0;
+  background:var(--navy);
+  border:1px solid rgba(200,168,75,.2);
+  border-radius:28px;
+  padding:8px 20px;
+  box-shadow:0 4px 24px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.15);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  font-family:'DM Mono',monospace;
+  transition:opacity .3s,transform .3s;
+  cursor:pointer;
+  user-select:none;-webkit-user-select:none;
+}
+#time-pill.visible{display:flex}
+#time-pill .tp-zone{
+  display:flex;flex-direction:column;align-items:center;
+  min-width:72px;
+}
+#time-pill .tp-flag{
+  font-size:14px;line-height:1;
+  margin-bottom:2px;
+}
+#time-pill .tp-time{
+  font-size:15px;font-weight:600;
+  color:var(--cream);
+  letter-spacing:.02em;
+  white-space:nowrap;
+}
+#time-pill .tp-label{
+  font-size:8px;letter-spacing:.12em;
+  text-transform:uppercase;
+  color:rgba(200,168,75,.7);
+  margin-top:2px;
+}
+#time-pill .tp-sep{
+  width:1px;height:28px;
+  background:rgba(200,168,75,.2);
+  margin:0 14px;
+}
 </style>
 </head>
 <body>
@@ -3802,7 +3849,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.27 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.28 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -3812,6 +3859,21 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
     powered by <span class="alterra-name">Alterra</span><span class="alterra-digital">, digital</span>
   </p>
 </footer>
+
+<!-- ── FLOATING TIME PILL ─────────────────────────── -->
+<div id="time-pill" aria-label="Timezone comparison">
+  <div class="tp-zone" id="tp-away">
+    <span class="tp-flag" id="tp-away-flag"></span>
+    <span class="tp-time" id="tp-away-time"></span>
+    <span class="tp-label" id="tp-away-label"></span>
+  </div>
+  <div class="tp-sep"></div>
+  <div class="tp-zone" id="tp-home">
+    <span class="tp-flag">🏠</span>
+    <span class="tp-time" id="tp-home-time"></span>
+    <span class="tp-label">HOME</span>
+  </div>
+</div>
 
 <!-- ── FLOATING UTILITY MENU ──────────────────────── -->
 <div id="float-menu" aria-label="Quick navigation">
@@ -5338,6 +5400,57 @@ window.getItineraryCity = function() {
   if (now >= transitStart && now <= tripEnd) return 'zurich'; // transit+Zürich
   return null; // outside trip dates
 };
+
+// ── FLOATING TIME PILL ────────────────────────────────────────────
+(function() {
+  var pill = document.getElementById('time-pill');
+  if (!pill) return;
+
+  // Trip timezone config
+  // Home = user's home timezone
+  // Away cities map to their respective timezones and flags
+  var HOME_TZ = 'Europe/Copenhagen';
+  var CITIES = {
+    copenhagen: { tz: 'Europe/Copenhagen', flag: '\ud83c\udde9\ud83c\uddf0', label: 'CPH' },
+    zurich:     { tz: 'Europe/Zurich',     flag: '\ud83c\udde8\ud83c\udded', label: 'Z\u00dcRICH' }
+  };
+
+  // Check if two timezones currently have different UTC offsets
+  function tzOffsetDiffers(tz1, tz2) {
+    var now = new Date();
+    // Get the UTC offset in minutes for each timezone
+    var fmt1 = new Intl.DateTimeFormat('en-US', { timeZone: tz1, timeZoneName: 'shortOffset' });
+    var fmt2 = new Intl.DateTimeFormat('en-US', { timeZone: tz2, timeZoneName: 'shortOffset' });
+    var parts1 = fmt1.formatToParts(now).find(function(p){ return p.type === 'timeZoneName'; });
+    var parts2 = fmt2.formatToParts(now).find(function(p){ return p.type === 'timeZoneName'; });
+    return parts1 && parts2 && parts1.value !== parts2.value;
+  }
+
+  function formatTime(tz) {
+    return new Date().toLocaleTimeString('en-US', {
+      hour: 'numeric', minute: '2-digit', hour12: true, timeZone: tz
+    });
+  }
+
+  function update() {
+    var cityKey = window.getItineraryCity ? window.getItineraryCity() : null;
+    if (!cityKey || !CITIES[cityKey]) { pill.classList.remove('visible'); return; }
+
+    var city = CITIES[cityKey];
+    // If away timezone === home timezone (same offset), hide the pill
+    if (!tzOffsetDiffers(city.tz, HOME_TZ)) { pill.classList.remove('visible'); return; }
+
+    document.getElementById('tp-away-flag').textContent = city.flag;
+    document.getElementById('tp-away-time').textContent = formatTime(city.tz);
+    document.getElementById('tp-away-label').textContent = city.label;
+    document.getElementById('tp-home-time').textContent = formatTime(HOME_TZ);
+
+    pill.classList.add('visible');
+  }
+
+  update();
+  setInterval(update, 30000); // refresh every 30s
+})();
 
 // ── FLOATING SEARCH (full-screen overlay, location-aware) ─────
 (function() {

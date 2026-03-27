@@ -3,7 +3,7 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v3.26
+**Current:** v3.28
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
@@ -18,3 +18,5 @@
 | v3.24 | 2026-03-27 | GPS & time awareness for chat concierge and local search | `GPS_TIME_AWARE` |
 | v3.25 | 2026-03-27 | Fix GPS: track permission status, await resolution before chat send | `GPS_STATUS_FIX` |
 | v3.26 | 2026-03-27 | Fix search: itinerary-date city fallback, fix broken POI images | `SEARCH_CITY_POI` |
+| v3.27 | 2026-03-27 | Render markdown links as clickable hyperlinks in chat | `CHAT_MD_LINKS` |
+| v3.28 | 2026-03-27 | Floating time pill widget — shows away vs home timezone when offset differs | `TIME_PILL` |
