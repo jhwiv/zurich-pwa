@@ -2223,15 +2223,15 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 /* ── FLOATING TIME PILL ─────────────────────────── */
 #time-pill{
   position:fixed;
-  bottom:calc(100px + env(safe-area-inset-bottom,0px));
-  left:50%;transform:translateX(-50%);
+  bottom:calc(var(--sp24) + env(safe-area-inset-bottom,0px));
+  right:var(--sp16);
   z-index:175;
   display:none;
   align-items:center;gap:0;
   background:var(--navy);
   border:1px solid rgba(200,168,75,.2);
-  border-radius:28px;
-  padding:8px 20px;
+  border-radius:20px;
+  padding:5px 12px;
   box-shadow:0 4px 24px rgba(0,0,0,.45),0 0 0 1px rgba(0,0,0,.15);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
@@ -2243,28 +2243,28 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 #time-pill.visible{display:flex}
 #time-pill .tp-zone{
   display:flex;flex-direction:column;align-items:center;
-  min-width:72px;
+  min-width:52px;
 }
 #time-pill .tp-flag{
-  font-size:14px;line-height:1;
-  margin-bottom:2px;
+  font-size:10px;line-height:1;
+  margin-bottom:1px;
 }
 #time-pill .tp-time{
-  font-size:15px;font-weight:600;
+  font-size:11px;font-weight:600;
   color:var(--cream);
   letter-spacing:.02em;
   white-space:nowrap;
 }
 #time-pill .tp-label{
-  font-size:8px;letter-spacing:.12em;
+  font-size:7px;letter-spacing:.1em;
   text-transform:uppercase;
   color:rgba(200,168,75,.7);
-  margin-top:2px;
+  margin-top:1px;
 }
 #time-pill .tp-sep{
-  width:1px;height:28px;
+  width:1px;height:20px;
   background:rgba(200,168,75,.2);
-  margin:0 14px;
+  margin:0 8px;
 }
 </style>
 </head>
@@ -3849,7 +3849,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.31 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.32 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
