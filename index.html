@@ -2349,7 +2349,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <h2 class="day-title">Denmark</h2>
         <p class="day-intro">Charlotte is studying in Copenhagen — a chance to visit her before flying on to Zürich Friday evening.</p>
       </div>
-      <div class="wx-card" role="button" tabindex="0" aria-label="Copenhagen weather — tap for expanded view" id="wx-dk" data-wx-day="dk" data-wx-date="Thursday, March 26" data-wx-city="Copenhagen, Denmark" data-wx-lat="55.6761" data-wx-lng="12.5683" data-wx-datestr="2026-03-26" data-wx-ext="https://www.accuweather.com/en/dk/copenhagen/123094/weather-forecast/123094" onclick="openWxModal(this)">
+      <div class="wx-card" role="button" tabindex="0" aria-label="Copenhagen weather — tap for expanded view" id="wx-dk" data-wx-day="dk" data-wx-date="Thursday, March 26" data-wx-city="Copenhagen, Denmark" data-wx-lat="55.6838" data-wx-lng="12.5718" data-wx-datestr="2026-03-26" data-wx-ext="https://www.accuweather.com/en/dk/copenhagen/123094/weather-forecast/123094" onclick="openWxModal(this)">
         <div class="wx-top"><span class="wx-hi">43°</span><span class="wx-lo">Lo 34°F (6°C / 1°C)</span></div>
         <div class="wx-c">6°C / 1°C</div>
         <div class="wx-cond">Partly Cloudy. Hi 43°F.</div>
@@ -3849,7 +3849,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.32 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.33 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5006,7 +5006,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     95:'Thunderstorm'
   };
   var API_CPH = 'https://api.open-meteo.com/v1/forecast'
-    + '?latitude=55.6761&longitude=12.5683'
+    + '?latitude=55.6838&longitude=12.5718'
     + '&daily=weather_code,temperature_2m_max,temperature_2m_min,'
     + 'precipitation_probability_max,wind_speed_10m_max,sunrise,sunset'
     + '&temperature_unit=fahrenheit&wind_speed_unit=mph'
@@ -5470,7 +5470,7 @@ window.getItineraryCity = function() {
 
   var cities = {
     copenhagen: {
-      name: 'Copenhagen', lat: 55.6761, lng: 12.5683,
+      name: 'Copenhagen', lat: 55.6838, lng: 12.5718,
       pois: [
         { name: 'Nyhavn Canal', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Nyhavn_MichaD.jpg/320px-Nyhavn_MichaD.jpg', q: 'Nyhavn Copenhagen' },
         { name: 'Tivoli Gardens', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Tivoli_Gardens_-_main_entrance.jpg/320px-Tivoli_Gardens_-_main_entrance.jpg', q: 'Tivoli Gardens Copenhagen' },
@@ -5929,7 +5929,7 @@ window.getItineraryCity = function() {
       }
       if (!lat || !lng) {
         var ic = window.getItineraryCity && window.getItineraryCity();
-        if (ic === 'copenhagen') { lat = 55.6761; lng = 12.5683; }
+        if (ic === 'copenhagen') { lat = 55.6838; lng = 12.5718; }
         else { lat = 47.3769; lng = 8.5417; }
       }
     }
