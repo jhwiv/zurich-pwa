@@ -4428,6 +4428,44 @@ document.querySelectorAll('.nav-chip').forEach(chip => {
   chip.addEventListener('click', function() { navTo(this.dataset.target, this); });
 });
 
+// ── DATE-AWARE AUTO-NAVIGATION ────────────────────
+(function() {
+  // Only auto-nav on fresh page load (not on back/forward)
+  if (window.performance && window.performance.navigation && window.performance.navigation.type === 2) return;
+  // Don't auto-nav if URL has a hash (user linked to a specific section)
+  if (window.location.hash) return;
+
+  var now = new Date();
+  // Trip dates (local time for the traveler):
+  // Mar 25–26: Copenhagen stopover
+  // Mar 27: Copenhagen morning → Fly to Zürich (Day 1 — arrival evening)
+  // Mar 28: Zürich Day 2
+  // Mar 29: Zürich Day 3 → fly home
+  var y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+  var target = null;
+
+  if (y === 2026 && m === 2) { // March = month 2 (0-indexed)
+    if (d === 25 || d === 26) {
+      target = 'section-denmark';
+    } else if (d === 27) {
+      target = 'section-fri';
+    } else if (d === 28) {
+      target = 'section-sat';
+    } else if (d === 29) {
+      target = 'section-sun';
+    }
+  }
+
+  if (target) {
+    // Small delay to let the page render and header height settle
+    setTimeout(function() {
+      var btn = document.querySelector('.nav-chip[data-target="' + target + '"]');
+      navTo(target, btn);
+    }, 600);
+  }
+  // Outside trip dates → stays on hero/Overview (default)
+})();
+
 // Flight bar dismiss
 const fbarDismissBtn = document.getElementById('fbar-dismiss-btn');
 if (fbarDismissBtn) fbarDismissBtn.addEventListener('click', dismissFlightBar);
