@@ -2682,6 +2682,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         </div>
         <div class="stop-actions">
           <a class="btn-secondary" href="https://www.marriott.com/en-us/hotels/zrhmc-zurich-marriott-hotel/dining/" target="_blank" rel="noopener">🌐 Hotel Dining</a>
+          <button class="btn-menu" onclick="openMenuModal('lenox-bar')">📋 Menu</button>
         </div>
       </article>
 
@@ -2764,7 +2765,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3692,8.5378&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.confiserie-spruengli.ch/en" target="_blank" rel="noopener">🌐 Website</a>
-
+          <button class="btn-menu" onclick="openMenuModal('sprungli')">📋 Menu</button>
         </div>
       </article>
 
@@ -2792,6 +2793,9 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="stop-meta">
           <span class="meta-chip" data-popup data-popup-title="Hotel Restaurant" data-popup-body="The hotel has an on-site restaurant serving international and Swiss cuisine. Convenient for arrival-night dining when you don&#39;t want to venture out after a day of travel." data-popup-tip="Good for a relaxed arrival dinner, but Zürich&#39;s restaurant scene is worth exploring on other nights.">🍽 On-site</span>
           <span class="meta-chip" data-popup data-popup-title="Kunsthaus Café Hours" data-popup-body="The café in the Kunsthaus Zürich is open Saturday from 9 AM to 9 PM — longer hours than the museum itself. It&#39;s accessible without a museum ticket and serves coffee, light meals, and Swiss wines." data-popup-tip="A good lunch spot if you&#39;re visiting the Kunsthaus. The terrace has nice views of the Heimplatz square.">⏱ Open Sat 9 AM–9 PM</span>
+        </div>
+        <div class="stop-actions">
+          <button class="btn-menu" onclick="openMenuModal('kunsthaus-cafe')">📋 Menu</button>
         </div>
       </article>
 
@@ -2836,7 +2840,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">Then walk 3 min direct to Zeughauskeller on Bahnhofstrasse</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3700,8.5413&dirflg=w" target="_blank" rel="noopener">🗺 Directions</a>
-
+          <button class="btn-menu" onclick="openMenuModal('belpaese')">📋 Menu</button>
         </div>
       </article>
 
@@ -3873,7 +3877,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.37 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.38 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5993,6 +5997,140 @@ window.getItineraryCity = function() {
         ]},
         { label: '3-Course Menu Deal', items: [
           ['Dreier-Menü','compose your own: starter + main + dessert','CHF 69 pp']
+        ]}
+      ]
+    },
+    'sprungli': {
+      title: 'Confiserie Sprüngli',
+      subtitle: 'Paradeplatz · Zürich\'s legendary café since 1836',
+      footer: 'Prices in CHF incl. VAT · Open Sat 7:30 AM–6:30 PM',
+      sections: [
+        { label: 'Signature · Must-Try', items: [
+          ['Hot Chocolate','Sprüngli\'s legendary house recipe','CHF 8.20'],
+          ['Luxemburgerli (3 pcs)','iconic bite-sized macarons, seasonal flavours','CHF 6'],
+          ['Luxemburgerli (12 pcs)','assorted box — the Zürich souvenir','CHF 24'],
+          ['Truffes du Jour','fresh cream truffles, made daily','CHF 3.80 ea']
+        ]},
+        { label: 'Breakfast · until 11:30 AM', items: [
+          ['Birchermüesli','classique or seasonal fruit','CHF 12.50'],
+          ['Homemade Granola','Granny Smith, Greek or coconut yoghurt','CHF 14.50'],
+          ['Smashed Croissant — Salmon','horseradish cream cheese, rocket, dill-mustard','CHF 18'],
+          ['Eggs Benedict','English muffin, poached egg, hollandaise','CHF 25–29'],
+          ['Breakfast Etagère','hot drink, juice, egg dish, 2 sides','CHF 42']
+        ]},
+        { label: 'Lunch Mains · from 11:30 AM', items: [
+          ['Classic Burger','Angus beef, cheddar, house relish, fries','CHF 33'],
+          ['Crispy Chicken Salad','mango-lime, avocado, cashews, rice paper','CHF 33'],
+          ['Pan-fried Zürich Geschnetzeltes','veal, mushroom cream, Rösti','CHF 39'],
+          ['Fish of the Week','seasonal, market vegetables','CHF 49']
+        ]},
+        { label: 'Pastries & Coffee', items: [
+          ['Cappuccino','','CHF 7.80'],
+          ['Latte Macchiato','','CHF 8.20'],
+          ['Espresso','','CHF 5.80'],
+          ['Croissant / Pain au Chocolat','freshly baked','CHF 5–6'],
+          ['Daily Cake Slice','see counter display','CHF 8–12']
+        ]}
+      ]
+    },
+    'kunsthaus-cafe': {
+      title: 'Kunsthaus Café & Bar',
+      subtitle: 'Chipperfield Building · Heimplatz, Zürich',
+      footer: 'Prices in CHF incl. VAT · Café Sat 9 AM–9 PM',
+      sections: [
+        { label: 'Breakfast', items: [
+          ['Gipfeli (Croissant)','classic or vegan','CHF 3–4'],
+          ['Cornetto Cioccolato','chocolate-filled croissant','CHF 4'],
+          ['Brot, Butter & Konfi','bread, butter & jam','CHF 7'],
+          ['Croissant aux Œuf','egg croissant','CHF 9'],
+          ['Granola & Yoghurt','fresh fruit','CHF 9.50'],
+          ['Birchermüesli','','CHF 7']
+        ]},
+        { label: 'Lunch · Tue–Fri 11:30–14:00', items: [
+          ['Tagessuppe','soup of the day','daily price'],
+          ['Bunter Blattsalat','mixed green salad','daily price'],
+          ['Vegetarian Main','rotating weekly, always vegetarian','CHF 20–25']
+        ]},
+        { label: 'Snacks & Apéro', items: [
+          ['Oliven & Dips','mixed marinated olives','CHF 6'],
+          ['Tartines','assorted toppings, rustic bread','CHF 9–14'],
+          ['Mezze Board','hummus, falafel, bread (Bei Moudi)','CHF 15–20']
+        ]},
+        { label: 'Drinks', items: [
+          ['Espresso / Café Crème','','CHF 4.50–5.50'],
+          ['House Wine (1dl)','red or white','CHF 7–9'],
+          ['Cocktails','Aperol Spritz, Negroni, seasonal','CHF 13–16'],
+          ['Panaché / Beer','draught','CHF 6–8']
+        ]},
+        { label: 'Bei Moudi · Lebanese Restaurant', items: [
+          ['Lunch Buffet','Lebanese mezze spread, Tue–Sat','CHF 29.50'],
+          ['Falafel Plate','salad, hummus, tahini','CHF 18'],
+          ['Couscous Royal','seasonal vegetables, harissa','CHF 24']
+        ]}
+      ]
+    },
+    'belpaese': {
+      title: 'Caffè & Bar Belpaese',
+      subtitle: 'Münsterhof 11 · Italian café on the square',
+      footer: 'Prices in CHF · Open Mon–Sat 7 AM–10 PM, Sun 7 AM–8 PM',
+      sections: [
+        { label: 'Coffee & Drinks', items: [
+          ['Espresso','Italian roast','CHF 4.50'],
+          ['Cappuccino','','CHF 5.50'],
+          ['Café Freddo','iced espresso','CHF 6'],
+          ['Aperol Spritz','','CHF 14'],
+          ['Negroni','','CHF 16'],
+          ['Glass of Wine','Italian red or white','CHF 8–12']
+        ]},
+        { label: 'Food · Italian Street Classics', items: [
+          ['Pizzella + Softdrink','combo','CHF 17.50'],
+          ['Focaccia + Softdrink','combo','CHF 17.50'],
+          ['Piadina + Softdrink','combo','CHF 17.50'],
+          ['Focaccia','various fillings','CHF 12–14'],
+          ['Piadina','various fillings','CHF 12–14']
+        ]},
+        { label: 'Dolci · Sweets', items: [
+          ['Pasticciotto','Puglian custard pastry','CHF 5'],
+          ['Cheesecake','Italian style','CHF 7'],
+          ['Cornetto','plain, cioccolato, or crema','CHF 4']
+        ]}
+      ]
+    },
+    'lenox-bar': {
+      title: 'Lenox Bar',
+      subtitle: 'Zürich Marriott Hotel · NY-inspired cocktail bar',
+      footer: 'Prices in CHF incl. VAT · Open late',
+      sections: [
+        { label: 'Must-Try Cocktails', items: [
+          ['The Bee','Lenox Gin, blackberry, honey, lavender, pineapple','CHF 20'],
+          ['Swiss meets Thai (Clarified)','saffron gin, IVA herb liqueur, coconut, Thai tea','CHF 23'],
+          ['The Big Apple','apple-infused Lenox Gin, green apple, vanilla','CHF 20'],
+          ['Lenox Old Fashioned','Woodford Reserve, orange & vanilla bitters','CHF 22'],
+          ['Lenox Espresso Martini','Diplomatico Rum, espresso, Kahlua, Licor 43','CHF 22']
+        ]},
+        { label: 'Negroni & Champagne', items: [
+          ['Smoked Negroni','San Cosme Mezcal, bitter, vermouth, Laphroaig','CHF 22'],
+          ['White Negroni','Bombay Gin, Chartreuse, Luxardo Bianco','CHF 22'],
+          ['French 75','Bombay Gin, lemon, sugar, Champagne','CHF 25'],
+          ['The Grand Cocktail','Glenfiddich 23, Chambord, raspberry, Champagne','CHF 39']
+        ]},
+        { label: 'Whisky Flights', items: [
+          ['Glenfiddich Experimental','IPA + Project XX + Fire & Cane','CHF 29'],
+          ['Macallan Classic','12y + 18y + Rare Cask','CHF 69'],
+          ['Glenfiddich Grand Series','21y + 23y + 26y','CHF 90'],
+          ['Balvenie 25 Flight','14y + 21y + 25y','CHF 90']
+        ]},
+        { label: 'Bar Bites', items: [
+          ['Pick Any 3 Bar Bites','wings, meatballs, empanadas, falafel…','CHF 30'],
+          ['Vegetarian Burger','','CHF 26'],
+          ['Chicken Burger','','CHF 29'],
+          ['Marriott Burger','Black Angus','CHF 32'],
+          ['Club Sandwich','classic triple-decker','CHF 32']
+        ]},
+        { label: 'Mocktails', items: [
+          ['Berrylicious','berry blend, citrus','CHF 14'],
+          ['Swiss 75','non-alcoholic French 75','CHF 15'],
+          ['Nogroni Sbagliato','NA negroni with sparkling','CHF 15']
         ]}
       ]
     }
