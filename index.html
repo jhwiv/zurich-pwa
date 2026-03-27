@@ -1441,31 +1441,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   color:rgba(255,255,255,.65);
 }
 
-/* Map preview */
-.search-map-wrap{
-  border-radius:12px;overflow:hidden;
-  height:120px;position:relative;
-  margin-bottom:8px;
-  border:1px solid rgba(200,168,75,.12);
-}
-.search-map-wrap iframe{
-  width:100%;height:100%;border:none;
-  filter:invert(90%) hue-rotate(180deg) saturate(.7) brightness(.85);
-}
-.search-map-pin{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);
-  font-size:24px;text-shadow:0 2px 6px rgba(0,0,0,.5);
-  pointer-events:none;
-}
-.search-map-label{
-  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.06em;text-transform:uppercase;
-  color:rgba(255,255,255,.75);
-  background:rgba(13,25,41,.8);backdrop-filter:blur(6px);
-  padding:4px 12px;border-radius:10px;
-  white-space:nowrap;
-}
+
 
 /* Location status */
 .search-loc-status{
@@ -1481,51 +1457,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 .search-loc-status.denied .loc-dot{background:#e8985a}
 
-/* Explore section */
-.search-explore-title{
-  font-family:'Playfair Display',serif;font-size:16px;
-  color:#fff;margin:0 0 10px;
-  font-weight:500;
-}
-.search-explore-scroll{
-  display:flex;gap:12px;
-  overflow-x:auto;-webkit-overflow-scrolling:touch;
-  padding-bottom:10px;
-  scrollbar-width:none;
-}
-.search-explore-scroll::-webkit-scrollbar{display:none}
-.search-poi-card{
-  flex-shrink:0;width:110px;cursor:pointer;
-  transition:transform .15s;
-}
-.search-poi-card:hover{transform:translateY(-2px)}
-.search-poi-img{
-  width:110px;height:72px;border-radius:10px;
-  object-fit:cover;
-  border:1px solid rgba(200,168,75,.12);
-  position:relative;
-  overflow:hidden;
-  background:rgba(255,255,255,.04);
-}
-.search-poi-img img{
-  width:100%;height:100%;object-fit:cover;
-}
-.search-poi-rating{
-  position:absolute;top:6px;left:6px;
-  background:rgba(13,25,41,.85);backdrop-filter:blur(4px);
-  padding:2px 6px;border-radius:6px;
-  font-family:'DM Mono',monospace;font-size:9px;
-  color:var(--gold);
-  display:flex;align-items:center;gap:3px;
-}
-.search-poi-name{
-  font-family:'DM Mono',monospace;font-size:9px;
-  letter-spacing:.04em;
-  color:rgba(255,255,255,.6);
-  margin-top:6px;
-  text-align:center;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+
 
 /* Bottom navigation */
 .search-bottom-nav{
@@ -3849,7 +3781,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.33 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.34 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -3976,21 +3908,9 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
       </button>
     </div>
 
-    <!-- Map preview -->
-    <div class="search-map-wrap" id="search-map-wrap">
-      <iframe id="search-map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src=""></iframe>
-      <span class="search-map-label" id="search-map-label">Zürich Center</span>
-    </div>
-
     <!-- Location status -->
     <div class="search-loc-status" id="search-loc-status">
       <span class="loc-dot"></span> Tap to allow location for nearby results
-    </div>
-
-    <!-- Explore section -->
-    <h3 class="search-explore-title" id="search-explore-title">Exploring Zürich Center</h3>
-    <div class="search-explore-scroll" id="search-explore-scroll">
-      <!-- POI cards populated by JS -->
     </div>
   </div>
 
@@ -5459,35 +5379,15 @@ window.getItineraryCity = function() {
   var input = document.getElementById('search-input');
   var closeBtn = document.getElementById('search-close');
   var status = document.getElementById('search-loc-status');
-  var mapIframe = document.getElementById('search-map-iframe');
-  var mapLabel = document.getElementById('search-map-label');
-  var exploreTitle = document.getElementById('search-explore-title');
-  var exploreScroll = document.getElementById('search-explore-scroll');
+
   if (!fab || !card) return;
 
   var userLat = null, userLng = null;
   var geoGranted = false;
 
   var cities = {
-    copenhagen: {
-      name: 'Copenhagen', lat: 55.6838, lng: 12.5718,
-      pois: [
-        { name: 'Nyhavn Canal', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Nyhavn_MichaD.jpg/320px-Nyhavn_MichaD.jpg', q: 'Nyhavn Copenhagen' },
-        { name: 'Tivoli Gardens', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Tivoli_Gardens_-_main_entrance.jpg/320px-Tivoli_Gardens_-_main_entrance.jpg', q: 'Tivoli Gardens Copenhagen' },
-        { name: 'Strøget', rating: '4.5', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Str%C3%B8get_CPH_%2815289680874%29.jpg/320px-Str%C3%B8get_CPH_%2815289680874%29.jpg', q: 'Stroget Copenhagen' },
-        { name: 'Round Tower', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Kopenhagen_%28DK%29%2C_Runder_Turm_--_2017_--_1633.jpg/320px-Kopenhagen_%28DK%29%2C_Runder_Turm_--_2017_--_1633.jpg', q: 'Rundetaarn Copenhagen' }
-      ]
-    },
-    zurich: {
-      name: 'Zürich', lat: 47.3769, lng: 8.5417,
-      pois: [
-        { name: 'Bahnhofstrasse', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Z%C3%BCrich_Bahnhofstrasse_04.jpg/320px-Z%C3%BCrich_Bahnhofstrasse_04.jpg', q: 'Bahnhofstrasse Zurich' },
-        { name: 'Old Town', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Augustinergasse_32_-_44_in_Z%C3%BCrich_%282013%29.jpg/320px-Augustinergasse_32_-_44_in_Z%C3%BCrich_%282013%29.jpg', q: 'Altstadt Zurich' },
-        { name: 'Lake Zürich', rating: '4.9', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Lake_Zurich%2C_Zurich_%28Ank_Kumar%29_03.jpg/320px-Lake_Zurich%2C_Zurich_%28Ank_Kumar%29_03.jpg', q: 'Lake Zurich' },
-        { name: 'Lindenhof', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Lindenhof_Hill%2C_Zurich%2C_20250330_1227_7917.jpg/320px-Lindenhof_Hill%2C_Zurich%2C_20250330_1227_7917.jpg', q: 'Lindenhof Zurich' },
-        { name: 'Sprüngli', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Cafe_sprungli_Zurich.jpg/320px-Cafe_sprungli_Zurich.jpg', q: 'Confiserie Sprungli Zurich' }
-      ]
-    }
+    copenhagen: { name: 'Copenhagen', lat: 55.6838, lng: 12.5718 },
+    zurich: { name: 'Zürich', lat: 47.3769, lng: 8.5417 }
   };
 
   function getActiveCity() {
@@ -5503,43 +5403,7 @@ window.getItineraryCity = function() {
   function syncCityUI() {
     var city = getActiveCity();
     var useGps = geoGranted && userLat && userLng;
-    var displayLat = useGps ? userLat : city.lat;
-    var displayLng = useGps ? userLng : city.lng;
     input.placeholder = useGps ? 'Search nearby…' : 'Search ' + city.name + '…';
-    if (mapLabel) mapLabel.textContent = useGps ? 'Your Location' : city.name + ' Center';
-    if (exploreTitle) exploreTitle.textContent = useGps ? 'Near your location' : 'Exploring ' + city.name + ' Center';
-
-    // Update map — center on real GPS when available
-    if (mapIframe) {
-      var mapSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='
-        + (displayLng - 0.015) + '%2C' + (displayLat - 0.008) + '%2C'
-        + (displayLng + 0.015) + '%2C' + (displayLat + 0.008)
-        + '&layer=mapnik&marker=' + displayLat + '%2C' + displayLng;
-      if (mapIframe.getAttribute('src') !== mapSrc) mapIframe.setAttribute('src', mapSrc);
-    }
-
-    // Update POI cards
-    if (exploreScroll) {
-      exploreScroll.innerHTML = '';
-      city.pois.forEach(function(poi) {
-        var c = document.createElement('div');
-        c.className = 'search-poi-card';
-        c.innerHTML = '<div class="search-poi-img"><img src="' + poi.img + '" alt="' + poi.name + '" loading="lazy"><div class="search-poi-rating">' + poi.rating + ' ★</div></div><div class="search-poi-name">' + poi.name + '</div>';
-        var img = c.querySelector('img');
-        if (img) {
-          img.onerror = function() {
-            this.onerror = null;
-            this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='72' viewBox='0 0 110 72'%3E%3Crect fill='%230D1929' width='110' height='72' rx='10'/%3E%3Cpath d='M55 18c-5.5 0-10 4.5-10 10 0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4.5-10-10-10zm0 13.5a3.5 3.5 0 110-7 3.5 3.5 0 010 7z' fill='%23C8A84B'/%3E%3Ctext x='55' y='60' text-anchor='middle' fill='%23C8A84B' font-size='9' font-family='system-ui'>Explore%3C/text%3E%3C/svg%3E";
-            this.style.objectFit = 'contain';
-          };
-        }
-        c.addEventListener('click', function() {
-          openSearchIframe(null, city.lat, city.lng, poi.q);
-          closeSearch();
-        });
-        exploreScroll.appendChild(c);
-      });
-    }
 
     if (!geoGranted && userLat) {
       status.innerHTML = '<span class="loc-dot"></span> Location denied — searching ' + city.name + ' center';
