@@ -3877,7 +3877,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.38 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.39 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -6444,11 +6444,10 @@ window.getItineraryCity = function() {
     'wifi': '["internet_access"="wlan"]'
   };
 
-  function getOverpassQuery(query, lat, lng) {
+  function getOverpassQuery(query, lat, lng, radius) {
     var q = query.toLowerCase().trim();
     var tags = TAG_MAP[q];
     if (!tags) {
-      // Try partial match: check if query contains any known key
       var keys = Object.keys(TAG_MAP);
       for (var k = 0; k < keys.length; k++) {
         if (q.indexOf(keys[k]) >= 0 || keys[k].indexOf(q) >= 0) {
@@ -6458,18 +6457,16 @@ window.getItineraryCity = function() {
       }
     }
     if (!tags) {
-      // Fallback: search name OR cuisine across all amenities
       var safe = q.replace(/["\\]/g, '');
       tags = '["name"~"' + safe + '",i]';
-      // Also search by cuisine for food-related terms
-      var r = 1500;
-      return '[out:json][timeout:12];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + ');'
+      var r = radius || 800;
+      return '[out:json][timeout:10];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + ');'
         + 'node["cuisine"~"' + safe + '",i](around:' + r + ',' + lat + ',' + lng + ');'
         + 'node["amenity"]["name"~"' + safe + '",i](around:' + r + ',' + lat + ',' + lng + ');'
-        + 'way["name"~"' + safe + '",i](around:' + r + ',' + lat + ',' + lng + '););out center 40;';
+        + 'way["name"~"' + safe + '",i](around:' + r + ',' + lat + ',' + lng + '););out center 30;';
     }
-    var r = 1500;
-    return '[out:json][timeout:12];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + '););out body 40;';
+    var r = radius || 800;
+    return '[out:json][timeout:10];(node' + tags + '(around:' + r + ',' + lat + ',' + lng + '););out body 30;';
   }
 
   function goldIcon() {
@@ -6539,9 +6536,13 @@ window.getItineraryCity = function() {
     um.bindPopup('<div style="font-family:\'DM Mono\',monospace;font-size:11px;color:#333">Your location</div>');
     markers.push(um);
 
-    // Query Overpass with retry on rate-limit
-    var oq = getOverpassQuery(query, lat, lng);
-    function queryOverpass(attempt) {
+    // Two-tier search: tight radius first, expand if too few results
+    var TIGHT_RADIUS = 500;
+    var WIDE_RADIUS = 1200;
+    var MIN_RESULTS = 3;
+    var MAX_MARKERS = 15;
+
+    function fetchOverpass(oq, attempt) {
       return fetch('https://overpass-api.de/api/interpreter', {
         method:'POST',
         headers:{'Content-Type':'application/x-www-form-urlencoded'},
@@ -6555,47 +6556,71 @@ window.getItineraryCity = function() {
         return JSON.parse(text);
       }).catch(function(err) {
         if (attempt < 3) {
-          // Wait longer between retries: 1.5s, 3s, 5s
           var delay = attempt * 1500 + 500;
           statusEl.textContent = 'Searching… (retry ' + attempt + ')';
           return new Promise(function(resolve) {
-            setTimeout(function() { resolve(queryOverpass(attempt + 1)); }, delay);
+            setTimeout(function() { resolve(fetchOverpass(oq, attempt + 1)); }, delay);
           });
         }
         throw err;
       });
     }
-    queryOverpass(1)
+
+    function distM(lat1, lon1, lat2, lon2) {
+      var R = 6371000, dLat = (lat2-lat1)*Math.PI/180, dLon = (lon2-lon1)*Math.PI/180;
+      var a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+      return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    }
+
+    function addMarkersToMap(elements) {
+      var withDist = elements.filter(function(el) { return el.lat && el.lon; })
+        .map(function(el) { el._dist = distM(lat, lng, el.lat, el.lon); return el; })
+        .sort(function(a, b) { return a._dist - b._dist; })
+        .slice(0, MAX_MARKERS);
+      if (withDist.length === 0) {
+        statusEl.textContent = 'No results nearby';
+        statusEl.style.display = '';
+        return;
+      }
+      statusEl.style.display = 'none';
+      var bounds = L.latLngBounds([[lat, lng]]);
+      withDist.forEach(function(el) {
+        var name = (el.tags && el.tags.name) || query;
+        var addr = (el.tags && (el.tags['addr:street'] || '')) || '';
+        var phone = (el.tags && el.tags.phone) || '';
+        var hours = (el.tags && el.tags.opening_hours) || '';
+        var walkMin = Math.max(2, Math.round(el._dist * 1.4 / 67));
+        var popup = '<div style="font-family:\'Crimson Pro\',serif;min-width:160px">';
+        popup += '<div style="font-weight:700;font-size:15px;color:#C8A84B;margin-bottom:4px">' + name + '</div>';
+        if (addr) popup += '<div style="font-size:12px;color:#ccc">' + addr + '</div>';
+        if (phone) popup += '<div style="font-size:12px;color:#ccc">' + phone + '</div>';
+        if (hours) popup += '<div style="font-size:11px;color:#999;margin-top:4px">' + hours + '</div>';
+        popup += '<div style="font-size:11px;color:#aaa;margin-top:3px">~' + walkMin + ' min walk</div>';
+        popup += '<div style="margin-top:6px"><a href="https://www.google.com/maps/dir/?api=1&destination=' + el.lat + ',' + el.lon + '" target="_blank" style="font-family:\'DM Mono\',monospace;font-size:10px;color:#C8A84B;text-decoration:none;letter-spacing:.04em">DIRECTIONS →</a></div>';
+        popup += '</div>';
+        var mk = L.marker([el.lat, el.lon], { icon: goldIcon() }).addTo(searchMap);
+        mk.bindPopup(popup);
+        markers.push(mk);
+        bounds.extend([el.lat, el.lon]);
+      });
+      searchMap.fitBounds(bounds, { padding: [50, 50], maxZoom: 17, minZoom: 15 });
+    }
+
+    var tightQuery = getOverpassQuery(query, lat, lng, TIGHT_RADIUS);
+    fetchOverpass(tightQuery, 1)
       .then(function(data) {
-        statusEl.style.display = 'none';
-        if (!data || !data.elements || data.elements.length === 0) {
-          statusEl.textContent = 'No results nearby';
-          statusEl.style.display = '';
-          return;
+        var count = (data && data.elements) ? data.elements.length : 0;
+        if (count >= MIN_RESULTS) {
+          addMarkersToMap(data.elements);
+        } else {
+          statusEl.textContent = 'Expanding search…';
+          var wideQuery = getOverpassQuery(query, lat, lng, WIDE_RADIUS);
+          return fetchOverpass(wideQuery, 1).then(function(wideData) {
+            addMarkersToMap((wideData && wideData.elements) || []);
+          });
         }
-        var bounds = L.latLngBounds([[lat, lng]]);
-        data.elements.forEach(function(el) {
-          if (!el.lat || !el.lon) return;
-          var name = (el.tags && el.tags.name) || query;
-          var addr = (el.tags && (el.tags['addr:street'] || '')) || '';
-          var phone = (el.tags && el.tags.phone) || '';
-          var hours = (el.tags && el.tags.opening_hours) || '';
-          var popup = '<div style="font-family:\'Crimson Pro\',serif;min-width:160px">';
-          popup += '<div style="font-weight:700;font-size:15px;color:#C8A84B;margin-bottom:4px">' + name + '</div>';
-          if (addr) popup += '<div style="font-size:12px;color:#ccc">' + addr + '</div>';
-          if (phone) popup += '<div style="font-size:12px;color:#ccc">' + phone + '</div>';
-          if (hours) popup += '<div style="font-size:11px;color:#999;margin-top:4px">' + hours + '</div>';
-          popup += '<div style="margin-top:6px"><a href="https://www.google.com/maps/dir/?api=1&destination=' + el.lat + ',' + el.lon + '" target="_blank" style="font-family:\'DM Mono\',monospace;font-size:10px;color:#C8A84B;text-decoration:none;letter-spacing:.04em">DIRECTIONS →</a></div>';
-          popup += '</div>';
-          var mk = L.marker([el.lat, el.lon], { icon: goldIcon() }).addTo(searchMap);
-          mk.bindPopup(popup);
-          markers.push(mk);
-          bounds.extend([el.lat, el.lon]);
-        });
-        searchMap.fitBounds(bounds, { padding: [40, 40], maxZoom: 16 });
       })
       .catch(function(err) {
-        // Final fallback: show error with option to try Google Maps
         console.error('Overpass search failed:', err);
         statusEl.innerHTML = 'Search unavailable<br><a href="https://www.google.com/maps/search/' + encodeURIComponent(query) + '/@' + lat + ',' + lng + ',15z" target="_blank" style="color:#C8A84B;font-size:11px;text-decoration:underline;margin-top:8px;display:inline-block">Try Google Maps →</a>';
         statusEl.style.display = '';
