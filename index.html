@@ -1547,6 +1547,54 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 
 
 
+/* Map preview */
+.search-map-wrap{
+  position:relative;border-radius:12px;overflow:hidden;
+  height:140px;margin:12px 0 0
+}
+.search-map-wrap iframe{
+  width:100%;height:100%;border:none;pointer-events:none;
+  filter:brightness(.85) saturate(.9)
+}
+.search-map-label{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  background:rgba(13,25,41,.85);padding:4px 12px;border-radius:8px;
+  color:#fff;font-size:12px;font-family:var(--ff-mono);letter-spacing:.5px;
+  text-transform:uppercase;white-space:nowrap
+}
+/* Explore section */
+.search-explore-title{
+  color:var(--cream);font-family:var(--ff-body);font-size:16px;
+  font-weight:400;margin:16px 0 8px;letter-spacing:.3px
+}
+.search-explore-scroll{
+  display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch
+}
+.search-explore-scroll::-webkit-scrollbar{display:none}
+.search-poi-card{
+  flex:0 0 130px;cursor:pointer;scroll-snap-align:start;transition:transform .2s
+}
+.search-poi-card:hover{transform:translateY(-2px)}
+.search-poi-img{
+  position:relative;width:130px;height:90px;border-radius:10px;overflow:hidden;
+  background:var(--navy2)
+}
+.search-poi-img img{
+  width:100%;height:100%;object-fit:cover
+}
+.search-poi-rating{
+  position:absolute;top:6px;left:6px;
+  background:rgba(13,25,41,.8);padding:2px 6px;border-radius:6px;
+  color:var(--gold);font-size:11px;font-family:var(--ff-mono);
+  display:flex;align-items:center;gap:3px
+}
+.search-poi-name{
+  margin-top:5px;font-size:12px;color:var(--cream);
+  font-family:var(--ff-body);text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px
+}
+
 /* Location status */
 .search-loc-status{
   font-family:'DM Mono',monospace;font-size:9px;
@@ -3877,7 +3925,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.41 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.42 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -4002,6 +4050,18 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8V2"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C9 3 12 6 12 8"/><path d="M16.5 8a2.5 2.5 0 0 0 0-5C15 3 12 6 12 8"/></svg>
         <span class="search-grid-label">Souvenirs</span>
       </button>
+    </div>
+
+    <!-- Map preview -->
+    <div class="search-map-wrap" id="search-map-wrap">
+      <iframe id="search-map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src=""></iframe>
+      <span class="search-map-label" id="search-map-label">Copenhagen Center</span>
+    </div>
+
+    <!-- Explore section -->
+    <h3 class="search-explore-title" id="search-explore-title">Exploring Copenhagen Center</h3>
+    <div class="search-explore-scroll" id="search-explore-scroll">
+      <!-- POI cards populated by JS -->
     </div>
 
     <!-- Location status -->
@@ -5607,6 +5667,10 @@ window.getItineraryCity = function() {
   var input = document.getElementById('search-input');
   var closeBtn = document.getElementById('search-close');
   var status = document.getElementById('search-loc-status');
+  var mapIframe = document.getElementById('search-map-iframe');
+  var mapLabel = document.getElementById('search-map-label');
+  var exploreTitle = document.getElementById('search-explore-title');
+  var exploreScroll = document.getElementById('search-explore-scroll');
 
 
   if (!fab || !card) return;
@@ -5615,8 +5679,26 @@ window.getItineraryCity = function() {
   var geoGranted = false;
 
   var cities = {
-    copenhagen: { name: 'Copenhagen', lat: 55.6838, lng: 12.5718 },
-    zurich: { name: 'Zürich', lat: 47.3769, lng: 8.5417 }
+    copenhagen: {
+      name: 'Copenhagen', lat: 55.6838, lng: 12.5718,
+      pois: [
+        { name: 'Nyhavn Canal', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Nyhavn_MichaD.jpg/320px-Nyhavn_MichaD.jpg', q: 'Nyhavn Copenhagen' },
+        { name: 'Tivoli Gardens', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Tivoli_Gardens_-_main_entrance.jpg/320px-Tivoli_Gardens_-_main_entrance.jpg', q: 'Tivoli Gardens Copenhagen' },
+        { name: 'Strøget', rating: '4.5', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Str%C3%B8get_CPH_%2815289680874%29.jpg/320px-Str%C3%B8get_CPH_%2815289680874%29.jpg', q: 'Stroget Copenhagen' },
+        { name: 'Round Tower', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Kopenhagen_%28DK%29%2C_Runder_Turm_--_2017_--_1633.jpg/320px-Kopenhagen_%28DK%29%2C_Runder_Turm_--_2017_--_1633.jpg', q: 'Rundetaarn Copenhagen' },
+        { name: 'Torvehallerne', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Torvehallerne_2.jpg/320px-Torvehallerne_2.jpg', q: 'Torvehallerne Copenhagen' }
+      ]
+    },
+    zurich: {
+      name: 'Zürich', lat: 47.3769, lng: 8.5417,
+      pois: [
+        { name: 'Old Town', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Augustinergasse_32_-_44_in_Z%C3%BCrich_%282013%29.jpg/320px-Augustinergasse_32_-_44_in_Z%C3%BCrich_%282013%29.jpg', q: 'Altstadt Zurich' },
+        { name: 'Lake Zürich', rating: '4.9', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Lake_Zurich%2C_Zurich_%28Ank_Kumar%29_03.jpg/320px-Lake_Zurich%2C_Zurich_%28Ank_Kumar%29_03.jpg', q: 'Lake Zurich' },
+        { name: 'Bahnhofstrasse', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Z%C3%BCrich_Bahnhofstrasse_04.jpg/320px-Z%C3%BCrich_Bahnhofstrasse_04.jpg', q: 'Bahnhofstrasse Zurich' },
+        { name: 'Lindenhof', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Lindenhof_Hill%2C_Zurich%2C_20250330_1227_7917.jpg/320px-Lindenhof_Hill%2C_Zurich%2C_20250330_1227_7917.jpg', q: 'Lindenhof Zurich' },
+        { name: 'Grossmünster', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Grossm%C3%BCnster_-_Wasserkirche_-_Limmatquai-Stadthausquai_2012-09-26_17-35-04.jpg/320px-Grossm%C3%BCnster_-_Wasserkirche_-_Limmatquai-Stadthausquai_2012-09-26_17-35-04.jpg', q: 'Grossmunster Zurich' }
+      ]
+    }
   };
 
   function getActiveCity() {
@@ -5637,6 +5719,34 @@ window.getItineraryCity = function() {
     if (!geoGranted && userLat) {
       status.innerHTML = '<span class="loc-dot"></span> Location denied — searching ' + city.name + ' center';
       status.className = 'search-loc-status denied';
+    }
+
+    var displayLat = useGps ? userLat : city.lat;
+    var displayLng = useGps ? userLng : city.lng;
+
+    if (mapLabel) mapLabel.textContent = useGps ? 'Your Location' : city.name + ' Center';
+    if (exploreTitle) exploreTitle.textContent = useGps ? 'Near your location' : 'Exploring ' + city.name + ' Center';
+
+    if (mapIframe) {
+      var mapSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='
+        + (displayLng - 0.015) + '%2C' + (displayLat - 0.008) + '%2C'
+        + (displayLng + 0.015) + '%2C' + (displayLat + 0.008)
+        + '&layer=mapnik&marker=' + displayLat + '%2C' + displayLng;
+      if (mapIframe.getAttribute('src') !== mapSrc) mapIframe.setAttribute('src', mapSrc);
+    }
+
+    if (exploreScroll && city.pois) {
+      exploreScroll.innerHTML = '';
+      city.pois.forEach(function(poi) {
+        var c = document.createElement('div');
+        c.className = 'search-poi-card';
+        c.innerHTML = '<div class="search-poi-img"><img src="' + poi.img + '" alt="' + poi.name + '" loading="lazy" onerror="this.onerror=null;this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 130 90%22><rect fill=%22%230D1929%22 width=%22130%22 height=%2290%22/><text x=%2265%22 y=%2250%22 fill=%22%23C8A84B%22 font-size=%2228%22 text-anchor=%22middle%22>&#x1F4CD;</text></svg>\';this.style.objectFit=\'contain\'"><div class="search-poi-rating">' + poi.rating + ' ★</div></div><div class="search-poi-name">' + poi.name + '</div>';
+        c.addEventListener('click', function() {
+          openSearchIframe(null, city.lat, city.lng, poi.q);
+          closeSearch();
+        });
+        exploreScroll.appendChild(c);
+      });
     }
   }
 
