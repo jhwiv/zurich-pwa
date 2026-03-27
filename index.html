@@ -3877,7 +3877,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.40 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.41 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -4482,27 +4482,24 @@ document.querySelectorAll('.nav-chip').forEach(chip => {
   }
 
   if (target) {
-    setTimeout(function() {
-      // Activate the section tab
+    // Single instant jump on load — no visible scrolling, no flicker
+    requestAnimationFrame(function() {
+      // Activate the correct tab chip (visually) without triggering a scroll
       var btn = document.querySelector('.nav-chip[data-target="' + target + '"]');
-      navTo(target, btn);
+      if (btn) {
+        document.querySelectorAll('.nav-chip').forEach(function(c) { c.classList.remove('active'); });
+        btn.classList.add('active');
+      }
 
-      // After section scrolls, scroll to the specific stop
-      setTimeout(function() {
-        var section = document.getElementById(target);
-        if (!section) return;
-        var stops = section.querySelectorAll('.stop');
-        var stop = stops[stopIdx] || stops[stops.length - 1];
-        if (stop) {
-          stop.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          // Offset for sticky header
-          setTimeout(function() {
-            var hdr = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 80;
-            window.scrollBy(0, -(hdr + 12));
-          }, 400);
-        }
-      }, 800);
-    }, 600);
+      // Find the target stop and jump instantly (no smooth scroll)
+      var section = document.getElementById(target);
+      if (!section) return;
+      var stops = section.querySelectorAll('.stop');
+      var stop = stops[stopIdx] || stops[stops.length - 1] || section;
+      var hdr = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 80;
+      var top = stop.getBoundingClientRect().top + window.pageYOffset - hdr - 12;
+      window.scrollTo(0, top); // instant, no smooth
+    });
   }
 })();
 
