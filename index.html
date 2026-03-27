@@ -4428,47 +4428,82 @@ document.querySelectorAll('.nav-chip').forEach(chip => {
   chip.addEventListener('click', function() { navTo(this.dataset.target, this); });
 });
 
-// ── DATE & TIME-AWARE AUTO-NAVIGATION ─────────────
+// ── TIME-AWARE AUTO-NAVIGATION ──────────────────
 (function() {
-  // Only auto-nav on fresh page load
   if (window.performance && window.performance.navigation && window.performance.navigation.type === 2) return;
   if (window.location.hash) return;
 
-  // Schedule: [ISO datetime (CET/CEST), section to activate, optional stop article index within section]
-  // Each entry = "from this time onward, show this section"
-  // The last entry whose time has passed wins.
+  // Detailed schedule: [ISO time, section, stop index (0-based within section)]
+  // The app scrolls to the section AND the specific stop closest to "now".
+  // Each entry = "from this time onward, you should be at this stop".
   var schedule = [
-    // Copenhagen stopover
-    ['2026-03-25T07:00+01:00', 'section-denmark'],  // Arrive Copenhagen Thu morning
-    ['2026-03-26T18:15+01:00', 'section-denmark'],  // Thu dinner at Union Kitchen
-    // Friday: morning still Copenhagen, then depart
-    ['2026-03-27T00:00+01:00', 'section-denmark'],  // Fri morning — still in Copenhagen
-    ['2026-03-27T16:00+01:00', 'section-fri'],       // Fri afternoon — head to airport / depart
-    // Saturday: Zürich Day 2
-    ['2026-03-28T00:00+01:00', 'section-sat'],
-    // Sunday: Zürich Day 3
-    ['2026-03-29T00:00+02:00', 'section-sun'],
-    // After trip ends (flight at 8:25 PM Sunday)
-    ['2026-03-29T21:00+02:00', null]  // Back to overview
+    // ── COPENHAGEN STOPOVER ──
+    ['2026-03-25T07:00+01:00', 'section-denmark', 1],  // Arrive CPH
+    ['2026-03-25T09:00+01:00', 'section-denmark', 3],  // Hotel check-in
+    ['2026-03-25T11:00+01:00', 'section-denmark', 4],  // Explore Nearby
+    ['2026-03-25T14:00+01:00', 'section-denmark', 5],  // Charlotte’s place
+    ['2026-03-26T17:00+01:00', 'section-denmark', 7],  // Union Kitchen dinner
+    ['2026-03-26T22:00+01:00', 'section-denmark', 8],  // After dinner → Fri departure card
+    // Friday morning: still in Copenhagen, show departure card
+    ['2026-03-27T08:00+01:00', 'section-denmark', 8],  // Fri morning — departure is next
+    // ── FRIDAY: ZÜRICH ARRIVAL ──
+    ['2026-03-27T16:00+01:00', 'section-fri', 0],      // Head to CPH airport
+    ['2026-03-27T19:00+01:00', 'section-fri', 0],      // Airport → hotel
+    ['2026-03-27T20:30+01:00', 'section-fri', 1],      // Dinner: White Elephant
+    // ── SATURDAY: THE BIG DAY ──
+    ['2026-03-28T00:00+01:00', 'section-sat', 0],      // Uetliberg
+    ['2026-03-28T12:00+01:00', 'section-sat', 1],      // Sprüngli
+    ['2026-03-28T13:00+01:00', 'section-sat', 2],      // Kunsthaus
+    ['2026-03-28T15:00+01:00', 'section-sat', 3],      // Old Town walk
+    ['2026-03-28T16:00+01:00', 'section-sat', 4],      // Lindenhof
+    ['2026-03-28T17:30+01:00', 'section-sat', 5],      // Aperitivo
+    ['2026-03-28T18:15+01:00', 'section-sat', 6],      // Münsterhof
+    ['2026-03-28T19:00+01:00', 'section-sat', 7],      // Zeughauskeller dinner
+    // ── SUNDAY: DAY 3 ──
+    ['2026-03-29T00:00+02:00', 'section-sun', 0],      // Brunch: Hiltl
+    ['2026-03-29T11:00+02:00', 'section-sun', 1],      // Lake walk
+    ['2026-03-29T12:00+02:00', 'section-sun', 2],      // Lunch options
+    ['2026-03-29T14:30+02:00', 'section-sun', 4],      // Fischerstube / Rietberg
+    ['2026-03-29T17:00+02:00', 'section-sun', 6],      // Departure to airport
+    // Trip over
+    ['2026-03-29T21:00+02:00', null, 0]
   ];
 
   var now = new Date();
   var target = null;
+  var stopIdx = 0;
 
   for (var i = 0; i < schedule.length; i++) {
     var t = new Date(schedule[i][0]);
     if (now >= t) {
       target = schedule[i][1];
+      stopIdx = schedule[i][2];
     }
   }
 
   if (target) {
     setTimeout(function() {
+      // Activate the section tab
       var btn = document.querySelector('.nav-chip[data-target="' + target + '"]');
       navTo(target, btn);
+
+      // After section scrolls, scroll to the specific stop
+      setTimeout(function() {
+        var section = document.getElementById(target);
+        if (!section) return;
+        var stops = section.querySelectorAll('.stop');
+        var stop = stops[stopIdx] || stops[stops.length - 1];
+        if (stop) {
+          stop.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Offset for sticky header
+          setTimeout(function() {
+            var hdr = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 80;
+            window.scrollBy(0, -(hdr + 12));
+          }, 400);
+        }
+      }, 800);
     }, 600);
   }
-  // null or no match → stays on hero/Overview
 })();
 
 // Flight bar dismiss
