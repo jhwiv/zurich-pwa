@@ -1561,7 +1561,52 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 }
 .search-loc-status.denied .loc-dot{background:#e8985a}
 
-
+/* Map preview */
+.search-map-wrap{
+  position:relative;border-radius:12px;overflow:hidden;
+  height:140px;margin:12px 0 0
+}
+.search-map-wrap iframe{
+  width:100%;height:100%;border:none;pointer-events:none;
+  filter:brightness(.85) saturate(.9)
+}
+.search-map-label{
+  position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  background:rgba(13,25,41,.85);padding:4px 12px;border-radius:8px;
+  color:#fff;font-size:12px;font-family:var(--ff-mono);letter-spacing:.5px;
+  text-transform:uppercase;white-space:nowrap
+}
+.search-explore-title{
+  color:var(--cream);font-family:var(--ff-body);font-size:16px;
+  font-weight:400;margin:16px 0 8px;letter-spacing:.3px
+}
+.search-explore-scroll{
+  display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;
+  scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch
+}
+.search-explore-scroll::-webkit-scrollbar{display:none}
+.search-poi-card{
+  flex:0 0 130px;cursor:pointer;scroll-snap-align:start;transition:transform .2s
+}
+.search-poi-card:hover{transform:translateY(-2px)}
+.search-poi-img{
+  position:relative;width:130px;height:90px;border-radius:10px;overflow:hidden;
+  background:var(--navy2)
+}
+.search-poi-img img{
+  width:100%;height:100%;object-fit:cover
+}
+.search-poi-rating{
+  position:absolute;top:6px;left:6px;
+  background:rgba(13,25,41,.8);padding:2px 6px;border-radius:6px;
+  color:var(--gold);font-size:11px;font-family:var(--ff-mono);
+  display:flex;align-items:center;gap:3px;
+}
+.search-poi-name{
+  margin-top:5px;font-size:12px;color:var(--cream);
+  font-family:var(--ff-body);text-align:center;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:130px
+}
 
 /* Bottom navigation */
 .search-bottom-nav{
@@ -2303,23 +2348,33 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   margin:0 8px;
 }
 .search-ask-concierge{
-  display:block;width:100%;padding:14px 0;margin:8px 0 0;
-  background:transparent;border:none;cursor:pointer;
-  color:var(--gold2);font-family:var(--ff-body);font-size:13px;
-  text-align:center;opacity:0.7;transition:opacity .2s
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:calc(100% - 32px);margin:20px auto 0;padding:16px 20px;
+  background:rgba(200,168,75,.08);
+  border:1px solid rgba(200,168,75,.3);border-radius:14px;
+  color:var(--gold2);font-family:var(--ff-body);font-size:15px;
+  cursor:pointer;transition:all .2s;
+  letter-spacing:.3px
 }
-.search-ask-concierge:hover{opacity:1}
+.search-ask-concierge:hover,.search-ask-concierge:active{
+  background:rgba(200,168,75,.18);
+  border-color:rgba(200,168,75,.6)
+}
 .chat-action-chips{
-  display:flex;flex-wrap:wrap;gap:6px;margin-top:8px
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:12px
 }
 .chat-action-chip{
-  display:inline-flex;align-items:center;gap:4px;
-  padding:6px 12px;border-radius:16px;
-  background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.25);
-  color:var(--gold2);font-family:var(--ff-body);font-size:12px;
-  cursor:pointer;transition:background .2s
+  display:inline-flex;align-items:center;gap:5px;
+  padding:10px 16px;border-radius:14px;
+  background:rgba(200,168,75,.08);border:1px solid rgba(200,168,75,.3);
+  color:var(--gold2);font-family:var(--ff-body);font-size:14px;
+  cursor:pointer;transition:all .2s;
+  letter-spacing:.2px
 }
-.chat-action-chip:hover{background:rgba(200,168,75,.22)}
+.chat-action-chip:hover,.chat-action-chip:active{
+  background:rgba(200,168,75,.18);
+  border-color:rgba(200,168,75,.6)
+}
 </style>
 </head>
 <body>
@@ -3990,12 +4045,24 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
       </button>
     </div>
 
+    <!-- Map preview -->
+    <div class="search-map-wrap" id="search-map-wrap">
+      <iframe id="search-map-iframe" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src=""></iframe>
+      <span class="search-map-label" id="search-map-label">Copenhagen Center</span>
+    </div>
+
+    <!-- Explore section -->
+    <h3 class="search-explore-title" id="search-explore-title">Exploring Copenhagen Center</h3>
+    <div class="search-explore-scroll" id="search-explore-scroll">
+      <!-- POI cards populated by JS -->
+    </div>
+
     <!-- Location status -->
     <div class="search-loc-status" id="search-loc-status">
       <span class="loc-dot"></span> Tap to allow location for nearby results
     </div>
     <button class="search-ask-concierge" id="search-ask-concierge">
-      💬 Can't find what you need? <span style="text-decoration:underline">Ask the Trip Concierge</span>
+      💬 Ask the Trip Concierge
     </button>
   </div>
 
@@ -5503,6 +5570,10 @@ window.getItineraryCity = function() {
   var input = document.getElementById('search-input');
   var closeBtn = document.getElementById('search-close');
   var status = document.getElementById('search-loc-status');
+  var mapIframe = document.getElementById('search-map-iframe');
+  var mapLabel = document.getElementById('search-map-label');
+  var exploreTitle = document.getElementById('search-explore-title');
+  var exploreScroll = document.getElementById('search-explore-scroll');
 
   if (!fab || !card) return;
 
@@ -5510,8 +5581,20 @@ window.getItineraryCity = function() {
   var geoGranted = false;
 
   var cities = {
-    copenhagen: { name: 'Copenhagen', lat: 55.6838, lng: 12.5718 },
-    zurich: { name: 'Zürich', lat: 47.3769, lng: 8.5417 }
+    copenhagen: { name: 'Copenhagen', lat: 55.6838, lng: 12.5718, pois: [
+      { name: 'Nyhavn', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Nyhavn_MichaD.jpg/320px-Nyhavn_MichaD.jpg', rating: '4.7', q: 'Nyhavn Copenhagen' },
+      { name: 'Tivoli Gardens', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Tivoli_Gardens_2.jpg/320px-Tivoli_Gardens_2.jpg', rating: '4.6', q: 'Tivoli Gardens' },
+      { name: 'Strøget', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/K%C3%B8benhavn_Str%C3%B8get.jpg/320px-K%C3%B8benhavn_Str%C3%B8get.jpg', rating: '4.5', q: 'Strøget Copenhagen' },
+      { name: 'Round Tower', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Rundetaarn2.jpg/320px-Rundetaarn2.jpg', rating: '4.5', q: 'Rundetårn Copenhagen' },
+      { name: 'Torvehallerne', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Torvehallerne_1.jpg/320px-Torvehallerne_1.jpg', rating: '4.4', q: 'Torvehallerne Copenhagen' }
+    ]},
+    zurich: { name: 'Zürich', lat: 47.3769, lng: 8.5417, pois: [
+      { name: 'Old Town', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Zurich_Altstadt.jpg/320px-Zurich_Altstadt.jpg', rating: '4.7', q: 'Altstadt Zürich' },
+      { name: 'Lake Zürich', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Z%C3%BCrichsee_-_Enge_-_Hafen_Riesbach_2010-08-29_18-47-56.jpg/320px-Z%C3%BCrichsee.jpg', rating: '4.8', q: 'Zürichsee' },
+      { name: 'Bahnhofstrasse', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Bahnhofstrasse_Zürich_2011.jpg/320px-Bahnhofstrasse_Zürich_2011.jpg', rating: '4.5', q: 'Bahnhofstrasse Zürich' },
+      { name: 'Lindenhof', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Lindenhof_-_Limmat_-_Schipfe_2014-03-05_15-23-49.jpg/320px-Lindenhof.jpg', rating: '4.6', q: 'Lindenhof Zürich' },
+      { name: 'Grossmünster', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Grossmünster_-_Pair_of_Towers.jpg/320px-Grossmünster.jpg', rating: '4.5', q: 'Grossmünster Zürich' }
+    ]}
   };
 
   function getActiveCity() {
@@ -5527,7 +5610,37 @@ window.getItineraryCity = function() {
   function syncCityUI() {
     var city = getActiveCity();
     var useGps = geoGranted && userLat && userLng;
+    var displayLat = useGps ? userLat : city.lat;
+    var displayLng = useGps ? userLng : city.lng;
     input.placeholder = useGps ? 'Search nearby…' : 'Search ' + city.name + '…';
+
+    // Update map label and explore title
+    if (mapLabel) mapLabel.textContent = useGps ? 'Your Location' : city.name + ' Center';
+    if (exploreTitle) exploreTitle.textContent = useGps ? 'Near your location' : 'Exploring ' + city.name + ' Center';
+
+    // Update map iframe
+    if (mapIframe) {
+      var mapSrc = 'https://www.openstreetmap.org/export/embed.html?bbox='
+        + (displayLng - 0.015) + '%2C' + (displayLat - 0.008) + '%2C'
+        + (displayLng + 0.015) + '%2C' + (displayLat + 0.008)
+        + '&layer=mapnik&marker=' + displayLat + '%2C' + displayLng;
+      if (mapIframe.getAttribute('src') !== mapSrc) mapIframe.setAttribute('src', mapSrc);
+    }
+
+    // Update POI cards
+    if (exploreScroll) {
+      exploreScroll.innerHTML = '';
+      city.pois.forEach(function(poi) {
+        var c = document.createElement('div');
+        c.className = 'search-poi-card';
+        c.innerHTML = '<div class="search-poi-img"><img src="' + poi.img + '" alt="' + poi.name + '" loading="lazy" onerror="this.onerror=null;this.src=\'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 130 90%22><rect fill=%22%230D1929%22 width=%22130%22 height=%2290%22/><text x=%2265%22 y=%2250%22 fill=%22%23C8A84B%22 font-size=%2228%22 text-anchor=%22middle%22>&#x1F4CD;</text></svg>\';this.style.objectFit=\'contain\'"><div class="search-poi-rating">' + poi.rating + ' ★</div></div><div class="search-poi-name">' + poi.name + '</div>';
+        c.addEventListener('click', function() {
+          openSearchIframe(null, city.lat, city.lng, poi.q);
+          closeSearch();
+        });
+        exploreScroll.appendChild(c);
+      });
+    }
 
     if (!geoGranted && userLat) {
       status.innerHTML = '<span class="loc-dot"></span> Location denied — searching ' + city.name + ' center';
