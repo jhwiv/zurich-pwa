@@ -3802,7 +3802,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.26 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.27 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5194,6 +5194,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     div.className = 'chat-msg ' + role;
     if (role === 'assistant') {
       text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:var(--gold2);text-decoration:underline">$1</a>');
       text = text.replace(/\n/g, '<br>');
       div.innerHTML = text;
     } else if (role === 'system') {
@@ -5290,7 +5291,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
               var token = chunk.response || (chunk.choices && chunk.choices[0] && chunk.choices[0].delta && chunk.choices[0].delta.content) || '';
               if (token) {
                 fullText += token;
-                var rendered = fullText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+                var rendered = fullText.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener" style="color:var(--gold2);text-decoration:underline">$1</a>').replace(/\n/g, '<br>');
                 msgDiv.innerHTML = rendered;
                 chatMessages.scrollTop = chatMessages.scrollHeight;
               }
