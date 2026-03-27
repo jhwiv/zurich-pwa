@@ -3,7 +3,7 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v3.24
+**Current:** v3.25
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
@@ -16,3 +16,4 @@
 | v3.22 | 2026-03-25 | Local search presets match Maritimes style | `LOCAL_PRESETS` |
 | v3.23 | 2026-03-25 | Full-screen local search overlay with grid buttons, map, POI cards | `LOCAL_FULLSCREEN` |
 | v3.24 | 2026-03-27 | GPS & time awareness for chat concierge and local search | `GPS_TIME_AWARE` |
+| v3.25 | 2026-03-27 | Fix GPS: track permission status, await resolution before chat send | `GPS_STATUS_FIX` |
