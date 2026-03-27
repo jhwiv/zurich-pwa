@@ -3877,7 +3877,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.39 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.40 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -6578,8 +6578,12 @@ window.getItineraryCity = function() {
         .sort(function(a, b) { return a._dist - b._dist; })
         .slice(0, MAX_MARKERS);
       if (withDist.length === 0) {
-        statusEl.textContent = 'No results nearby';
+        // No results even in wide search — open Google Maps instead
+        var gmUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(query) + '/@' + lat + ',' + lng + ',16z';
+        statusEl.innerHTML = 'Opening Google Maps…';
         statusEl.style.display = '';
+        window.closeSearchMap();
+        window.open(gmUrl, '_blank');
         return;
       }
       statusEl.style.display = 'none';
@@ -6622,9 +6626,12 @@ window.getItineraryCity = function() {
       })
       .catch(function(err) {
         console.error('Overpass search failed:', err);
-        statusEl.innerHTML = 'Search unavailable<br><a href="https://www.google.com/maps/search/' + encodeURIComponent(query) + '/@' + lat + ',' + lng + ',15z" target="_blank" style="color:#C8A84B;font-size:11px;text-decoration:underline;margin-top:8px;display:inline-block">Try Google Maps →</a>';
+        // Auto-redirect to Google Maps search when Overpass is unavailable
+        var gmUrl = 'https://www.google.com/maps/search/' + encodeURIComponent(query) + '/@' + lat + ',' + lng + ',16z';
+        statusEl.innerHTML = 'Opening Google Maps…';
         statusEl.style.display = '';
-        statusEl.style.pointerEvents = 'auto';
+        window.closeSearchMap();
+        window.open(gmUrl, '_blank');
       });
 
     // Leaflet needs multiple invalidateSize calls after container becomes visible
