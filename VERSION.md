@@ -3,7 +3,7 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v3.38
+**Current:** v4.0
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
@@ -27,3 +27,4 @@
 | v3.36 | 2026-03-27 | Restaurant menu pop-ups: replace inline Union Kitchen menu with modal button, add menu buttons for all 6 restaurants (Union Kitchen, White Elephant, Zeughauskeller, Hiltl, Fischerstube, eCHo) with full menus sourced from official websites | `MENU_POPUP` |
 | v3.37 | 2026-03-27 | Remove map preview & explore cards from search; add bidirectional toggle between Local Search and Trip Concierge | `SEARCH_CONCIERGE` |
 | v3.38 | 2026-03-27 | Add menu pop-ups for all remaining dining/drink stops: Café Sprüngli, Kunsthaus Café, Café Bar Münsterhof (Caffè Belpaese), Lenox Bar — now 10 total menu buttons | `MENU_POPUP` |
+| v4.0 | 2026-03-27 | Unified version number with Maritimes PWA — full feature parity achieved | — |
