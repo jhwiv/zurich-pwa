@@ -590,6 +590,110 @@ img{display:block;max-width:100%}
 }
 .chip-popup-link.visible{display:inline-block}
 
+/* ── RESTAURANT MENU MODAL ──────────────────────── */
+.menu-modal-overlay{
+  position:fixed;inset:0;z-index:510;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s;
+}
+.menu-modal-overlay.visible{
+  opacity:1;pointer-events:auto;
+}
+.menu-modal{
+  background:var(--cream);
+  border-radius:var(--r12,12px);
+  max-width:520px;width:calc(100% - 32px);
+  max-height:85vh;
+  display:flex;flex-direction:column;
+  box-shadow:0 24px 80px rgba(0,0,0,.4);
+  transform:translateY(16px);
+  transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.menu-modal-overlay.visible .menu-modal{
+  transform:translateY(0);
+}
+.menu-modal-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:20px 20px 12px;
+  border-bottom:1px solid var(--divider);
+  gap:12px;flex-shrink:0;
+}
+.menu-modal-title{
+  font-family:'Playfair Display',serif;
+  font-size:18px;font-weight:700;
+  color:var(--gold);line-height:1.3;
+}
+.menu-modal-subtitle{
+  font-family:'Crimson Pro',serif;
+  font-size:13px;color:var(--steel);
+  font-style:italic;margin-top:4px;
+}
+.menu-modal-close{
+  background:none;border:none;cursor:pointer;
+  font-size:24px;color:var(--steel);
+  padding:0 0 0 8px;line-height:1;
+  flex-shrink:0;
+}
+.menu-modal-close:hover{color:var(--navy)}
+.menu-modal-scroll{
+  overflow-y:auto;padding:4px 20px 20px;
+  -webkit-overflow-scrolling:touch;
+}
+.menu-section-label{
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold);
+  margin:16px 0 8px;
+  border-bottom:1px solid rgba(200,168,75,.15);
+  padding-bottom:4px;
+}
+.menu-section-label:first-child{margin-top:8px}
+.menu-item-row{
+  display:flex;justify-content:space-between;
+  align-items:baseline;gap:8px;
+  padding:3px 0;
+  font-family:'Crimson Pro',serif;font-size:13px;
+  color:var(--body);
+}
+.menu-item-name{flex:1;min-width:0}
+.menu-item-desc{
+  color:var(--steel);font-size:11px;
+}
+.menu-item-price{
+  white-space:nowrap;color:var(--steel);
+  font-size:12px;text-align:right;flex-shrink:0;
+}
+.menu-footer{
+  font-family:'Crimson Pro',serif;
+  font-size:11px;color:var(--steel);
+  margin-top:14px;text-align:center;
+  font-style:italic;
+  padding-top:10px;
+  border-top:1px solid var(--divider);
+}
+.btn-menu{
+  display:inline-flex;align-items:center;gap:var(--sp4);
+  background:var(--gold3);
+  color:var(--gold2);
+  border:1px solid rgba(200,168,75,.35);
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:7px 14px;border-radius:var(--r6);
+  min-height:36px;font-weight:500;
+  transition:all .2s;
+  cursor:pointer;
+}
+.btn-menu:hover{
+  background:rgba(200,168,75,.2);
+  border-color:var(--gold);
+  transform:translateY(-1px);
+}
+.btn-menu:active{transform:scale(.97);transition-duration:.05s}
+
+
 /* action row */
 .stop-actions{
   display:flex;flex-wrap:wrap;gap:var(--sp8);
@@ -2472,48 +2576,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=Vodroffsvej+39,+Frederiksberg,+Copenhagen" target="_blank" rel="noopener">🗺 Directions</a>
           <a class="btn-secondary" href="https://theunionkitchen.dk/frederiksberg/" target="_blank" rel="noopener">🌐 Restaurant</a>
-        </div>
-
-        <!-- MENU -->
-        <div style="margin-top:16px;padding:16px;background:var(--gold3);border:1px solid rgba(200,168,75,.2);border-radius:var(--r9)">
-          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;text-align:center">Menu · The Union Kitchen Frederiksberg</div>
-          <div style="font-family:'Crimson Pro',serif;font-size:12px;color:var(--steel);text-align:center;margin-bottom:12px;font-style:italic">The kitchen recommends 3 dishes per person</div>
-
-          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:14px 0 8px;border-bottom:1px solid rgba(200,168,75,.15);padding-bottom:4px">Sharing Plates</div>
-          <table style="width:100%;font-family:'Crimson Pro',serif;font-size:13px;color:var(--body);border-collapse:collapse">
-            <tr><td style="padding:3px 0">Fried Goat Cheese <span style="color:var(--steel);font-size:11px">— jalapeño, marinara sauce</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">125 kr</td></tr>
-            <tr><td style="padding:3px 0">Fishcake <span style="color:var(--steel);font-size:11px">— mango salsa</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">139 kr</td></tr>
-            <tr><td style="padding:3px 0">Pork &amp; Shrimp Dumplings <span style="color:var(--steel);font-size:11px">— crunchy chili sauce</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">139 kr</td></tr>
-            <tr><td style="padding:3px 0">Lentil Mushroom Balls <span style="color:var(--steel);font-size:11px">— pesto &amp; parmesan</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">139 kr</td></tr>
-            <tr><td style="padding:3px 0">Mushroom Arancini <span style="color:var(--steel);font-size:11px">— whipped ricotta &amp; honey</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">129 kr</td></tr>
-            <tr><td style="padding:3px 0">Beef Polpette <span style="color:var(--steel);font-size:11px">— tomato sauce, ricotta &amp; lemon</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">159 kr</td></tr>
-            <tr><td style="padding:3px 0">Ginger Chicken Tsukune <span style="color:var(--steel);font-size:11px">— teriyaki sauce &amp; chives</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">139 kr</td></tr>
-            <tr><td style="padding:3px 0">Moroccan Lamb Kefta <span style="color:var(--steel);font-size:11px">— romesco sauce &amp; mint</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">139 kr</td></tr>
-          </table>
-
-          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:14px 0 8px;border-bottom:1px solid rgba(200,168,75,.15);padding-bottom:4px">Sides</div>
-          <table style="width:100%;font-family:'Crimson Pro',serif;font-size:13px;color:var(--body);border-collapse:collapse">
-            <tr><td style="padding:3px 0">Garlic Bread <span style="color:var(--steel);font-size:11px">— herb butter</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">85 kr</td></tr>
-            <tr><td style="padding:3px 0">Warm Farro <span style="color:var(--steel);font-size:11px">— goat cheese, pumpkin, hazelnut</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">86 kr</td></tr>
-            <tr><td style="padding:3px 0">Mac 'n' Cheese <span style="color:var(--steel);font-size:11px">— mushrooms &amp; chives</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">89 kr</td></tr>
-            <tr><td style="padding:3px 0">Grilled Broccolini <span style="color:var(--steel);font-size:11px">— green beans, soy, sesame</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">89 kr</td></tr>
-            <tr><td style="padding:3px 0">Burrata <span style="color:var(--steel);font-size:11px">— crispy chili oil &amp; pickled onions</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">105 kr</td></tr>
-            <tr><td style="padding:3px 0">Rigatoni Pasta <span style="color:var(--steel);font-size:11px">— pesto &amp; parmesan</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">82 kr</td></tr>
-            <tr><td style="padding:3px 0">Charred Cabbage <span style="color:var(--steel);font-size:11px">— parmesan panko &amp; caesar dressing</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">86 kr</td></tr>
-            <tr><td style="padding:3px 0">Avocado, Tomato &amp; Cucumber <span style="color:var(--steel);font-size:11px">— za'atar, pickled onion, coriander</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">89 kr</td></tr>
-            <tr><td style="padding:3px 0">Crispy Sweet Potato <span style="color:var(--steel);font-size:11px">— sunflower seeds, salsa verde, za'atar</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">82 kr</td></tr>
-            <tr><td style="padding:3px 0">Truffle Fries <span style="color:var(--steel);font-size:11px">— chili mayo</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">79 kr</td></tr>
-            <tr><td style="padding:3px 0">Farm Leaves <span style="color:var(--steel);font-size:11px">— white balsamic</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">69 kr</td></tr>
-          </table>
-
-          <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin:14px 0 8px;border-bottom:1px solid rgba(200,168,75,.15);padding-bottom:4px">Dessert</div>
-          <table style="width:100%;font-family:'Crimson Pro',serif;font-size:13px;color:var(--body);border-collapse:collapse">
-            <tr><td style="padding:3px 0">Lemon Sorbet <span style="color:var(--steel);font-size:11px">— lemon curd, burnt meringue</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">85 kr</td></tr>
-            <tr><td style="padding:3px 0">Chocolate Mousse <span style="color:var(--steel);font-size:11px">— cardamom cream</span></td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">85 kr</td></tr>
-            <tr><td style="padding:3px 0">Tiramisu</td><td style="text-align:right;white-space:nowrap;color:var(--steel);font-size:12px">85 kr</td></tr>
-          </table>
-
-          <div style="font-family:'Crimson Pro',serif;font-size:11px;color:var(--steel);margin-top:12px;text-align:center;font-style:italic">Prices in DKK · ~7 DKK = $1 USD · Cards accepted</div>
+          <button class="btn-menu" onclick="openMenuModal('union-kitchen')">📋 Menu</button>
         </div>
       </article>
 
@@ -2595,6 +2658,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">+41 44 360 73 22 · Dinner daily 6–10 PM</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://whiteelephant.ch" target="_blank" rel="noopener">🌐 Website</a>
+          <button class="btn-menu" onclick="openMenuModal('white-elephant')">📋 Menu</button>
         </div>
       </article>
 
@@ -2779,7 +2843,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3699,8.5378&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.zeughauskeller.ch/en/" target="_blank" rel="noopener">🌐 Website</a>
-
+          <button class="btn-menu" onclick="openMenuModal('zeughauskeller')">📋 Menu</button>
         </div>
       </article>
 
@@ -2835,7 +2899,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3744,8.5370&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
           <a class="btn-secondary" href="https://www.hiltl.ch/en/" target="_blank" rel="noopener">🌐 Website</a>
-
+          <button class="btn-menu" onclick="openMenuModal('hiltl')">📋 Menu</button>
         </div>
       </article>
 
@@ -2897,7 +2961,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">Bellerivestrasse 160 · +41 44 422 25 20 · Recommended: book ahead</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3537,8.5562&dirflg=r" target="_blank" rel="noopener">🗺 Transit Directions</a>
-
+          <button class="btn-menu" onclick="openMenuModal('fischerstube')">📋 Menu</button>
         </div>
       </article>
 
@@ -2929,7 +2993,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">+41 44 360 73 18 · Ask hotel to seat you at 5:15 PM — mention 8:25 PM flight</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3812,8.5387&dirflg=w" target="_blank" rel="noopener">🗺 Hotel Location</a>
-
+          <button class="btn-menu" onclick="openMenuModal('echo')">📋 Menu</button>
         </div>
       </article>
 
@@ -3799,7 +3863,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.35 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.36 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5615,6 +5679,20 @@ window.getItineraryCity = function() {
 </script>
 
 <!-- Chip Popup Overlay -->
+<!-- ── RESTAURANT MENU MODAL ──────────────────────── -->
+<div class="menu-modal-overlay" id="menu-modal-overlay">
+  <div class="menu-modal" role="dialog" aria-modal="true">
+    <div class="menu-modal-header">
+      <div>
+        <div class="menu-modal-title" id="menu-modal-title"></div>
+        <div class="menu-modal-subtitle" id="menu-modal-subtitle"></div>
+      </div>
+      <button class="menu-modal-close" id="menu-modal-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="menu-modal-scroll" id="menu-modal-scroll"></div>
+  </div>
+</div>
+
 <div class="chip-popup-overlay" id="chip-popup-overlay">
   <div class="chip-popup" role="dialog" aria-modal="true">
     <div class="chip-popup-header">
@@ -5628,6 +5706,318 @@ window.getItineraryCity = function() {
     </div>
   </div>
 </div>
+
+<script>
+// ── Restaurant Menu Modal System ──
+(function(){
+  var overlay = document.getElementById('menu-modal-overlay');
+  var titleEl = document.getElementById('menu-modal-title');
+  var subtitleEl = document.getElementById('menu-modal-subtitle');
+  var scrollEl = document.getElementById('menu-modal-scroll');
+  var closeBtn = document.getElementById('menu-modal-close');
+
+  var menus = {
+    'union-kitchen': {
+      title: 'The Union Kitchen Frederiksberg',
+      subtitle: 'The kitchen recommends 3 dishes per person',
+      footer: 'Prices in DKK · ~7 DKK = $1 USD · Cards accepted',
+      sections: [
+        { label: 'Sharing Plates', items: [
+          ['Fried Goat Cheese','jalapeño, marinara sauce','125 kr'],
+          ['Fishcake','mango salsa','139 kr'],
+          ['Pork & Shrimp Dumplings','crunchy chili sauce','139 kr'],
+          ['Lentil Mushroom Balls','pesto & parmesan','139 kr'],
+          ['Mushroom Arancini','whipped ricotta & honey','129 kr'],
+          ['Beef Polpette','tomato sauce, ricotta & lemon','159 kr'],
+          ['Ginger Chicken Tsukune','teriyaki sauce & chives','139 kr'],
+          ['Moroccan Lamb Kefta','romesco sauce & mint','139 kr']
+        ]},
+        { label: 'Sides', items: [
+          ['Garlic Bread','herb butter','85 kr'],
+          ['Warm Farro','goat cheese, pumpkin, hazelnut','86 kr'],
+          ["Mac 'n' Cheese",'mushrooms & chives','89 kr'],
+          ['Grilled Broccolini','green beans, soy, sesame','89 kr'],
+          ['Burrata','crispy chili oil & pickled onions','105 kr'],
+          ['Rigatoni Pasta','pesto & parmesan','82 kr'],
+          ['Charred Cabbage','parmesan panko & caesar dressing','86 kr'],
+          ['Avocado, Tomato & Cucumber',"za'atar, pickled onion, coriander",'89 kr'],
+          ['Crispy Sweet Potato',"sunflower seeds, salsa verde, za'atar",'82 kr'],
+          ['Truffle Fries','chili mayo','79 kr'],
+          ['Farm Leaves','white balsamic','69 kr']
+        ]},
+        { label: 'Dessert', items: [
+          ['Lemon Sorbet','lemon curd, burnt meringue','85 kr'],
+          ['Chocolate Mousse','cardamom cream','85 kr'],
+          ['Tiramisu','','85 kr']
+        ]}
+      ]
+    },
+    'white-elephant': {
+      title: 'White Elephant · Thai',
+      subtitle: 'Michelin-listed since 1991 · Zürich Marriott Hotel',
+      footer: 'Prices in CHF incl. VAT · No MSG · 🌿 = vegan',
+      sections: [
+        { label: 'Appetizers', items: [
+          ['Poh Piah Tod','spring rolls, glass noodles, mushrooms','CHF 16'],
+          ['Puek Tod','fried water taro, peanuts, sweet-sour sauce','CHF 16'],
+          ['Gung Sarong','shrimp wrapped in crispy potato noodles','CHF 19'],
+          ['Tod Man Pla','fish cakes, red curry, kaffir lime','CHF 19'],
+          ['Kau Kieb Pak Moh','steamed chicken & peanut dumplings','CHF 20'],
+          ['Satay Gai','grilled chicken skewers, peanut sauce','CHF 22']
+        ]},
+        { label: 'Soups', items: [
+          ['Gang Jeud Woonsen 🌿','clear soup, glass noodles, tofu, vegetables','CHF 15'],
+          ['Tom Yam Je 🌿','spicy-sour soup, vegetables, straw mushrooms','CHF 15'],
+          ['Tom Yam Gung','spicy-sour, prawns, lemongrass, galangal','CHF 19'],
+          ['Tom Kah Gai','coconut soup, chicken, served in fresh coconut','CHF 23']
+        ]},
+        { label: 'Salads', items: [
+          ['Som Tam','green papaya, chili, palm sugar, lime, peanuts','CHF 24'],
+          ['Laab Gai','spiced chicken salad, toasted rice','CHF 22'],
+          ['Yam Woonsen','glass noodle salad, seafood','CHF 22'],
+          ['Neua Yang Nam Tok','spicy beef fillet, basil, toasted rice','CHF 26'],
+          ['Yam Han Sa 🌿','tofu salad, Thai celery, tomatoes','CHF 20']
+        ]},
+        { label: 'Main Courses · with jasmine rice', items: [
+          ['Gai Pad Med','chicken, sweet chili paste, cashew nuts','CHF 44'],
+          ['Ped Tod','crispy baked duck on Thai cabbage','CHF 46'],
+          ['Gang Ped Ped Yang','duck red curry, pineapple, lychee, basil','CHF 46'],
+          ['Neua Prig Gang','beef fillet, pepper, chili paste, coconut milk','CHF 49'],
+          ['Pla Chu Chee','baked sea bass, Panang curry','CHF 58'],
+          ['Tau Hou Pad King 🌿','Thai tofu & vegetables, ginger','CHF 39'],
+          ['Pad Kana 🌿','kale, garlic, mushroom sauce','CHF 33']
+        ]},
+        { label: 'Curries · choose your protein', items: [
+          ['Gang Ped','red curry, aubergines, Thai basil',''],
+          ['Gang Keow','green curry, lemongrass, aubergines',''],
+          ['Panang','panang curry, peanuts, kaffir lime',''],
+          ['Gang Gari','yellow curry, onions, potatoes',''],
+          ['Tofu 🌿','','CHF 39'],
+          ['Chicken','','CHF 43'],
+          ['Pork','','CHF 42'],
+          ['Beef fillet','','CHF 49'],
+          ['Black Tiger prawns','','CHF 49'],
+          ['Lobster tail','','CHF 58']
+        ]},
+        { label: 'Sharing Platters · min. 2 persons', items: [
+          ['Royal White Elephant','6 signature dishes incl. satay, fish cakes, salads','CHF 32 pp'],
+          ['Pearl of Siam','beef Panang, prawn green curry, chicken yellow curry','CHF 58 pp'],
+          ['Pearl of Andaman','lobster, barramundi, mussels, squid, prawns, rice','CHF 78 pp']
+        ]},
+        { label: 'Sides', items: [
+          ['Kao Pad Je','fried jasmine rice, eggs, vegetables','CHF 6'],
+          ['Kao Seuy','steamed jasmine rice','CHF 3']
+        ]}
+      ]
+    },
+    'zeughauskeller': {
+      title: 'Zeughauskeller',
+      subtitle: "Zürich's legendary beer hall · est. 1487",
+      footer: 'Prices in CHF incl. VAT & service · Open daily 11:30–23:00',
+      sections: [
+        { label: 'House Specialities', items: [
+          ['Zürcher Geschnetzeltes ★','sliced veal & mushrooms in cream-wine sauce','CHF 36.50'],
+          ['Wienerschnitzel','crumbed veal escalope, fried crispy','CHF 36.50'],
+          ['Veal Cordon Bleu','veal, ham & spicy Gruyère, fried crispy','CHF 38'],
+          ['Pork Cordon Bleu','pork, ham & Gruyère','CHF 32'],
+          ['Sliced Veal Liver','fresh, pan-fried in butter','CHF 36'],
+          ['Whole Pork Shank','herb-marinated, dark beer braised, potato salad','CHF 33'],
+          ["Möckli à la Zeughauskeller",'beef in curry-garlic sauce, buttered rice','CHF 36'],
+          ["Mayor's Sword (2 pers.)",'400g baby-beef steaks on a sword, Rösti/fries','CHF 88'],
+          ['Deep Fried Perch Fillets','boiled potatoes, tartar sauce','CHF 31']
+        ]},
+        { label: 'Sausage Favourites · with potato salad', items: [
+          ['Kalbsbratwurst','pan-fried veal sausage, onion sauce','CHF 20'],
+          ['Zwingli Sausage','grilled pork, herbs & pistachio, recipe from 1519','CHF 22'],
+          ['Wiedikerli (pair)','pan-fried pork sausages, herbs, savoury gravy','CHF 22.50'],
+          ['Hungarian Paprika Schnägg','spicy paprika pork sausage','CHF 24'],
+          ['Vaudois Saucisson','smoked pork, bacon, white wine, sauerkraut','CHF 29'],
+          ['Augustiner Schüblig','traditional smoked pork & beef sausage','CHF 19.50'],
+          ['Sausage Skewer','selection of grilled sausage specialities','CHF 31'],
+          ['Kanonenputzer ½ meter (2 pers.)','pan-fried French-Swiss sausage','CHF 44'],
+          ['Kanonenputzer 1 meter (4 pers.)','pan-fried French-Swiss sausage','CHF 88']
+        ]},
+        { label: 'Always a Good Choice', items: [
+          ['Älplermagronen 🌿','Alpine macaroni, potato, onions, cream sauce','CHF 21.50'],
+          ['Zeughauskeller Burger','2×120g beef, coleslaw, bacon, BBQ, fries','CHF 28'],
+          ['Incredible Burger 🌿','vegi burger, coleslaw, BBQ, fries','CHF 26.50']
+        ]},
+        { label: 'Cold Platters', items: [
+          ['Beefsteak Tartare (starter)','raw, mild or spicy, toast & butter','CHF 24'],
+          ['Beefsteak Tartare (main)','','CHF 32'],
+          ['Dried Ham, Beef & Gruyère','air-dried mountain specialities','CHF 24.50'],
+          ['Sausage-Cheese Salad','servelat, Swiss cheese, tomato, egg','CHF 23.50']
+        ]},
+        { label: 'Soups & Salads', items: [
+          ['Beef Broth','with finely shredded crêpe','CHF 8'],
+          ['Seasonal Soup','','CHF 9'],
+          ['Mixed Salad','','CHF 9.50'],
+          ['Coleslaw','','CHF 6.50']
+        ]}
+      ]
+    },
+    'hiltl': {
+      title: 'Hiltl',
+      subtitle: "World's oldest vegetarian restaurant · est. 1898",
+      footer: 'All vegetarian/vegan · Prices in CHF · Reservations recommended',
+      sections: [
+        { label: 'Sunday Brunch Buffet', items: [
+          ['All-You-Can-Eat Brunch ★','100+ hot & cold dishes, dessert buffet, 1 Prosecco, 2 hot drinks & juices','CHF 63'],
+          ['Saturday Breakfast Buffet','until 11:30 AM, 1 Prosecco & hot drink','CHF 45'],
+          ['Buffet by Weight','help-yourself, any day','CHF 5.90/100g']
+        ]},
+        { label: 'Starters & Salads', items: [
+          ['Hiltl Tartare','eggplant, organic egg, capers, brioche','CHF 18.50'],
+          ['Thai Papaya Salad','green papaya, satay skewer, peanuts','CHF 17.50'],
+          ['Korean Style Cauliflower','pickled cucumber, Asian BBQ sauce','CHF 15.50'],
+          ['Caesar Salad','iceberg, organic egg, hard cheese, croutons','CHF 14.50'],
+          ['Hiltl Starter Platter (2+ pers.)','satay, tartare, hummus, cauliflower, olives','CHF 20 pp']
+        ]},
+        { label: 'Main Courses', items: [
+          ['Züri Geschnetzeltes','mushrooms, organic seitan, white wine, Rösti','CHF 32.50'],
+          ['Hiltl Cordon Bleu','Swiss cheese, seitan, smoked tofu, fries','CHF 32.50'],
+          ['Hiltl Burger','brioche bun, pickled cucumber, fries','CHF 28.50'],
+          ['Pulled BBQ Burger','pretzel bun, planted., cole slaw, fries','CHF 32.50'],
+          ['Mushroom Stroganoff','bell pepper, shiitake, pickles, Rösti','CHF 32.50'],
+          ['Gnocchi with Saffron Sauce','baby spinach, cherry tomatoes, pine nuts','CHF 28.50'],
+          ['Hiltl Bolognese','carrot, celery, soy mince, spaghetti','CHF 24.50'],
+          ['Indian Thali Platter (2+ pers.)','dal, aloo, paneer, eggplant curry, naan, rice','CHF 34 pp']
+        ]},
+        { label: 'Desserts', items: [
+          ['Affogato al Caffè','vanilla ice cream, double espresso','CHF 9'],
+          ['Coupe Denmark','vanilla ice cream, hot chocolate sauce','CHF 11']
+        ]}
+      ]
+    },
+    'fischerstube': {
+      title: 'Fischerstube Zürihorn',
+      subtitle: 'Lakeside terrace · Swiss fish & seasonal cuisine',
+      footer: 'Prices in CHF incl. VAT · Reservations recommended',
+      sections: [
+        { label: 'Starters', items: [
+          ['Räucherforellen-Tatar','smoked trout tartare, beetroot, mustard seeds','CHF 23'],
+          ['Matjes-Salat','matjes fillets, sour cream, cucumber, apple','CHF 19'],
+          ['Swiss Beef Tartare','pickled vegetables, Belper Knolle, bread','CHF 24 / 38'],
+          ['Goat Cheese','warm, crispy crust, honey-mustard, rhubarb','CHF 18'],
+          ['Silken Tofu Ceviche 🌿','leche de tigre, avocado, sweet potato, corn','CHF 18'],
+          ['Prawn Bisque','crème fraîche, celery, potatoes','CHF 19']
+        ]},
+        { label: 'Fish Mains', items: [
+          ['Steinbutt (Turbot)','parsley salsa, market vegetables, rosemary potatoes','CHF 58'],
+          ['Wolfsbarsch (Sea Bass)','mussels, tomato beurre blanc, spinach, mash','CHF 48'],
+          ['Fisch-Chnusperli','crispy pikeperch nuggets, tartar sauce, fries','CHF 35'],
+          ['Seeannsgarn','sepia tagliolini, salmon, whitefish, saffron','CHF 39'],
+          ['Swiss Lachs Rösti','graved salmon, quail egg, horseradish, Rösti','CHF 42']
+        ]},
+        { label: 'Meat & Vegetarian', items: [
+          ['Zürcher Geschnetzeltes','sliced veal, mushroom cream, Rösti','CHF 54'],
+          ['Lasagne al Ragù','braised beef cheeks, sun-dried tomatoes, basil','CHF 42'],
+          ['Frühlingsrollen 🌿','spring rolls, red vegetable coconut curry','CHF 33'],
+          ['Roasted Cauliflower 🌿','pomegranate vinaigrette, lentil hummus','CHF 31'],
+          ['Cappelletti','seasonal filling, sage butter, pumpkin seeds','CHF 36']
+        ]},
+        { label: 'Apéro & Sharing', items: [
+          ['Bacalhau-Kroketten','crispy cod croquettes, tomato salsa','CHF 12 / 22 / 42'],
+          ['Black Tiger Prawns','glazed, chilli butter, rosemary','CHF 27 / 39 / 49'],
+          ['Zvieriplattli (2/4 pers.)','bacon, sausage, cheese, antipasti','CHF 29 / 49'],
+          ['Crostini (2/4 pers.)','beef tartare, lentil hummus, olive tapenade','CHF 19 / 36']
+        ]},
+        { label: 'Desserts', items: [
+          ['Pistazien-Tiramisu','mascarpone, sponge cake, pistachios','CHF 13'],
+          ['Dreierlei Schokolade','mousse, brownie, ice cream','CHF 17'],
+          ['Cheesecake','with fruit compote','CHF 12'],
+          ['Rüeblikuchen','homemade carrot cake, almonds','CHF 9.50']
+        ]}
+      ]
+    },
+    'echo': {
+      title: 'eCHo · Swiss Restaurant',
+      subtitle: 'Zürich Marriott Hotel · March 2026 menu',
+      footer: 'Prices in CHF incl. 8.1% VAT · Open Wed–Sun 18:00–22:30',
+      sections: [
+        { label: 'Cold Starters', items: [
+          ['Frühlingssalat','rhubarb, gratinated goat cheese, honey','CHF 18'],
+          ['Nüsslisalat','lamb\'s lettuce, French dressing, egg, bacon','CHF 19'],
+          ['Kohlrabicarpaccio','hazelnuts, pomegranate, rocket, orange','CHF 18'],
+          ['eCHo Tatar','beef, egg yolk, pickled veg, brioche','CHF 22 / 36'],
+          ['eCHo Plättli','coppa, salsiz, Rohschinken, Bündnerfleisch, cheese','CHF 22']
+        ]},
+        { label: 'Soups', items: [
+          ['Basler Mehlsuppe','Gruyère, crème fraîche, croutons','CHF 15'],
+          ['Kartoffel-Lauchsuppe','leek, herb oil','CHF 15']
+        ]},
+        { label: 'Warm Starters & Small Plates', items: [
+          ['Felchenfilets','Swiss lake whitefish, fregola sarda, fennel','CHF 43'],
+          ['Chees Fondue ★','house blend, white wine, Kirsch, bread','CHF 36'],
+          ['Erbsenrisotto 🌿','pea risotto, Sbrinz, crème fraîche','CHF 24 / 36'],
+          ['Pizokel 🌿','spinach, spring onions, morels, mountain cheese','CHF 24 / 36']
+        ]},
+        { label: 'Main Courses', items: [
+          ['Züri Gschnätzlets ★','veal, mushroom cream sauce, butter Rösti','CHF 45'],
+          ['eCHo Plättli (warm)','Edelschwein, Rohschinken, cheese, mushrooms','CHF 43'],
+          ['Rindsentrecôte','grilled, tagliatelle, glazed carrots, morel cream','CHF 52'],
+          ['eCHo\'s Bratwurscht','veal & pork sausage, caramelized onion, Rösti-Gruyère','CHF 33'],
+          ['Gschmorti Lammhaxe','braised lamb shank, Ebly, carrots, peas','CHF 52']
+        ]},
+        { label: 'Desserts', items: [
+          ['Lava Schoggi','chocolate cake, liquid core, sour cream ice cream','CHF 16'],
+          ['Rhabarber Crumble','rhubarb, hazelnut streusel, vanilla ice cream','CHF 16'],
+          ['Röteli Dom','mascarpone, chocolate, strawberries, Röteli liqueur','CHF 16'],
+          ['Glace','per scoop: vanilla, strawberry, chocolate, pistachio…','CHF 5']
+        ]},
+        { label: '3-Course Menu Deal', items: [
+          ['Dreier-Menü','compose your own: starter + main + dessert','CHF 69 pp']
+        ]}
+      ]
+    }
+  };
+
+  function buildMenuHTML(menu) {
+    var h = '';
+    for (var s = 0; s < menu.sections.length; s++) {
+      var sec = menu.sections[s];
+      h += '<div class="menu-section-label">' + sec.label + '</div>';
+      for (var i = 0; i < sec.items.length; i++) {
+        var item = sec.items[i];
+        h += '<div class="menu-item-row">';
+        h += '<div class="menu-item-name">' + item[0];
+        if (item[1]) h += ' <span class="menu-item-desc">— ' + item[1] + '</span>';
+        h += '</div>';
+        if (item[2]) h += '<div class="menu-item-price">' + item[2] + '</div>';
+        h += '</div>';
+      }
+    }
+    if (menu.footer) {
+      h += '<div class="menu-footer">' + menu.footer + '</div>';
+    }
+    return h;
+  }
+
+  window.openMenuModal = function(id) {
+    var menu = menus[id];
+    if (!menu) return;
+    titleEl.textContent = menu.title;
+    subtitleEl.textContent = menu.subtitle || '';
+    scrollEl.innerHTML = buildMenuHTML(menu);
+    overlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  };
+
+  function closeMenu() {
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeMenu();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('visible')) closeMenu();
+  });
+})();
+</script>
 
 <script>
 // ── Chip Popup System ──
