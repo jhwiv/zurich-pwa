@@ -2198,6 +2198,24 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   background:rgba(200,168,75,.2);
   margin:0 8px;
 }
+.search-ask-concierge{
+  display:block;width:100%;padding:14px 0;margin:8px 0 0;
+  background:transparent;border:none;cursor:pointer;
+  color:var(--gold2);font-family:var(--ff-body);font-size:13px;
+  text-align:center;opacity:0.7;transition:opacity .2s
+}
+.search-ask-concierge:hover{opacity:1}
+.chat-action-chips{
+  display:flex;flex-wrap:wrap;gap:6px;margin-top:8px
+}
+.chat-action-chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:6px 12px;border-radius:16px;
+  background:rgba(200,168,75,.12);border:1px solid rgba(200,168,75,.25);
+  color:var(--gold2);font-family:var(--ff-body);font-size:12px;
+  cursor:pointer;transition:background .2s
+}
+.chat-action-chip:hover{background:rgba(200,168,75,.22)}
 </style>
 </head>
 <body>
@@ -3781,7 +3799,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.34 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.35 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -3912,6 +3930,9 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
     <div class="search-loc-status" id="search-loc-status">
       <span class="loc-dot"></span> Tap to allow location for nearby results
     </div>
+    <button class="search-ask-concierge" id="search-ask-concierge">
+      💬 Can't find what you need? <span style="text-decoration:underline">Ask the Trip Concierge</span>
+    </button>
   </div>
 
   <!-- Bottom nav -->
@@ -5120,6 +5141,13 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     chatFab.textContent = '\uD83D\uDCAC';
     document.body.style.overflow = '';
   }
+  window.openChatFromSearch = function(prefilledText) {
+    openChat();
+    if (prefilledText) {
+      chatInput.value = prefilledText;
+      chatInput.focus();
+    }
+  };
   function isChatOpen() {
     return chatPanel.classList.contains('open');
   }
@@ -5221,6 +5249,9 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       chatSuggestions.style.display = 'none';
     }
 
+    var oldChips = chatMessages.querySelectorAll('.chat-action-chips');
+    for (var i = 0; i < oldChips.length; i++) oldChips[i].remove();
+
     addMessage('user', text);
     chatHistory.push({ role: 'user', content: text });
     showTyping();
@@ -5255,6 +5286,35 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         return reader.read().then(function(result) {
           if (result.done) {
             chatHistory.push({ role: 'assistant', content: fullText });
+            if (/maps\.google\.com/.test(fullText)) {
+              var chipRow = document.createElement('div');
+              chipRow.className = 'chat-action-chips';
+              var chips = [
+                { label: '☕ Coffee nearby', action: 'search-coffee' },
+                { label: '🍽 Restaurants', action: 'search-restaurant' },
+                { label: '🔍 Search nearby', action: 'search-nearby' }
+              ];
+              chips.forEach(function(c) {
+                var btn = document.createElement('button');
+                btn.className = 'chat-action-chip';
+                btn.dataset.action = c.action;
+                btn.textContent = c.label;
+                btn.addEventListener('click', function() {
+                  closeChat();
+                  var act = this.dataset.action;
+                  if (act === 'search-coffee' && window.openSearchWithQuery) {
+                    window.openSearchWithQuery('coffee shop');
+                  } else if (act === 'search-restaurant' && window.openSearchWithQuery) {
+                    window.openSearchWithQuery('restaurant');
+                  } else if (act === 'search-nearby' && window.openSearchOverlay) {
+                    window.openSearchOverlay();
+                  }
+                });
+                chipRow.appendChild(btn);
+              });
+              msgDiv.parentNode.appendChild(chipRow);
+              chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
             isSending = false;
             chatSend.disabled = false;
             chatInput.focus();
@@ -5527,6 +5587,30 @@ window.getItineraryCity = function() {
       syncCityUI();
     }
   }, 300);
+
+  // Cross-link: Ask Concierge button
+  var askConcierge = document.getElementById('search-ask-concierge');
+  if (askConcierge) {
+    askConcierge.addEventListener('click', function() {
+      var searchText = input.value.trim();
+      closeSearch();
+      var prefill = searchText
+        ? 'I\'m looking for ' + searchText + ' near my hotel — any recommendations?'
+        : '';
+      if (window.openChatFromSearch) window.openChatFromSearch(prefill);
+    });
+  }
+
+  // Cross-link: expose search functions for chat action chips
+  window.openSearchWithQuery = function(query) {
+    var city = getActiveCity();
+    var lat = geoGranted ? userLat : city.lat;
+    var lng = geoGranted ? userLng : city.lng;
+    openSearchIframe(null, lat, lng, query);
+  };
+  window.openSearchOverlay = function() {
+    openSearch();
+  };
 })();
 </script>
 
