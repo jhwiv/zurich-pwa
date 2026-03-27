@@ -3802,7 +3802,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v3.25 · Updated 27 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v3.26 · Updated 27 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5322,6 +5322,22 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
 </script>
 
 <script>
+// ── Itinerary-aware city detection (global, shared by search IIFEs) ───
+window.getItineraryCity = function() {
+  // Copenhagen: Thu Mar 26 all day through Fri Mar 27 ~5 PM CET (4 PM UTC)
+  // In transit: Fri Mar 27 ~5 PM – ~7:40 PM CET
+  // Zürich: Fri Mar 27 ~7:40 PM CET onwards through Sun Mar 29
+  var now = Date.now();
+  var cphStart     = Date.UTC(2026, 2, 26, 5, 0);   // Thu 6 AM CET
+  var transitStart = Date.UTC(2026, 2, 27, 16, 0);   // Fri 5 PM CET
+  var zrhArrival   = Date.UTC(2026, 2, 27, 18, 40);  // Fri 7:40 PM CET
+  var tripEnd      = Date.UTC(2026, 2, 29, 19, 0);   // Sun 8 PM CET
+
+  if (now >= cphStart && now < transitStart) return 'copenhagen';
+  if (now >= transitStart && now <= tripEnd) return 'zurich'; // transit+Zürich
+  return null; // outside trip dates
+};
+
 // ── FLOATING SEARCH (full-screen overlay, location-aware) ─────
 (function() {
   var fab = document.getElementById('search-fab');
@@ -5344,23 +5360,27 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       pois: [
         { name: 'Nyhavn Canal', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Nyhavn_MichaD.jpg/320px-Nyhavn_MichaD.jpg', q: 'Nyhavn Copenhagen' },
         { name: 'Tivoli Gardens', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Tivoli_Gardens_-_main_entrance.jpg/320px-Tivoli_Gardens_-_main_entrance.jpg', q: 'Tivoli Gardens Copenhagen' },
-        { name: 'Strøget', rating: '4.5', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/K%C3%B8benhavn_%28DK%29%2C_Str%C3%B8get_--_2017_--_0224.jpg/320px-K%C3%B8benhavn_%28DK%29%2C_Str%C3%B8get_--_2017_--_0224.jpg', q: 'Stroget Copenhagen' },
-        { name: 'Round Tower', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Rundetaarn_fra_Trinitatis_Kirke.jpg/320px-Rundetaarn_fra_Trinitatis_Kirke.jpg', q: 'Rundetaarn Copenhagen' }
+        { name: 'Strøget', rating: '4.5', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/Str%C3%B8get_CPH_%2815289680874%29.jpg/320px-Str%C3%B8get_CPH_%2815289680874%29.jpg', q: 'Stroget Copenhagen' },
+        { name: 'Round Tower', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Kopenhagen_%28DK%29%2C_Runder_Turm_--_2017_--_1633.jpg/320px-Kopenhagen_%28DK%29%2C_Runder_Turm_--_2017_--_1633.jpg', q: 'Rundetaarn Copenhagen' }
       ]
     },
     zurich: {
       name: 'Zürich', lat: 47.3769, lng: 8.5417,
       pois: [
-        { name: 'Bahnhofstrasse', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Bahnhofstrasse_Zurich.jpg/320px-Bahnhofstrasse_Zurich.jpg', q: 'Bahnhofstrasse Zurich' },
-        { name: 'Old Town', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Augustinergasse_in_Z%C3%BCrich.JPG/320px-Augustinergasse_in_Z%C3%BCrich.JPG', q: 'Altstadt Zurich' },
-        { name: 'Lake Zürich', rating: '4.9', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Z%C3%BCrich_-_Z%C3%BCrichsee_IMG_1230.JPG/320px-Z%C3%BCrich_-_Z%C3%BCrichsee_IMG_1230.JPG', q: 'Lake Zurich' },
-        { name: 'Lindenhof', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bf/Lindenhof_-_Limmat_-_Schipfe_2012-09-26_17-42-15_%28P7000%29.JPG/320px-Lindenhof_-_Limmat_-_Schipfe_2012-09-26_17-42-15_%28P7000%29.JPG', q: 'Lindenhof Zurich' },
-        { name: 'Sprüngli', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Caf%C3%A9_Spr%C3%BCngli_am_Paradeplatz_2012-03-10_17-10-22_%28P7000%29.JPG/320px-Caf%C3%A9_Spr%C3%BCngli_am_Paradeplatz_2012-03-10_17-10-22_%28P7000%29.JPG', q: 'Confiserie Sprungli Zurich' }
+        { name: 'Bahnhofstrasse', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Z%C3%BCrich_Bahnhofstrasse_04.jpg/320px-Z%C3%BCrich_Bahnhofstrasse_04.jpg', q: 'Bahnhofstrasse Zurich' },
+        { name: 'Old Town', rating: '4.8', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Augustinergasse_32_-_44_in_Z%C3%BCrich_%282013%29.jpg/320px-Augustinergasse_32_-_44_in_Z%C3%BCrich_%282013%29.jpg', q: 'Altstadt Zurich' },
+        { name: 'Lake Zürich', rating: '4.9', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Lake_Zurich%2C_Zurich_%28Ank_Kumar%29_03.jpg/320px-Lake_Zurich%2C_Zurich_%28Ank_Kumar%29_03.jpg', q: 'Lake Zurich' },
+        { name: 'Lindenhof', rating: '4.6', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Lindenhof_Hill%2C_Zurich%2C_20250330_1227_7917.jpg/320px-Lindenhof_Hill%2C_Zurich%2C_20250330_1227_7917.jpg', q: 'Lindenhof Zurich' },
+        { name: 'Sprüngli', rating: '4.7', img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Cafe_sprungli_Zurich.jpg/320px-Cafe_sprungli_Zurich.jpg', q: 'Confiserie Sprungli Zurich' }
       ]
     }
   };
 
   function getActiveCity() {
+    // Itinerary dates take priority over active tab
+    var ic = window.getItineraryCity && window.getItineraryCity();
+    if (ic && cities[ic]) return cities[ic];
+    // Fallback: use active section/tab
     var sec = (typeof lastActiveSection !== 'undefined') ? lastActiveSection : 'hero';
     if (sec === 'section-denmark' || sec === 'hero') return cities.copenhagen;
     return cities.zurich;
@@ -5391,6 +5411,14 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         var c = document.createElement('div');
         c.className = 'search-poi-card';
         c.innerHTML = '<div class="search-poi-img"><img src="' + poi.img + '" alt="' + poi.name + '" loading="lazy"><div class="search-poi-rating">' + poi.rating + ' ★</div></div><div class="search-poi-name">' + poi.name + '</div>';
+        var img = c.querySelector('img');
+        if (img) {
+          img.onerror = function() {
+            this.onerror = null;
+            this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='72' viewBox='0 0 110 72'%3E%3Crect fill='%230D1929' width='110' height='72' rx='10'/%3E%3Cpath d='M55 18c-5.5 0-10 4.5-10 10 0 7.5 10 18 10 18s10-10.5 10-18c0-5.5-4.5-10-10-10zm0 13.5a3.5 3.5 0 110-7 3.5 3.5 0 010 7z' fill='%23C8A84B'/%3E%3Ctext x='55' y='60' text-anchor='middle' fill='%23C8A84B' font-size='9' font-family='system-ui'>Explore%3C/text%3E%3C/svg%3E";
+            this.style.objectFit = 'contain';
+          };
+        }
         c.addEventListener('click', function() {
           openSearchIframe(null, city.lat, city.lng, poi.q);
           closeSearch();
@@ -5785,7 +5813,11 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
         var m = url.match(/@([\d.-]+),([\d.-]+)/);
         if (m) { lat = parseFloat(m[1]); lng = parseFloat(m[2]); }
       }
-      if (!lat || !lng) { lat = 47.3769; lng = 8.5417; }
+      if (!lat || !lng) {
+        var ic = window.getItineraryCity && window.getItineraryCity();
+        if (ic === 'copenhagen') { lat = 55.6761; lng = 12.5683; }
+        else { lat = 47.3769; lng = 8.5417; }
+      }
     }
     if (!query) {
       if (url) {
