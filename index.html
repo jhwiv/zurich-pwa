@@ -4428,42 +4428,47 @@ document.querySelectorAll('.nav-chip').forEach(chip => {
   chip.addEventListener('click', function() { navTo(this.dataset.target, this); });
 });
 
-// ── DATE-AWARE AUTO-NAVIGATION ────────────────────
+// ── DATE & TIME-AWARE AUTO-NAVIGATION ─────────────
 (function() {
-  // Only auto-nav on fresh page load (not on back/forward)
+  // Only auto-nav on fresh page load
   if (window.performance && window.performance.navigation && window.performance.navigation.type === 2) return;
-  // Don't auto-nav if URL has a hash (user linked to a specific section)
   if (window.location.hash) return;
 
+  // Schedule: [ISO datetime (CET/CEST), section to activate, optional stop article index within section]
+  // Each entry = "from this time onward, show this section"
+  // The last entry whose time has passed wins.
+  var schedule = [
+    // Copenhagen stopover
+    ['2026-03-25T07:00+01:00', 'section-denmark'],  // Arrive Copenhagen Thu morning
+    ['2026-03-26T18:15+01:00', 'section-denmark'],  // Thu dinner at Union Kitchen
+    // Friday: morning still Copenhagen, then depart
+    ['2026-03-27T00:00+01:00', 'section-denmark'],  // Fri morning — still in Copenhagen
+    ['2026-03-27T16:00+01:00', 'section-fri'],       // Fri afternoon — head to airport / depart
+    // Saturday: Zürich Day 2
+    ['2026-03-28T00:00+01:00', 'section-sat'],
+    // Sunday: Zürich Day 3
+    ['2026-03-29T00:00+02:00', 'section-sun'],
+    // After trip ends (flight at 8:25 PM Sunday)
+    ['2026-03-29T21:00+02:00', null]  // Back to overview
+  ];
+
   var now = new Date();
-  // Trip dates (local time for the traveler):
-  // Mar 25–26: Copenhagen stopover
-  // Mar 27: Copenhagen morning → Fly to Zürich (Day 1 — arrival evening)
-  // Mar 28: Zürich Day 2
-  // Mar 29: Zürich Day 3 → fly home
-  var y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
   var target = null;
 
-  if (y === 2026 && m === 2) { // March = month 2 (0-indexed)
-    if (d === 25 || d === 26) {
-      target = 'section-denmark';
-    } else if (d === 27) {
-      target = 'section-fri';
-    } else if (d === 28) {
-      target = 'section-sat';
-    } else if (d === 29) {
-      target = 'section-sun';
+  for (var i = 0; i < schedule.length; i++) {
+    var t = new Date(schedule[i][0]);
+    if (now >= t) {
+      target = schedule[i][1];
     }
   }
 
   if (target) {
-    // Small delay to let the page render and header height settle
     setTimeout(function() {
       var btn = document.querySelector('.nav-chip[data-target="' + target + '"]');
       navTo(target, btn);
     }, 600);
   }
-  // Outside trip dates → stays on hero/Overview (default)
+  // null or no match → stays on hero/Overview
 })();
 
 // Flight bar dismiss
