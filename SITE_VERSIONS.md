@@ -7,7 +7,7 @@ Last updated: 27 March 2026
 | Site | URL | Repo | Version | Updated |
 |------|-----|------|---------|---------|
 | Zürich Weekend | [zurich-weekend.com](https://www.zurich-weekend.com) | `jhwiv/zurich-pwa` | **v3.26** | 27 Mar 2026 |
-| Maritimes Grand Loop | [maritimesgrandloop.com](https://maritimesgrandloop.com) | `jhwiv/maritimes-pwa` | **v1.6** | 27 Mar 2026 |
+| Maritimes Grand Loop | [maritimesgrandloop.com](https://maritimesgrandloop.com) | `jhwiv/maritimes-pwa` | **v1.9** | 27 Mar 2026 |
 
 ## Shared Feature Parity
 
@@ -34,6 +34,7 @@ Features that exist on both sites. If a cell shows ✗, that feature hasn't been
 | Shared GPS cache | `GPS_CACHE_SHARED` | ✓ v3.24 | ✓ v1.6 | 5-min cache shared by search + chat |
 | City-aware search + POI fix | `SEARCH_CITY_POI` | ✓ v3.26 | ✓ v1.6 | Itinerary-date city fallback, POI image error handling |
 | Enhanced Overpass search | `OVERPASS_ENHANCED` | ✓ v3.26 | ✓ v1.6 | POST method, retry logic, expanded TAG_MAP (57 entries) |
+| Restaurant menu pop-ups | `MENU_POPUP` | ✓ v3.36 | ✓ v1.9 | Scrollable menu modal with sections, dishes, prices |
 | Pronunciation guide | `PRONUNCIATION` | ✓ | ✗ | Danish + Swiss German (Zürich-specific) |
 | Transit / ticket info | `TRANSIT_TAB` | ✓ | ✗ | Zürich Card, metro, etc. (Zürich-specific) |
 | Actual road routes (OSRM) | `MAP_ROADS` | ✗ | ✓ | Maritimes driving routes |
