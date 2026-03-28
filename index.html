@@ -3779,14 +3779,20 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
 <!-- ── FLOATING TIME PILL ─────────────────────────── -->
 <div id="time-pill" aria-label="Timezone comparison">
+  <div class="tp-zone" id="tp-viewer">
+    <span class="tp-flag" id="tp-viewer-flag"></span>
+    <span class="tp-time" id="tp-viewer-time"></span>
+    <span class="tp-label" id="tp-viewer-label"></span>
+  </div>
+  <div class="tp-sep" id="tp-sep-1"></div>
   <div class="tp-zone" id="tp-away">
     <span class="tp-flag" id="tp-away-flag"></span>
     <span class="tp-time" id="tp-away-time"></span>
     <span class="tp-label" id="tp-away-label"></span>
   </div>
-  <div class="tp-sep"></div>
+  <div class="tp-sep" id="tp-sep-2"></div>
   <div class="tp-zone" id="tp-home">
-    <span class="tp-flag" id="tp-home-flag">🏠</span>
+    <span class="tp-flag" id="tp-home-flag">🇺🇸</span>
     <span class="tp-time" id="tp-home-time"></span>
     <span class="tp-label" id="tp-home-label">HOME</span>
   </div>
@@ -5468,32 +5474,46 @@ window.getItineraryCity = function() {
   return null; // outside trip dates
 };
 
-// ── FLOATING TIME PILL ────────────────────────────────────────────
+// ── FLOATING TIME PILL (3-zone: viewer | destination | home) ─────
 (function() {
   var pill = document.getElementById('time-pill');
   if (!pill) return;
 
-  // Trip timezone config
-  // Home = US Eastern (trip owner's home)
-  // Away = wherever the itinerary says you are right now
-  var HOME_TZ = 'America/New_York';
+  // Fixed: trip owner's home timezone
+  var HOME_TZ    = 'America/New_York';
   var HOME_LABEL = 'HOME';
-  var HOME_FLAG = '\ud83c\uddfa\ud83c\uddf8';
+  var HOME_FLAG  = '\ud83c\uddfa\ud83c\uddf8';
 
+  // Viewer's timezone (auto-detected from browser)
+  var VIEWER_TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || HOME_TZ;
+
+  // Derive label + flag for viewer
+  var VIEWER_LABEL = (function() {
+    var c = (VIEWER_TZ || '').split('/').pop().replace(/_/g, ' ');
+    return c.toUpperCase() || 'YOU';
+  })();
+  var VIEWER_FLAG = (function() {
+    var m = {
+      'America/New_York':'\ud83c\uddfa\ud83c\uddf8','America/Chicago':'\ud83c\uddfa\ud83c\uddf8','America/Denver':'\ud83c\uddfa\ud83c\uddf8','America/Los_Angeles':'\ud83c\uddfa\ud83c\uddf8','America/Phoenix':'\ud83c\uddfa\ud83c\uddf8','America/Anchorage':'\ud83c\uddfa\ud83c\uddf8','Pacific/Honolulu':'\ud83c\uddfa\ud83c\uddf8',
+      'Europe/London':'\ud83c\uddec\ud83c\udde7','Europe/Berlin':'\ud83c\udde9\ud83c\uddea','Europe/Paris':'\ud83c\uddeb\ud83c\uddf7','Europe/Madrid':'\ud83c\uddea\ud83c\uddf8','Europe/Rome':'\ud83c\uddee\ud83c\uddf9','Europe/Amsterdam':'\ud83c\uddf3\ud83c\uddf1','Europe/Brussels':'\ud83c\udde7\ud83c\uddea','Europe/Zurich':'\ud83c\udde8\ud83c\udded','Europe/Vienna':'\ud83c\udde6\ud83c\uddf9','Europe/Stockholm':'\ud83c\uddf8\ud83c\uddea','Europe/Oslo':'\ud83c\uddf3\ud83c\uddf4','Europe/Copenhagen':'\ud83c\udde9\ud83c\uddf0','Europe/Helsinki':'\ud83c\uddeb\ud83c\uddee','Europe/Warsaw':'\ud83c\uddf5\ud83c\uddf1','Europe/Prague':'\ud83c\udde8\ud83c\uddff','Europe/Dublin':'\ud83c\uddee\ud83c\uddea','Europe/Lisbon':'\ud83c\uddf5\ud83c\uddf9','Europe/Athens':'\ud83c\uddec\ud83c\uddf7','Europe/Bucharest':'\ud83c\uddf7\ud83c\uddf4','Europe/Istanbul':'\ud83c\uddf9\ud83c\uddf7','Europe/Moscow':'\ud83c\uddf7\ud83c\uddfa',
+      'Asia/Tokyo':'\ud83c\uddef\ud83c\uddf5','Asia/Shanghai':'\ud83c\udde8\ud83c\uddf3','Asia/Hong_Kong':'\ud83c\udded\ud83c\uddf0','Asia/Singapore':'\ud83c\uddf8\ud83c\uddec','Asia/Seoul':'\ud83c\uddf0\ud83c\uddf7','Asia/Kolkata':'\ud83c\uddee\ud83c\uddf3','Asia/Calcutta':'\ud83c\uddee\ud83c\uddf3','Asia/Dubai':'\ud83c\udde6\ud83c\uddea','Asia/Bangkok':'\ud83c\uddf9\ud83c\udded','Asia/Jakarta':'\ud83c\uddee\ud83c\udde9','Asia/Taipei':'\ud83c\uddf9\ud83c\uddfc',
+      'Australia/Sydney':'\ud83c\udde6\ud83c\uddfa','Australia/Melbourne':'\ud83c\udde6\ud83c\uddfa','Pacific/Auckland':'\ud83c\uddf3\ud83c\uddff',
+      'America/Toronto':'\ud83c\udde8\ud83c\udde6','America/Vancouver':'\ud83c\udde8\ud83c\udde6','America/Mexico_City':'\ud83c\uddf2\ud83c\uddfd','America/Sao_Paulo':'\ud83c\udde7\ud83c\uddf7','America/Buenos_Aires':'\ud83c\udde6\ud83c\uddf7','America/Bogota':'\ud83c\udde8\ud83c\uddf4','America/Lima':'\ud83c\uddf5\ud83c\uddea','America/Santiago':'\ud83c\udde8\ud83c\uddf1',
+      'Africa/Johannesburg':'\ud83c\uddff\ud83c\udde6','Africa/Lagos':'\ud83c\uddf3\ud83c\uddec','Africa/Cairo':'\ud83c\uddea\ud83c\uddec','Africa/Nairobi':'\ud83c\uddf0\ud83c\uddea'
+    };
+    return m[VIEWER_TZ] || '\ud83c\udf10';
+  })();
+
+  // Itinerary destinations
   var CITIES = {
     copenhagen: { tz: 'Europe/Copenhagen', flag: '\ud83c\udde9\ud83c\uddf0', label: 'COPENHAGEN' },
     zurich:     { tz: 'Europe/Zurich',     flag: '\ud83c\udde8\ud83c\udded', label: 'Z\u00dcRICH' }
   };
 
-  // Check if two timezones currently have different UTC offsets
-  function tzOffsetDiffers(tz1, tz2) {
-    var now = new Date();
-    // Get the UTC offset in minutes for each timezone
-    var fmt1 = new Intl.DateTimeFormat('en-US', { timeZone: tz1, timeZoneName: 'shortOffset' });
-    var fmt2 = new Intl.DateTimeFormat('en-US', { timeZone: tz2, timeZoneName: 'shortOffset' });
-    var parts1 = fmt1.formatToParts(now).find(function(p){ return p.type === 'timeZoneName'; });
-    var parts2 = fmt2.formatToParts(now).find(function(p){ return p.type === 'timeZoneName'; });
-    return parts1 && parts2 && parts1.value !== parts2.value;
+  function getOffset(tz) {
+    var f = new Intl.DateTimeFormat('en-US', { timeZone: tz, timeZoneName: 'shortOffset' });
+    var p = f.formatToParts(new Date()).find(function(x){ return x.type === 'timeZoneName'; });
+    return p ? p.value : '';
   }
 
   function formatTime(tz) {
@@ -5502,23 +5522,56 @@ window.getItineraryCity = function() {
     });
   }
 
+  function showZone(id, flag, time, label) {
+    document.getElementById(id + '-flag').textContent = flag;
+    document.getElementById(id + '-time').textContent = time;
+    document.getElementById(id + '-label').textContent = label;
+  }
+
   function update() {
     var cityKey = window.getItineraryCity ? window.getItineraryCity() : null;
     if (!cityKey || !CITIES[cityKey]) { pill.classList.remove('visible'); return; }
 
     var city = CITIES[cityKey];
-    document.getElementById('tp-away-flag').textContent = city.flag;
-    document.getElementById('tp-away-time').textContent = formatTime(city.tz);
-    document.getElementById('tp-away-label').textContent = city.label;
-    document.getElementById('tp-home-flag').textContent = HOME_FLAG;
-    document.getElementById('tp-home-time').textContent = formatTime(HOME_TZ);
-    document.getElementById('tp-home-label').textContent = HOME_LABEL;
+    var viewerOff = getOffset(VIEWER_TZ);
+    var destOff   = getOffset(city.tz);
+    var homeOff   = getOffset(HOME_TZ);
+
+    // Determine which zones to show:
+    // - Destination (itinerary local): always
+    // - Home (US Eastern): always
+    // - Viewer: only if their offset differs from BOTH destination and home
+    //   (i.e. they're a third-party viewer, not the traveler or someone at home)
+    var viewerMatchesDest = (viewerOff === destOff);
+    var viewerMatchesHome = (viewerOff === homeOff);
+    var showViewer = !viewerMatchesDest && !viewerMatchesHome;
+
+    var vEl = document.getElementById('tp-viewer');
+    var s1  = document.getElementById('tp-sep-1');
+    if (showViewer) {
+      vEl.style.display = '';
+      s1.style.display  = '';
+      showZone('tp-viewer', VIEWER_FLAG, formatTime(VIEWER_TZ), VIEWER_LABEL);
+    } else {
+      vEl.style.display = 'none';
+      s1.style.display  = 'none';
+    }
+
+    // Destination: always show
+    showZone('tp-away', city.flag, formatTime(city.tz), city.label);
+
+    // Home (US Eastern): always show
+    var hEl = document.getElementById('tp-home');
+    var s2  = document.getElementById('tp-sep-2');
+    hEl.style.display = '';
+    s2.style.display  = '';
+    showZone('tp-home', HOME_FLAG, formatTime(HOME_TZ), HOME_LABEL);
 
     pill.classList.add('visible');
   }
 
   update();
-  setInterval(update, 30000); // refresh every 30s
+  setInterval(update, 30000);
 })();
 
 // ── FLOATING SEARCH (full-screen overlay, location-aware) ─────
