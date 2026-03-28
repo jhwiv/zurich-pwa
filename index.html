@@ -3727,7 +3727,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <thead><tr><th></th><th>Hotel</th><th>Check-in</th><th>Check-out</th><th>Nights</th><th>Notes</th></tr></thead>
           <tbody>
             <tr>
-              <td><a href="https://www.marriott.com/marriott-bonvoy-app.mi" target="_blank" rel="noopener"><span class="ah-status ah-status-curr">Now</span></a></td>
+              <td><a href="https://apps.apple.com/app/marriott-bonvoy/id455004730" onclick="return openApp('marriott://',this.href)" target="_blank" rel="noopener"><span class="ah-status ah-status-curr">Now</span></a></td>
               <td><span class="ah-htl-name">Zurich Marriott</span><br><span class="ah-htl-loc">Zurich</span></td>
               <td>Fri Mar 27, 3 PM</td><td>Sun Mar 29, 4 PM</td><td>2</td>
               <td><span class="ah-open">Open Bonvoy ›</span></td>
@@ -3756,7 +3756,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
     </div>
     <div class="ah-apps">
       <a href="flysas://" class="ah-app-link" target="_blank" rel="noopener">✈️ SAS</a>
-      <a href="https://www.marriott.com/marriott-bonvoy-app.mi" class="ah-app-link" target="_blank" rel="noopener">🏨 Bonvoy</a>
+      <a href="https://apps.apple.com/app/marriott-bonvoy/id455004730" onclick="return openApp('marriott://',this.href)" class="ah-app-link" target="_blank" rel="noopener">🏨 Bonvoy</a>
       <a href="scandic://" class="ah-app-link" target="_blank" rel="noopener">🏨 Scandic</a>
     </div>
 
@@ -4114,6 +4114,17 @@ let navTapTimer;
 // ── NAV SCROLL FADE INDICATOR (disabled — tabs now wrap) ──
 const navEl = document.querySelector('.hdr-row-1') || document.querySelector('.hdr-nav');
 function updateNavFade() { /* no-op: tabs wrap instead of scroll */ }
+
+// ── DEEP LINK HELPER ─────────────────────────────────
+function openApp(scheme, fallback) {
+  var t0 = Date.now();
+  window.location.href = scheme;
+  setTimeout(function() {
+    // If still here after 1.5s, app didn't open — go to App Store
+    if (Date.now() - t0 < 2000) window.location.href = fallback;
+  }, 1500);
+  return false;
+}
 
 // ── FLIGHT BAR DISMISS + RESURFACE ─────────────────────
 let flightBarDismissed = true;
