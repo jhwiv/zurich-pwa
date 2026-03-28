@@ -5526,27 +5526,12 @@ window.getItineraryCity = function() {
     if (!cityKey || !CITIES[cityKey]) { pill.classList.remove('visible'); return; }
 
     var city = CITIES[cityKey];
-    // If away timezone === home timezone (same offset), show simplified pill
-    var sameOffset = !tzOffsetDiffers(city.tz, HOME_TZ);
-
     document.getElementById('tp-away-flag').textContent = city.flag;
     document.getElementById('tp-away-time').textContent = formatTime(city.tz);
     document.getElementById('tp-away-label').textContent = city.label;
-
-    // Show/hide the home side + separator based on whether timezones differ
-    var homeZone = document.getElementById('tp-home');
-    var sep = pill.querySelector('.tp-sep');
-    if (sameOffset) {
-      // Same timezone — just show destination time, hide home side
-      homeZone.style.display = 'none';
-      sep.style.display = 'none';
-    } else {
-      homeZone.style.display = '';
-      sep.style.display = '';
-      document.getElementById('tp-home-flag').textContent = HOME_FLAG;
-      document.getElementById('tp-home-time').textContent = formatTime(HOME_TZ);
-      document.getElementById('tp-home-label').textContent = HOME_LABEL;
-    }
+    document.getElementById('tp-home-flag').textContent = HOME_FLAG;
+    document.getElementById('tp-home-time').textContent = formatTime(HOME_TZ);
+    document.getElementById('tp-home-label').textContent = HOME_LABEL;
 
     pill.classList.add('visible');
   }
