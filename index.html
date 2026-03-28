@@ -894,6 +894,92 @@ img{display:block;max-width:100%}
 }
 
 
+/* ── AIR & HOTEL SECTION ─────────────────────────── */
+#section-airhotel .content-section{border-top:2px solid var(--gold)}
+.ah-subsection{margin-bottom:var(--sp24)}
+.ah-sub-label{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.1em;color:var(--gold);
+  margin-bottom:var(--sp12);padding-left:2px;
+}
+.ah-card{
+  display:block;background:var(--navy3);border:1px solid rgba(200,168,75,.15);
+  border-radius:var(--r12);padding:var(--sp16);margin-bottom:var(--sp12);
+  transition:transform .15s ease,border-color .15s ease;
+}
+a.ah-card:active{transform:scale(.98);border-color:var(--gold)}
+.ah-card.ah-past{opacity:.5}
+.ah-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp12)}
+.ah-badge{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.06em;
+  padding:2px 8px;border-radius:4px;
+}
+.ah-scheduled{background:rgba(108,140,255,.15);color:#6c8cff}
+.ah-arrived{background:rgba(52,211,153,.15);color:#34d399}
+.ah-ref{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.05em}
+.ah-route{display:flex;align-items:center;justify-content:space-between;gap:var(--sp8);margin-bottom:var(--sp12)}
+.ah-airport{display:flex;flex-direction:column;align-items:center;min-width:50px}
+.ah-code{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;color:#fff;letter-spacing:.04em}
+.ah-city{font-size:11px;color:var(--muted)}
+.ah-line{flex:1;display:flex;align-items:center;gap:0}
+.ah-line-bar{flex:1;height:1px;background:rgba(200,168,75,.3)}
+.ah-plane{color:var(--gold);font-size:14px;margin:0 6px;flex-shrink:0}
+.ah-details{display:flex;gap:var(--sp16);padding:var(--sp12) 0;border-top:1px solid rgba(200,168,75,.1)}
+.ah-detail{display:flex;flex-direction:column;gap:1px}
+.ah-detail-lbl{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ah-detail-val{font-size:13px;font-weight:600;color:rgba(255,255,255,.9)}
+.ah-detail-sub{font-size:11px;color:var(--muted)}
+.ah-meta{display:flex;align-items:center;justify-content:space-between;gap:var(--sp8);margin-top:var(--sp8);padding-top:var(--sp8);border-top:1px solid rgba(200,168,75,.1)}
+.ah-meta-item{font-size:11px;color:var(--muted)}
+.ah-tap{font-size:11px;color:var(--gold);font-weight:500;opacity:.7;text-align:right}
+.ah-hotel-brand{
+  font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.08em;margin-bottom:var(--sp8);
+}
+.ah-marriott{color:#f87171}
+.ah-scandic{color:#f9a8d4}
+.ah-hotel-name{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;margin-bottom:2px}
+.ah-hotel-loc{font-size:13px;color:var(--muted);margin-bottom:var(--sp12)}
+.ah-hotel-dates{
+  display:flex;align-items:center;gap:var(--sp8);
+  padding:var(--sp12);background:rgba(200,168,75,.06);
+  border-radius:var(--r9);margin-bottom:var(--sp8);
+}
+.ah-hdate{display:flex;flex-direction:column;gap:1px;flex:1}
+.ah-harrow{color:var(--muted);font-size:14px;flex-shrink:0}
+.ah-hnights{display:flex;flex-direction:column;align-items:center;min-width:40px;flex-shrink:0}
+.ah-nights-num{font-size:18px;font-weight:700;color:var(--gold);line-height:1}
+.ah-nights-lbl{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.ah-hotel-extras{display:flex;gap:var(--sp8);margin-bottom:var(--sp8)}
+.ah-extra{
+  font-size:11px;color:var(--muted);background:rgba(200,168,75,.08);
+  padding:2px 8px;border-radius:4px;border:1px solid rgba(200,168,75,.12);
+}
+.ah-hotel-status{font-size:12px;font-weight:600;padding:6px 10px;border-radius:var(--r6);margin-bottom:var(--sp8)}
+.ah-current{background:rgba(52,211,153,.12);color:#34d399}
+.ah-upcoming{background:rgba(251,146,60,.12);color:#fb923c}
+.ah-hotel .ah-tap{display:block;margin-top:var(--sp4)}
+.ah-qr{margin-bottom:var(--sp12)}
+.ah-qr-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:var(--sp12) var(--sp16);background:var(--navy3);
+  border:1px solid rgba(200,168,75,.12);margin-bottom:var(--sp8);border-radius:var(--r9);
+}
+.ah-qr-lbl{font-size:13px;color:var(--muted)}
+.ah-qr-val{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:#fff;letter-spacing:.04em}
+.ah-app-btns{display:flex;flex-direction:column;gap:var(--sp8)}
+.ah-app-btn{
+  display:flex;align-items:center;justify-content:center;gap:var(--sp8);
+  padding:var(--sp12) var(--sp16);border-radius:var(--r9);
+  font-size:13px;font-weight:600;color:#fff;text-align:center;
+  transition:transform .15s ease,opacity .15s ease;
+}
+.ah-app-btn:active{transform:scale(.97);opacity:.85}
+.ah-btn-marriott{background:linear-gradient(135deg,#c6282e,#8a1a1f)}
+.ah-btn-scandic{background:linear-gradient(135deg,#6b1030,#4a0b22)}
+.ah-btn-sas{background:linear-gradient(135deg,#000080,#000050)}
+
 /* ── MAP SECTION ───────────────────────────────── */
 #section-map .content-section{
   background:var(--navy2);
@@ -2354,8 +2440,9 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
       <button class="nav-chip" data-target="section-essentials">Essentials</button>
       <button class="nav-chip" data-target="section-transit">Transit</button>
       <button class="nav-chip" data-target="section-streetview">Street Views</button>
-      <button class="nav-chip" data-target="section-map">Map</button>
       <button class="nav-chip" data-target="section-history">History</button>
+      <button class="nav-chip" data-target="section-map">Map</button>
+      <button class="nav-chip" data-target="section-airhotel">Air & Hotel</button>
     </nav>
   </div>
   <div class="hdr-section-label" id="hdr-section-label">Overview</div>
@@ -3871,6 +3958,193 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+<!-- ── AIR & HOTEL ─────────────────────────────────── -->
+<span class="section-anchor" id="section-airhotel-anchor"></span>
+<section id="section-airhotel" aria-label="Air and hotel information">
+  <div class="content-section" style="background:var(--navy2);padding:var(--sp24)">
+    <div class="section-header">
+      <div class="section-eyebrow">Travel Logistics</div>
+      <h2 class="section-title" style="color:#fff">Air & Hotel</h2>
+    </div>
+
+    <!-- FLIGHTS -->
+    <div class="ah-subsection">
+      <div class="ah-sub-label">Upcoming Flights</div>
+
+      <!-- ZRH → CPH -->
+      <a href="flysas://" class="ah-card" target="_blank" rel="noopener">
+        <div class="ah-card-top">
+          <span class="ah-badge ah-scheduled">Scheduled</span>
+          <span class="ah-ref">Y8LBLD</span>
+        </div>
+        <div class="ah-route">
+          <div class="ah-airport">
+            <span class="ah-code">ZRH</span>
+            <span class="ah-city">Zurich</span>
+          </div>
+          <div class="ah-line">
+            <span class="ah-line-bar"></span>
+            <span class="ah-plane">✈</span>
+            <span class="ah-line-bar"></span>
+          </div>
+          <div class="ah-airport">
+            <span class="ah-code">CPH</span>
+            <span class="ah-city">Copenhagen</span>
+          </div>
+        </div>
+        <div class="ah-details">
+          <div class="ah-detail"><span class="ah-detail-lbl">Depart</span><span class="ah-detail-val">Mar 29, 20:25</span></div>
+          <div class="ah-detail"><span class="ah-detail-lbl">Arrive</span><span class="ah-detail-val">Mar 29, 22:10</span></div>
+          <div class="ah-detail"><span class="ah-detail-lbl">Seats</span><span class="ah-detail-val">3F, 3D</span></div>
+        </div>
+        <div class="ah-meta">
+          <span class="ah-meta-item">SK610 · 1h 45m · Boarding 19:55</span>
+          <span class="ah-tap">Open SAS ›</span>
+        </div>
+      </a>
+
+      <!-- CPH → EWR -->
+      <a href="flysas://" class="ah-card" target="_blank" rel="noopener">
+        <div class="ah-card-top">
+          <span class="ah-badge ah-scheduled">Scheduled</span>
+          <span class="ah-ref">Y9HY5Z</span>
+        </div>
+        <div class="ah-route">
+          <div class="ah-airport">
+            <span class="ah-code">CPH</span>
+            <span class="ah-city">Copenhagen</span>
+          </div>
+          <div class="ah-line">
+            <span class="ah-line-bar"></span>
+            <span class="ah-plane">✈</span>
+            <span class="ah-line-bar"></span>
+          </div>
+          <div class="ah-airport">
+            <span class="ah-code">EWR</span>
+            <span class="ah-city">New York</span>
+          </div>
+        </div>
+        <div class="ah-details">
+          <div class="ah-detail"><span class="ah-detail-lbl">Depart</span><span class="ah-detail-val">Mar 31, 12:30</span></div>
+          <div class="ah-detail"><span class="ah-detail-lbl">Arrive</span><span class="ah-detail-val">Mar 31, 14:59</span></div>
+          <div class="ah-detail"><span class="ah-detail-lbl">Duration</span><span class="ah-detail-val">8h 29m</span></div>
+        </div>
+        <div class="ah-meta">
+          <span class="ah-meta-item">SK909 · Check-in opens ~50hrs before</span>
+          <span class="ah-tap">Open SAS ›</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Completed Flights -->
+    <div class="ah-subsection">
+      <div class="ah-sub-label">Completed Flights</div>
+
+      <div class="ah-card ah-past">
+        <div class="ah-card-top">
+          <span class="ah-badge ah-arrived">Arrived</span>
+          <span class="ah-ref">Y9HY5Z</span>
+        </div>
+        <div class="ah-route">
+          <div class="ah-airport"><span class="ah-code">EWR</span><span class="ah-city">New York</span></div>
+          <div class="ah-line"><span class="ah-line-bar"></span><span class="ah-plane">✈</span><span class="ah-line-bar"></span></div>
+          <div class="ah-airport"><span class="ah-code">CPH</span><span class="ah-city">Copenhagen</span></div>
+        </div>
+        <div class="ah-details">
+          <div class="ah-detail"><span class="ah-detail-lbl">Date</span><span class="ah-detail-val">Mar 25</span></div>
+          <div class="ah-detail"><span class="ah-detail-lbl">SK910</span><span class="ah-detail-val">22:34 → 10:43+1</span></div>
+          <div class="ah-detail"><span class="ah-detail-lbl">Terminal</span><span class="ah-detail-val">T3 · E135</span></div>
+        </div>
+      </div>
+
+      <div class="ah-card ah-past">
+        <div class="ah-card-top">
+          <span class="ah-badge ah-arrived">Arrived</span>
+          <span class="ah-ref">Y8LBLD</span>
+        </div>
+        <div class="ah-route">
+          <div class="ah-airport"><span class="ah-code">CPH</span><span class="ah-city">Copenhagen</span></div>
+          <div class="ah-line"><span class="ah-line-bar"></span><span class="ah-plane">✈</span><span class="ah-line-bar"></span></div>
+          <div class="ah-airport"><span class="ah-code">ZRH</span><span class="ah-city">Zurich</span></div>
+        </div>
+        <div class="ah-details">
+          <div class="ah-detail"><span class="ah-detail-lbl">Date</span><span class="ah-detail-val">Mar 27</span></div>
+          <div class="ah-detail"><span class="ah-detail-lbl">SK609</span><span class="ah-detail-val">17:52 → 19:30</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOTELS -->
+    <div class="ah-subsection">
+      <div class="ah-sub-label">Current Hotel</div>
+
+      <a href="marriottbonvoy://" class="ah-card ah-hotel" target="_blank" rel="noopener">
+        <div class="ah-hotel-brand ah-marriott">Marriott Bonvoy</div>
+        <h3 class="ah-hotel-name">Zurich Marriott Hotel</h3>
+        <div class="ah-hotel-loc">Zurich, Switzerland</div>
+        <div class="ah-hotel-dates">
+          <div class="ah-hdate"><span class="ah-detail-lbl">Check-in</span><span class="ah-detail-val">Fri, Mar 27</span><span class="ah-detail-sub">3:00 PM</span></div>
+          <div class="ah-harrow">→</div>
+          <div class="ah-hdate"><span class="ah-detail-lbl">Check-out</span><span class="ah-detail-val">Sun, Mar 29</span><span class="ah-detail-sub">4:00 PM</span></div>
+          <div class="ah-hnights"><span class="ah-nights-num">2</span><span class="ah-nights-lbl">Nights</span></div>
+        </div>
+        <div class="ah-hotel-status ah-current">● Currently checked in</div>
+        <div class="ah-tap">Open Marriott app ›</div>
+      </a>
+    </div>
+
+    <div class="ah-subsection">
+      <div class="ah-sub-label">Upcoming Hotel</div>
+
+      <a href="scandic://" class="ah-card ah-hotel" target="_blank" rel="noopener">
+        <div class="ah-hotel-brand ah-scandic">Scandic Hotels</div>
+        <h3 class="ah-hotel-name">Scandic Nørreport</h3>
+        <div class="ah-hotel-loc">København K, Denmark</div>
+        <div class="ah-hotel-dates">
+          <div class="ah-hdate"><span class="ah-detail-lbl">Check-in</span><span class="ah-detail-val">Sat, Mar 29</span><span class="ah-detail-sub">4:00 PM</span></div>
+          <div class="ah-harrow">→</div>
+          <div class="ah-hdate"><span class="ah-detail-lbl">Check-out</span><span class="ah-detail-val">Tue, Mar 31</span></div>
+          <div class="ah-hnights"><span class="ah-nights-num">2</span><span class="ah-nights-lbl">Nights</span></div>
+        </div>
+        <div class="ah-hotel-extras"><span class="ah-extra">1 Adult</span><span class="ah-extra">Superior Plus</span></div>
+        <div class="ah-hotel-status ah-upcoming">◷ Check-in tomorrow at 16:00</div>
+        <div class="ah-tap">Open Scandic app ›</div>
+      </a>
+    </div>
+
+    <div class="ah-subsection">
+      <div class="ah-sub-label">Past Hotel</div>
+
+      <div class="ah-card ah-hotel ah-past">
+        <div class="ah-hotel-brand ah-scandic">Scandic Hotels</div>
+        <h3 class="ah-hotel-name">Scandic Nørreport</h3>
+        <div class="ah-hotel-loc">København K, Denmark</div>
+        <div class="ah-hotel-dates">
+          <div class="ah-hdate"><span class="ah-detail-lbl">Check-in</span><span class="ah-detail-val">Tue, Mar 25</span></div>
+          <div class="ah-harrow">→</div>
+          <div class="ah-hdate"><span class="ah-detail-lbl">Check-out</span><span class="ah-detail-val">Thu, Mar 27</span></div>
+          <div class="ah-hnights"><span class="ah-nights-num">2</span><span class="ah-nights-lbl">Nights</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="ah-subsection">
+      <div class="ah-sub-label">Quick Reference</div>
+      <div class="ah-qr">
+        <div class="ah-qr-row"><span class="ah-qr-lbl">SAS (EWR↔CPH)</span><span class="ah-qr-val">Y9HY5Z</span></div>
+        <div class="ah-qr-row"><span class="ah-qr-lbl">SAS (ZRH↔CPH)</span><span class="ah-qr-val">Y8LBLD</span></div>
+      </div>
+      <div class="ah-app-btns">
+        <a href="marriottbonvoy://" class="ah-app-btn ah-btn-marriott" target="_blank" rel="noopener">🏨 Marriott Bonvoy</a>
+        <a href="scandic://" class="ah-app-btn ah-btn-scandic" target="_blank" rel="noopener">🏨 Scandic Hotels</a>
+        <a href="flysas://" class="ah-app-btn ah-btn-sas" target="_blank" rel="noopener">✈ SAS Airlines</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ── FOOTER ──────────────────────────────────────── -->
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
@@ -4262,7 +4536,8 @@ const jumpTargets = {
   'section-history':    { label: 'Showcase', target: 'section-showcase' },
   'section-showcase':   { label: 'Street View', target: 'section-streetview' },
   'section-streetview':  { label: 'Map',       target: 'section-map' },
-  'section-map':        { label: 'Top',       target: 'hero' },
+  'section-map':        { label: 'Air & Hotel', target: 'section-airhotel' },
+  'section-airhotel':   { label: 'Top',       target: 'hero' },
 };
 let currentFabTarget = 'section-sat';
 
@@ -4299,6 +4574,7 @@ const sections = [
   { id: 'section-showcase',   label: 'Showcase' },
   { id: 'section-streetview', label: 'Street View' },
   { id: 'section-map',        label: 'Map' },
+  { id: 'section-airhotel',   label: 'Air & Hotel' },
 ];
 
 let lastScroll = 0;
