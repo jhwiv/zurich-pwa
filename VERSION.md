@@ -3,10 +3,11 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.1
+**Current:** v4.2
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
+| v4.2 | 2026-03-28 | Saturday reschedule: noon Uetliberg arrival, cascade all times through dinner | `SAT_RESCHEDULE` |
 | v4.1 | 2026-03-28 | Reskin: dark navy → light cream theme across all pages | `LIGHT_THEME` |
 | v3.16 | 2026-03-20 | Fix broken street view images | — |
 | v3.17 | 2026-03-25 | Street View overlay button on image cards | `SV_OVERLAY_BTN` |

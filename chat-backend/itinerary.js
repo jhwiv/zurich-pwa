@@ -54,16 +54,16 @@ const ITINERARY = {
       id: "saturday",
       label: "Day 2 · Saturday 28 March — The Big Day",
       title: "Mountain, Art & Old Town",
-      summary: "Uetliberg → Sprüngli → Kunsthaus → Old Town → Lindenhof → aperitivo → Zeughauskeller. No hotel return before dinner. Leave hotel at 10:00 AM.",
+      summary: "Uetliberg → Sprüngli → Kunsthaus → Old Town → Lindenhof → aperitivo → Zeughauskeller. No hotel return before dinner. Arrive Uetliberg trailhead at 12:00 PM.",
       city: "Zürich",
       lat: 47.3769,
       lng: 8.5417,
       stops: [
-        { time: "10:00 AM", title: "Uetliberg Summit · 871 m", desc: "Zürich's local mountain — S10 train from HB takes 20 min. Walk 10 min to summit tower: Alps panorama, Lake Zürich. Zürich Card covers fully.", lat: 47.3497, lng: 8.4916, tags: ["🚆 S10 from HB", "⏱ 20 min", "🎫 Zürich Card ✓"], alt: { foggy: "Polybahn + ETH Terrace — 90-second funicular ride, great rooftop views, no altitude fog risk. Free with Zürich Card.", rainy: "Landesmuseum instead — behind HB, free with Zürich Card, Sat 10 AM–5 PM. Then Kunsthaus at 1:30 PM." }, note: "⚠️ Felsenegg cable car CLOSED 2 Mar–10 Apr 2026" },
-        { time: "12:45 PM", title: "Café Sprüngli", desc: "Zürich's legendary confiserie since 1836. Legendary hot chocolate. Luxemburgerli macarons — seasonal, bite-sized.", address: "Bahnhofstrasse 21", lat: 47.3692, lng: 8.5378, tags: ["🚶 12 min walk from HB", "🌿 Vegetarian", "⏱ Sat 7:30 AM–6:30 PM"] },
-        { time: "1:30 PM", title: "Kunsthaus Zürich", desc: "Switzerland's largest art museum. Bührle Collection (Monet, Cézanne, Renoir), Munch (largest outside Norway), Giacometti, Pipilotti Rist. Plan two hours. Free with Zürich Card.", address: "Heimplatz 1", lat: 47.3703, lng: 8.5489, tags: ["🎨 Museum", "🎫 Zürich Card ✓ free", "⏱ Sat–Sun 10 AM–6 PM"] },
-        { time: "3:00 PM", title: "Lunch: Kunsthaus Café", desc: "Light lunches — soups, salads, open sandwiches. Part of the museum experience. 🌿 Good vegetarian options.", tags: ["🍽 On-site", "⏱ Open Sat 9 AM–9 PM"] },
-        { time: "4:15 PM", title: "Old Town — Augustinergasse & Cathedrals", desc: "Zürich's most photographed medieval lane. Grossmünster (twin-towered cathedral, begun 1100s). Fraumünster with Marc Chagall's stained glass. Münsterhof square.", lat: 47.3700, lng: 8.5413, tags: ["🚶 18 min walk from Kunsthaus", "⛪ Both free entry", "⏱ Sat 10 AM–5 PM"] },
+        { time: "12:00 PM", title: "Uetliberg Summit · 871 m", desc: "Zürich's local mountain — S10 train from HB takes 20 min. Walk 10 min to summit tower: Alps panorama, Lake Zürich. Zürich Card covers fully.", lat: 47.3497, lng: 8.4916, tags: ["🚆 S10 from HB", "⏱ 20 min", "🎫 Zürich Card ✓"], alt: { foggy: "Polybahn + ETH Terrace — 90-second funicular ride, great rooftop views, no altitude fog risk. Free with Zürich Card.", rainy: "Landesmuseum instead — behind HB, free with Zürich Card, Sat 10 AM–5 PM. Then Kunsthaus at 2:15 PM." }, note: "⚠️ Felsenegg cable car CLOSED 2 Mar–10 Apr 2026" },
+        { time: "1:30 PM", title: "Café Sprüngli", desc: "Zürich's legendary confiserie since 1836. Legendary hot chocolate. Luxemburgerli macarons — seasonal, bite-sized.", address: "Bahnhofstrasse 21", lat: 47.3692, lng: 8.5378, tags: ["🚶 12 min walk from HB", "🌿 Vegetarian", "⏱ Sat 7:30 AM–6:30 PM"] },
+        { time: "2:15 PM", title: "Kunsthaus Zürich", desc: "Switzerland's largest art museum. Bührle Collection (Monet, Cézanne, Renoir), Munch (largest outside Norway), Giacometti, Pipilotti Rist. Plan two hours. Free with Zürich Card.", address: "Heimplatz 1", lat: 47.3703, lng: 8.5489, tags: ["🎨 Museum", "🎫 Zürich Card ✓ free", "⏱ Sat–Sun 10 AM–6 PM"] },
+        { time: "3:45 PM", title: "Lunch: Kunsthaus Café", desc: "Light lunches — soups, salads, open sandwiches. Part of the museum experience. 🌿 Good vegetarian options.", tags: ["🍽 On-site", "⏱ Open Sat 9 AM–9 PM"] },
+        { time: "4:30 PM", title: "Old Town — Augustinergasse & Cathedrals", desc: "Zürich's most photographed medieval lane. Grossmünster (twin-towered cathedral, begun 1100s). Fraumünster with Marc Chagall's stained glass. Münsterhof square.", lat: 47.3700, lng: 8.5413, tags: ["🚶 18 min walk from Kunsthaus", "⛪ Both free entry", "⏱ Sat 10 AM–5 PM"] },
         { time: "5:45 PM", title: "Lindenhof Hill — Best Panorama", desc: "Former Roman fort hilltop park. Panoramic views over the Limmat and Old Town rooftops. Large public chessboard. Late afternoon March light.", lat: 47.3727, lng: 8.5400, tags: ["🚶 5 min from Fraumünster", "🆓 Always open, free"] },
         { time: "6:30 PM", title: "Pre-Dinner Drinks: Café Bar Münsterhof", desc: "Münsterhof square. Order a Spritz or local wine. Watch the square settle into evening.", address: "Münsterhof 6", tags: ["🚶 5 min from Lindenhof"] },
         { time: "7:30 PM", title: "Dinner: Zeughauskeller", desc: "Zürich's most famous beer-hall restaurant, in a 15th-century former armory on Bahnhofstrasse. Excellent Zürcher Geschnetzeltes. 🌿 Älplermagronen (Alpine macaroni). CONFIRMED reservation 7:30 PM.", address: "Bahnhofstrasse 28A", phone: "+41 44 220 15 15", confirmed: true, lat: 47.3699, lng: 8.5378, tags: ["🚶 3 min from Münsterhof", "💰 CHF 35–55 pp", "⏱ Reservation 7:30 PM"] }
@@ -99,8 +99,8 @@ const ITINERARY = {
 
   dining: [
     { time: "Fri 9 PM", venue: "White Elephant (hotel)", status: "Recommended", phone: "+41 44 360 73 22" },
-    { time: "Sat 12:45 PM", venue: "Café Sprüngli", status: "Walk-in" },
-    { time: "Sat 3 PM", venue: "Kunsthaus Café", status: "Walk-in" },
+    { time: "Sat 1:30 PM", venue: "Café Sprüngli", status: "Walk-in" },
+    { time: "Sat 3:45 PM", venue: "Kunsthaus Café", status: "Walk-in" },
     { time: "Sat 6:30 PM", venue: "Café Bar Münsterhof", status: "Walk-in" },
     { time: "Sat 7:30 PM", venue: "Zeughauskeller ★", status: "✓ Confirmed · 7:30 PM", phone: "+41 44 220 15 15" },
     { time: "Sun 10 AM", venue: "Hiltl", status: "Walk-in — arrive early" },
