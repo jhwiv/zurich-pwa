@@ -5428,10 +5428,30 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
     function doSend() {
       if (sent) return;
       sent = true;
+
+      // Abort controller: 30s hard timeout to prevent infinite hangs
+      var controller = new AbortController();
+      var abortTimer = setTimeout(function() { controller.abort(); }, 30000);
+
+      // "Still thinking" feedback after 8s of no streamed tokens
+      var thinkingTimer = setTimeout(function() {
+        var el = document.getElementById('chat-typing-indicator');
+        if (el) {
+          el.innerHTML = '<span></span><span></span><span></span>' +
+            '<span style="font-size:11px;color:rgba(255,255,255,.4);margin-left:6px;animation:none">Searching for info\u2026</span>';
+        }
+      }, 8000);
+
+      function cleanup() {
+        clearTimeout(abortTimer);
+        clearTimeout(thinkingTimer);
+      }
+
       var gps = window._gpsCache.get();
       fetch(CHAT_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           message: text,
           activeTab: getActiveTabLabel(),
@@ -5453,6 +5473,7 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       function pump() {
         return reader.read().then(function(result) {
           if (result.done) {
+            cleanup();
             chatHistory.push({ role: 'assistant', content: fullText });
             if (/maps\.google\.com/.test(fullText)) {
               var chipRow = document.createElement('div');
@@ -5488,6 +5509,8 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
             chatInput.focus();
             return;
           }
+          // Clear the "still thinking" timer on first real data
+          clearTimeout(thinkingTimer);
           buf += decoder.decode(result.value, { stream: true });
           var lines = buf.split('\n');
           buf = lines.pop();
@@ -5512,9 +5535,13 @@ function buildAdvisory(dayId, weatherCode, rain, wind, hi, lo, hours) {
       }
       return pump();
     })
-    .catch(function() {
+    .catch(function(err) {
+      cleanup();
       hideTyping();
-      addMessage('system', 'Connection error \u2014 check your internet');
+      var msg = (err && err.name === 'AbortError')
+        ? 'Request timed out \u2014 please try again'
+        : 'Connection error \u2014 check your internet';
+      addMessage('system', msg);
       isSending = false;
       chatSend.disabled = false;
       chatInput.focus();
