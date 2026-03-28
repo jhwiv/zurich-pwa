@@ -895,7 +895,7 @@ img{display:block;max-width:100%}
 
 
 /* ── AIR & HOTEL SECTION ─────────────────────────── */
-#section-airhotel .content-section{border-top:2px solid var(--gold)}
+#section-airhotel .content-section{border-top:2px solid var(--gold);min-height:calc(100vh - var(--hdr));min-height:calc(100dvh - var(--hdr))}
 .ah-group{margin-bottom:var(--sp16)}
 .ah-group-hd{
   font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
@@ -4106,7 +4106,7 @@ function navTo(sectionId, btn) {
   const fbVisible = fb && !fb.classList.contains('hidden');
   const fbH = fbVisible ? fb.getBoundingClientRect().height : 0;
 
-  const gap = 20; // breathing room below sticky bar
+  const gap = 8; // small breathing room below sticky bar
   const targetTop = section.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
 
   window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
