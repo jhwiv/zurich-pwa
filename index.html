@@ -6668,6 +6668,7 @@ window.getItineraryCity = function() {
 
   window.closeSearchMap = function() {
     overlay.classList.remove('open');
+    overlay.style.display = '';          // clear inline display set by openSearchIframe
     closeBtn.classList.remove('open');
     document.body.style.overflow = '';
   };
