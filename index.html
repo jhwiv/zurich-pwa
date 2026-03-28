@@ -4449,12 +4449,12 @@ function onScroll() {
     flightBar.classList.add('hidden');
   }
 
-  // Flight mini-chip: show in Sunday section when bar is dismissed
-  if (sunTop <= hdrHeight + 60 && flightBarDismissed) {
-    flightChip.classList.add('visible');
-  } else {
-    flightChip.classList.remove('visible');
-  }
+  // Flight mini-chip: disabled — user found it intrusive during scrolling
+  // if (sunTop <= hdrHeight + 60 && flightBarDismissed) {
+  //   flightChip.classList.add('visible');
+  // } else {
+  //   flightChip.classList.remove('visible');
+  // }
 
   // Float menu: show after 300px scroll
   if (scroll > 300) floatMenu.classList.add('visible');
