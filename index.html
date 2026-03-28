@@ -68,7 +68,7 @@ img{display:block;max-width:100%}
 /* ── STICKY HEADER ──────────────────────────────── */
 #site-header{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  background:rgba(250,246,238,.92);
+  background:var(--cream);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(212,201,176,.5);
   transition:box-shadow .25s ease;
@@ -951,6 +951,9 @@ img{display:block;max-width:100%}
 }
 
 /* ── MAP SECTION ───────────────────────────────── */
+#section-map{
+  position:relative;z-index:1;
+}
 #section-map .content-section{
   background:var(--cream);
   padding:0;
@@ -979,7 +982,7 @@ img{display:block;max-width:100%}
 }
 /* Custom control styling */
 .map-day-controls{
-  position:absolute;top:12px;left:12px;z-index:800;
+  position:absolute;top:12px;left:12px;z-index:150;
   display:flex;gap:6px;flex-wrap:wrap;
 }
 .map-day-btn{
@@ -1075,7 +1078,7 @@ img{display:block;max-width:100%}
   color:rgba(200,168,75,.6)!important;
 }
 .map-legend{
-  position:absolute;bottom:28px;left:12px;z-index:800;
+  position:absolute;bottom:28px;left:12px;z-index:150;
   background:rgba(13,25,41,.88);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border:1px solid rgba(200,168,75,.2);
@@ -1668,7 +1671,7 @@ body:has(#search-card.open) #a2hs-banner{display:none!important}
 
 /* ── SECTION SCROLL MARGIN ─────────────────────── */
 section[id]{
-  scroll-margin-top:calc(var(--hdr) + 20px);
+  scroll-margin-top:var(--hdr);
 }
 
 /* ── ALT TOGGLE PROMINENCE ─────────────────────── */
@@ -4107,19 +4110,24 @@ function navTo(sectionId, btn) {
   const fbVisible = fb && !fb.classList.contains('hidden');
   const fbH = fbVisible ? fb.getBoundingClientRect().height : 0;
 
-  const gap = 2;
+  const gap = 0;
   const targetTop = section.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
 
   window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
 
-  // iOS smooth-scroll can undershoot when toolbar collapses; correct after animation
-  setTimeout(function() {
+  // iOS Safari: toolbar collapse during scroll shifts the viewport.
+  // Run multiple correction passes to compensate.
+  function correctScroll() {
+    var h = document.getElementById('site-header');
+    var hh = h ? h.getBoundingClientRect().height : 56;
     var actual = section.getBoundingClientRect().top;
-    var desired = hdrH + gap;
-    if (Math.abs(actual - desired) > 5) {
-      window.scrollBy({ top: actual - desired, behavior: 'smooth' });
+    if (Math.abs(actual - hh) > 3) {
+      window.scrollBy({ top: actual - hh, behavior: 'instant' });
     }
-  }, 600);
+  }
+  setTimeout(correctScroll, 400);
+  setTimeout(correctScroll, 800);
+  setTimeout(correctScroll, 1200);
 
   // After scrolling to Street Views section, auto-scroll to current location's photo
   if (doSvAutoScroll) window._svAutoScroll();
