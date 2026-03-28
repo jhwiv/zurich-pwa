@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="theme-color" content="#0D1929">
+<meta name="theme-color" content="#FAF6EE">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Zürich">
@@ -56,7 +56,7 @@
 html{-webkit-text-size-adjust:100%}
 body{
   font-family:'Crimson Pro',Georgia,serif;
-  background:var(--navy2);
+  background:var(--cream);
   color:var(--body);
   line-height:1.65;
   min-height:100vh;
@@ -68,9 +68,9 @@ img{display:block;max-width:100%}
 /* ── STICKY HEADER ──────────────────────────────── */
 #site-header{
   position:fixed;top:0;left:0;right:0;z-index:200;
-  background:rgba(13,25,41,.92);
+  background:rgba(250,246,238,.92);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(200,168,75,.18);
+  border-bottom:1px solid rgba(212,201,176,.5);
   transition:box-shadow .25s ease;
   padding:6px var(--sp16) 4px;
   display:flex;flex-direction:column;
@@ -92,7 +92,7 @@ img{display:block;max-width:100%}
   padding:6px 14px;
   min-height:30px;
   border-radius:16px;
-  color:rgba(255,255,255,.55);
+  color:var(--steel);
 }
 .hdr-row-2 .nav-chip.active{
   color:var(--navy2);
@@ -101,7 +101,7 @@ img{display:block;max-width:100%}
   font-weight:700;
 }
 #site-header.scrolled{
-  box-shadow:0 2px 20px rgba(0,0,0,.35);
+  box-shadow:0 2px 20px rgba(0,0,0,.08);
 }
 
 .hdr-nav{
@@ -120,7 +120,7 @@ img{display:block;max-width:100%}
   min-height:36px;
   border-radius:20px;
   white-space:nowrap;
-  color:rgba(255,255,255,.65);
+  color:var(--steel);
   border:1px solid transparent;
   background:transparent;
   transition:color .18s,background .18s,border-color .18s;
@@ -129,8 +129,8 @@ img{display:block;max-width:100%}
   display:inline-flex;align-items:center;
 }
 .nav-chip:hover{
-  color:rgba(255,255,255,.82);
-  background:rgba(255,255,255,.07);
+  color:var(--navy);
+  background:rgba(27,42,74,.06);
 }
 .nav-chip.active{
   color:var(--navy2);
@@ -187,7 +187,7 @@ img{display:block;max-width:100%}
 /* ── HERO ───────────────────────────────────────── */
 #hero{
   min-height:45vh;
-  background:var(--navy2);
+  background:var(--cream);
   display:flex;flex-direction:column;
   justify-content:center;
   padding:var(--sp32) var(--sp24) var(--sp24);
@@ -204,7 +204,7 @@ img{display:block;max-width:100%}
 }
 .hero-vignette{
   position:absolute;inset:0;
-  background:radial-gradient(ellipse 100% 80% at 50% 60%,transparent 20%,var(--navy2) 100%);
+  background:radial-gradient(ellipse 100% 80% at 50% 60%,transparent 20%,var(--cream) 100%);
   pointer-events:none;
 }
 .hero-inner{position:relative;z-index:2}
@@ -221,8 +221,8 @@ img{display:block;max-width:100%}
   font-weight:900;
   font-size:clamp(72px,14vw,140px);
   line-height:.88;letter-spacing:-.02em;
-  color:var(--gold2);
-  text-shadow:0 0 60px rgba(200,168,75,.25);
+  color:var(--navy);
+  text-shadow:none;
   margin-bottom:2px;
   opacity:0;animation:fadeUp .7s ease .35s forwards;
 }
@@ -230,7 +230,7 @@ img{display:block;max-width:100%}
   font-family:'Playfair Display',serif;
   font-style:italic;
   font-size:clamp(17px,3vw,24px);
-  color:rgba(220,225,235,.8);
+  color:var(--steel);
   letter-spacing:.04em;
   margin-bottom:var(--sp24);
   opacity:0;animation:fadeUp .6s ease .55s forwards;
@@ -244,7 +244,7 @@ img{display:block;max-width:100%}
 .hero-desc{
   font-family:'Crimson Pro',serif;
   font-style:italic;
-  font-size:17px;color:rgba(220,225,235,.78);
+  font-size:17px;color:var(--steel);
   max-width:400px;line-height:1.7;
   margin-bottom:var(--sp32);
   opacity:0;animation:fadeUp .6s ease .8s forwards;
@@ -267,14 +267,14 @@ img{display:block;max-width:100%}
 .hero-btn-primary:hover{background:var(--gold2);transform:translateY(-1px)}
 .hero-btn-primary:active{transform:scale(.97);transition-duration:.05s}
 .hero-btn-secondary{
-  background:rgba(255,255,255,.08);
-  color:rgba(255,255,255,.85);
-  border:1px solid rgba(255,255,255,.2);
+  background:transparent;
+  color:var(--navy);
+  border:1px solid rgba(27,42,74,.3);
 }
 .hero-btn-secondary:hover{
-  background:rgba(255,255,255,.1);
-  color:#fff;
-  border-color:rgba(255,255,255,.25);
+  background:rgba(27,42,74,.06);
+  color:var(--navy);
+  border-color:rgba(27,42,74,.5);
 }
 .hero-btn-secondary:active{transform:scale(.97);transition-duration:.05s}
 .hero-wx-strip{
@@ -289,7 +289,7 @@ img{display:block;max-width:100%}
   text-transform:uppercase;
 }
 .hero-wx-temp{
-  font-size:12px;color:rgba(220,225,235,.7);
+  font-size:12px;color:var(--steel);
 }
 
 /* ── SECTION ANCHORS ────────────────────────────── */
@@ -310,7 +310,7 @@ img{display:block;max-width:100%}
 /* Visual break between day sections */
 #section-sat .content-section,
 #section-sun .content-section{
-  border-top:4px solid var(--navy2);
+  border-top:4px solid var(--navy);
   position:relative;
 }
 #section-sat .content-section::before,
@@ -677,7 +677,7 @@ img{display:block;max-width:100%}
 .btn-menu{
   display:inline-flex;align-items:center;gap:var(--sp4);
   background:var(--gold3);
-  color:var(--gold2);
+  color:var(--gold);
   border:1px solid rgba(200,168,75,.35);
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.08em;text-transform:uppercase;
@@ -909,28 +909,28 @@ img{display:block;max-width:100%}
   border-bottom:1px solid rgba(200,168,75,.15);
 }
 .ah-table td{
-  font-size:12px;color:rgba(255,255,255,.88);padding:6px;
-  border-bottom:1px solid rgba(255,255,255,.04);
+  font-size:12px;color:var(--body);padding:6px;
+  border-bottom:1px solid var(--divider2);
   white-space:nowrap;
 }
 .ah-table tr.ah-past td{opacity:.45}
 .ah-table .ah-mono{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.03em}
 .ah-table .ah-status{font-size:10px;font-weight:600;padding:1px 6px;border-radius:3px}
-.ah-status-sched{background:rgba(108,140,255,.15);color:#6c8cff}
-.ah-status-arr{background:rgba(52,211,153,.12);color:#34d399}
-.ah-status-curr{background:rgba(52,211,153,.12);color:#34d399}
-.ah-status-next{background:rgba(251,146,60,.12);color:#fb923c}
+.ah-status-sched{background:var(--blue2);color:var(--blue3)}
+.ah-status-arr{background:var(--green2);color:var(--green3)}
+.ah-status-curr{background:var(--green2);color:var(--green3)}
+.ah-status-next{background:var(--amber2);color:var(--amber)}
 .ah-table a{color:inherit;text-decoration:none}
 .ah-table a:active{opacity:.7}
 .ah-open{font-size:10px;color:var(--gold);opacity:.7}
 /* hotel rows */
-.ah-htl-name{font-weight:600;color:#fff}
+.ah-htl-name{font-weight:600;color:var(--navy)}
 .ah-htl-loc{font-size:11px;color:var(--muted)}
 /* ref strip */
 .ah-refs{display:flex;gap:var(--sp12);flex-wrap:wrap;margin-bottom:var(--sp12)}
 .ah-ref-chip{
-  font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,.7);
-  padding:4px 10px;background:var(--navy3);border:1px solid rgba(200,168,75,.12);
+  font-family:'DM Mono',monospace;font-size:11px;color:var(--navy);
+  padding:4px 10px;background:var(--cream2);border:1px solid var(--divider);
   border-radius:var(--r6);
 }
 .ah-ref-chip span{color:var(--muted);font-size:10px;margin-right:4px}
@@ -940,7 +940,7 @@ img{display:block;max-width:100%}
   flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
   padding:10px 8px;border-radius:var(--r9);
   font-size:12px;font-weight:600;color:#fff;text-align:center;
-  background:var(--navy3);border:1px solid rgba(200,168,75,.12);
+  background:var(--navy);border:1px solid rgba(27,42,74,.3);
   transition:transform .15s ease,opacity .15s ease;
 }
 .ah-app-link:active{transform:scale(.97);opacity:.8}
@@ -951,15 +951,15 @@ img{display:block;max-width:100%}
 
 /* ── MAP SECTION ───────────────────────────────── */
 #section-map .content-section{
-  background:var(--navy2);
+  background:var(--cream);
   padding:0;
 }
 #section-map .day-header{
   background:linear-gradient(to bottom,rgba(200,168,75,.05),transparent);
   border-bottom:2px solid var(--gold);
 }
-#section-map .day-title{color:var(--gold2)}
-#section-map .day-intro{color:rgba(220,225,235,.65)}
+#section-map .day-title{color:var(--navy)}
+#section-map .day-intro{color:var(--steel)}
 #section-map .day-label{color:var(--gold)}
 .map-wrap{
   position:relative;
@@ -1125,7 +1125,7 @@ img{display:block;max-width:100%}
 /* ── INLINE TIP BLOCK ───────────────────────────── */
 .tip-block{
   margin:0 var(--sp24) var(--sp24);
-  background:var(--navy);
+  background:var(--cream2);
   border-radius:var(--r9);
   padding:var(--sp16) var(--sp20, 20px);
   display:flex;gap:var(--sp12);align-items:flex-start;
@@ -1133,7 +1133,7 @@ img{display:block;max-width:100%}
 .tip-orn{color:var(--gold);font-size:16px;flex-shrink:0;margin-top:2px}
 .tip-txt{
   font-family:'Crimson Pro',serif;font-style:italic;
-  font-size:13.5px;color:rgba(255,255,255,.65);line-height:1.6;
+  font-size:13.5px;color:var(--steel);line-height:1.6;
 }
 .tip-block.alert{
   background:rgba(185,28,28,.08);
@@ -1163,11 +1163,11 @@ img{display:block;max-width:100%}
 
 /* ── ESSENTIALS SECTION ─────────────────────────── */
 #section-essentials .content-section{
-  background:var(--navy);
+  background:var(--cream);
 }
 .essentials-header{
   padding:var(--sp24) var(--sp24) var(--sp16);
-  border-bottom:2px solid rgba(200,168,75,.2);
+  border-bottom:2px solid var(--gold);
 }
 .essentials-eyebrow{
   font-family:'DM Mono',monospace;font-size:9px;
@@ -1176,7 +1176,7 @@ img{display:block;max-width:100%}
 }
 .essentials-title{
   font-family:'Playfair Display',serif;
-  font-size:26px;font-weight:700;color:#fff;
+  font-size:26px;font-weight:700;color:var(--navy);
 }
 .ess-grid{
   padding:var(--sp16) var(--sp24) var(--sp24);
@@ -1188,19 +1188,19 @@ img{display:block;max-width:100%}
 .ess-label{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.2em;text-transform:uppercase;
-  color:rgba(200,168,75,.6);margin-bottom:var(--sp4);
+  color:var(--gold);margin-bottom:var(--sp4);
 }
 .ess-value{
   font-family:'Crimson Pro',serif;font-size:13.5px;
-  color:rgba(255,255,255,.75);line-height:1.5;
+  color:var(--body);line-height:1.5;
 }
 .ess-badge{
   display:inline-block;
-  background:rgba(26,107,53,.3);
-  border:1px solid rgba(26,107,53,.5);
+  background:var(--green2);
+  border:1px solid rgba(22,101,52,.3);
   padding:2px 8px;border-radius:3px;
   font-family:'DM Mono',monospace;font-size:8px;
-  letter-spacing:.08em;color:#86efac;
+  letter-spacing:.08em;color:var(--green3);
   margin-top:var(--sp4);width:fit-content;
 }
 
@@ -1257,12 +1257,12 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 
 /* ── SURVIVAL SECTION ───────────────────────────── */
 .survival-section{
-  background:var(--navy2);
+  background:var(--cream);
 }
 .surv-header{
   padding:var(--sp32) var(--sp24) var(--sp24);
   text-align:center;
-  border-bottom:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid var(--divider2);
 }
 .surv-eyebrow{
   font-family:'DM Mono',monospace;font-size:9px;
@@ -1271,7 +1271,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 }
 .surv-title{
   font-family:'Playfair Display',serif;
-  font-size:28px;font-weight:700;color:#fff;
+  font-size:28px;font-weight:700;color:var(--navy);
   margin-bottom:var(--sp8);
 }
 .surv-rule{width:40px;height:1px;background:#E05252;margin:0 auto}
@@ -1281,26 +1281,26 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
   flex-wrap:wrap;padding:var(--sp24);
 }
 .emerg-card{
-  background:rgba(185,28,28,.2);
-  border:1px solid rgba(185,28,28,.35);
+  background:var(--red2);
+  border:1px solid rgba(153,27,27,.25);
   border-radius:var(--r9);
   padding:var(--sp12) var(--sp16);
   text-align:center;min-width:88px;
 }
 .emerg-num{
   font-family:'Playfair Display',serif;
-  font-size:26px;font-weight:700;color:#FCA5A5;line-height:1;
+  font-size:26px;font-weight:700;color:var(--red);line-height:1;
 }
 .emerg-lbl{
   font-family:'DM Mono',monospace;font-size:7px;
   letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(255,255,255,.4);margin-top:var(--sp4);
+  color:var(--steel);margin-top:var(--sp4);
 }
 /* Accordion */
 .surv-body{padding:0 var(--sp24) var(--sp24)}
 .accordion{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.07);
+  background:var(--cream2);
+  border:1px solid var(--divider);
   border-radius:var(--r9);
   overflow:hidden;
   margin-bottom:var(--sp8);
@@ -1308,7 +1308,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .accordion-hdr{
   width:100%;
   font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(200,168,75,.75);
+  text-transform:uppercase;color:var(--gold);
   padding:13px var(--sp16) 11px;
   border:none;background:none;cursor:pointer;
   display:flex;justify-content:space-between;align-items:center;
@@ -1316,7 +1316,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
   user-select:none;
   transition:background .2s;
 }
-.accordion-hdr:hover{background:rgba(255,255,255,.03)}
+.accordion-hdr:hover{background:rgba(27,42,74,.04)}
 .accordion-hdr:focus-visible{
   outline:2px solid var(--gold);
   outline-offset:-2px;
@@ -1329,21 +1329,21 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .accordion-body{
   display:none;
   padding:var(--sp4) var(--sp16) var(--sp16);
-  border-top:1px solid rgba(255,255,255,.05);
+  border-top:1px solid var(--divider2);
 }
 .accordion.open .accordion-body{display:block}
 .acc-item{
   font-family:'Crimson Pro',serif;font-size:13.5px;
-  color:rgba(255,255,255,.62);line-height:1.65;
+  color:var(--body);line-height:1.65;
   padding:var(--sp8) 0;
-  border-bottom:1px solid rgba(255,255,255,.04);
+  border-bottom:1px solid var(--divider2);
 }
 .acc-item:last-child{border-bottom:none}
-.acc-item b{color:rgba(255,255,255,.86)}
+.acc-item b{color:var(--navy)}
 /* Pronunciation tables */
 .pron-section{
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.07);
+  background:var(--cream2);
+  border:1px solid var(--divider);
   border-radius:var(--r9);
   overflow:hidden;
   margin-bottom:var(--sp8);
@@ -1351,44 +1351,44 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .pron-hdr{
   width:100%;
   font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(200,168,75,.75);
+  text-transform:uppercase;color:var(--gold);
   padding:13px var(--sp16) 11px;
   border:none;background:none;cursor:pointer;
   display:flex;justify-content:space-between;align-items:center;
   text-align:left;user-select:none;
   transition:background .2s;
 }
-.pron-hdr:hover{background:rgba(255,255,255,.03)}
+.pron-hdr:hover{background:rgba(27,42,74,.04)}
 .pron-hdr:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 .pron-body{
   display:none;overflow-x:auto;
-  border-top:1px solid rgba(255,255,255,.05);
+  border-top:1px solid var(--divider2);
 }
 .pron-section.open .pron-body{display:block}
 .pron-hint{
   padding:var(--sp8) var(--sp16) var(--sp4);
   font-family:'Crimson Pro',serif;font-style:italic;
-  font-size:12.5px;color:rgba(255,255,255,.32);
+  font-size:12.5px;color:var(--steel);
 }
 table.ptbl{width:100%;border-collapse:collapse;font-size:13px}
 table.ptbl th{
   font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:rgba(200,168,75,.5);
-  padding:7px 12px;border-bottom:1px solid rgba(255,255,255,.05);text-align:left;
+  text-transform:uppercase;color:var(--steel);
+  padding:7px 12px;border-bottom:1px solid var(--divider);text-align:left;
 }
 table.ptbl td{
-  padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.04);
-  font-family:'Crimson Pro',serif;color:rgba(255,255,255,.65);
+  padding:8px 12px;border-bottom:1px solid var(--divider2);
+  font-family:'Crimson Pro',serif;color:var(--body);
   vertical-align:top;line-height:1.4;
 }
 table.ptbl tr:last-child td{border-bottom:none}
-table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+table.ptbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .pron-link{color:var(--gold);text-decoration:none;margin-right:var(--sp4);font-size:13px;background:none;border:none;cursor:pointer;padding:0;display:inline;vertical-align:baseline;line-height:1}
 .phon{font-family:'DM Mono',monospace;font-size:10px;color:rgba(200,168,75,.8);white-space:nowrap}
 
 /* ── FOOTER ─────────────────────────────────────── */
 #site-footer{
-  background:var(--navy);
+  background:var(--cream);
   border-top:2px solid var(--gold);
   padding:var(--sp32) var(--sp24);
   text-align:center;
@@ -1396,17 +1396,17 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 .footer-quote{
   font-family:'Playfair Display',serif;font-style:italic;
   font-size:clamp(15px,2.5vw,19px);
-  color:rgba(255,255,255,.6);
+  color:var(--steel);
   line-height:1.65;max-width:400px;margin:0 auto var(--sp12);
 }
 .footer-sub{
   font-family:'Crimson Pro',serif;font-style:italic;
-  font-size:14px;color:rgba(200,168,75,.5);margin-bottom:var(--sp12);
+  font-size:14px;color:rgba(200,168,75,.65);margin-bottom:var(--sp12);
 }
 .footer-meta{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(200,168,75,.3);
+  color:rgba(200,168,75,.5);
 }
 .footer-actions{
   display:flex;justify-content:center;gap:var(--sp12);
@@ -1417,11 +1417,11 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.1em;text-transform:uppercase;
   padding:8px 16px;border-radius:var(--r6);
-  color:rgba(255,255,255,.5);
-  border:1px solid rgba(255,255,255,.1);
+  color:var(--navy);
+  border:1px solid rgba(27,42,74,.2);
   transition:all .2s;min-height:36px;
 }
-.footer-btn:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.25)}
+.footer-btn:hover{color:var(--navy);border-color:rgba(27,42,74,.4);background:rgba(27,42,74,.06)}
 
 /* ── ALTERRA BRANDING ────────────────────────────── */
 .alterra-powered{
@@ -1482,13 +1482,13 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 .float-btn-label{
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.1em;text-transform:uppercase;
-  color:rgba(255,255,255,.35);
+  color:var(--steel);
   text-align:right;margin-right:var(--sp4);
   transition:color .2s;
   pointer-events:none;
 }
 .float-row{display:flex;align-items:center;gap:var(--sp8)}
-.float-row:hover .float-btn-label{color:rgba(255,255,255,.65)}
+.float-row:hover .float-btn-label{color:var(--navy)}
 
 /* ── PROGRESS BAR ───────────────────────────────── */
 #progress-bar{
@@ -1502,7 +1502,7 @@ table.ptbl tr:nth-child(even) td{background:rgba(255,255,255,.02)}
 /* ── TRANSITIONS ────────────────────────────────── */
 #page-fade{
   position:fixed;inset:0;
-  background:var(--navy2);
+  background:var(--cream);
   opacity:0;pointer-events:none;
   transition:opacity .55s ease;
   z-index:9999;
@@ -1747,7 +1747,7 @@ section[id]{
 #a2hs-banner{
   display:none;
   position:fixed;bottom:0;left:0;right:0;z-index:210;
-  background:var(--navy);
+  background:var(--cream);
   border-top:2px solid var(--gold);
   padding:var(--sp16) var(--sp16) calc(var(--sp16) + env(safe-area-inset-bottom));
   animation:slideUp .35s ease;
@@ -1765,13 +1765,13 @@ section[id]{
 .a2hs-text{
   flex:1;
   font-family:'Crimson Pro',serif;
-  font-size:14px;color:rgba(255,255,255,.85);
+  font-size:14px;color:var(--body);
   line-height:1.4;
 }
-.a2hs-text strong{color:var(--gold2);font-weight:600}
+.a2hs-text strong{color:var(--gold);font-weight:600}
 .a2hs-steps{
   font-family:'DM Mono',monospace;
-  font-size:9px;color:rgba(255,255,255,.5);
+  font-size:9px;color:var(--steel);
   margin-top:4px;letter-spacing:.03em;
 }
 .a2hs-btn{
@@ -1787,11 +1787,11 @@ section[id]{
 .a2hs-btn:hover{background:var(--gold2)}
 .a2hs-btn:active{transform:scale(.95)}
 .a2hs-dismiss{
-  background:none;border:none;color:rgba(255,255,255,.4);
+  background:none;border:none;color:var(--steel);
   font-size:18px;cursor:pointer;padding:4px 8px;
   flex-shrink:0;line-height:1;
 }
-.a2hs-dismiss:hover{color:rgba(255,255,255,.7)}
+.a2hs-dismiss:hover{color:var(--navy)}
 
 /* ── OFFLINE INDICATOR ─────────────────────────── */
 #offline-bar{
@@ -2014,7 +2014,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
 /* ── PHONE MOCKUP SHOWCASE ──────────────────────── */
 .showcase-wrap{
-  background:var(--navy2);
+  background:var(--cream);
   padding:var(--sp32) var(--sp16) var(--sp48);
   text-align:center;
 }
@@ -2023,7 +2023,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   font-style:italic;
   font-size:clamp(1.6rem,1rem+2vw,2.4rem);
   font-weight:400;
-  color:var(--cream);
+  color:var(--navy);
   margin-bottom:var(--sp8);
   letter-spacing:.02em;
 }
@@ -2040,7 +2040,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   font-family:'DM Mono',monospace;
   font-size:10px;font-weight:600;
   letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(250,246,238,.35);
+  color:var(--steel);
   cursor:pointer;padding:6px 0;
   border:none;background:none;
   position:relative;
@@ -2533,27 +2533,27 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
         <p class="stop-body" style="margin-top:12px"><strong>City Pass — Worth It?</strong><br>If you'll ride 3+ times a day, a City Pass Small (zones 1–4, airport included) saves money. Unlimited metro, bus, train, and harbour bus.</p>
         <table style="width:100%;margin:8px 0 4px;border-collapse:collapse;font-size:.85rem">
-          <tr style="border-bottom:1px solid rgba(255,255,255,.15)">
-            <td style="padding:6px 8px;color:#e2c87a">24 hours</td><td style="padding:6px 8px;text-align:right;color:#f0f0f0;font-weight:600">100 DKK (~$14)</td>
+          <tr style="border-bottom:1px solid var(--divider2)">
+            <td style="padding:6px 8px;color:var(--gold)">24 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">100 DKK (~$14)</td>
           </tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,.15)">
-            <td style="padding:6px 8px;color:#e2c87a">48 hours</td><td style="padding:6px 8px;text-align:right;color:#f0f0f0;font-weight:600">160 DKK (~$22)</td>
+          <tr style="border-bottom:1px solid var(--divider2)">
+            <td style="padding:6px 8px;color:var(--gold)">48 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">160 DKK (~$22)</td>
           </tr>
           <tr>
-            <td style="padding:6px 8px;color:#e2c87a">72 hours</td><td style="padding:6px 8px;text-align:right;color:#f0f0f0;font-weight:600">220 DKK (~$30)</td>
+            <td style="padding:6px 8px;color:var(--gold)">72 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">220 DKK (~$30)</td>
           </tr>
         </table>
 
         <p class="stop-body" style="margin-top:12px"><strong>Single Ticket Prices (2026)</strong></p>
         <table style="width:100%;margin:8px 0 4px;border-collapse:collapse;font-size:.85rem">
-          <tr style="border-bottom:1px solid rgba(255,255,255,.15)">
-            <td style="padding:6px 8px;color:#e2c87a">2 zones (inner-city)</td><td style="padding:6px 8px;text-align:right;color:#f0f0f0;font-weight:600">24 DKK · 75 min</td>
+          <tr style="border-bottom:1px solid var(--divider2)">
+            <td style="padding:6px 8px;color:var(--gold)">2 zones (inner-city)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">24 DKK · 75 min</td>
           </tr>
-          <tr style="border-bottom:1px solid rgba(255,255,255,.15)">
-            <td style="padding:6px 8px;color:#e2c87a">3 zones (airport ↔ centre)</td><td style="padding:6px 8px;text-align:right;color:#f0f0f0;font-weight:600">30 DKK · 90 min</td>
+          <tr style="border-bottom:1px solid var(--divider2)">
+            <td style="padding:6px 8px;color:var(--gold)">3 zones (airport ↔ centre)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">30 DKK · 90 min</td>
           </tr>
           <tr>
-            <td style="padding:6px 8px;color:#e2c87a">4 zones (cross-city)</td><td style="padding:6px 8px;text-align:right;color:#f0f0f0;font-weight:600">40 DKK · 105 min</td>
+            <td style="padding:6px 8px;color:var(--gold)">4 zones (cross-city)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">40 DKK · 105 min</td>
           </tr>
         </table>
 
@@ -3098,10 +3098,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <!-- ── ESSENTIALS ─────────────────────────────────── -->
 <span class="section-anchor" id="section-essentials-anchor"></span>
 <section id="section-essentials" aria-label="Trip essentials">
-  <div class="content-section" style="background:var(--navy)">
+  <div class="content-section">
     <div class="essentials-header">
       <div class="essentials-eyebrow">Quick Reference</div>
-      <h2 class="essentials-title" style="color:#fff">Trip Essentials</h2>
+      <h2 class="essentials-title">Trip Essentials</h2>
     </div>
     <div class="ess-grid">
       <div class="ess-item">
@@ -3197,7 +3197,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
     </div>
 
     <!-- Survival Accordions -->
-    <div style="padding:var(--sp24);background:var(--navy2);border-top:1px solid rgba(255,255,255,.06)">
+    <div style="padding:var(--sp24);border-top:1px solid var(--divider2)">
       <div style="text-align:center;margin-bottom:var(--sp24)">
         <div class="surv-eyebrow">Switzerland · March 2026</div>
         <div class="surv-title">Survival Guide</div>
@@ -3421,10 +3421,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <!-- ── HISTORY ──────────────────────────────────────── -->
 <span class="section-anchor" id="section-history-anchor"></span>
 <section id="section-history" aria-label="Destination history">
-  <div class="content-section" style="background:var(--navy2);padding:var(--sp24)">
+  <div class="content-section" style="padding:var(--sp24)">
     <div class="section-header">
       <div class="section-eyebrow">Background</div>
-      <h2 class="section-title" style="color:#fff">History</h2>
+      <h2 class="section-title">History</h2>
     </div>
 
     <div class="accordion" id="acc-hist-norreport">
@@ -3432,7 +3432,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Nørreport &amp; Copenhagen <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-norreport-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           Copenhagen began as a Viking fishing village in the 10th century. In 1167, Bishop Absalon fortified the harbour with a castle — the city’s name, København, literally means “merchants’ harbour.” It became Denmark’s capital in the early 15th century and exploded under Christian IV (1596–1648), who built the Round Tower, Rosenborg Castle, and Christianshavn modelled on Amsterdam. Nørreport, where your hotel sits, was one of the original four city gates — all traffic entering Copenhagen for centuries passed through here. Torvehallerne food market next door stands on the old Højtorv livestock marketplace. Denmark maintains one of the oldest continuous monarchies in the world, and the royal family still resides at Amalienborg Palace, a 10-minute walk from your hotel.
         </div>
       </div>
@@ -3443,7 +3443,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Uetliberg <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-uetliberg-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           The summit you’ll visit Saturday morning has been settled since at least 4000 BC. Around 500 BC, the Celts built one of Switzerland’s most important Iron Age fortifications here — an oppidum with walls up to 14 metres high and 35 metres thick, enclosing a large hilltop settlement. Remains of these ancient ramparts are still visible at the Uto Kulm summit. The Romans later stationed a garrison here to protect their customs post (Turicum) at the lake below. In the Middle Ages, the lords of Regensberg built a castle on the summit, the Uotelenburg, which was destroyed when Zürich allied with Rudolf von Habsburg. The Uetliberg railway has run since 1874 — the same S10 line you’ll take.
         </div>
       </div>
@@ -3454,7 +3454,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Café Sprüngli <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-sprungli-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           David Sprüngli opened his confiserie on the Marktgasse in 1836, and his son Rudolf Sprüngli-Ammann moved it to the current Paradeplatz address on Bahnhofstrasse in 1859. The famous Luxemburgerli — the delicate, airy macarons you’ll try — were created in 1957 by confectioner Richard Sprüngli after he visited Ladüree in Paris and decided to make a lighter, more refined version. The Sprüngli family also co-founded Lindt & Sprüngli, though the chocolate company and the confiserie split into separate businesses in 1899. The Paradeplatz café remains family-owned and is considered one of Zürich’s cultural institutions.
         </div>
       </div>
@@ -3465,7 +3465,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Kunsthaus Zürich <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-kunsthaus-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           Switzerland’s largest art museum was founded in 1910 by the Zürcher Kunstgesellschaft (Zürich Art Society), which had been collecting since 1787. The original building on Heimplatz was designed by Karl Moser. In 2021, the museum doubled in size with a major extension by David Chipperfield — the sleek limestone building across the square that now houses the Bührle Collection of French Impressionists (Monet, Cézanne, Renoir, van Gogh). The museum holds the world’s largest Munch collection outside Norway, an exceptional Giacometti room, and major works by Picasso and Chagall. It’s free with your Zürich Card.
         </div>
       </div>
@@ -3476,7 +3476,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Old Town &amp; Cathedrals <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-oldtown-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           The Grossmünster’s twin towers have defined Zürich’s skyline since the Romanesque church was completed in the 1200s. Legend says Charlemagne founded it over the graves of Felix and Regula, the city’s patron saints. In 1519, Huldrych Zwingli began preaching here and launched the Swiss Reformation — stripping every church in the city of its art, altars, and organs. Across the Limmat, the Fraumünster was founded in 853 by King Louis the German for his daughters. Its abbesses ruled Zürich for centuries, minting coins and appointing mayors. The abbey was dissolved during Zwingli’s Reformation in 1524. The church’s five Chagall stained-glass windows, installed in 1970 when the artist was 80, are considered among his greatest works. Lindenhof Hill, your sunset stop, was the site of the Roman Turicum fort and later a Carolingian palace.
         </div>
       </div>
@@ -3487,7 +3487,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Zeughauskeller <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-zeughaus-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           The building on Bahnhofstrasse 28A where you’ll have your confirmed Saturday dinner was constructed around 1487 as Zürich’s municipal armoury — Zeughaus means “arsenal.” For over four centuries it stored the city’s weapons, armour, and gunpowder. The vaulted stone cellar with its massive oak beams and pillars survives intact from the original construction. In 1926 it was converted into the beer hall restaurant you’ll see today, and it has operated continuously since. The Zürcher Geschnetzeltes (veal in cream sauce) served here follows a recipe that’s been a Zürich staple since at least the 19th century.
         </div>
       </div>
@@ -3498,7 +3498,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Hiltl <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-hiltl-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           The world’s oldest vegetarian restaurant, confirmed by Guinness World Records, opened in 1898 as the “Vegetarierheim & Abstinenzcafé” on Sihlstrasse. Locals mocked it as the “Wurzelbunker” (root bunker) and guests entered through the back door to avoid being seen. In 1901, a Bavarian tailor named Ambrosius Hiltl visited on his doctor’s orders to treat severe rheumatism. He recovered, fell in love with the cook Martha Gneupel, married her, and took over the restaurant in 1904. In 1951, daughter-in-law Margrith travelled to Delhi as Switzerland’s delegate to the World Vegetarian Congress and returned with bags of spices — introducing Indian-accented dishes decades before they became mainstream in Europe. Now in its fourth generation, Hiltl has expanded to eight branches across Zürich, and its Sunday brunch buffet (the one you’ll have) draws over 100 dishes from Indian, Asian, Mediterranean, and Swiss traditions.
         </div>
       </div>
@@ -3509,7 +3509,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         Lake Zürich &amp; Bürkliplatz <span class="acc-chevron">▾</span>
       </button>
       <div class="accordion-body" id="acc-hist-lake-body" role="region">
-        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7;color:rgba(255,255,255,.88)">
+        <div class="acc-item" style="font-family:'Crimson Pro',serif;font-size:14px;line-height:1.7">
           Lake Zürich was formed by glacial retreat roughly 20,000 years ago and has been central to human settlement here since the Neolithic. The prehistoric pile dwellings along its shores are a UNESCO World Heritage Site. Bürkliplatz, where you’ll walk and possibly board a boat, was created in the 1880s when the city’s quays were extended and landscaped — named after Arnold Bürkli, the engineer who designed Zürich’s modern lakefront. The ZSG boat company has operated cruises on the lake since 1890. On clear days from the promenade, you can see the Glärnisch and Tödi peaks of the Alps over 60 km away.
         </div>
       </div>
@@ -3930,10 +3930,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <!-- ── AIR & HOTEL ─────────────────────────────────── -->
 <span class="section-anchor" id="section-airhotel-anchor"></span>
 <section id="section-airhotel" aria-label="Air and hotel information">
-  <div class="content-section" style="background:var(--navy2);padding:var(--sp16) var(--sp16) var(--sp24)">
+  <div class="content-section" style="padding:var(--sp16) var(--sp16) var(--sp24)">
     <div class="section-header" style="margin-bottom:var(--sp12)">
       <div class="section-eyebrow">Travel Logistics</div>
-      <h2 class="section-title" style="color:#fff">Air &amp; Hotel</h2>
+      <h2 class="section-title">Air &amp; Hotel</h2>
     </div>
 
     <!-- FLIGHTS TABLE -->

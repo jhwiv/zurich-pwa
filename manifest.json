@@ -4,8 +4,8 @@
   "description": "Zürich itinerary for Charlotte & parent — March 27–29 2026",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0D1929",
-  "theme_color": "#0D1929",
+  "background_color": "#FAF6EE",
+  "theme_color": "#FAF6EE",
   "orientation": "portrait-primary",
   "icons": [
     {
