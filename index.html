@@ -895,6 +895,7 @@ img{display:block;max-width:100%}
 
 
 /* ── AIR & HOTEL SECTION ─────────────────────────── */
+#section-airhotel{scroll-margin-top:var(--hdr)}
 #section-airhotel .content-section{border-top:2px solid var(--gold);min-height:calc(100vh - var(--hdr));min-height:calc(100dvh - var(--hdr))}
 .ah-group{margin-bottom:var(--sp16)}
 .ah-group-hd{
@@ -4106,10 +4107,19 @@ function navTo(sectionId, btn) {
   const fbVisible = fb && !fb.classList.contains('hidden');
   const fbH = fbVisible ? fb.getBoundingClientRect().height : 0;
 
-  const gap = 8; // small breathing room below sticky bar
+  const gap = 2;
   const targetTop = section.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
 
   window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+
+  // iOS smooth-scroll can undershoot when toolbar collapses; correct after animation
+  setTimeout(function() {
+    var actual = section.getBoundingClientRect().top;
+    var desired = hdrH + gap;
+    if (Math.abs(actual - desired) > 5) {
+      window.scrollBy({ top: actual - desired, behavior: 'smooth' });
+    }
+  }, 600);
 
   // After scrolling to Street Views section, auto-scroll to current location's photo
   if (doSvAutoScroll) window._svAutoScroll();
