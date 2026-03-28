@@ -29,13 +29,14 @@
   --navy2: #0D1929;
   --navy3: #162238;
   --gold:  #C8A84B;
+  --gold-text:#806826;
   --gold2: #E8C96B;
   --gold3: rgba(200,168,75,.12);
   --cream: #FAF6EE;
   --cream2:#F0EBE1;
   --steel: #5A6A7A;
   --body:  #2A2A2A;
-  --muted: #8A96A2;
+  --muted: #5C6C7C;
   --divider:#D4C9B0;
   --divider2:rgba(212,201,176,.4);
   --green: #1A6B35;
@@ -212,7 +213,7 @@ img{display:block;max-width:100%}
   font-family:'DM Mono',monospace;
   font-size:10px;letter-spacing:.28em;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-text);
   margin-bottom:var(--sp16);
   opacity:0;animation:fadeUp .6s ease .2s forwards;
 }
@@ -334,7 +335,7 @@ img{display:block;max-width:100%}
 .day-label{
   font-family:'DM Mono',monospace;
   font-size:9px;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--gold);font-weight:700;margin-bottom:var(--sp8);
+  color:var(--gold-text);font-weight:700;margin-bottom:var(--sp8);
 }
 .day-title{
   font-family:'Playfair Display',serif;
@@ -401,8 +402,8 @@ img{display:block;max-width:100%}
 }
 .wx-tap{
   font-family:'DM Mono',monospace;font-size:7px;
-  color:var(--gold);margin-top:var(--sp8);
-  letter-spacing:.08em;opacity:.75;
+  color:var(--gold-text);margin-top:var(--sp8);
+  letter-spacing:.08em;
 }
 .wx-c{display:none}
 
@@ -416,7 +417,7 @@ img{display:block;max-width:100%}
 .stop:last-child{border-bottom:none}
 .stop-time{
   font-family:'DM Mono',monospace;
-  font-size:9px;letter-spacing:.1em;color:var(--gold);
+  font-size:9px;letter-spacing:.1em;color:var(--gold-text);
   font-weight:500;margin-bottom:var(--sp8);
   display:flex;align-items:center;gap:var(--sp8);
 }
@@ -442,7 +443,7 @@ img{display:block;max-width:100%}
   display:inline-flex;align-items:center;gap:3px;
   font-family:'DM Mono',monospace;
   font-size:9px;letter-spacing:.06em;
-  color:var(--gold);
+  color:var(--gold-text);
   background:var(--gold3);
   border:1px solid rgba(200,168,75,.18);
   padding:2px 8px;
@@ -463,7 +464,7 @@ img{display:block;max-width:100%}
 }
 .stop-ext{
   font-family:'DM Mono',monospace;font-size:9px;
-  color:var(--gold);opacity:0;
+  color:var(--gold-text);opacity:0;
   transition:opacity .15s;
   flex-shrink:0;
 }
@@ -538,7 +539,7 @@ img{display:block;max-width:100%}
 .chip-popup-title{
   font-family:'Playfair Display',serif;
   font-size:18px;font-weight:700;
-  color:var(--gold);
+  color:var(--gold-text);
   line-height:1.3;
 }
 .chip-popup-close{
@@ -624,7 +625,7 @@ img{display:block;max-width:100%}
 .menu-modal-title{
   font-family:'Playfair Display',serif;
   font-size:18px;font-weight:700;
-  color:var(--gold);line-height:1.3;
+  color:var(--gold-text);line-height:1.3;
 }
 .menu-modal-subtitle{
   font-family:'Crimson Pro',serif;
@@ -645,7 +646,7 @@ img{display:block;max-width:100%}
 .menu-section-label{
   font-family:'DM Mono',monospace;
   font-size:9px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold);
+  text-transform:uppercase;color:var(--gold-text);
   margin:16px 0 8px;
   border-bottom:1px solid rgba(200,168,75,.15);
   padding-bottom:4px;
@@ -677,7 +678,7 @@ img{display:block;max-width:100%}
 .btn-menu{
   display:inline-flex;align-items:center;gap:var(--sp4);
   background:var(--gold3);
-  color:var(--gold);
+  color:var(--gold-text);
   border:1px solid rgba(200,168,75,.35);
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.08em;text-transform:uppercase;
@@ -824,7 +825,7 @@ img{display:block;max-width:100%}
   font-family:'DM Mono',monospace;
   font-size:8px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-text);
   white-space:nowrap;
 }
 .sv-webcam-btn{
@@ -866,7 +867,7 @@ img{display:block;max-width:100%}
   font-family:'DM Mono',monospace;
   font-size:8px;font-weight:600;
   letter-spacing:.1em;text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-text);
   white-space:nowrap;
 }
 /* ── Webcam iframe modal ── */
@@ -900,7 +901,7 @@ img{display:block;max-width:100%}
 .ah-group{margin-bottom:var(--sp16)}
 .ah-group-hd{
   font-family:'DM Mono',monospace;font-size:10px;font-weight:500;
-  text-transform:uppercase;letter-spacing:.1em;color:var(--gold);
+  text-transform:uppercase;letter-spacing:.1em;color:var(--gold-text);
   margin-bottom:6px;padding-left:2px;
 }
 .ah-table{width:100%;border-collapse:collapse}
@@ -923,7 +924,7 @@ img{display:block;max-width:100%}
 .ah-status-next{background:var(--amber2);color:var(--amber)}
 .ah-table a{color:inherit;text-decoration:none}
 .ah-table a:active{opacity:.7}
-.ah-open{font-size:10px;color:var(--gold);opacity:.7}
+.ah-open{font-size:10px;color:var(--gold-text)}
 /* hotel rows */
 .ah-htl-name{font-weight:600;color:var(--navy)}
 .ah-htl-loc{font-size:11px;color:var(--muted)}
@@ -964,7 +965,7 @@ img{display:block;max-width:100%}
 }
 #section-map .day-title{color:var(--navy)}
 #section-map .day-intro{color:var(--steel)}
-#section-map .day-label{color:var(--gold)}
+#section-map .day-label{color:var(--gold-text)}
 .map-wrap{
   position:relative;
   width:100%;
@@ -1134,7 +1135,7 @@ img{display:block;max-width:100%}
   padding:var(--sp16) var(--sp20, 20px);
   display:flex;gap:var(--sp12);align-items:flex-start;
 }
-.tip-orn{color:var(--gold);font-size:16px;flex-shrink:0;margin-top:2px}
+.tip-orn{color:var(--gold-text);font-size:16px;flex-shrink:0;margin-top:2px}
 .tip-txt{
   font-family:'Crimson Pro',serif;font-style:italic;
   font-size:13.5px;color:var(--steel);line-height:1.6;
@@ -1158,7 +1159,7 @@ img{display:block;max-width:100%}
 .extras-label{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:var(--sp4);
+  color:var(--gold-text);margin-bottom:var(--sp4);
 }
 .extras-text{
   font-family:'Crimson Pro',serif;
@@ -1176,7 +1177,7 @@ img{display:block;max-width:100%}
 .essentials-eyebrow{
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.24em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:var(--sp8);
+  color:var(--gold-text);margin-bottom:var(--sp8);
 }
 .essentials-title{
   font-family:'Playfair Display',serif;
@@ -1192,7 +1193,7 @@ img{display:block;max-width:100%}
 .ess-label{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:var(--sp4);
+  color:var(--gold-text);margin-bottom:var(--sp4);
 }
 .ess-value{
   font-family:'Crimson Pro',serif;font-size:13.5px;
@@ -1220,7 +1221,7 @@ img{display:block;max-width:100%}
 .section-eyebrow{
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.22em;text-transform:uppercase;
-  color:var(--gold);margin-bottom:var(--sp8);
+  color:var(--gold-text);margin-bottom:var(--sp8);
 }
 .section-title{
   font-family:'Playfair Display',serif;
@@ -1312,7 +1313,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .accordion-hdr{
   width:100%;
   font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold);
+  text-transform:uppercase;color:var(--gold-text);
   padding:13px var(--sp16) 11px;
   border:none;background:none;cursor:pointer;
   display:flex;justify-content:space-between;align-items:center;
@@ -1355,7 +1356,7 @@ table.rtbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 .pron-hdr{
   width:100%;
   font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--gold);
+  text-transform:uppercase;color:var(--gold-text);
   padding:13px var(--sp16) 11px;
   border:none;background:none;cursor:pointer;
   display:flex;justify-content:space-between;align-items:center;
@@ -1387,8 +1388,8 @@ table.ptbl td{
 }
 table.ptbl tr:last-child td{border-bottom:none}
 table.ptbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
-.pron-link{color:var(--gold);text-decoration:none;margin-right:var(--sp4);font-size:13px;background:none;border:none;cursor:pointer;padding:0;display:inline;vertical-align:baseline;line-height:1}
-.phon{font-family:'DM Mono',monospace;font-size:10px;color:rgba(200,168,75,.8);white-space:nowrap}
+.pron-link{color:var(--gold-text);text-decoration:none;margin-right:var(--sp4);font-size:13px;background:none;border:none;cursor:pointer;padding:0;display:inline;vertical-align:baseline;line-height:1}
+.phon{font-family:'DM Mono',monospace;font-size:10px;color:var(--gold-text);white-space:nowrap}
 
 /* ── FOOTER ─────────────────────────────────────── */
 #site-footer{
@@ -1405,12 +1406,12 @@ table.ptbl tr:nth-child(even) td{background:rgba(240,235,225,.5)}
 }
 .footer-sub{
   font-family:'Crimson Pro',serif;font-style:italic;
-  font-size:14px;color:rgba(200,168,75,.65);margin-bottom:var(--sp12);
+  font-size:14px;color:var(--gold-text);margin-bottom:var(--sp12);
 }
 .footer-meta{
   font-family:'DM Mono',monospace;font-size:8px;
   letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(200,168,75,.5);
+  color:var(--muted);
 }
 .footer-actions{
   display:flex;justify-content:center;gap:var(--sp12);
@@ -1734,7 +1735,7 @@ section[id]{
   font-family:'DM Mono',monospace;
   font-size:10px;letter-spacing:.12em;
   text-transform:uppercase;
-  color:var(--gold);
+  color:var(--gold-text);
   background:rgba(200,168,75,.08);
   border:1px solid rgba(200,168,75,.2);
   padding:6px 16px;
@@ -1772,7 +1773,7 @@ section[id]{
   font-size:14px;color:var(--body);
   line-height:1.4;
 }
-.a2hs-text strong{color:var(--gold);font-weight:600}
+.a2hs-text strong{color:var(--gold-text);font-weight:600}
 .a2hs-steps{
   font-family:'DM Mono',monospace;
   font-size:9px;color:var(--steel);
@@ -2194,7 +2195,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 }
 /* Make wx-card look tappable */
 .wx-card{cursor:pointer}
-.wx-card .wx-tap{color:var(--gold)}
+.wx-card .wx-tap{color:var(--gold-text)}
 
 /* ── FLOATING TIME PILL ─────────────────────────── */
 #time-pill{
@@ -2410,35 +2411,35 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <span class="meta-chip" data-popup data-popup-title="Transit Fine — 750 DKK (~$100)" data-popup-body="Riding without a valid ticket results in an immediate 750 DKK fine (~$100 USD). Inspectors in plainclothes check regularly, especially on the Metro. There are no warnings — just fines." data-popup-tip="This is strictly enforced. Even tourists get no leniency. Always have a valid, activated ticket. If you forgot, get off at the next stop and buy one.">💰 Fine: 750 DKK</span>
         </div>
 
-        <p class="stop-body" style="margin-top:12px"><strong>Easiest option — Rejsekort App</strong> (recommended)<br>Download the <a href="https://apps.apple.com/us/app/rejsekort/id6469603787" target="_blank" rel="noopener" style="color:var(--gold)">Rejsekort app</a> before you land. Link your credit card in the app. Swipe to check in before boarding, swipe to check out when you arrive. The app charges your card automatically once a day. Works on metro, bus, train, and light rail — check in once even if you transfer. Smart Check Out reminds you so you don't forget. 20% off during off-peak hours.</p>
+        <p class="stop-body" style="margin-top:12px"><strong>Easiest option — Rejsekort App</strong> (recommended)<br>Download the <a href="https://apps.apple.com/us/app/rejsekort/id6469603787" target="_blank" rel="noopener" style="color:var(--gold-text)">Rejsekort app</a> before you land. Link your credit card in the app. Swipe to check in before boarding, swipe to check out when you arrive. The app charges your card automatically once a day. Works on metro, bus, train, and light rail — check in once even if you transfer. Smart Check Out reminds you so you don't forget. 20% off during off-peak hours.</p>
 
-        <p class="stop-body" style="margin-top:12px"><strong>Alternative — Rejsebillet App</strong><br>The <a href="https://www.publictransport.dk/tickets" target="_blank" rel="noopener" style="color:var(--gold)">Rejsebillet app</a> lets you buy single tickets and City Passes. Pay with Apple Pay, Google Pay, or stored Visa/Mastercard. Good if you just want to pre-buy a few rides without the check-in/check-out flow.</p>
+        <p class="stop-body" style="margin-top:12px"><strong>Alternative — Rejsebillet App</strong><br>The <a href="https://www.publictransport.dk/tickets" target="_blank" rel="noopener" style="color:var(--gold-text)">Rejsebillet app</a> lets you buy single tickets and City Passes. Pay with Apple Pay, Google Pay, or stored Visa/Mastercard. Good if you just want to pre-buy a few rides without the check-in/check-out flow.</p>
 
         <p class="stop-body" style="margin-top:12px"><strong>At the airport — Ticket Machines</strong><br>Machines in Terminal 3 near the metro entrance sell single tickets and City Passes. Accept coins and major credit cards (Visa, Mastercard). Quick and simple — buy a 3-zone ticket to city center before heading to the platform.</p>
 
         <p class="stop-body" style="margin-top:12px"><strong>City Pass — Worth It?</strong><br>If you'll ride 3+ times a day, a City Pass Small (zones 1–4, airport included) saves money. Unlimited metro, bus, train, and harbour bus.</p>
         <table style="width:100%;margin:8px 0 4px;border-collapse:collapse;font-size:.85rem">
           <tr style="border-bottom:1px solid var(--divider2)">
-            <td style="padding:6px 8px;color:var(--gold)">24 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">100 DKK (~$14)</td>
+            <td style="padding:6px 8px;color:var(--gold-text)">24 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">100 DKK (~$14)</td>
           </tr>
           <tr style="border-bottom:1px solid var(--divider2)">
-            <td style="padding:6px 8px;color:var(--gold)">48 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">160 DKK (~$22)</td>
+            <td style="padding:6px 8px;color:var(--gold-text)">48 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">160 DKK (~$22)</td>
           </tr>
           <tr>
-            <td style="padding:6px 8px;color:var(--gold)">72 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">220 DKK (~$30)</td>
+            <td style="padding:6px 8px;color:var(--gold-text)">72 hours</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">220 DKK (~$30)</td>
           </tr>
         </table>
 
         <p class="stop-body" style="margin-top:12px"><strong>Single Ticket Prices (2026)</strong></p>
         <table style="width:100%;margin:8px 0 4px;border-collapse:collapse;font-size:.85rem">
           <tr style="border-bottom:1px solid var(--divider2)">
-            <td style="padding:6px 8px;color:var(--gold)">2 zones (inner-city)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">24 DKK · 75 min</td>
+            <td style="padding:6px 8px;color:var(--gold-text)">2 zones (inner-city)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">24 DKK · 75 min</td>
           </tr>
           <tr style="border-bottom:1px solid var(--divider2)">
-            <td style="padding:6px 8px;color:var(--gold)">3 zones (airport ↔ centre)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">30 DKK · 90 min</td>
+            <td style="padding:6px 8px;color:var(--gold-text)">3 zones (airport ↔ centre)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">30 DKK · 90 min</td>
           </tr>
           <tr>
-            <td style="padding:6px 8px;color:var(--gold)">4 zones (cross-city)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">40 DKK · 105 min</td>
+            <td style="padding:6px 8px;color:var(--gold-text)">4 zones (cross-city)</td><td style="padding:6px 8px;text-align:right;color:var(--navy);font-weight:600">40 DKK · 105 min</td>
           </tr>
         </table>
 
@@ -2523,7 +2524,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <span class="meta-chip" data-popup data-popup-title="Reservation Details" data-popup-body="Confirmed for 4 guests at 6:15 PM, Thursday 26 March 2026. The restaurant recommends 3 sharing dishes per person. Open until midnight on Thursdays." data-popup-tip="Arrive a few minutes early — it’s a popular spot. The sharing format means you’ll order a mix of dishes for the table.">📋 4 guests · 6:15 PM</span>
           <span class="meta-chip" data-popup data-popup-title="Budget — Sharing Dinner" data-popup-body="Sharing dishes range DKK 69–159 (~$10–23). With 3 dishes per person plus drinks, expect about DKK 400–600 per person (~$55–85). Cards accepted everywhere — no cash needed." data-popup-tip="Order a mix of the smaller sharing plates and one or two bigger items like the beef polpette or fishcakes. The truffle fries are a must.">💰 ~$55–85/person</span>
         </div>
-        <p class="stop-note">Thu open until midnight · +45 24 45 06 05 · <a href="https://theunionkitchen.dk/frederiksberg/" target="_blank" rel="noopener" style="color:var(--gold)">theunionkitchen.dk</a></p>
+        <p class="stop-note">Thu open until midnight · +45 24 45 06 05 · <a href="https://theunionkitchen.dk/frederiksberg/" target="_blank" rel="noopener" style="color:var(--gold-text)">theunionkitchen.dk</a></p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=Vodroffsvej+39,+Frederiksberg,+Copenhagen" target="_blank" rel="noopener">🗺 Directions</a>
           <a class="btn-secondary" href="https://theunionkitchen.dk/frederiksberg/" target="_blank" rel="noopener">🌐 Restaurant</a>
@@ -3228,7 +3229,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <table class="ptbl">
             <thead><tr><th>Place</th><th>Say It</th><th>What It Is</th></tr></thead>
             <tbody>
-              <tr><td colspan="3" style="padding:10px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇩🇰 Copenhagen</td></tr>
+              <tr><td colspan="3" style="padding:10px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);border-bottom:1px solid var(--divider2)">🇩🇰 Copenhagen</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('København','da-DK')">🔊</button> København</td><td class="phon">kuh-ben-HOWN</td><td>Copenhagen in Danish. Literally "merchants' harbour".</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Nørreport','da-DK')">🔊</button> Nørreport</td><td class="phon">NUR-uh-port</td><td>Your metro station &amp; hotel. The city's busiest hub.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Torvehallerne','da-DK')">🔊</button> Torvehallerne</td><td class="phon">TOR-vuh-hal-AIR-nuh</td><td>The glass food market next to Nørreport. 1 min walk.</td></tr>
@@ -3239,7 +3240,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
               <tr><td><button class="pron-link" onclick="speakWord('Amagerbro','da-DK')">🔊</button> Amagerbro</td><td class="phon">ah-MAH-er-bro</td><td>Charlotte's neighbourhood south of the centre.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Kastrup','da-DK')">🔊</button> Kastrup</td><td class="phon">KAS-trup</td><td>Where CPH airport is. The T is pronounced.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Frederiksborggade','da-DK')">🔊</button> Frederiksborggade</td><td class="phon">FRETH-riks-bor-GAH-thuh</td><td>The street your hotel is on. D's are soft in Danish.</td></tr>
-              <tr><td colspan="3" style="padding:14px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇨🇭 Zürich</td></tr>
+              <tr><td colspan="3" style="padding:14px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);border-bottom:1px solid var(--divider2)">🇨🇭 Zürich</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Zürich','de-DE')">🔊</button> Zürich</td><td class="phon">TSOO-rikh</td><td>The city. Not "ZOO-rick".</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Sihlquai','de-DE')">🔊</button> Sihlquai</td><td class="phon">ZEEL-ky</td><td>Tram stop near your hotel.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Uetliberg','de-DE')">🔊</button> Uetliberg</td><td class="phon">OOT-lee-berg</td><td>Zürich's local mountain. Saturday morning.</td></tr>
@@ -3275,14 +3276,14 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <table class="ptbl">
             <thead><tr><th>Term</th><th>Say It</th><th>What It Is</th></tr></thead>
             <tbody>
-              <tr><td colspan="3" style="padding:10px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇩🇰 Danish Food &amp; Drink</td></tr>
+              <tr><td colspan="3" style="padding:10px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);border-bottom:1px solid var(--divider2)">🇩🇰 Danish Food &amp; Drink</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Smørrebrød','da-DK')">🔊</button> Smørrebrød</td><td class="phon">SMUR-bruth</td><td>Open-faced rye sandwich. Denmark's national lunch.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Wienerbrød','da-DK')">🔊</button> Wienerbrød</td><td class="phon">VEE-nuh-bruth</td><td>"Danish pastry" — what the Danes actually call it.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Kanelsnurrer','da-DK')">🔊</button> Kanelsnurrer</td><td class="phon">kah-NEL-snoo-uh</td><td>Cinnamon swirl pastry. Try at any bakery.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Rødgrød med fløde','da-DK')">🔊</button> Rødgrød med fløde</td><td class="phon">RUTH-gruth meth FLUH-thuh</td><td>Red berry pudding with cream. A Danish tongue-twister.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Rugbrød','da-DK')">🔊</button> Rugbrød</td><td class="phon">ROO-bruth</td><td>Dense dark rye bread. The base of all smørrebrød.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Øl','da-DK')">🔊</button> Øl</td><td class="phon">UHL</td><td>Beer. Carlsberg and Tuborg are Copenhagen originals.</td></tr>
-              <tr><td colspan="3" style="padding:14px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);border-bottom:1px solid var(--divider2)">🇨🇭 Swiss Food &amp; Drink</td></tr>
+              <tr><td colspan="3" style="padding:14px 0 4px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);border-bottom:1px solid var(--divider2)">🇨🇭 Swiss Food &amp; Drink</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Zürcher Geschnetzeltes','de-DE')">🔊</button> Zürcher Geschnetzeltes</td><td class="phon">TSOOR-kher geh-SHNET-tsel-tes</td><td>Zürich's signature veal dish in cream sauce.</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Rösti','de-DE')">🔊</button> Rösti</td><td class="phon">RURR-shti</td><td>Swiss potato cake. Not "ROH-stee".</td></tr>
               <tr><td><button class="pron-link" onclick="speakWord('Älplermagronen','de-DE')">🔊</button> Älplermagronen</td><td class="phon">ELP-ler-mah-GROH-nen</td><td>Alpine macaroni with cheese &amp; applesauce.</td></tr>
@@ -3317,7 +3318,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
       <!-- ── COPENHAGEN ─────────────────────────── -->
       <div style="margin:20px 0 8px;padding:10px 0 6px;border-bottom:1px solid rgba(226,200,122,.3)">
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold);margin:0;letter-spacing:.03em">Copenhagen</h3>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold-text);margin:0;letter-spacing:.03em">Copenhagen</h3>
       </div>
 
       <article class="stop sv-stop" role="listitem">
@@ -3403,7 +3404,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
       <!-- ── ZÜRICH ──────────────────────────────── -->
       <div style="margin:28px 0 8px;padding:10px 0 6px;border-bottom:1px solid rgba(226,200,122,.3)">
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold);margin:0;letter-spacing:.03em">Zürich</h3>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--gold-text);margin:0;letter-spacing:.03em">Zürich</h3>
       </div>
 
       <article class="stop sv-stop" role="listitem">
