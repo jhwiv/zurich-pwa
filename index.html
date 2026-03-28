@@ -4194,6 +4194,10 @@ function navTo(sectionId, btn) {
     return;
   }
 
+  // Street View: time-aware auto-scroll to current location's photo
+  // (runs AFTER the normal section scroll below, with a small delay)
+  var doSvAutoScroll = (sectionId === 'section-streetview' && window._svAutoScroll);
+
   // Find the real section element
   const section = document.getElementById(sectionId);
   if (!section) return;
@@ -4211,6 +4215,9 @@ function navTo(sectionId, btn) {
   const targetTop = section.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
 
   window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
+
+  // After scrolling to Street Views section, auto-scroll to current location's photo
+  if (doSvAutoScroll) window._svAutoScroll();
 }
 let navTapTimer;
 
@@ -4253,11 +4260,11 @@ const jumpTargets = {
   'section-sat':        { label: 'Sunday',    target: 'section-sun' },
   'section-sun':        { label: 'Essentials',target: 'section-essentials' },
   'section-essentials': { label: 'Transit',   target: 'section-transit' },
-  'section-transit':    { label: 'Showcase', target: 'section-showcase' },
+  'section-transit':    { label: 'History',  target: 'section-history' },
+  'section-history':    { label: 'Showcase', target: 'section-showcase' },
   'section-showcase':   { label: 'Street View', target: 'section-streetview' },
   'section-streetview':  { label: 'Map',       target: 'section-map' },
-  'section-map':        { label: 'History',   target: 'section-history' },
-  'section-history':    { label: 'Top',       target: 'hero' },
+  'section-map':        { label: 'Top',       target: 'hero' },
 };
 let currentFabTarget = 'section-sat';
 
@@ -4290,10 +4297,10 @@ const sections = [
   { id: 'section-sun',        label: 'Sunday' },
   { id: 'section-essentials', label: 'Essentials' },
   { id: 'section-transit',    label: 'Transit' },
+  { id: 'section-history',    label: 'History' },
   { id: 'section-showcase',   label: 'Showcase' },
   { id: 'section-streetview', label: 'Street View' },
   { id: 'section-map',        label: 'Map' },
-  { id: 'section-history',    label: 'History' },
 ];
 
 let lastScroll = 0;
@@ -4427,6 +4434,78 @@ document.querySelectorAll('.stop[data-url]').forEach(stop => {
 document.querySelectorAll('.nav-chip').forEach(chip => {
   chip.addEventListener('click', function() { navTo(this.dataset.target, this); });
 });
+
+// ── TIME-AWARE STREET VIEW AUTO-SCROLL ───────────────────
+// When user taps the Street Views chip, scroll to the photo matching
+// their current itinerary location. Outside trip dates → top of section.
+(function() {
+  // Schedule: [ISO time, sv-stop index (0-based within section-streetview .sv-stop articles)]
+  // Copenhagen stops: 0=Scandic, 1=Torvehallerne, 2=Nyhavn, 3=Rundetårn,
+  //   4=Strøget, 5=Kongens Nytorv, 6=Amagerbro, 7=CPH Airport
+  // Zürich stops: 8=Marriott, 9=Uetliberg, 10=Sprüngli, 11=Kunsthaus,
+  //   12=Augustinergasse, 13=Lindenhof, 14=Münsterhof, 15=Zeughauskeller,
+  //   16=Hiltl, 17=Quaianlagen, 18=Bürkliplatz, 19=Polybahn,
+  //   20=Fischerstube, 21=Rietberg, 22=eCHo
+  var svSchedule = [
+    // Copenhagen
+    ['2026-03-25T07:00+01:00',  0],  // Arrive CPH → Scandic Hotel
+    ['2026-03-25T09:30+01:00',  1],  // Torvehallerne (explore nearby)
+    ['2026-03-25T11:00+01:00',  2],  // Nyhavn
+    ['2026-03-25T13:00+01:00',  3],  // Rundetårn
+    ['2026-03-25T14:30+01:00',  6],  // Amagerbro — Charlotte's place
+    ['2026-03-25T18:00+01:00',  4],  // Strøget / evening walk
+    ['2026-03-26T10:00+01:00',  5],  // Kongens Nytorv
+    ['2026-03-26T17:00+01:00',  2],  // Back to Nyhavn area
+    ['2026-03-27T08:00+01:00',  7],  // CPH Airport — departure day
+    // Zürich
+    ['2026-03-27T19:00+01:00',  8],  // Arrive Zürich → Marriott
+    ['2026-03-27T20:30+01:00',  8],  // Near hotel for dinner
+    ['2026-03-28T00:00+01:00',  9],  // Sat morning: Uetliberg
+    ['2026-03-28T12:00+01:00', 10],  // Sprüngli
+    ['2026-03-28T13:00+01:00', 11],  // Kunsthaus
+    ['2026-03-28T15:00+01:00', 12],  // Augustinergasse (Old Town)
+    ['2026-03-28T16:00+01:00', 13],  // Lindenhof
+    ['2026-03-28T17:30+01:00', 14],  // Münsterhof (aperitivo)
+    ['2026-03-28T19:00+01:00', 15],  // Zeughauskeller dinner
+    ['2026-03-29T00:00+02:00', 16],  // Sun: Hiltl brunch
+    ['2026-03-29T11:00+02:00', 17],  // Quaianlagen lake walk
+    ['2026-03-29T11:30+02:00', 18],  // Bürkliplatz
+    ['2026-03-29T12:30+02:00', 20],  // Fischerstube lunch
+    ['2026-03-29T14:30+02:00', 21],  // Rietberg museum
+    ['2026-03-29T17:00+02:00', 22],  // eCHo farewell dinner
+  ];
+
+  var tripStart = new Date('2026-03-25T07:00+01:00');
+  var tripEnd   = new Date('2026-03-29T21:00+02:00');
+
+  window._svAutoScroll = function() {
+    var section = document.getElementById('section-streetview');
+    if (!section) return;
+    var stops = section.querySelectorAll('.sv-stop');
+    if (!stops.length) return;
+
+    var now = new Date();
+    var targetIdx = 0; // default: top of section
+
+    if (now >= tripStart && now <= tripEnd) {
+      for (var i = 0; i < svSchedule.length; i++) {
+        if (now >= new Date(svSchedule[i][0])) {
+          targetIdx = svSchedule[i][1];
+        }
+      }
+    }
+    // else: outside trip → targetIdx stays 0 (beginning)
+
+    var target = stops[targetIdx] || stops[0];
+    // Small delay to let the main navTo scroll finish positioning,
+    // then scroll to the specific stop within the section
+    setTimeout(function() {
+      var hdrH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 80;
+      var top = target.getBoundingClientRect().top + window.pageYOffset - hdrH - 16;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }, 400);
+  };
+})();
 
 // ── TIME-AWARE AUTO-NAVIGATION ──────────────────
 (function() {
