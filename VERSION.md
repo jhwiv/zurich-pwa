@@ -3,10 +3,11 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.6
+**Current:** v4.7
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
+| v4.7 | 2026-03-29 | Fix flight departure times (2-hr airport buffer) and recalculate all walking times from GPS coordinates at 5 km/h | `FLIGHT_WALK_FIX` |
 | v4.6 | 2026-03-29 | Fix overnight star visibility: offset position + raised z-index so star doesn't hide behind overlapping stop markers | `MAP_DYN_HEADING` |
 | v4.5 | 2026-03-29 | Dynamic map heading: day-of-week hat + "Itinerary Map Locations" title during trip; gold star marker for previous night's hotel | `MAP_DYN_HEADING` |
 | v4.4 | 2026-03-29 | Remove airport stops from map — no airport markers, route lines, or flight path | `MAP_NO_AIRPORTS` |
