@@ -3,10 +3,11 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.10
+**Current:** v4.11
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
+| v4.11 | 2026-03-29 | Sunday departure: Uber to ZRH replaces Airport Express — all references updated (flight bar, departure stop, transit table, chat backend, tip blocks) | `UBER_DEPARTURE` |
 | v4.10 | 2026-03-29 | Add subtle Uber alternative notes for walks ≥15 min — Nyhavn (19 min), Hiltl (18 min), Kunsthaus (15 min), Old Town (15 min), Reffen (15 min from metro), Little Mermaid (30 min), Union Kitchen (15 min) | `WALK_UBER_NOTE` |
 | v4.7 | 2026-03-29 | Fix all walking time estimates — cross-referenced with Google Maps Directions API. 25+ walk times corrected (e.g. Marriott→Hiltl 8→18 min, Hotel→Nyhavn 10→19 min, Kunsthaus→Old Town 18→13 min) | `WALK_TIMES_FIX` |
 | v4.6 | 2026-03-29 | Fix overnight star visibility: offset position + raised z-index so star doesn't hide behind overlapping stop markers | `MAP_DYN_HEADING` |

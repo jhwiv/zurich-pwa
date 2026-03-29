@@ -6,7 +6,7 @@ Last updated: 28 March 2026
 
 | Site | URL | Repo | Version | Updated |
 |------|-----|------|---------|---------|
-| Zürich Weekend | [zurich-weekend.com](https://www.zurich-weekend.com) | `jhwiv/zurich-pwa` | **v4.2** | 28 Mar 2026 |
+| Zürich Weekend | [zurich-weekend.com](https://www.zurich-weekend.com) | `jhwiv/zurich-pwa` | **v4.11** | 29 Mar 2026 |
 | Maritimes Grand Loop | [maritimesgrandloop.com](https://maritimesgrandloop.com) | `jhwiv/maritimes-pwa` | **v1.9** | 27 Mar 2026 |
 
 ## Shared Feature Parity
