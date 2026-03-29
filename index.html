@@ -1079,12 +1079,15 @@ img{display:block;max-width:100%}
   color:rgba(200,168,75,.6)!important;
 }
 .map-legend{
-  position:absolute;bottom:28px;left:12px;z-index:150;
-  background:rgba(13,25,41,.88);
+  position:absolute;bottom:34px;left:12px;z-index:400;
+  background:rgba(13,25,41,.92);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
   border:1px solid rgba(200,168,75,.2);
   border-radius:8px;
   padding:10px 14px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.map-legend-row{
   display:flex;gap:12px;flex-wrap:wrap;
 }
 .map-legend-item{
@@ -1098,6 +1101,23 @@ img{display:block;max-width:100%}
   width:10px;height:10px;
   border-radius:50%;
   flex-shrink:0;
+}
+.map-legend-dot.opt{
+  opacity:.55;
+  border:1.5px dashed rgba(255,255,255,.6);
+  background:transparent !important;
+}
+.map-legend-dot.star{
+  background:#0D1929;
+  border:1.5px solid #E8C96B;
+  display:flex;align-items:center;justify-content:center;
+  font-size:6px;color:#E8C96B;line-height:1;
+}
+.map-legend-dot.revised{
+  background:#22D3EE;
+}
+#map-legend-revised-row{
+  display:none;
 }
 /* btn-alt-toggle styles moved to responsive section */
 /* alt body */
@@ -3915,11 +3935,20 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <button class="map-day-btn" data-day="sat">🏔️ Saturday</button>
         <button class="map-day-btn" data-day="sun">☀️ Sunday</button>
       </div>
-      <div class="map-legend">
-        <div class="map-legend-item"><div class="map-legend-dot" style="background:#58A6FF"></div>Copenhagen</div>
-        <div class="map-legend-item"><div class="map-legend-dot" style="background:#E8C96B"></div>Friday</div>
-        <div class="map-legend-item"><div class="map-legend-dot" style="background:#F97316"></div>Saturday</div>
-        <div class="map-legend-item"><div class="map-legend-dot" style="background:#A78BFA"></div>Sunday</div>
+      <div class="map-legend" id="map-legend">
+        <div class="map-legend-row">
+          <div class="map-legend-item"><div class="map-legend-dot" style="background:#58A6FF"></div>Copenhagen</div>
+          <div class="map-legend-item"><div class="map-legend-dot" style="background:#E8C96B"></div>Friday</div>
+          <div class="map-legend-item"><div class="map-legend-dot" style="background:#F97316"></div>Saturday</div>
+          <div class="map-legend-item"><div class="map-legend-dot" style="background:#A78BFA"></div>Sunday</div>
+        </div>
+        <div class="map-legend-row">
+          <div class="map-legend-item"><div class="map-legend-dot star">★</div>Prior Night Hotel</div>
+          <div class="map-legend-item"><div class="map-legend-dot opt" style="border-color:rgba(255,255,255,.5)"></div>Optional</div>
+        </div>
+        <div class="map-legend-row" id="map-legend-revised-row">
+          <div class="map-legend-item"><div class="map-legend-dot revised"></div>Revised Plan</div>
+        </div>
       </div>
       <button class="alter-day-btn" id="alter-day-btn" onclick="openAlterDay()">Alter Today's Plan</button>
     </div>
@@ -4890,7 +4919,7 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     // ── FRIDAY (Z\u00fcrich arrival) ────────────
     { day:'fri', n:1, name:'Z\u00fcrich Marriott Hotel', desc:'Neum\u00fchlequai 42 \u2014 home base on the Limmat', time:'~8:30 PM', lat:47.38180, lng:8.54150, icon:'\ud83c\udfe8' },
     { day:'fri', n:2, name:'White Elephant', desc:'Michelin-listed Thai \u2014 on-site at Marriott since 1991', time:'9:00 PM', lat:47.38195, lng:8.54130, icon:'\ud83c\udf5c' },
-    { day:'fri', n:3, name:'Lenox Bar', desc:'NY-inspired bar \u2014 rare whiskies & craft cocktails', time:'10:30 PM (opt.)', lat:47.38170, lng:8.54165, icon:'\ud83e\udd43' },
+    { day:'fri', n:3, name:'Lenox Bar', desc:'NY-inspired bar \u2014 rare whiskies & craft cocktails', time:'10:30 PM (opt.)', lat:47.38170, lng:8.54165, icon:'\ud83e\udd43', opt:true },
     // ── SATURDAY ──────────────────────────
     { day:'sat', n:1, name:'Uetliberg Summit', desc:'871 m \u2014 S10 train from HB, 20 min \u2014 Alps panorama', time:'12:00 PM', lat:47.3497, lng:8.4919, icon:'\u26f0\ufe0f' },
     { day:'sat', n:2, name:'Caf\u00e9 Spr\u00fcngli', desc:'Legendary confiserie since 1836 \u2014 hot chocolate & Luxemburgerli', time:'1:30 PM', lat:47.36953, lng:8.53925, icon:'\u2615' },
@@ -4902,7 +4931,8 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     // ── SUNDAY ────────────────────────────
     { day:'sun', n:1, name:'Hiltl', desc:'World\u2019s oldest vegetarian restaurant \u2014 Sunday brunch CHF 57', time:'10:00 AM', lat:47.37330, lng:8.53580, icon:'\ud83e\udd57' },
     { day:'sun', n:2, name:'Lake Z\u00fcrich Promenade', desc:'Quaianlagen \u2014 swans, sailboats, Alps views', time:'11:15 AM', lat:47.3636, lng:8.5364, icon:'\ud83e\udea7' },
-    { day:'sun', n:3, name:'B\u00fcrkliplatz Boat Pier', desc:'Lake cruise departure \u2014 ~40 min Rundfahrt', time:'11:45 AM (opt.)', lat:47.367, lng:8.5395, icon:'\u26f5' },
+    { day:'sun', n:3, name:'B\u00fcrkliplatz Boat Pier', desc:'Lake cruise departure \u2014 ~40 min Rundfahrt', time:'11:45 AM (opt.)', lat:47.367, lng:8.5395, icon:'\u26f5', opt:true },
+    { day:'sun', n:'P', name:'Polybahn Funicular', desc:'90-sec ride to ETH terrace \u2014 best rooftop view', time:'Bonus opt.', lat:47.3744, lng:8.5449, icon:'\ud83d\ude9e', opt:true },
     { day:'sun', n:4, name:'Fischerstube Z\u00fcrihorn', desc:'Lakeside terrace \u2014 fresh Lake Z\u00fcrich fish', time:'1:00 PM', lat:47.35302, lng:8.55051, icon:'\ud83c\udf5f' },
     { day:'sun', n:5, name:'Museum Rietberg', desc:'Asian, African & Oceanic art in Rieter Park', time:'2:30 PM', lat:47.3587, lng:8.5304, icon:'\ud83c\udfdb\ufe0f' },
     { day:'sun', n:6, name:'eCHo Restaurant', desc:'Hotel\u2019s Swiss restaurant \u2014 farewell dinner', time:'5:15 PM', lat:47.38180, lng:8.54150, icon:'\ud83e\uddc0' }
@@ -4923,7 +4953,25 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     maxZoom: 19
   }).addTo(map);
 
-  function makeIcon(num, color) {
+  function makeIcon(num, color, isOpt) {
+    if (isOpt) {
+      return L.divIcon({
+        className: '',
+        html: '<div style="'
+          + 'width:26px;height:26px;border-radius:50%;'
+          + 'background:transparent;'
+          + 'border:2px dashed ' + color + ';'
+          + 'opacity:.65;'
+          + 'box-shadow:0 2px 8px rgba(0,0,0,.25);'
+          + 'display:flex;align-items:center;justify-content:center;'
+          + 'font-family:DM Mono,monospace;font-size:10px;font-weight:600;'
+          + 'color:' + color + ';'
+          + '">' + num + '</div>',
+        iconSize: [26, 26],
+        iconAnchor: [13, 13],
+        popupAnchor: [0, -16]
+      });
+    }
     return L.divIcon({
       className: '',
       html: '<div style="'
@@ -4941,22 +4989,52 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     });
   }
 
+  // Revised-plan marker (cyan)
+  var REVISED_COLOR = '#22D3EE';
+  function makeRevisedIcon(num) {
+    return L.divIcon({
+      className: '',
+      html: '<div style="'
+        + 'width:28px;height:28px;border-radius:50%;'
+        + 'background:' + REVISED_COLOR + ';'
+        + 'border:2px solid rgba(255,255,255,.9);'
+        + 'box-shadow:0 2px 8px rgba(34,211,238,.4);'
+        + 'display:flex;align-items:center;justify-content:center;'
+        + 'font-family:DM Mono,monospace;font-size:11px;font-weight:700;'
+        + 'color:#0D1929;'
+        + '">' + num + '</div>',
+      iconSize: [28, 28],
+      iconAnchor: [14, 14],
+      popupAnchor: [0, -18]
+    });
+  }
+
   var layers = { denmark:[], fri:[], sat:[], sun:[] };
+  var optLayers = { denmark:[], fri:[], sat:[], sun:[] };
   var routeLines = {};
   var allMarkers = [];
+  var allOptMarkers = [];
 
   stops.forEach(function(s) {
     var color = COLORS[s.day];
-    var marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.n, color) });
+    var isOpt = !!s.opt;
+    var marker = L.marker([s.lat, s.lng], { icon: makeIcon(s.n, color, isOpt) });
+    var label = isOpt ? 'Optional' : 'Stop ' + s.n;
     var popup = '<div class="map-popup">'
-      + '<div class="map-popup-num">' + s.icon + ' Stop ' + s.n + '</div>'
+      + '<div class="map-popup-num">' + s.icon + ' ' + label + '</div>'
       + '<div class="map-popup-name">' + s.name + '</div>'
       + '<div class="map-popup-desc">' + s.desc + '</div>'
       + '<div class="map-popup-time">' + s.time + '</div>'
       + '</div>';
     marker.bindPopup(popup, { maxWidth: 260, closeButton: true });
     marker._dayTag = s.day;
-    layers[s.day].push(marker);
+    marker._isOpt = isOpt;
+    if (isOpt) {
+      optLayers[s.day].push(marker);
+      allOptMarkers.push(marker);
+    } else {
+      layers[s.day].push(marker);
+    }
     allMarkers.push(marker);
   });
 
@@ -4976,6 +5054,64 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
   var currentDay = 'all';
   var activeGroup = L.layerGroup().addTo(map);
 
+  // Revised-plan markers (populated by alter-day feature)
+  var revisedMarkers = [];
+  var revisedRouteLine = null;
+
+  // Expose helpers so alter-day script can plot markers
+  window._mapRevisedColor = REVISED_COLOR;
+  window._mapMakeRevisedIcon = makeRevisedIcon;
+  window._mapActiveGroup = function() { return activeGroup; };
+  window._mapInstance = function() { return map; };
+
+  window._plotRevisedOnMap = function(planStops, dayKey) {
+    // Remove previous revised markers
+    revisedMarkers.forEach(function(m) { activeGroup.removeLayer(m); });
+    if (revisedRouteLine) activeGroup.removeLayer(revisedRouteLine);
+    revisedMarkers = [];
+    revisedRouteLine = null;
+
+    if (!planStops || planStops.length === 0) return;
+
+    planStops.forEach(function(s, i) {
+      var marker = L.marker([s.lat, s.lng], { icon: makeRevisedIcon(i + 1) });
+      var popup = '<div class="map-popup">'
+        + '<div class="map-popup-num" style="color:#22D3EE">Revised Stop ' + (i + 1) + '</div>'
+        + '<div class="map-popup-name">' + s.name + '</div>'
+        + '<div class="map-popup-desc">' + s.desc + '</div>'
+        + '<div class="map-popup-time">' + s.time + '</div>'
+        + '</div>';
+      marker.bindPopup(popup, { maxWidth: 260, closeButton: true });
+      marker._dayTag = dayKey;
+      marker._isRevised = true;
+      revisedMarkers.push(marker);
+      activeGroup.addLayer(marker);
+    });
+
+    // Draw route line for revised stops
+    var coords = revisedMarkers.map(function(m) { return m.getLatLng(); });
+    if (coords.length > 1) {
+      revisedRouteLine = L.polyline(coords, {
+        color: REVISED_COLOR,
+        weight: 3,
+        opacity: 0.7,
+        dashArray: '8 6',
+        smoothFactor: 1.5
+      });
+      activeGroup.addLayer(revisedRouteLine);
+    }
+
+    // Show the revised legend row
+    var legendRow = document.getElementById('map-legend-revised-row');
+    if (legendRow) legendRow.style.display = 'flex';
+
+    // Expand bounds to include revised markers
+    var allBounds = layers[dayKey].concat(revisedMarkers).map(function(m) { return m.getLatLng(); });
+    if (allBounds.length > 1) {
+      map.fitBounds(L.latLngBounds(allBounds).pad(0.2));
+    }
+  };
+
   function showDay(day) {
     currentDay = day;
     activeGroup.clearLayers();
@@ -4983,6 +5119,9 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     if (day === 'all') {
       allMarkers.forEach(function(m) { activeGroup.addLayer(m); });
       Object.keys(routeLines).forEach(function(d) { activeGroup.addLayer(routeLines[d]); });
+      // Also add revised markers if they exist
+      revisedMarkers.forEach(function(m) { activeGroup.addLayer(m); });
+      if (revisedRouteLine) activeGroup.addLayer(revisedRouteLine);
       var zurichBounds = L.latLngBounds(
         allMarkers.filter(function(m) { return m._dayTag !== 'denmark'; })
                   .map(function(m) { return m.getLatLng(); })
@@ -4990,8 +5129,23 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       map.fitBounds(zurichBounds.pad(0.15));
     } else {
       layers[day].forEach(function(m) { activeGroup.addLayer(m); });
+      // Add optional stops for this day
+      if (optLayers[day]) {
+        optLayers[day].forEach(function(m) { activeGroup.addLayer(m); });
+      }
       if (routeLines[day]) activeGroup.addLayer(routeLines[day]);
-      var bounds = L.latLngBounds(layers[day].map(function(m) { return m.getLatLng(); }));
+      // Add revised markers if they belong to this day
+      revisedMarkers.forEach(function(m) {
+        if (m._dayTag === day) activeGroup.addLayer(m);
+      });
+      if (revisedRouteLine && revisedMarkers.length > 0 && revisedMarkers[0]._dayTag === day) {
+        activeGroup.addLayer(revisedRouteLine);
+      }
+      // Build bounds including optional + revised
+      var boundsMarkers = layers[day].slice();
+      if (optLayers[day]) boundsMarkers = boundsMarkers.concat(optLayers[day]);
+      revisedMarkers.forEach(function(m) { if (m._dayTag === day) boundsMarkers.push(m); });
+      var bounds = L.latLngBounds(boundsMarkers.map(function(m) { return m.getLatLng(); }));
       map.fitBounds(bounds.pad(0.2));
     }
 
@@ -5274,7 +5428,7 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
           return false;
         }
       }
-      plan.push({ time: fmtTime(cursor), name: activity.name, desc: activity.desc, dur: activity.dur, maps: activity.maps });
+      plan.push({ time: fmtTime(cursor), name: activity.name, desc: activity.desc, dur: activity.dur, maps: activity.maps, lat: activity.lat, lng: activity.lng });
       usedNames[activity.name] = true;
       cursor += activity.dur + transitBuffer;
       return true;
@@ -5290,7 +5444,7 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       }
       // Place meal
       cursor = Math.max(cursor, mealTime);
-      plan.push({ time: fmtTime(cursor), name: mealActivity.name, desc: mealActivity.desc, dur: mealActivity.dur, maps: mealActivity.maps, isMeal: true });
+      plan.push({ time: fmtTime(cursor), name: mealActivity.name, desc: mealActivity.desc, dur: mealActivity.dur, maps: mealActivity.maps, lat: mealActivity.lat, lng: mealActivity.lng, isMeal: true });
       usedNames[mealActivity.name] = true;
       cursor += mealActivity.dur + transitBuffer;
       mealPlaced = true;
@@ -5310,7 +5464,7 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       usedNames = {};
       for (var k = 0; k < Math.min(3, filtered.length); k++) {
         if (cursor + filtered[k].dur <= endMin + 30) {
-          plan.push({ time: fmtTime(cursor), name: filtered[k].name, desc: filtered[k].desc, dur: filtered[k].dur, maps: filtered[k].maps });
+          plan.push({ time: fmtTime(cursor), name: filtered[k].name, desc: filtered[k].desc, dur: filtered[k].dur, maps: filtered[k].maps, lat: filtered[k].lat, lng: filtered[k].lng });
           cursor += filtered[k].dur + transitBuffer;
         }
       }
@@ -5449,6 +5603,11 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       existingRevised.forEach(function(el) { el.remove(); });
       // Insert before the stops container
       stopsContainer.insertAdjacentHTML('beforebegin', html);
+    }
+
+    // Plot revised stops on the map
+    if (typeof window._plotRevisedOnMap === 'function') {
+      window._plotRevisedOnMap(plan, dk);
     }
 
     // Close the modal
