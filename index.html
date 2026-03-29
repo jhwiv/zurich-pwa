@@ -2484,6 +2484,13 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   text-decoration:none;
 }
 .revised-stop-link:hover{text-decoration:underline}
+.revised-stop-transit{
+  margin-top:6px;
+  font-size:11px;
+  color:rgba(255,255,255,.35);
+  font-family:'DM Mono',monospace;
+  letter-spacing:.04em;
+}
 .revised-dismiss{
   display:block;
   margin:16px auto 0;
@@ -2617,6 +2624,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="wx-tap">Tap · Expanded View ↗</div>
       </div>
     </div>
+    <button class="alter-day-btn" data-alter-day="denmark" onclick="openAlterDay()">Alter Copenhagen's Plan</button>
     <div class="stops" role="list">
 
       <!-- WEDNESDAY NIGHT -->
@@ -2828,6 +2836,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="wx-tap">Tap · Expanded View ↗</div>
       </div>
     </div>
+    <button class="alter-day-btn" data-alter-day="fri" onclick="openAlterDay()">Alter Friday's Plan</button>
     <div class="stops" role="list">
 
       <article class="stop" role="listitem">
@@ -2912,6 +2921,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="wx-tap">Tap · Expanded View ↗</div>
       </div>
     </div>
+    <button class="alter-day-btn" data-alter-day="sat" onclick="openAlterDay()">Alter Saturday's Plan</button>
     <div class="stops" role="list">
 
       <article class="stop" role="listitem">
@@ -3087,6 +3097,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="wx-tap">Tap · Expanded View ↗</div>
       </div>
     </div>
+    <button class="alter-day-btn" data-alter-day="sun" onclick="openAlterDay()">Alter Sunday's Plan</button>
     <div class="stops" role="list">
 
       <article class="stop" role="listitem">
@@ -3949,7 +3960,6 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <div class="map-legend-item"><div class="map-legend-dot revised"></div>Revised Plan</div>
         </div>
       </div>
-      <button class="alter-day-btn" id="alter-day-btn" onclick="openAlterDay()">Alter Today's Plan</button>
     </div>
   </div>
 </section>
@@ -5293,13 +5303,17 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     return DATE_TO_DAY_ALTER[y + '-' + m + '-' + d] || null;
   }
 
-  // Show the button only if within trip dates
+  // Show the alter button only on the current day's section
   var todayKey = getTodayDayKey();
-  var alterBtn = document.getElementById('alter-day-btn');
-  if (todayKey && alterBtn) {
-    alterBtn.classList.add('visible');
-    alterBtn.textContent = 'Alter ' + DAY_LABELS[todayKey] + "'s Plan";
-  }
+  document.querySelectorAll('.alter-day-btn').forEach(function(btn) {
+    var btnDay = btn.getAttribute('data-alter-day');
+    if (todayKey && btnDay === todayKey) {
+      btn.classList.add('visible');
+      btn.textContent = 'Alter ' + DAY_LABELS[todayKey] + "'s Plan";
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
 
   // ── Zürich & Copenhagen activity pool ──
   // Each activity: name, desc, duration (min), category tags, lat/lng, mapsUrl, indoor flag
@@ -5358,11 +5372,12 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     return hh + ':' + String(m).padStart(2, '0') + ' ' + ap;
   }
 
-  // Build itinerary from pool
+  // Build itinerary from pool — thoughtful day redesign
   function buildItinerary(startMin, endMin, vibe, meal, avoid) {
     var pool = (todayKey === 'denmark') ? COPENHAGEN_ACTIVITIES : ZURICH_ACTIVITIES;
     var totalMin = endMin - startMin;
     if (totalMin < 60) return [];
+    var transitBuffer = 15;
 
     // Filter by avoid preferences
     var filtered = pool.filter(function(a) {
@@ -5371,89 +5386,191 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       return true;
     });
 
-    // Score activities by vibe match
-    filtered.forEach(function(a) {
+    // Classify each activity into a primary category
+    function getCategory(a) {
+      if (a.meal) return 'meal';
+      if (a.tags.indexOf('culture') !== -1) return 'culture';
+      if (a.tags.indexOf('outdoors') !== -1 || a.tags.indexOf('active') !== -1) return 'outdoor';
+      if (a.tags.indexOf('shopping') !== -1) return 'shopping';
+      if (a.tags.indexOf('foodie') !== -1) return 'dining'; // bars, cafés without meal tag
+      return 'other';
+    }
+
+    // Separate meals from non-meal activities
+    var mealItems = filtered.filter(function(a) { return !!a.meal; });
+    var nonMeals  = filtered.filter(function(a) { return !a.meal; });
+
+    // Score non-meal activities by vibe match + randomness
+    nonMeals.forEach(function(a) {
       a._score = 0;
       if (a.tags.indexOf(vibe) !== -1) a._score += 10;
-      // Slight randomness for variety
-      a._score += Math.random() * 3;
+      // Bonus for culture/outdoor to ensure variety
+      if (a.tags.indexOf('culture') !== -1) a._score += 2;
+      if (a.tags.indexOf('outdoors') !== -1) a._score += 2;
+      if (a.tags.indexOf('active') !== -1) a._score += 1;
+      a._score += Math.random() * 4;
     });
+    nonMeals.sort(function(a, b) { return b._score - a._score; });
 
-    // Sort by score descending
-    filtered.sort(function(a, b) { return b._score - a._score; });
+    // ── Decide which meals to include ──
+    var mealsToPlace = []; // {activity, targetTime}
+    function pickMeal(mealType, fallbackTime) {
+      var candidates = mealItems.filter(function(m) { return m.meal === mealType; });
+      if (candidates.length === 0) return null;
+      // Pick randomly from top candidates for variety
+      var idx = Math.floor(Math.random() * Math.min(3, candidates.length));
+      return candidates[idx];
+    }
 
-    var plan = [];
-    var usedMin = 0;
-    var cursor = startMin;
-    var usedNames = {};
-    var mealPlaced = false;
-    var transitBuffer = 15; // minutes between stops
-
-    // If meal requested, find a meal activity and slot it at the right time
-    var mealActivity = null;
+    // If user requested a specific meal, always include it
     if (meal !== 'none') {
-      var mealPool = filtered.filter(function(a) {
-        return a.meal === meal || (meal === 'lunch' && a.meal === 'lunch') || (meal === 'dinner' && a.meal === 'dinner') || (meal === 'breakfast' && a.meal === 'breakfast');
-      });
-      // Also match foodie items for lunch/dinner
-      if (mealPool.length === 0 && meal !== 'none') {
-        mealPool = filtered.filter(function(a) {
-          return a.tags.indexOf('foodie') !== -1;
-        });
-      }
-      if (mealPool.length > 0) {
-        // Pick the highest scored meal
-        mealActivity = mealPool[0];
+      var chosen = pickMeal(meal);
+      if (chosen) {
+        var target;
+        if (meal === 'breakfast') target = Math.max(startMin, parseTime('9:00 AM'));
+        else if (meal === 'lunch')  target = Math.max(startMin + 60, parseTime('12:00 PM'));
+        else if (meal === 'dinner') target = Math.min(endMin - 90, parseTime('6:30 PM'));
+        if (target < startMin) target = startMin;
+        if (target + chosen.dur > endMin) target = endMin - chosen.dur;
+        mealsToPlace.push({ activity: chosen, target: target, type: meal });
       }
     }
 
-    // Determine meal time window
-    var mealTime = null;
-    if (mealActivity) {
-      if (meal === 'breakfast') mealTime = Math.max(startMin, parseTime('9:00 AM'));
-      else if (meal === 'lunch') mealTime = Math.max(startMin + 60, parseTime('12:00 PM'));
-      else if (meal === 'dinner') mealTime = Math.min(endMin - 90, parseTime('6:30 PM'));
-      if (mealTime < startMin) mealTime = startMin;
-      if (mealTime + mealActivity.dur > endMin) mealTime = endMin - mealActivity.dur;
-    }
+    // For longer windows (5+ hrs), auto-insert meals the user didn't request
+    if (totalMin >= 300) {
+      var hasMeal = {};
+      mealsToPlace.forEach(function(m) { hasMeal[m.type] = true; });
 
-    // Fill time slots
-    function tryAdd(activity) {
-      if (usedNames[activity.name]) return false;
-      if (cursor + activity.dur + transitBuffer > endMin + transitBuffer) return false;
-      // Don't overlap with meal slot
-      if (mealActivity && !mealPlaced && mealTime !== null) {
-        if (cursor + activity.dur + transitBuffer > mealTime && cursor < mealTime + mealActivity.dur) {
-          return false;
+      // Auto-add lunch if window spans noon
+      var noon = parseTime('12:00 PM');
+      if (!hasMeal['lunch'] && startMin < noon && endMin > noon + 60) {
+        var lunchPick = pickMeal('lunch');
+        if (lunchPick) {
+          mealsToPlace.push({ activity: lunchPick, target: Math.max(startMin + 90, noon), type: 'lunch' });
         }
       }
-      plan.push({ time: fmtTime(cursor), name: activity.name, desc: activity.desc, dur: activity.dur, maps: activity.maps, lat: activity.lat, lng: activity.lng });
-      usedNames[activity.name] = true;
-      cursor += activity.dur + transitBuffer;
-      return true;
-    }
-
-    // Phase 1: fill before meal
-    if (mealActivity && mealTime !== null) {
-      for (var i = 0; i < filtered.length; i++) {
-        if (filtered[i] === mealActivity) continue;
-        if (cursor + filtered[i].dur + transitBuffer > mealTime) continue;
-        tryAdd(filtered[i]);
-        if (cursor >= mealTime) break;
+      // Auto-add dinner if window extends past 6 PM
+      var evening = parseTime('6:00 PM');
+      if (!hasMeal['dinner'] && endMin > evening + 60) {
+        var dinnerPick = pickMeal('dinner');
+        if (dinnerPick) {
+          mealsToPlace.push({ activity: dinnerPick, target: Math.min(endMin - 90, parseTime('7:00 PM')), type: 'dinner' });
+        }
       }
-      // Place meal
-      cursor = Math.max(cursor, mealTime);
-      plan.push({ time: fmtTime(cursor), name: mealActivity.name, desc: mealActivity.desc, dur: mealActivity.dur, maps: mealActivity.maps, lat: mealActivity.lat, lng: mealActivity.lng, isMeal: true });
-      usedNames[mealActivity.name] = true;
-      cursor += mealActivity.dur + transitBuffer;
-      mealPlaced = true;
     }
 
-    // Phase 2: fill remaining time
-    for (var j = 0; j < filtered.length; j++) {
-      if (cursor + filtered[j].dur > endMin) continue;
-      tryAdd(filtered[j]);
-      if (cursor >= endMin) break;
+    // Sort meals by target time
+    mealsToPlace.sort(function(a, b) { return a.target - b.target; });
+
+    // ── Build the day: interleave activities and meals ──
+    var plan = [];
+    var cursor = startMin;
+    var usedNames = {};
+    var lastCategory = null;
+    var diningCount = 0;
+    var maxDining = 1; // max non-meal food/drink stops
+
+    // Track meal target times for gap-aware filling
+    var mealSlots = mealsToPlace.map(function(m) {
+      return { start: m.target, end: m.target + m.activity.dur + transitBuffer, activity: m.activity, placed: false };
+    });
+
+    function addStop(activity, isMeal) {
+      plan.push({
+        time: fmtTime(cursor),
+        name: activity.name,
+        desc: activity.desc,
+        dur: activity.dur,
+        maps: activity.maps,
+        lat: activity.lat,
+        lng: activity.lng,
+        isMeal: !!isMeal
+      });
+      usedNames[activity.name] = true;
+      lastCategory = getCategory(activity);
+      cursor += activity.dur + transitBuffer;
+    }
+
+    function canFitBefore(deadline, dur) {
+      return cursor + dur + transitBuffer <= deadline;
+    }
+
+    function pickBestActivity(deadline) {
+      // Select the best non-meal activity that fits before the deadline
+      // Enforce variety: avoid same category as last stop; limit dining stops
+      var best = null;
+      var bestScore = -1;
+      for (var i = 0; i < nonMeals.length; i++) {
+        var a = nonMeals[i];
+        if (usedNames[a.name]) continue;
+        if (deadline && !canFitBefore(deadline, a.dur)) continue;
+        if (cursor + a.dur > endMin) continue;
+
+        var cat = getCategory(a);
+        var score = a._score;
+
+        // Penalize same category as previous stop
+        if (cat === lastCategory) score -= 6;
+        // Penalize too many dining/bar stops
+        if (cat === 'dining') {
+          if (diningCount >= maxDining) continue;
+          score -= 3;
+        }
+        // Bonus for geographic proximity to last stop
+        if (plan.length > 0) {
+          var last = plan[plan.length - 1];
+          if (last.lat && a.lat) {
+            var dist = Math.sqrt(Math.pow(last.lat - a.lat, 2) + Math.pow(last.lng - a.lng, 2));
+            if (dist < 0.005) score += 3; // very close
+            else if (dist < 0.015) score += 1; // walkable
+          }
+        }
+
+        if (score > bestScore) {
+          bestScore = score;
+          best = a;
+        }
+      }
+      return best;
+    }
+
+    // Fill time: alternate between activities and meal slots
+    var nextMealIdx = 0;
+    while (cursor < endMin) {
+      // Check if it's time for a meal
+      if (nextMealIdx < mealSlots.length) {
+        var ms = mealSlots[nextMealIdx];
+        // If we've reached or passed the meal target time, place the meal
+        if (cursor >= ms.start - transitBuffer || !canFitBefore(ms.start, 30)) {
+          if (!usedNames[ms.activity.name]) {
+            cursor = Math.max(cursor, ms.start);
+            if (cursor + ms.activity.dur <= endMin) {
+              addStop(ms.activity, true);
+              ms.placed = true;
+            }
+          }
+          nextMealIdx++;
+          continue;
+        }
+        // Fill gap before meal with activities
+        var act = pickBestActivity(ms.start);
+        if (act) {
+          if (getCategory(act) === 'dining') diningCount++;
+          addStop(act, false);
+        } else {
+          // No activity fits before meal, jump to meal
+          cursor = ms.start;
+        }
+      } else {
+        // No more meals — fill remaining time with activities
+        var act2 = pickBestActivity(null);
+        if (act2) {
+          if (getCategory(act2) === 'dining') diningCount++;
+          addStop(act2, false);
+        } else {
+          break; // nothing else fits
+        }
+      }
     }
 
     // Ensure at least 2 items
@@ -5461,9 +5578,21 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       cursor = startMin;
       plan = [];
       usedNames = {};
-      for (var k = 0; k < Math.min(3, filtered.length); k++) {
-        if (cursor + filtered[k].dur <= endMin + 30) {
+      // Force a mix: one experience + one meal/dining
+      var experiences = nonMeals.filter(function(a) { return getCategory(a) !== 'dining'; });
+      if (experiences.length > 0 && cursor + experiences[0].dur <= endMin) {
+        plan.push({ time: fmtTime(cursor), name: experiences[0].name, desc: experiences[0].desc, dur: experiences[0].dur, maps: experiences[0].maps, lat: experiences[0].lat, lng: experiences[0].lng });
+        cursor += experiences[0].dur + transitBuffer;
+      }
+      if (mealItems.length > 0 && cursor + mealItems[0].dur <= endMin) {
+        plan.push({ time: fmtTime(cursor), name: mealItems[0].name, desc: mealItems[0].desc, dur: mealItems[0].dur, maps: mealItems[0].maps, lat: mealItems[0].lat, lng: mealItems[0].lng, isMeal: true });
+        cursor += mealItems[0].dur + transitBuffer;
+      }
+      // If still short, add any remaining
+      for (var k = 0; k < filtered.length && plan.length < 3; k++) {
+        if (!usedNames[filtered[k].name] && cursor + filtered[k].dur <= endMin + 30) {
           plan.push({ time: fmtTime(cursor), name: filtered[k].name, desc: filtered[k].desc, dur: filtered[k].dur, maps: filtered[k].maps, lat: filtered[k].lat, lng: filtered[k].lng });
+          usedNames[filtered[k].name] = true;
           cursor += filtered[k].dur + transitBuffer;
         }
       }
@@ -5563,12 +5692,23 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     var now = new Date();
     var timeStamp = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
 
+    // Summarize the day's variety
+    var hasMeals = plan.filter(function(s){return s.isMeal;}).length;
+    var totalStops = plan.length;
+    var activities = totalStops - hasMeals;
+    var totalDur = plan.reduce(function(sum, s){return sum + s.dur;}, 0);
+    var durHrs = Math.floor(totalDur / 60);
+    var durMins = totalDur % 60;
+    var durStr = durHrs > 0 ? durHrs + 'h ' + durMins + 'm' : durMins + ' min';
+
     var html = '<div class="revised-itinerary" id="revised-itinerary-' + Date.now() + '">';
     html += '<div class="revised-hat">Revised Plan · ' + dayLabel + '</div>';
     html += '<div class="revised-title">' + vibeLabel + ' Itinerary</div>';
-    html += '<div class="revised-meta">Built at ' + timeStamp + ' · ' + startStr + ' to ' + endStr + ' · ' + plan.length + ' stops</div>';
+    html += '<div class="revised-meta">' + startStr + ' \u2013 ' + endStr + ' · ' + activities + (activities === 1 ? ' activity' : ' activities');
+    if (hasMeals > 0) html += ' + ' + hasMeals + (hasMeals === 1 ? ' meal' : ' meals');
+    html += ' · ' + durStr + ' total</div>';
 
-    plan.forEach(function(stop) {
+    plan.forEach(function(stop, idx) {
       html += '<div class="revised-stop">';
       html += '<div class="revised-stop-time">' + stop.time + '</div>';
       html += '<div class="revised-stop-info">';
@@ -5576,6 +5716,10 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       html += '<div class="revised-stop-desc">' + stop.desc + '</div>';
       if (stop.maps) {
         html += '<a class="revised-stop-link" href="' + stop.maps + '" target="_blank" rel="noopener">\ud83d\uddfa Directions</a>';
+      }
+      // Show transit hint to next stop
+      if (idx < plan.length - 1) {
+        html += '<div class="revised-stop-transit">\u2193 ~15 min transit</div>';
       }
       html += '</div></div>';
     });
