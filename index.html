@@ -4149,7 +4149,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.11 · Updated 29 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.12 · Updated 29 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5394,228 +5394,223 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     return hh + ':' + String(m).padStart(2, '0') + ' ' + ap;
   }
 
-  // Build itinerary from pool — thoughtful day redesign
+  // ── Build itinerary — thoughtful day redesign ──
+  //
+  // Design principles:
+  //  1. Experiences first — museums, walks, sights are the backbone
+  //  2. Meals anchored at natural times; never more than one bar/café fill
+  //  3. Vibe influences ranking but never eliminates substantial experiences
+  //  4. Variety enforced: alternate categories, proximity bonus
+  //  5. End-of-day wind-down (bar/café) only if time allows after real stops
+
   function buildItinerary(startMin, endMin, vibe, meal, avoid) {
     var pool = (todayKey === 'denmark') ? COPENHAGEN_ACTIVITIES : ZURICH_ACTIVITIES;
     var totalMin = endMin - startMin;
     if (totalMin < 60) return [];
-    var transitBuffer = 15;
+    var TB = 15; // transit buffer between stops
 
-    // Filter by avoid preferences
+    // ── 1. Filter by constraints ──
     var filtered = pool.filter(function(a) {
       if (avoid === 'rain' && !a.indoor) return false;
       if (avoid === 'walking' && a.dur > 100) return false;
       return true;
     });
 
-    // Classify each activity into a primary category
+    // ── 2. Classify ──
     function getCategory(a) {
       if (a.meal) return 'meal';
       if (a.tags.indexOf('culture') !== -1) return 'culture';
       if (a.tags.indexOf('outdoors') !== -1 || a.tags.indexOf('active') !== -1) return 'outdoor';
       if (a.tags.indexOf('shopping') !== -1) return 'shopping';
-      if (a.tags.indexOf('foodie') !== -1) return 'dining'; // bars, cafés without meal tag
+      if (a.tags.indexOf('foodie') !== -1) return 'winddown'; // bars/cafés = wind-down only
       return 'other';
     }
 
-    // Separate meals from non-meal activities
-    var mealItems = filtered.filter(function(a) { return !!a.meal; });
-    var nonMeals  = filtered.filter(function(a) { return !a.meal; });
+    // Split pool into three tiers
+    var mealPool    = filtered.filter(function(a) { return !!a.meal; });
+    var experiences  = filtered.filter(function(a) { return !a.meal && getCategory(a) !== 'winddown'; });
+    var winddownPool = filtered.filter(function(a) { return !a.meal && getCategory(a) === 'winddown'; });
 
-    // Score non-meal activities by vibe match + randomness
-    nonMeals.forEach(function(a) {
-      a._score = 0;
-      if (a.tags.indexOf(vibe) !== -1) a._score += 10;
-      // Bonus for culture/outdoor to ensure variety
-      if (a.tags.indexOf('culture') !== -1) a._score += 2;
-      if (a.tags.indexOf('outdoors') !== -1) a._score += 2;
-      if (a.tags.indexOf('active') !== -1) a._score += 1;
-      a._score += Math.random() * 4;
+    // ── 3. Score experiences ──
+    // Vibe gives a moderate boost, but every experience keeps a solid base score
+    experiences.forEach(function(a) {
+      a._score = 10; // base — every real experience starts with value
+      if (a.tags.indexOf(vibe) !== -1) a._score += 5;
+      // Secondary tag affinity
+      if (vibe === 'relaxed' && a.dur <= 60)  a._score += 2; // shorter = more relaxed
+      if (vibe === 'active'  && a.dur >= 75)  a._score += 2; // longer = more active
+      if (vibe === 'culture' && a.tags.indexOf('culture') !== -1) a._score += 3;
+      if (vibe === 'outdoors' && a.tags.indexOf('outdoors') !== -1) a._score += 3;
+      a._score += Math.random() * 4; // variety across runs
     });
-    nonMeals.sort(function(a, b) { return b._score - a._score; });
+    experiences.sort(function(a, b) { return b._score - a._score; });
 
-    // ── Decide which meals to include ──
-    var mealsToPlace = []; // {activity, targetTime}
-    function pickMeal(mealType, fallbackTime) {
-      var candidates = mealItems.filter(function(m) { return m.meal === mealType; });
-      if (candidates.length === 0) return null;
-      // Pick randomly from top candidates for variety
-      var idx = Math.floor(Math.random() * Math.min(3, candidates.length));
-      return candidates[idx];
+    // ── 4. Determine meals ──
+    function pickMeal(type) {
+      var cands = mealPool.filter(function(m) { return m.meal === type; });
+      if (cands.length === 0) return null;
+      return cands[Math.floor(Math.random() * Math.min(3, cands.length))];
     }
 
-    // If user requested a specific meal, always include it
+    var meals = []; // { activity, target, type }
+
     if (meal !== 'none') {
-      var chosen = pickMeal(meal);
-      if (chosen) {
-        var target;
-        if (meal === 'breakfast') target = Math.max(startMin, parseTime('9:00 AM'));
-        else if (meal === 'lunch')  target = Math.max(startMin + 60, parseTime('12:00 PM'));
-        else if (meal === 'dinner') target = Math.min(endMin - 90, parseTime('6:30 PM'));
-        if (target < startMin) target = startMin;
-        if (target + chosen.dur > endMin) target = endMin - chosen.dur;
-        mealsToPlace.push({ activity: chosen, target: target, type: meal });
+      var picked = pickMeal(meal);
+      if (picked) {
+        var t;
+        if (meal === 'breakfast') t = Math.max(startMin, parseTime('9:00 AM'));
+        else if (meal === 'lunch')  t = Math.max(startMin + 60, parseTime('12:00 PM'));
+        else if (meal === 'dinner') t = Math.min(endMin - 90, parseTime('6:30 PM'));
+        t = Math.max(t, startMin);
+        if (t + picked.dur > endMin) t = endMin - picked.dur;
+        meals.push({ activity: picked, target: t, type: meal });
       }
     }
 
-    // For longer windows (5+ hrs), auto-insert meals the user didn't request
+    // Auto-add meals for long windows
     if (totalMin >= 300) {
-      var hasMeal = {};
-      mealsToPlace.forEach(function(m) { hasMeal[m.type] = true; });
-
-      // Auto-add lunch if window spans noon
+      var has = {}; meals.forEach(function(m) { has[m.type] = true; });
       var noon = parseTime('12:00 PM');
-      if (!hasMeal['lunch'] && startMin < noon && endMin > noon + 60) {
-        var lunchPick = pickMeal('lunch');
-        if (lunchPick) {
-          mealsToPlace.push({ activity: lunchPick, target: Math.max(startMin + 90, noon), type: 'lunch' });
-        }
+      if (!has['lunch'] && startMin < noon && endMin > noon + 60) {
+        var lp = pickMeal('lunch');
+        if (lp) meals.push({ activity: lp, target: Math.max(startMin + 90, noon), type: 'lunch' });
       }
-      // Auto-add dinner if window extends past 6 PM
-      var evening = parseTime('6:00 PM');
-      if (!hasMeal['dinner'] && endMin > evening + 60) {
-        var dinnerPick = pickMeal('dinner');
-        if (dinnerPick) {
-          mealsToPlace.push({ activity: dinnerPick, target: Math.min(endMin - 90, parseTime('7:00 PM')), type: 'dinner' });
-        }
+      var eve = parseTime('6:00 PM');
+      if (!has['dinner'] && endMin > eve + 60) {
+        var dp = pickMeal('dinner');
+        if (dp) meals.push({ activity: dp, target: Math.min(endMin - 90, parseTime('7:00 PM')), type: 'dinner' });
       }
     }
+    meals.sort(function(a, b) { return a.target - b.target; });
 
-    // Sort meals by target time
-    mealsToPlace.sort(function(a, b) { return a.target - b.target; });
-
-    // ── Build the day: interleave activities and meals ──
+    // ── 5. Build the day ──
     var plan = [];
     var cursor = startMin;
     var usedNames = {};
-    var lastCategory = null;
-    var diningCount = 0;
-    var maxDining = 1; // max non-meal food/drink stops
+    var lastCat = null;
 
-    // Track meal target times for gap-aware filling
-    var mealSlots = mealsToPlace.map(function(m) {
-      return { start: m.target, end: m.target + m.activity.dur + transitBuffer, activity: m.activity, placed: false };
-    });
-
-    function addStop(activity, isMeal) {
-      plan.push({
-        time: fmtTime(cursor),
-        name: activity.name,
-        desc: activity.desc,
-        dur: activity.dur,
-        maps: activity.maps,
-        lat: activity.lat,
-        lng: activity.lng,
-        isMeal: !!isMeal
-      });
-      usedNames[activity.name] = true;
-      lastCategory = getCategory(activity);
-      cursor += activity.dur + transitBuffer;
+    function addStop(a, isMeal) {
+      plan.push({ time: fmtTime(cursor), name: a.name, desc: a.desc, dur: a.dur,
+                  maps: a.maps, lat: a.lat, lng: a.lng, isMeal: !!isMeal });
+      usedNames[a.name] = true;
+      lastCat = getCategory(a);
+      cursor += a.dur + TB;
     }
 
-    function canFitBefore(deadline, dur) {
-      return cursor + dur + transitBuffer <= deadline;
+    function fitsBefore(dur, deadline) {
+      return cursor + dur + TB <= (deadline || endMin + TB);
     }
 
-    function pickBestActivity(deadline) {
-      // Select the best non-meal activity that fits before the deadline
-      // Enforce variety: avoid same category as last stop; limit dining stops
-      var best = null;
-      var bestScore = -1;
-      for (var i = 0; i < nonMeals.length; i++) {
-        var a = nonMeals[i];
+    // Pick the best experience that fits before a deadline
+    function pickExperience(deadline) {
+      var best = null, bestS = -999;
+      for (var i = 0; i < experiences.length; i++) {
+        var a = experiences[i];
         if (usedNames[a.name]) continue;
-        if (deadline && !canFitBefore(deadline, a.dur)) continue;
+        if (!fitsBefore(a.dur, deadline)) continue;
         if (cursor + a.dur > endMin) continue;
 
+        var s = a._score;
         var cat = getCategory(a);
-        var score = a._score;
-
-        // Penalize same category as previous stop
-        if (cat === lastCategory) score -= 6;
-        // Penalize too many dining/bar stops
-        if (cat === 'dining') {
-          if (diningCount >= maxDining) continue;
-          score -= 3;
-        }
-        // Bonus for geographic proximity to last stop
+        // Penalise same category back-to-back
+        if (cat === lastCat) s -= 5;
+        // Proximity bonus
         if (plan.length > 0) {
-          var last = plan[plan.length - 1];
-          if (last.lat && a.lat) {
-            var dist = Math.sqrt(Math.pow(last.lat - a.lat, 2) + Math.pow(last.lng - a.lng, 2));
-            if (dist < 0.005) score += 3; // very close
-            else if (dist < 0.015) score += 1; // walkable
+          var prev = plan[plan.length - 1];
+          if (prev.lat && a.lat) {
+            var d = Math.sqrt(Math.pow(prev.lat - a.lat, 2) + Math.pow(prev.lng - a.lng, 2));
+            if (d < 0.005) s += 4;
+            else if (d < 0.015) s += 2;
           }
         }
-
-        if (score > bestScore) {
-          bestScore = score;
-          best = a;
-        }
+        if (s > bestS) { bestS = s; best = a; }
       }
       return best;
     }
 
-    // Fill time: alternate between activities and meal slots
-    var nextMealIdx = 0;
-    while (cursor < endMin) {
-      // Check if it's time for a meal
-      if (nextMealIdx < mealSlots.length) {
-        var ms = mealSlots[nextMealIdx];
-        // If we've reached or passed the meal target time, place the meal
-        if (cursor >= ms.start - transitBuffer || !canFitBefore(ms.start, 30)) {
+    // Interleave experiences and meals
+    var mi = 0;
+    var safetyLimit = 30; // prevent infinite loop
+    while (cursor < endMin && safetyLimit-- > 0) {
+      // Time for a meal?
+      if (mi < meals.length) {
+        var ms = meals[mi];
+        if (cursor >= ms.target - TB) {
+          // Place meal now
           if (!usedNames[ms.activity.name]) {
-            cursor = Math.max(cursor, ms.start);
-            if (cursor + ms.activity.dur <= endMin) {
-              addStop(ms.activity, true);
-              ms.placed = true;
-            }
+            cursor = Math.max(cursor, ms.target);
+            if (cursor + ms.activity.dur <= endMin) addStop(ms.activity, true);
           }
-          nextMealIdx++;
+          mi++;
           continue;
         }
-        // Fill gap before meal with activities
-        var act = pickBestActivity(ms.start);
-        if (act) {
-          if (getCategory(act) === 'dining') diningCount++;
-          addStop(act, false);
+        // Fill gap before meal with an experience
+        var exp = pickExperience(ms.target);
+        if (exp) {
+          addStop(exp, false);
         } else {
-          // No activity fits before meal, jump to meal
-          cursor = ms.start;
+          cursor = ms.target; // jump to meal time
         }
       } else {
-        // No more meals — fill remaining time with activities
-        var act2 = pickBestActivity(null);
-        if (act2) {
-          if (getCategory(act2) === 'dining') diningCount++;
-          addStop(act2, false);
+        // No more meals — fill with experiences
+        var exp2 = pickExperience(null);
+        if (exp2) {
+          addStop(exp2, false);
         } else {
-          break; // nothing else fits
+          break;
         }
       }
     }
 
-    // Ensure at least 2 items
-    if (plan.length < 2 && filtered.length > 0) {
+    // ── 6. Optional wind-down — add ONE bar/café if ≥45 min left ──
+    var remaining = endMin - cursor;
+    if (remaining >= 45) {
+      // Score wind-down options
+      winddownPool.forEach(function(a) {
+        a._score = 0;
+        if (a.tags.indexOf(vibe) !== -1) a._score += 5;
+        a._score += Math.random() * 3;
+      });
+      winddownPool.sort(function(a, b) { return b._score - a._score; });
+      for (var w = 0; w < winddownPool.length; w++) {
+        var wd = winddownPool[w];
+        if (!usedNames[wd.name] && wd.dur <= remaining) {
+          addStop(wd, false);
+          break;
+        }
+      }
+    }
+
+    // ── 7. Fallback — ensure at least 2 stops ──
+    if (plan.length < 2) {
       cursor = startMin;
       plan = [];
       usedNames = {};
-      // Force a mix: one experience + one meal/dining
-      var experiences = nonMeals.filter(function(a) { return getCategory(a) !== 'dining'; });
+      // Pick best experience first, then a meal
       if (experiences.length > 0 && cursor + experiences[0].dur <= endMin) {
-        plan.push({ time: fmtTime(cursor), name: experiences[0].name, desc: experiences[0].desc, dur: experiences[0].dur, maps: experiences[0].maps, lat: experiences[0].lat, lng: experiences[0].lng });
-        cursor += experiences[0].dur + transitBuffer;
+        plan.push({ time: fmtTime(cursor), name: experiences[0].name, desc: experiences[0].desc,
+                    dur: experiences[0].dur, maps: experiences[0].maps, lat: experiences[0].lat, lng: experiences[0].lng });
+        usedNames[experiences[0].name] = true;
+        cursor += experiences[0].dur + TB;
       }
-      if (mealItems.length > 0 && cursor + mealItems[0].dur <= endMin) {
-        plan.push({ time: fmtTime(cursor), name: mealItems[0].name, desc: mealItems[0].desc, dur: mealItems[0].dur, maps: mealItems[0].maps, lat: mealItems[0].lat, lng: mealItems[0].lng, isMeal: true });
-        cursor += mealItems[0].dur + transitBuffer;
+      if (mealPool.length > 0) {
+        for (var mp = 0; mp < mealPool.length; mp++) {
+          if (!usedNames[mealPool[mp].name] && cursor + mealPool[mp].dur <= endMin) {
+            plan.push({ time: fmtTime(cursor), name: mealPool[mp].name, desc: mealPool[mp].desc,
+                        dur: mealPool[mp].dur, maps: mealPool[mp].maps, lat: mealPool[mp].lat, lng: mealPool[mp].lng, isMeal: true });
+            usedNames[mealPool[mp].name] = true;
+            cursor += mealPool[mp].dur + TB;
+            break;
+          }
+        }
       }
-      // If still short, add any remaining
-      for (var k = 0; k < filtered.length && plan.length < 3; k++) {
-        if (!usedNames[filtered[k].name] && cursor + filtered[k].dur <= endMin + 30) {
-          plan.push({ time: fmtTime(cursor), name: filtered[k].name, desc: filtered[k].desc, dur: filtered[k].dur, maps: filtered[k].maps, lat: filtered[k].lat, lng: filtered[k].lng });
-          usedNames[filtered[k].name] = true;
-          cursor += filtered[k].dur + transitBuffer;
+      // Add more experiences
+      for (var k = 0; k < experiences.length && plan.length < 4; k++) {
+        if (!usedNames[experiences[k].name] && cursor + experiences[k].dur <= endMin + 15) {
+          plan.push({ time: fmtTime(cursor), name: experiences[k].name, desc: experiences[k].desc,
+                      dur: experiences[k].dur, maps: experiences[k].maps, lat: experiences[k].lat, lng: experiences[k].lng });
+          usedNames[experiences[k].name] = true;
+          cursor += experiences[k].dur + TB;
         }
       }
     }
