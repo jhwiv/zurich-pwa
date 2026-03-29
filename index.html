@@ -3674,9 +3674,9 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   <div class="content-section">
     <div class="day-header" style="grid-template-columns:1fr">
       <div>
-        <div class="day-label">Navigate · Visual Route</div>
-        <h2 class="day-title">Itinerary Map</h2>
-        <p class="day-intro">Every stop across Copenhagen and Zürich, plotted in order. Filter by day, tap markers for details.</p>
+        <div class="day-label" id="map-hat">Navigate · Visual Route</div>
+        <h2 class="day-title" id="map-title">Itinerary Map</h2>
+        <p class="day-intro" id="map-intro">Every stop across Copenhagen and Zürich, plotted in order. Filter by day, tap markers for details.</p>
       </div>
     </div>
     <div class="map-wrap">
@@ -3771,7 +3771,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.4 · Updated 29 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.5 · Updated 29 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -4697,10 +4697,81 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     '2026-03-28': 'sat',
     '2026-03-29': 'sun'
   };
+
+  // Hotel where you stayed the night before each trip day
+  var OVERNIGHT_HOTEL = {
+    '2026-03-26': { name: 'Scandic Nørreport', lat: 55.68391, lng: 12.57112 },
+    '2026-03-27': { name: 'Scandic Nørreport', lat: 55.68391, lng: 12.57112 },
+    '2026-03-28': { name: 'Zürich Marriott',   lat: 47.38180, lng: 8.54150 },
+    '2026-03-29': { name: 'Zürich Marriott',   lat: 47.38180, lng: 8.54150 }
+  };
+
+  var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
   var todayStr = new Date().getFullYear() + '-'
     + String(new Date().getMonth() + 1).padStart(2, '0') + '-'
     + String(new Date().getDate()).padStart(2, '0');
   var todayDay = DATE_TO_DAY[todayStr];
+  var overnightMarker = null;
+
+  // ── Dynamic heading + overnight marker when inside trip dates ──
+  function updateMapHeading() {
+    var hatEl   = document.getElementById('map-hat');
+    var titleEl = document.getElementById('map-title');
+    var introEl = document.getElementById('map-intro');
+    if (!hatEl || !titleEl) return;
+
+    if (todayDay) {
+      var dayName = DAY_NAMES[new Date().getDay()];
+      hatEl.textContent   = dayName;
+      titleEl.textContent = 'Itinerary Map Locations';
+      introEl.textContent = 'Today\u2019s stops plotted in order. \u2605 marks where you stayed last night.';
+
+      // Add overnight hotel star marker
+      var hotel = OVERNIGHT_HOTEL[todayStr];
+      if (hotel) {
+        overnightMarker = L.marker([hotel.lat, hotel.lng], {
+          icon: L.divIcon({
+            className: '',
+            html: '<div style="'
+              + 'width:32px;height:32px;border-radius:50%;'
+              + 'background:#0D1929;'
+              + 'border:2.5px solid #E8C96B;'
+              + 'box-shadow:0 2px 10px rgba(0,0,0,.5);'
+              + 'display:flex;align-items:center;justify-content:center;'
+              + 'font-size:16px;line-height:1;'
+              + '">\u2605</div>',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16],
+            popupAnchor: [0, -20]
+          }),
+          zIndexOffset: -100
+        });
+        overnightMarker.bindPopup(
+          '<div class="map-popup">'
+          + '<div class="map-popup-num">\u2605 Last Night</div>'
+          + '<div class="map-popup-name">' + hotel.name + '</div>'
+          + '<div class="map-popup-desc">Where you stayed the night before</div>'
+          + '</div>',
+          { maxWidth: 260, closeButton: true }
+        );
+        overnightMarker._dayTag = todayDay;
+      }
+    }
+  }
+  updateMapHeading();
+
+  // Patch showDay to include overnight marker when filtered to today
+  var _origShowDay = showDay;
+  showDay = function(day) {
+    _origShowDay(day);
+    if (overnightMarker) {
+      if (day === 'all' || day === overnightMarker._dayTag) {
+        activeGroup.addLayer(overnightMarker);
+      }
+    }
+  };
+
   showDay(todayDay || 'all');
 
   // Fix tile rendering when section scrolls into view
