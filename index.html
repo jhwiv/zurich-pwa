@@ -2271,6 +2271,233 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   background:rgba(200,168,75,.18);
   border-color:rgba(200,168,75,.6)
 }
+/* ── ALTER DAY ITINERARY MODAL ─────────────────── */
+.alter-day-btn{
+  display:none;
+  margin:16px auto 0;
+  padding:12px 28px;
+  background:var(--gold);
+  color:var(--navy);
+  border:none;border-radius:var(--r8,8px);
+  font-family:'DM Mono',monospace;
+  font-size:12px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;
+  transition:background .2s,transform .15s;
+  box-shadow:0 4px 16px rgba(200,168,75,.35);
+}
+.alter-day-btn:hover{background:#d4b44a;transform:translateY(-1px)}
+.alter-day-btn:active{transform:scale(.97)}
+.alter-day-btn.visible{display:block}
+
+.alter-overlay{
+  position:fixed;inset:0;z-index:520;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s;
+}
+.alter-overlay.open{opacity:1;pointer-events:auto}
+.alter-modal{
+  background:var(--cream);
+  border-radius:var(--r12,12px);
+  max-width:480px;width:calc(100% - 32px);
+  max-height:88vh;
+  display:flex;flex-direction:column;
+  box-shadow:0 24px 80px rgba(0,0,0,.45);
+  transform:translateY(20px);
+  transition:transform .35s cubic-bezier(.16,1,.3,1);
+}
+.alter-overlay.open .alter-modal{transform:translateY(0)}
+.alter-hdr{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  padding:20px 20px 14px;
+  border-bottom:1px solid var(--divider);
+}
+.alter-hdr-left{flex:1}
+.alter-hat{
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold-text);
+  margin-bottom:4px;
+}
+.alter-title{
+  font-family:'Playfair Display',serif;
+  font-size:20px;font-weight:700;
+  color:var(--navy);line-height:1.25;
+}
+.alter-close{
+  background:none;border:none;cursor:pointer;
+  font-size:26px;color:var(--steel);
+  padding:0 0 0 12px;line-height:1;
+}
+.alter-close:hover{color:var(--navy)}
+.alter-body{
+  overflow-y:auto;padding:16px 20px 20px;
+  -webkit-overflow-scrolling:touch;
+}
+.alter-field{margin-bottom:18px}
+.alter-field-label{
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--gold-text);
+  margin-bottom:8px;
+}
+.alter-time-row{
+  display:flex;gap:12px;align-items:center;
+}
+.alter-time-row select{
+  flex:1;
+  padding:10px 12px;
+  border:1px solid var(--divider);
+  border-radius:var(--r8,8px);
+  background:var(--white,#fff);
+  font-family:'Crimson Pro',serif;
+  font-size:15px;color:var(--navy);
+  appearance:auto;
+}
+.alter-time-row .alter-time-sep{
+  font-family:'Crimson Pro',serif;
+  font-size:14px;color:var(--steel);
+}
+.alter-opts{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.alter-opt{
+  padding:8px 14px;
+  border:1.5px solid var(--divider);
+  border-radius:20px;
+  background:var(--white,#fff);
+  font-family:'Crimson Pro',serif;
+  font-size:14px;color:var(--body);
+  cursor:pointer;
+  transition:border-color .2s,background .2s,color .2s;
+}
+.alter-opt:hover{border-color:var(--gold)}
+.alter-opt.selected{
+  background:var(--navy);color:#fff;
+  border-color:var(--navy);
+}
+.alter-opt.selected:hover{background:#162a4a}
+.alter-submit{
+  width:100%;padding:14px;
+  background:var(--navy);color:#fff;
+  border:none;border-radius:var(--r8,8px);
+  font-family:'DM Mono',monospace;
+  font-size:12px;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;
+  transition:background .2s,transform .15s;
+  margin-top:8px;
+}
+.alter-submit:hover{background:#162a4a}
+.alter-submit:active{transform:scale(.97)}
+.alter-submit:disabled{
+  opacity:.5;cursor:not-allowed;
+  transform:none;
+}
+.alter-note{
+  font-family:'Crimson Pro',serif;
+  font-size:12px;color:var(--steel);
+  font-style:italic;margin-top:6px;
+  text-align:center;
+}
+
+/* ── REVISED ITINERARY BANNER (injected into day tab) ── */
+.revised-itinerary{
+  background:linear-gradient(135deg,#0D1929 0%,#1a3050 100%);
+  border-radius:var(--r12,12px);
+  padding:20px;
+  margin-bottom:24px;
+  border:1.5px solid var(--gold);
+  box-shadow:0 8px 32px rgba(200,168,75,.2);
+}
+.revised-hat{
+  font-family:'DM Mono',monospace;
+  font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:6px;
+}
+.revised-title{
+  font-family:'Playfair Display',serif;
+  font-size:18px;font-weight:700;
+  color:#fff;line-height:1.3;
+  margin-bottom:4px;
+}
+.revised-meta{
+  font-family:'Crimson Pro',serif;
+  font-size:13px;color:rgba(255,255,255,.6);
+  font-style:italic;
+  margin-bottom:16px;
+}
+.revised-stop{
+  display:flex;gap:12px;
+  padding:10px 0;
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.revised-stop:first-of-type{border-top:none}
+.revised-stop-time{
+  font-family:'DM Mono',monospace;
+  font-size:11px;color:var(--gold);
+  min-width:65px;flex-shrink:0;
+  padding-top:2px;
+}
+.revised-stop-info{flex:1}
+.revised-stop-name{
+  font-family:'Playfair Display',serif;
+  font-size:15px;font-weight:700;
+  color:#fff;line-height:1.3;
+}
+.revised-stop-desc{
+  font-family:'Crimson Pro',serif;
+  font-size:13px;color:rgba(255,255,255,.7);
+  margin-top:2px;line-height:1.4;
+}
+.revised-stop-link{
+  display:inline-block;
+  margin-top:6px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--gold);
+  text-decoration:none;
+}
+.revised-stop-link:hover{text-decoration:underline}
+.revised-dismiss{
+  display:block;
+  margin:16px auto 0;
+  padding:8px 20px;
+  background:transparent;
+  color:rgba(255,255,255,.5);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--r8,8px);
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.08em;
+  text-transform:uppercase;
+  cursor:pointer;
+  transition:color .2s,border-color .2s;
+}
+.revised-dismiss:hover{color:#fff;border-color:rgba(255,255,255,.5)}
+.revised-divider{
+  text-align:center;
+  padding:16px 0 8px;
+  font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--steel);
+  position:relative;
+}
+.revised-divider::before{
+  content:'';position:absolute;
+  left:0;right:0;top:50%;
+  border-top:1px dashed var(--divider);
+}
+.revised-divider span{
+  background:var(--cream);
+  padding:0 12px;
+  position:relative;
+}
 </style>
 </head>
 <body>
@@ -3694,9 +3921,100 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <div class="map-legend-item"><div class="map-legend-dot" style="background:#F97316"></div>Saturday</div>
         <div class="map-legend-item"><div class="map-legend-dot" style="background:#A78BFA"></div>Sunday</div>
       </div>
+      <button class="alter-day-btn" id="alter-day-btn" onclick="openAlterDay()">Alter Today's Plan</button>
     </div>
   </div>
 </section>
+
+<!-- ── ALTER DAY QUESTIONNAIRE MODAL ───────────────── -->
+<div class="alter-overlay" id="alter-overlay">
+  <div class="alter-modal">
+    <div class="alter-hdr">
+      <div class="alter-hdr-left">
+        <div class="alter-hat" id="alter-hat">Adjust Your Day</div>
+        <div class="alter-title" id="alter-modal-title">Alter Today's Plan</div>
+      </div>
+      <button class="alter-close" onclick="closeAlterDay()">&times;</button>
+    </div>
+    <div class="alter-body">
+      <div class="alter-field">
+        <div class="alter-field-label">What time are you starting?</div>
+        <div class="alter-time-row">
+          <select id="alter-start-time">
+            <option value="7:00 AM">7:00 AM</option>
+            <option value="7:30 AM">7:30 AM</option>
+            <option value="8:00 AM">8:00 AM</option>
+            <option value="8:30 AM">8:30 AM</option>
+            <option value="9:00 AM">9:00 AM</option>
+            <option value="9:30 AM">9:30 AM</option>
+            <option value="10:00 AM" selected>10:00 AM</option>
+            <option value="10:30 AM">10:30 AM</option>
+            <option value="11:00 AM">11:00 AM</option>
+            <option value="11:30 AM">11:30 AM</option>
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="12:30 PM">12:30 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="1:30 PM">1:30 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="alter-field">
+        <div class="alter-field-label">What time do you need to finish?</div>
+        <div class="alter-time-row">
+          <select id="alter-end-time">
+            <option value="12:00 PM">12:00 PM</option>
+            <option value="1:00 PM">1:00 PM</option>
+            <option value="2:00 PM">2:00 PM</option>
+            <option value="3:00 PM">3:00 PM</option>
+            <option value="3:30 PM">3:30 PM</option>
+            <option value="4:00 PM">4:00 PM</option>
+            <option value="4:30 PM">4:30 PM</option>
+            <option value="5:00 PM" selected>5:00 PM</option>
+            <option value="5:30 PM">5:30 PM</option>
+            <option value="6:00 PM">6:00 PM</option>
+            <option value="6:30 PM">6:30 PM</option>
+            <option value="7:00 PM">7:00 PM</option>
+            <option value="7:30 PM">7:30 PM</option>
+            <option value="8:00 PM">8:00 PM</option>
+            <option value="9:00 PM">9:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="alter-field">
+        <div class="alter-field-label">What's the vibe?</div>
+        <div class="alter-opts" id="alter-vibe-opts">
+          <button class="alter-opt" data-val="relaxed">Relaxed &amp; Slow</button>
+          <button class="alter-opt" data-val="active">Active &amp; Full</button>
+          <button class="alter-opt" data-val="foodie">Food-Focused</button>
+          <button class="alter-opt" data-val="culture">Culture &amp; Museums</button>
+          <button class="alter-opt" data-val="outdoors">Outdoors &amp; Scenic</button>
+          <button class="alter-opt" data-val="shopping">Shopping &amp; Strolling</button>
+        </div>
+      </div>
+      <div class="alter-field">
+        <div class="alter-field-label">Include a meal?</div>
+        <div class="alter-opts" id="alter-meal-opts">
+          <button class="alter-opt" data-val="breakfast">Breakfast / Brunch</button>
+          <button class="alter-opt" data-val="lunch">Lunch</button>
+          <button class="alter-opt" data-val="dinner">Dinner</button>
+          <button class="alter-opt" data-val="none">No Meal</button>
+        </div>
+      </div>
+      <div class="alter-field">
+        <div class="alter-field-label">Anything to avoid?</div>
+        <div class="alter-opts" id="alter-avoid-opts">
+          <button class="alter-opt" data-val="walking">Too Much Walking</button>
+          <button class="alter-opt" data-val="crowds">Crowds</button>
+          <button class="alter-opt" data-val="rain">Rain Plan Needed</button>
+          <button class="alter-opt" data-val="none" >No Preferences</button>
+        </div>
+      </div>
+      <button class="alter-submit" id="alter-submit" onclick="submitAlterDay()">Build My New Plan</button>
+      <p class="alter-note">Your original itinerary is preserved below the updated plan.</p>
+    </div>
+  </div>
+</div>
 
 <!-- ── AIR & HOTEL ─────────────────────────────────── -->
 <span class="section-anchor" id="section-airhotel-anchor"></span>
@@ -3771,7 +4089,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.7 · Updated 29 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.9 · Updated 29 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -4784,6 +5102,374 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     });
   }, { threshold: 0.1 });
   mapObs.observe(document.getElementById('section-map'));
+})();
+</script>
+
+<script>
+// ── ALTER DAY ITINERARY ─────────────────────────────────
+(function() {
+  // Day-to-section mapping
+  var DAY_TO_SECTION = {
+    'denmark': 'section-denmark',
+    'fri':     'section-fri',
+    'sat':     'section-sat',
+    'sun':     'section-sun'
+  };
+
+  var DAY_LABELS = {
+    'denmark': 'Copenhagen',
+    'fri':     'Friday',
+    'sat':     'Saturday',
+    'sun':     'Sunday'
+  };
+
+  var DATE_TO_DAY_ALTER = {
+    '2026-03-25': 'denmark',
+    '2026-03-26': 'denmark',
+    '2026-03-27': 'fri',
+    '2026-03-28': 'sat',
+    '2026-03-29': 'sun'
+  };
+
+  // Determine if we're inside trip dates
+  function getTodayDayKey() {
+    var now = new Date();
+    var y = now.getFullYear();
+    var m = String(now.getMonth() + 1).padStart(2, '0');
+    var d = String(now.getDate()).padStart(2, '0');
+    return DATE_TO_DAY_ALTER[y + '-' + m + '-' + d] || null;
+  }
+
+  // Show the button only if within trip dates
+  var todayKey = getTodayDayKey();
+  var alterBtn = document.getElementById('alter-day-btn');
+  if (todayKey && alterBtn) {
+    alterBtn.classList.add('visible');
+    alterBtn.textContent = 'Alter ' + DAY_LABELS[todayKey] + "'s Plan";
+  }
+
+  // ── Zürich & Copenhagen activity pool ──
+  // Each activity: name, desc, duration (min), category tags, lat/lng, mapsUrl, indoor flag
+  var ZURICH_ACTIVITIES = [
+    { name:'Hiltl Brunch', desc:'World\'s oldest vegetarian restaurant — legendary Sunday brunch buffet with 100+ dishes. CHF 57 pp.', dur:75, tags:['foodie','breakfast','relaxed'], lat:47.3733, lng:8.5358, maps:'https://maps.google.com/maps?daddr=47.3744,8.5370&dirflg=w', indoor:true, meal:'breakfast' },
+    { name:'Café Sprüngli', desc:'Legendary confiserie since 1836 on Paradeplatz. Hot chocolate, Luxemburgerli, pastries.', dur:45, tags:['foodie','breakfast','relaxed','shopping'], lat:47.3695, lng:8.5393, maps:'https://maps.google.com/maps?daddr=47.36953,8.53925&dirflg=w', indoor:true, meal:'breakfast' },
+    { name:'Zeughauskeller', desc:'15th-century armory beer hall on Bahnhofstrasse. Massive shared tables, wursts, rösti.', dur:90, tags:['foodie','culture','dinner'], lat:47.3703, lng:8.5399, maps:'https://maps.google.com/maps?daddr=47.3703,8.5399&dirflg=w', indoor:true, meal:'dinner' },
+    { name:'eCHo at Marriott', desc:'Hotel\'s own Swiss restaurant — Züri Gschnätzlets, fondue, regional produce. Steps from the lobby.', dur:75, tags:['foodie','dinner','relaxed'], lat:47.3818, lng:8.5415, maps:'https://maps.google.com/maps?daddr=47.3812,8.5387&dirflg=w', indoor:true, meal:'dinner' },
+    { name:'White Elephant', desc:'Michelin-listed Thai at the Marriott — upscale, on-site since 1991. Superb curries and cocktails.', dur:90, tags:['foodie','dinner'], lat:47.3820, lng:8.5413, maps:'https://maps.google.com/maps?daddr=47.38195,8.54130&dirflg=w', indoor:true, meal:'dinner' },
+    { name:'Fischerstube Zürihorn', desc:'Lakeside terrace directly over the water. Fresh Lake Zürich fish — perch, trout with lemon butter.', dur:75, tags:['foodie','lunch','outdoors','relaxed'], lat:47.3530, lng:8.5505, maps:'https://maps.google.com/maps?daddr=47.3537,8.5562&dirflg=r', indoor:false, meal:'lunch' },
+    { name:'Kunsthaus Café', desc:'Modern museum café with courtyard seating. Light lunches, excellent cakes, good wine list.', dur:60, tags:['foodie','lunch','culture'], lat:47.3705, lng:8.5489, maps:'https://maps.google.com/maps?daddr=47.3705,8.54887&dirflg=w', indoor:true, meal:'lunch' },
+    { name:'Uetliberg Summit', desc:'871m peak — S10 train from HB, 20 min ride. Panoramic Alps and city views. Easy summit walk.', dur:150, tags:['outdoors','active'], lat:47.3497, lng:8.4919, maps:'https://maps.google.com/maps?daddr=47.3497,8.4919&dirflg=r', indoor:false },
+    { name:'Kunsthaus Zürich', desc:'Switzerland\'s largest art museum — Monet, Munch, Giacometti, Chagall. The Chipperfield extension is stunning.', dur:90, tags:['culture','active'], lat:47.3705, lng:8.5489, maps:'https://maps.google.com/maps?daddr=47.3705,8.54887&dirflg=w', indoor:true },
+    { name:'Museum Rietberg', desc:'Asian, African & Oceanic art in historic villas in Rieter Park. Underground Emerald extension.', dur:90, tags:['culture'], lat:47.3587, lng:8.5304, maps:'https://maps.google.com/maps?daddr=47.3598,8.5293&dirflg=r', indoor:true },
+    { name:'Augustinergasse & Old Town', desc:'Medieval painted-facade lane, Grossmünster, Fraumünster, Münsterhof. The heart of Zürich.', dur:75, tags:['culture','active','outdoors','shopping'], lat:47.371, lng:8.5378, maps:'https://maps.google.com/maps?daddr=47.371,8.5378&dirflg=w', indoor:false },
+    { name:'Lindenhof Hill', desc:'Roman hilltop park with the best Old Town panorama. Giant chess, lime trees, benches.', dur:30, tags:['outdoors','relaxed'], lat:47.373, lng:8.5435, maps:'https://maps.google.com/maps?daddr=47.37300,8.54350&dirflg=w', indoor:false },
+    { name:'Lake Zürich Promenade', desc:'Quaianlagen from Bürkliplatz — swans, sailboats, Alps views on clear days. Pure downtime.', dur:45, tags:['outdoors','relaxed'], lat:47.3636, lng:8.5364, maps:'https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w', indoor:false },
+    { name:'Lake Boat Cruise', desc:'ZSG short Rundfahrt from Bürkliplatz — 40 min on the lake. Alps behind the city. Zürich Card included.', dur:50, tags:['outdoors','relaxed'], lat:47.367, lng:8.5395, maps:'https://maps.google.com/maps?daddr=47.3657,8.5413&dirflg=w', indoor:false },
+    { name:'Polybahn Funicular', desc:'90-second ride from Central to ETH terrace. One of the best rooftop views in the city. Free with Zürich Card.', dur:25, tags:['outdoors','culture','relaxed'], lat:47.3744, lng:8.5449, maps:'https://maps.google.com/maps?daddr=47.3744,8.5449&dirflg=w', indoor:false },
+    { name:'Bahnhofstrasse Shopping', desc:'Switzerland\'s premier shopping boulevard — luxury brands, Swiss watches, department stores.', dur:60, tags:['shopping','active'], lat:47.372, lng:8.538, maps:'https://maps.google.com/maps?daddr=47.372,8.538&dirflg=w', indoor:false },
+    { name:'Niederdorf Quarter', desc:'The bohemian east bank — cobblestone lanes, independent shops, bars, vintage stores.', dur:60, tags:['shopping','relaxed','active'], lat:47.374, lng:8.544, maps:'https://maps.google.com/maps?daddr=47.374,8.544&dirflg=w', indoor:false },
+    { name:'Café Bar Münsterhof', desc:'Aperitivo on the square — wine, spritz, people-watching on Zürich\'s most photogenic piazza.', dur:45, tags:['foodie','relaxed'], lat:47.3701, lng:8.5404, maps:'https://maps.google.com/maps?daddr=47.3701,8.54035&dirflg=w', indoor:false },
+    { name:'Lenox Bar', desc:'NY-inspired bar at the Marriott — rare whiskies, craft cocktails. Dimly-lit sophistication.', dur:60, tags:['foodie','relaxed'], lat:47.3817, lng:8.5417, maps:'https://maps.google.com/maps?daddr=47.38170,8.54165&dirflg=w', indoor:true },
+    { name:'Landesmuseum', desc:'Swiss National Museum — castle-like building next to HB. History from prehistoric to modern. Free rain-day option.', dur:90, tags:['culture','active'], lat:47.379, lng:8.540, maps:'https://maps.google.com/maps?daddr=47.379,8.540&dirflg=w', indoor:true },
+    { name:'FIFA Museum', desc:'Three floors of interactive football history, original trophies, rooftop pitch. Fun even for non-fans.', dur:75, tags:['culture','active'], lat:47.364, lng:8.535, maps:'https://maps.google.com/maps?daddr=47.364,8.535&dirflg=w', indoor:true },
+    { name:'Botanical Garden', desc:'University of Zürich\'s free tropical greenhouses and alpine garden. Peaceful, uncrowded, beautiful.', dur:45, tags:['outdoors','relaxed'], lat:47.358, lng:8.559, maps:'https://maps.google.com/maps?daddr=47.358,8.559&dirflg=w', indoor:false },
+    { name:'Limmat River Walk', desc:'Walk along the river from the lake to the Landesmuseum — bridges, church spires, café terraces.', dur:40, tags:['outdoors','relaxed'], lat:47.372, lng:8.541, maps:'https://maps.google.com/maps?daddr=47.372,8.541&dirflg=w', indoor:false }
+  ];
+
+  var COPENHAGEN_ACTIVITIES = [
+    { name:'Torvehallerne Market', desc:'Gourmet food hall — pastries, smørrebrød, specialty coffee, Nordic tapas under glass roofs.', dur:60, tags:['foodie','breakfast','lunch','relaxed'], lat:55.6835, lng:12.5699, maps:'https://maps.google.com/maps?daddr=55.68347,12.56994&dirflg=w', indoor:true, meal:'breakfast' },
+    { name:'Nyhavn Waterfront', desc:'Iconic colorful harbor houses — outdoor cafés, canal boats, Hans Christian Andersen\'s home.', dur:45, tags:['outdoors','relaxed','culture','shopping'], lat:55.6799, lng:12.5910, maps:'https://maps.google.com/maps?daddr=55.67990,12.59100&dirflg=w', indoor:false },
+    { name:'Rundetårn', desc:'17th-century Round Tower observatory — spiral ramp walk to panoramic city views.', dur:30, tags:['culture','active','outdoors'], lat:55.6815, lng:12.5764, maps:'https://maps.google.com/maps?daddr=55.68150,12.57637&dirflg=w', indoor:true },
+    { name:'Strøget Shopping', desc:'Europe\'s longest pedestrian shopping street — Royal Copenhagen, Georg Jensen, Danish design.', dur:75, tags:['shopping','active'], lat:55.6787, lng:12.5780, maps:'https://maps.google.com/maps?daddr=55.67871,12.57798&dirflg=w', indoor:false },
+    { name:'Tivoli Gardens', desc:'Historic amusement park since 1843 — gardens, rides, restaurants, evening illumination.', dur:120, tags:['outdoors','active','culture','relaxed'], lat:55.6736, lng:12.5681, maps:'https://maps.google.com/maps?daddr=55.6736,12.5681&dirflg=w', indoor:false },
+    { name:'Rosenborg Castle', desc:'Renaissance castle with Crown Jewels and royal apartments. Beautiful King\'s Garden surrounds it.', dur:75, tags:['culture','active'], lat:55.6859, lng:12.5772, maps:'https://maps.google.com/maps?daddr=55.6859,12.5772&dirflg=w', indoor:true },
+    { name:'Christiania', desc:'Famed freetown commune — street art, DIY architecture, craft shops, alternative vibe.', dur:60, tags:['culture','outdoors','active'], lat:55.6735, lng:12.5977, maps:'https://maps.google.com/maps?daddr=55.6735,12.5977&dirflg=w', indoor:false }
+  ];
+
+  // Parse "10:00 AM" → minutes since midnight
+  function parseTime(str) {
+    var parts = str.match(/(\d+):(\d+)\s*(AM|PM)/i);
+    if (!parts) return 600;
+    var h = parseInt(parts[1]), m = parseInt(parts[2]), ap = parts[3].toUpperCase();
+    if (ap === 'PM' && h !== 12) h += 12;
+    if (ap === 'AM' && h === 12) h = 0;
+    return h * 60 + m;
+  }
+
+  // Minutes → "10:00 AM"
+  function fmtTime(mins) {
+    var h = Math.floor(mins / 60);
+    var m = mins % 60;
+    var ap = h >= 12 ? 'PM' : 'AM';
+    var hh = h > 12 ? h - 12 : (h === 0 ? 12 : h);
+    return hh + ':' + String(m).padStart(2, '0') + ' ' + ap;
+  }
+
+  // Build itinerary from pool
+  function buildItinerary(startMin, endMin, vibe, meal, avoid) {
+    var pool = (todayKey === 'denmark') ? COPENHAGEN_ACTIVITIES : ZURICH_ACTIVITIES;
+    var totalMin = endMin - startMin;
+    if (totalMin < 60) return [];
+
+    // Filter by avoid preferences
+    var filtered = pool.filter(function(a) {
+      if (avoid === 'rain' && !a.indoor) return false;
+      if (avoid === 'walking' && a.dur > 100) return false;
+      return true;
+    });
+
+    // Score activities by vibe match
+    filtered.forEach(function(a) {
+      a._score = 0;
+      if (a.tags.indexOf(vibe) !== -1) a._score += 10;
+      // Slight randomness for variety
+      a._score += Math.random() * 3;
+    });
+
+    // Sort by score descending
+    filtered.sort(function(a, b) { return b._score - a._score; });
+
+    var plan = [];
+    var usedMin = 0;
+    var cursor = startMin;
+    var usedNames = {};
+    var mealPlaced = false;
+    var transitBuffer = 15; // minutes between stops
+
+    // If meal requested, find a meal activity and slot it at the right time
+    var mealActivity = null;
+    if (meal !== 'none') {
+      var mealPool = filtered.filter(function(a) {
+        return a.meal === meal || (meal === 'lunch' && a.meal === 'lunch') || (meal === 'dinner' && a.meal === 'dinner') || (meal === 'breakfast' && a.meal === 'breakfast');
+      });
+      // Also match foodie items for lunch/dinner
+      if (mealPool.length === 0 && meal !== 'none') {
+        mealPool = filtered.filter(function(a) {
+          return a.tags.indexOf('foodie') !== -1;
+        });
+      }
+      if (mealPool.length > 0) {
+        // Pick the highest scored meal
+        mealActivity = mealPool[0];
+      }
+    }
+
+    // Determine meal time window
+    var mealTime = null;
+    if (mealActivity) {
+      if (meal === 'breakfast') mealTime = Math.max(startMin, parseTime('9:00 AM'));
+      else if (meal === 'lunch') mealTime = Math.max(startMin + 60, parseTime('12:00 PM'));
+      else if (meal === 'dinner') mealTime = Math.min(endMin - 90, parseTime('6:30 PM'));
+      if (mealTime < startMin) mealTime = startMin;
+      if (mealTime + mealActivity.dur > endMin) mealTime = endMin - mealActivity.dur;
+    }
+
+    // Fill time slots
+    function tryAdd(activity) {
+      if (usedNames[activity.name]) return false;
+      if (cursor + activity.dur + transitBuffer > endMin + transitBuffer) return false;
+      // Don't overlap with meal slot
+      if (mealActivity && !mealPlaced && mealTime !== null) {
+        if (cursor + activity.dur + transitBuffer > mealTime && cursor < mealTime + mealActivity.dur) {
+          return false;
+        }
+      }
+      plan.push({ time: fmtTime(cursor), name: activity.name, desc: activity.desc, dur: activity.dur, maps: activity.maps });
+      usedNames[activity.name] = true;
+      cursor += activity.dur + transitBuffer;
+      return true;
+    }
+
+    // Phase 1: fill before meal
+    if (mealActivity && mealTime !== null) {
+      for (var i = 0; i < filtered.length; i++) {
+        if (filtered[i] === mealActivity) continue;
+        if (cursor + filtered[i].dur + transitBuffer > mealTime) continue;
+        tryAdd(filtered[i]);
+        if (cursor >= mealTime) break;
+      }
+      // Place meal
+      cursor = Math.max(cursor, mealTime);
+      plan.push({ time: fmtTime(cursor), name: mealActivity.name, desc: mealActivity.desc, dur: mealActivity.dur, maps: mealActivity.maps, isMeal: true });
+      usedNames[mealActivity.name] = true;
+      cursor += mealActivity.dur + transitBuffer;
+      mealPlaced = true;
+    }
+
+    // Phase 2: fill remaining time
+    for (var j = 0; j < filtered.length; j++) {
+      if (cursor + filtered[j].dur > endMin) continue;
+      tryAdd(filtered[j]);
+      if (cursor >= endMin) break;
+    }
+
+    // Ensure at least 2 items
+    if (plan.length < 2 && filtered.length > 0) {
+      cursor = startMin;
+      plan = [];
+      usedNames = {};
+      for (var k = 0; k < Math.min(3, filtered.length); k++) {
+        if (cursor + filtered[k].dur <= endMin + 30) {
+          plan.push({ time: fmtTime(cursor), name: filtered[k].name, desc: filtered[k].desc, dur: filtered[k].dur, maps: filtered[k].maps });
+          cursor += filtered[k].dur + transitBuffer;
+        }
+      }
+    }
+
+    return plan;
+  }
+
+  // ── Toggle helpers for pill buttons ──
+  function setupOptGroup(containerId, multi) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
+    container.addEventListener('click', function(e) {
+      var btn = e.target.closest('.alter-opt');
+      if (!btn) return;
+      if (multi) {
+        btn.classList.toggle('selected');
+      } else {
+        container.querySelectorAll('.alter-opt').forEach(function(b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+      }
+    });
+  }
+  setupOptGroup('alter-vibe-opts', false);
+  setupOptGroup('alter-meal-opts', false);
+  setupOptGroup('alter-avoid-opts', false);
+
+  // ── Open / Close ──
+  window.openAlterDay = function() {
+    var overlay = document.getElementById('alter-overlay');
+    if (!overlay) return;
+    // Update title with today's day label
+    var dk = getTodayDayKey();
+    if (dk) {
+      var lbl = DAY_LABELS[dk] || 'Today';
+      document.getElementById('alter-hat').textContent = 'Adjust · ' + lbl;
+      document.getElementById('alter-modal-title').textContent = 'Alter ' + lbl + "'s Plan";
+    }
+    // Reset selections
+    document.querySelectorAll('.alter-opt').forEach(function(b) { b.classList.remove('selected'); });
+    overlay.classList.add('open');
+  };
+
+  window.closeAlterDay = function() {
+    var overlay = document.getElementById('alter-overlay');
+    if (overlay) overlay.classList.remove('open');
+  };
+
+  // Close on backdrop click
+  var overlay = document.getElementById('alter-overlay');
+  if (overlay) {
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeAlterDay();
+    });
+  }
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeAlterDay();
+  });
+
+  // ── Submit ──
+  window.submitAlterDay = function() {
+    var dk = getTodayDayKey();
+    if (!dk) return;
+
+    var startStr = document.getElementById('alter-start-time').value;
+    var endStr = document.getElementById('alter-end-time').value;
+    var startMin = parseTime(startStr);
+    var endMin = parseTime(endStr);
+
+    if (endMin <= startMin) {
+      alert('End time must be after start time.');
+      return;
+    }
+
+    // Read selections
+    var vibeEl = document.querySelector('#alter-vibe-opts .alter-opt.selected');
+    var mealEl = document.querySelector('#alter-meal-opts .alter-opt.selected');
+    var avoidEl = document.querySelector('#alter-avoid-opts .alter-opt.selected');
+
+    var vibe = vibeEl ? vibeEl.dataset.val : 'relaxed';
+    var meal = mealEl ? mealEl.dataset.val : 'none';
+    var avoid = avoidEl ? avoidEl.dataset.val : 'none';
+
+    // Build the itinerary
+    var plan = buildItinerary(startMin, endMin, vibe, meal, avoid);
+
+    if (plan.length === 0) {
+      alert('Could not build a plan for that time window. Try widening your start/end times.');
+      return;
+    }
+
+    // Build the HTML card
+    var dayLabel = DAY_LABELS[dk];
+    var vibeLabel = vibeEl ? vibeEl.textContent : 'Custom';
+    var now = new Date();
+    var timeStamp = now.getHours() + ':' + String(now.getMinutes()).padStart(2, '0');
+
+    var html = '<div class="revised-itinerary" id="revised-itinerary-' + Date.now() + '">';
+    html += '<div class="revised-hat">Revised Plan · ' + dayLabel + '</div>';
+    html += '<div class="revised-title">' + vibeLabel + ' Itinerary</div>';
+    html += '<div class="revised-meta">Built at ' + timeStamp + ' · ' + startStr + ' to ' + endStr + ' · ' + plan.length + ' stops</div>';
+
+    plan.forEach(function(stop) {
+      html += '<div class="revised-stop">';
+      html += '<div class="revised-stop-time">' + stop.time + '</div>';
+      html += '<div class="revised-stop-info">';
+      html += '<div class="revised-stop-name">' + (stop.isMeal ? '\ud83c\udf7d ' : '') + stop.name + '</div>';
+      html += '<div class="revised-stop-desc">' + stop.desc + '</div>';
+      if (stop.maps) {
+        html += '<a class="revised-stop-link" href="' + stop.maps + '" target="_blank" rel="noopener">\ud83d\uddfa Directions</a>';
+      }
+      html += '</div></div>';
+    });
+
+    html += '<button class="revised-dismiss" onclick="this.closest(\'.revised-itinerary\').style.display=\'none\'">Hide This Plan</button>';
+    html += '</div>';
+
+    // Add a divider between revised and original
+    html += '<div class="revised-divider"><span>Original Plan Below</span></div>';
+
+    // Inject into the day section
+    var sectionId = DAY_TO_SECTION[dk];
+    var section = document.getElementById(sectionId);
+    if (!section) return;
+
+    var stopsContainer = section.querySelector('.stops');
+    if (!stopsContainer) {
+      // fallback: inject after day-header
+      var header = section.querySelector('.day-header');
+      if (header) header.insertAdjacentHTML('afterend', html);
+    } else {
+      // Remove any existing revised plan + divider from previous edits
+      var existingRevised = section.querySelectorAll('.revised-itinerary, .revised-divider');
+      existingRevised.forEach(function(el) { el.remove(); });
+      // Insert before the stops container
+      stopsContainer.insertAdjacentHTML('beforebegin', html);
+    }
+
+    // Close the modal
+    closeAlterDay();
+
+    // Navigate to the day tab
+    setTimeout(function() {
+      var anchor = document.getElementById(sectionId + '-anchor') || document.getElementById(sectionId);
+      if (anchor) {
+        var hdrH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 80;
+        var top = anchor.getBoundingClientRect().top + window.pageYOffset - hdrH - 8;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+      }
+      // Activate the nav chip
+      var chip = document.querySelector('.nav-chip[data-target="' + sectionId + '"]');
+      if (chip) {
+        document.querySelectorAll('.nav-chip').forEach(function(c) { c.classList.remove('active'); });
+        chip.classList.add('active');
+      }
+    }, 350);
+  };
 })();
 </script>
 
