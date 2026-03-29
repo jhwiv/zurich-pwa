@@ -17,7 +17,7 @@ const ITINERARY = {
     },
     emergency: { any: 112, ambulance: 144, police: 117, fire: 118, doctor: 111 },
     zurichCard: "72-hr, CHF 56 pp — covers all trams, trains, buses, boats, Uetliberg, Polybahn, 40+ museums",
-    flight: { code: "ZRH", time: "8:25 PM Sunday 29 March", leaveHotel: "6:00 PM sharp", airportExpress: "25 min from HB" }
+    flight: { code: "ZRH", time: "8:25 PM Sunday 29 March", leaveHotel: "6:00 PM sharp", uber: "~15 min from hotel" }
   },
 
   days: [
@@ -86,13 +86,13 @@ const ITINERARY = {
         { time: "1:00 PM", title: "Lunch: Fischerstube Zürihorn", desc: "Lakeside terrace directly over the water. Seasonal Swiss fish from Lake Zürich. 🌿 Vegetarian options.", address: "Bellerivestrasse 160", phone: "+41 44 422 25 20", lat: 47.3537, lng: 8.5562, tags: ["🚃 Tram 2 → Zürichhorn (10 min)", "🎫 Zürich Card ✓", "💰 CHF 35–50 pp"] },
         { time: "2:30 PM", title: "Museum Rietberg", desc: "Asian, African & Oceanic art in historic villas in Rieter Park. Underground Emerald extension. Free with Zürich Card.", address: "Gablerstrasse 15", lat: 47.3598, lng: 8.5293, tags: ["🚕 Uber ~10 min", "🎫 Zürich Card ✓ free", "⏱ Sun 10 AM–5 PM"] },
         { time: "5:15 PM", title: "Farewell Dinner: eCHo", desc: "Hotel's Swiss restaurant — Züri Gschnätzlets, cheese fondue, regional produce. Finish by 6:00 PM.", phone: "+41 44 360 73 18", tags: ["🍽 On-site, Marriott", "💰 CHF 45–70 pp"] },
-        { time: "6:00 PM", title: "Depart for ZRH Airport", desc: "Leave hotel by 6:00 PM. Walk 5 min to HB → Airport Express (25 min) → ZRH by 6:30 PM. Flight departs 8:25 PM.", critical: true, tags: ["🚆 Airport Express from HB", "⏱ 25 min to ZRH", "🎫 Zürich Card ✓"] }
+        { time: "6:00 PM", title: "Depart for ZRH Airport", desc: "Leave hotel by 6:00 PM. Uber from hotel to ZRH Airport — ~15 min (10 km). Arrive ZRH by 6:20 PM. Flight departs 8:25 PM.", critical: true, tags: ["🚗 Uber · ~15 min", "⏱ ~20 min to ZRH"] }
       ],
       extras: "Choose ONE optional: boat cruise (~40 min) or Polybahn (~20 min). Not both. Do NOT add stops after 3:30 PM.",
       warnings: [
         "Almost all shops closed on Sunday. Buy anything you need Saturday before 6 PM.",
         "March 29 is Palm Sunday — Old Town processions and Grossmünster services.",
-        "Leave hotel by 6:00 PM. Flight ZRH 8:25 PM."
+        "Leave hotel by 6:00 PM. Uber ~15 min to ZRH. Flight ZRH 8:25 PM."
       ]
     }
   ],
@@ -129,7 +129,7 @@ const ITINERARY = {
     { dest: "Bürkliplatz / Lake", via: "Tram 7 → Bürkliplatz", time: "9 min" },
     { dest: "Fischerstube Zürihorn", via: "Tram 2 Bürkliplatz → Zürichhorn", time: "10 min" },
     { dest: "Museum Rietberg", via: "Tram 7 or Uber", time: "16 min" },
-    { dest: "ZRH Airport (Sunday)", via: "Airport Express from HB · Zürich Card ✓", time: "25 min" }
+    { dest: "ZRH Airport (Sunday)", via: "Uber from hotel · CHF 45–60", time: "~15 min" }
   ]
 };
 
