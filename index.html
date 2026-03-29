@@ -3771,7 +3771,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.2 · Updated 28 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.3 · Updated 29 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -4686,17 +4686,32 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
       var bounds = L.latLngBounds(layers[day].map(function(m) { return m.getLatLng(); }));
       map.fitBounds(bounds.pad(0.2));
     }
+
+    // Sync the day-filter buttons to match
+    document.querySelectorAll('.map-day-btn').forEach(function(b) { b.classList.remove('active'); });
+    var activeBtn = document.querySelector('.map-day-btn[data-day="' + day + '"]');
+    if (activeBtn) activeBtn.classList.add('active');
   }
 
   document.getElementById('map-day-controls').addEventListener('click', function(e) {
     var btn = e.target.closest('.map-day-btn');
     if (!btn) return;
-    document.querySelectorAll('.map-day-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
     showDay(btn.dataset.day);
   });
 
-  showDay('all');
+  // ── Time-aware default: auto-filter to today's day if within trip dates ──
+  var DATE_TO_DAY = {
+    '2026-03-25': 'denmark',
+    '2026-03-26': 'denmark',
+    '2026-03-27': 'fri',
+    '2026-03-28': 'sat',
+    '2026-03-29': 'sun'
+  };
+  var todayStr = new Date().getFullYear() + '-'
+    + String(new Date().getMonth() + 1).padStart(2, '0') + '-'
+    + String(new Date().getDate()).padStart(2, '0');
+  var todayDay = DATE_TO_DAY[todayStr];
+  showDay(todayDay || 'all');
 
   // Fix tile rendering when section scrolls into view
   var mapObs = new IntersectionObserver(function(entries) {

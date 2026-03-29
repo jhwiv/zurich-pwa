@@ -3,10 +3,11 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.2
+**Current:** v4.3
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
+| v4.3 | 2026-03-29 | Time-aware map: auto-filter to today's stops when opened during the trip | `MAP_TIME_AWARE` |
 | v4.2 | 2026-03-28 | Saturday reschedule: noon Uetliberg arrival, cascade all times through dinner | `SAT_RESCHEDULE` |
 | v4.1 | 2026-03-28 | Reskin: dark navy → light cream theme across all pages | `LIGHT_THEME` |
 | v3.16 | 2026-03-20 | Fix broken street view images | — |
