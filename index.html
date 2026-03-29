@@ -1121,7 +1121,7 @@ img{display:block;max-width:100%}
   flex-shrink:0;
 }
 .map-legend-dot.opt{
-  opacity:.55;
+  opacity:.75;
   border:1.5px dashed rgba(255,255,255,.6);
   background:transparent !important;
 }
@@ -5227,8 +5227,20 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     if (todayDay) {
       var dayName = DAY_NAMES[new Date().getDay()];
       hatEl.textContent   = dayName;
-      titleEl.textContent = 'Itinerary Map Locations';
-      introEl.textContent = 'Today\u2019s stops plotted in order. \u2605 marks where you stayed last night.';
+      titleEl.textContent = 'Today\u2019s Itinerary Stops';
+      introEl.textContent = 'Main stops, alternatives, and your hotel \u2014 color-coded below.';
+
+      // Rebuild legend for today's 3 categories
+      var todayColor = COLORS[todayDay];
+      var legendEl = document.getElementById('map-legend');
+      if (legendEl) {
+        legendEl.innerHTML = ''
+          + '<div class="map-legend-row">'
+          + '  <div class="map-legend-item"><div class="map-legend-dot star">\u2605</div>Hotel</div>'
+          + '  <div class="map-legend-item"><div class="map-legend-dot" style="background:' + todayColor + '"></div>Today\u2019s Stops</div>'
+          + '  <div class="map-legend-item"><div class="map-legend-dot opt" style="border-color:' + todayColor + '"></div>Alternatives</div>'
+          + '</div>';
+      }
 
       // Add overnight hotel star marker
       var hotel = OVERNIGHT_HOTEL[todayStr];
