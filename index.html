@@ -3771,7 +3771,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.7 · Updated 29 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.8 · Updated 29 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -4698,12 +4698,19 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     '2026-03-29': 'sun'
   };
 
-  // Hotel where you stayed the night before each trip day
-  var OVERNIGHT_HOTEL = {
-    '2026-03-26': { name: 'Scandic Nørreport', lat: 55.68391, lng: 12.57112 },
-    '2026-03-27': { name: 'Scandic Nørreport', lat: 55.68391, lng: 12.57112 },
-    '2026-03-28': { name: 'Zürich Marriott',   lat: 47.38180, lng: 8.54150 },
-    '2026-03-29': { name: 'Zürich Marriott',   lat: 47.38180, lng: 8.54150 }
+  // Hotel for each day of the trip (shown as a prominent pin)
+  var DAY_HOTEL = {
+    denmark: { name: 'Scandic Nørreport',  lat: 55.68391, lng: 12.57112 },
+    fri:     { name: 'Zürich Marriott',     lat: 47.38180, lng: 8.54150 },
+    sat:     { name: 'Zürich Marriott',     lat: 47.38180, lng: 8.54150 },
+    sun:     { name: 'Zürich Marriott',     lat: 47.38180, lng: 8.54150 }
+  };
+
+  var DAY_DISPLAY = {
+    denmark: 'Copenhagen',
+    fri:     'Friday',
+    sat:     'Saturday',
+    sun:     'Sunday'
   };
 
   var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -4712,74 +4719,97 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     + String(new Date().getMonth() + 1).padStart(2, '0') + '-'
     + String(new Date().getDate()).padStart(2, '0');
   var todayDay = DATE_TO_DAY[todayStr];
-  var overnightMarker = null;
 
-  // ── Dynamic heading + overnight marker when inside trip dates ──
-  function updateMapHeading() {
+  // ── Build hotel markers for each day ──
+  var hotelMarkers = {};
+  Object.keys(DAY_HOTEL).forEach(function(day) {
+    var hotel = DAY_HOTEL[day];
+    var marker = L.marker([hotel.lat, hotel.lng], {
+      icon: L.divIcon({
+        className: '',
+        html: '<div style="'
+          + 'width:40px;height:40px;border-radius:50%;'
+          + 'background:#FFFFFF;'
+          + 'border:3px solid #E8C96B;'
+          + 'box-shadow:0 0 12px rgba(232,201,107,.6), 0 3px 12px rgba(0,0,0,.5);'
+          + 'display:flex;align-items:center;justify-content:center;'
+          + 'font-size:20px;line-height:1;'
+          + '">🏨</div>',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [0, -24]
+      }),
+      zIndexOffset: 600
+    });
+    marker.bindPopup(
+      '<div class="map-popup">'
+      + '<div class="map-popup-num">🏨 Your Hotel</div>'
+      + '<div class="map-popup-name">' + hotel.name + '</div>'
+      + '<div class="map-popup-desc">Home base — where you\'re staying</div>'
+      + '</div>',
+      { maxWidth: 260, closeButton: true }
+    );
+    marker._dayTag = day;
+    hotelMarkers[day] = marker;
+  });
+
+  // ── Dynamic heading — updates on every filter change ──
+  function updateMapHeading(day) {
     var hatEl   = document.getElementById('map-hat');
     var titleEl = document.getElementById('map-title');
     var introEl = document.getElementById('map-intro');
     if (!hatEl || !titleEl) return;
 
-    if (todayDay) {
+    if (day === 'all') {
+      hatEl.textContent   = 'Navigate · Visual Route';
+      titleEl.textContent = 'Full Trip Itinerary';
+      introEl.textContent = 'Every stop across Copenhagen and Zürich, plotted in order. Filter by day, tap markers for details.';
+    } else if (day === todayDay && todayDay) {
       var dayName = DAY_NAMES[new Date().getDay()];
       hatEl.textContent   = dayName;
-      titleEl.textContent = 'Itinerary Map Locations';
-      introEl.textContent = 'Today\u2019s stops plotted in order. \u2605 marks where you stayed last night.';
-
-      // Add overnight hotel star marker
-      var hotel = OVERNIGHT_HOTEL[todayStr];
-      if (hotel) {
-        // Offset slightly so star doesn't hide behind overlapping stop markers
-        overnightMarker = L.marker([hotel.lat + 0.0012, hotel.lng - 0.0012], {
-          icon: L.divIcon({
-            className: '',
-            html: '<div style="'
-              + 'width:32px;height:32px;border-radius:50%;'
-              + 'background:#0D1929;'
-              + 'border:2.5px solid #E8C96B;'
-              + 'box-shadow:0 2px 10px rgba(0,0,0,.5);'
-              + 'display:flex;align-items:center;justify-content:center;'
-              + 'font-size:16px;line-height:1;color:#E8C96B;'
-              + '">\u2605</div>',
-            iconSize: [32, 32],
-            iconAnchor: [16, 16],
-            popupAnchor: [0, -20]
-          }),
-          zIndexOffset: 500
-        });
-        overnightMarker.bindPopup(
-          '<div class="map-popup">'
-          + '<div class="map-popup-num">\u2605 Last Night</div>'
-          + '<div class="map-popup-name">' + hotel.name + '</div>'
-          + '<div class="map-popup-desc">Where you stayed the night before</div>'
-          + '</div>',
-          { maxWidth: 260, closeButton: true }
-        );
-        overnightMarker._dayTag = todayDay;
-      }
+      titleEl.textContent = dayName + ' — Today\u2019s Itinerary';
+      introEl.textContent = 'Today\u2019s stops plotted in order. 🏨 marks your hotel.';
+    } else {
+      var label = DAY_DISPLAY[day] || day;
+      hatEl.textContent   = label;
+      titleEl.textContent = label + ' — Itinerary Stops';
+      introEl.textContent = 'Stops for ' + label + ' plotted in order. 🏨 marks your hotel.';
     }
   }
-  updateMapHeading();
 
-  // Patch showDay to include overnight marker when filtered to today
+  // Patch showDay to include hotel marker + dynamic heading
   var _origShowDay = showDay;
   showDay = function(day) {
     _origShowDay(day);
-    if (overnightMarker) {
-      if (day === 'all' || day === overnightMarker._dayTag) {
-        activeGroup.addLayer(overnightMarker);
-      }
+    // Add hotel markers for the active day(s)
+    if (day === 'all') {
+      Object.keys(hotelMarkers).forEach(function(d) {
+        activeGroup.addLayer(hotelMarkers[d]);
+      });
+    } else if (hotelMarkers[day]) {
+      activeGroup.addLayer(hotelMarkers[day]);
     }
+    updateMapHeading(day);
   };
 
-  showDay(todayDay || 'all');
+  // ── Initial filter: auto-filter to today if within trip dates ──
+  var initialDay = todayDay || 'all';
+  showDay(initialDay);
 
-  // Fix tile rendering when section scrolls into view
+  // ── Fix tile rendering + re-apply auto-filter when map section scrolls into view ──
+  var mapFirstVisible = true;
   var mapObs = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        setTimeout(function() { map.invalidateSize(); }, 150);
+        setTimeout(function() {
+          map.invalidateSize();
+          // Re-apply fitBounds on first visible — initial showDay may have
+          // run while section was off-screen, causing fitBounds to mis-calculate
+          if (mapFirstVisible) {
+            mapFirstVisible = false;
+            showDay(currentDay);
+          }
+        }, 200);
       }
     });
   }, { threshold: 0.1 });
