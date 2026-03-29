@@ -3,10 +3,11 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.12
+**Current:** v4.14
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
+| v4.14 | 2026-03-29 | Google Maps API-verified walk times — all walking durations cross-referenced with Google Maps Directions API (24 routes across Zürich + Copenhagen). 13 corrections applied to index.html and itinerary.js (e.g. Kunsthaus→Old Town 18→10 min, Marriott→Hiltl 8→18 min, Strøget 12→17 min, Union Kitchen 15→21 min) | `WALK_TIMES_GOOGLE` |
 | v4.12 | 2026-03-29 | Add transit walking direction buttons — when a stop mentions an alternative tram, a green "Walk to Tram" button links to walking directions to the tram stop (Sprüngli, Kunsthaus, Hiltl, Museum Rietberg) | `WALK_TO_TRAM_BTN` |
 | v4.11 | 2026-03-29 | Sunday departure: Uber to ZRH replaces Airport Express — all references updated (flight bar, departure stop, transit table, chat backend, tip blocks) | `UBER_DEPARTURE` |
 | v4.10 | 2026-03-29 | Add subtle Uber alternative notes for walks ≥15 min — Nyhavn (19 min), Hiltl (18 min), Kunsthaus (15 min), Old Town (15 min), Reffen (15 min from metro), Little Mermaid (30 min), Union Kitchen (15 min) | `WALK_UBER_NOTE` |
