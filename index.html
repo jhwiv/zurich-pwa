@@ -750,19 +750,18 @@ img{display:block;max-width:100%}
 .btn-sv:active{transform:scale(.97);transition-duration:.05s}
 .btn-transit{
   display:inline-flex;align-items:center;gap:var(--sp4);
-  background:transparent;
-  color:var(--green3);
-  border:1px solid rgba(22,101,52,.3);
+  background:var(--green);
+  color:#fff;
+  border:none;
   font-family:'DM Mono',monospace;font-size:9px;
   letter-spacing:.08em;text-transform:uppercase;
-  padding:7px 14px;border-radius:var(--r6);
+  padding:8px 16px;border-radius:var(--r6);
   min-height:36px;font-weight:500;
-  transition:all .2s;
+  transition:background .2s,transform .15s;
   text-decoration:none;
 }
 .btn-transit:hover{
-  background:rgba(22,101,52,.07);
-  border-color:rgba(22,101,52,.5);
+  background:#155D2E;
   transform:translateY(-1px);
 }
 .btn-transit:active{transform:scale(.97);transition-duration:.05s}
@@ -2981,7 +2980,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">Bahnhofstrasse 21 · OR Tram 13 → Paradeplatz 5 min</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3692,8.5378&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
-          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.3784,8.5340&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 13 (Sihlquai/HB)</a>
+          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.3784,8.5340&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 13 · 6 min to Sihlquai/HB</a>
           <a class="btn-secondary" href="https://www.confiserie-spruengli.ch/en" target="_blank" rel="noopener">🌐 Website</a>
           <button class="btn-menu" onclick="openMenuModal('sprungli')">📋 Menu</button>
         </div>
@@ -2999,7 +2998,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">Heimplatz 1 · Walk 15 min E from Sprüngli · OR Tram 3 Paradeplatz → Kunsthaus 6 min · <span style="color:var(--muted);font-size:.85em">or Uber ~4 min</span></p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3703,8.5489&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
-          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.36971,8.53890&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 3 (Paradeplatz)</a>
+          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.36971,8.53890&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 3 · 1 min to Paradeplatz</a>
           <a class="btn-secondary" href="https://www.kunsthaus.ch/en/" target="_blank" rel="noopener">🌐 Official Site</a>
 
         </div>
@@ -3132,7 +3131,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">Sihlstrasse 28 · OR Tram 13 → Paradeplatz + 3 min walk</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3744,8.5370&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
-          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.3784,8.5340&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 13 (Sihlquai/HB)</a>
+          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.3784,8.5340&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 13 · 6 min to Sihlquai/HB</a>
           <a class="btn-secondary" href="https://www.hiltl.ch/en/" target="_blank" rel="noopener">🌐 Website</a>
           <button class="btn-menu" onclick="openMenuModal('hiltl')">📋 Menu</button>
         </div>
@@ -3212,7 +3211,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <p class="stop-note">Gablerstrasse 15 · OR Tram 7 from Bellevue → Museum Rietberg</p>
         <div class="stop-actions">
           <a class="btn-primary" href="https://maps.google.com/maps?daddr=47.3598,8.5293&dirflg=r" target="_blank" rel="noopener">🗺 Directions</a>
-          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.3671,8.5453&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 7 (Bellevue)</a>
+          <a class="btn-transit" href="https://maps.google.com/maps?daddr=47.3671,8.5453&dirflg=w" target="_blank" rel="noopener">🚃 Walk to Tram 7 · 15 min to Bellevue</a>
           <a class="btn-secondary" href="https://www.rietberg.ch/en/" target="_blank" rel="noopener">🌐 Website</a>
 
         </div>
