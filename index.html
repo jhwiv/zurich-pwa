@@ -3771,7 +3771,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.3 · Updated 29 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.4 · Updated 29 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -4569,12 +4569,10 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     { day:'denmark', n:5, name:'Str\u00f8get', desc:'Europe\u2019s longest pedestrian shopping street', time:'Thu', lat:55.67871, lng:12.57798, icon:'\ud83d\udecd\ufe0f' },
     { day:'denmark', n:6, name:'Kongens Nytorv', desc:'Grand royal square where Str\u00f8get meets Nyhavn', time:'Thu', lat:55.68104, lng:12.58668, icon:'\ud83d\udc51' },
     { day:'denmark', n:7, name:'Charlotte\u2019s Place \u2014 Amagerbro', desc:'Holmbladsgade 70B \u2014 visiting Charlotte', time:'Thu', lat:55.66150, lng:12.60140, icon:'\ud83d\udc69' },
-    { day:'denmark', n:8, name:'Copenhagen Airport (CPH)', desc:'M2 metro from N\u00f8rreport \u2014 13 min to terminal', time:'Fri evening', lat:55.63106, lng:12.64609, icon:'\u2708\ufe0f' },
     // ── FRIDAY (Z\u00fcrich arrival) ────────────
-    { day:'fri', n:1, name:'Z\u00fcrich Airport (ZRH)', desc:'Airport Express to HB \u2014 10 min, Z\u00fcrich Card covers it', time:'7:40 PM', lat:47.4582, lng:8.5555, icon:'\u2708\ufe0f' },
-    { day:'fri', n:2, name:'Z\u00fcrich Marriott Hotel', desc:'Neum\u00fchlequai 42 \u2014 home base on the Limmat', time:'~8:30 PM', lat:47.38180, lng:8.54150, icon:'\ud83c\udfe8' },
-    { day:'fri', n:3, name:'White Elephant', desc:'Michelin-listed Thai \u2014 on-site at Marriott since 1991', time:'9:00 PM', lat:47.38195, lng:8.54130, icon:'\ud83c\udf5c' },
-    { day:'fri', n:4, name:'Lenox Bar', desc:'NY-inspired bar \u2014 rare whiskies & craft cocktails', time:'10:30 PM (opt.)', lat:47.38170, lng:8.54165, icon:'\ud83e\udd43' },
+    { day:'fri', n:1, name:'Z\u00fcrich Marriott Hotel', desc:'Neum\u00fchlequai 42 \u2014 home base on the Limmat', time:'~8:30 PM', lat:47.38180, lng:8.54150, icon:'\ud83c\udfe8' },
+    { day:'fri', n:2, name:'White Elephant', desc:'Michelin-listed Thai \u2014 on-site at Marriott since 1991', time:'9:00 PM', lat:47.38195, lng:8.54130, icon:'\ud83c\udf5c' },
+    { day:'fri', n:3, name:'Lenox Bar', desc:'NY-inspired bar \u2014 rare whiskies & craft cocktails', time:'10:30 PM (opt.)', lat:47.38170, lng:8.54165, icon:'\ud83e\udd43' },
     // ── SATURDAY ──────────────────────────
     { day:'sat', n:1, name:'Uetliberg Summit', desc:'871 m \u2014 S10 train from HB, 20 min \u2014 Alps panorama', time:'12:00 PM', lat:47.3497, lng:8.4919, icon:'\u26f0\ufe0f' },
     { day:'sat', n:2, name:'Caf\u00e9 Spr\u00fcngli', desc:'Legendary confiserie since 1836 \u2014 hot chocolate & Luxemburgerli', time:'1:30 PM', lat:47.36953, lng:8.53925, icon:'\u2615' },
@@ -4589,8 +4587,7 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     { day:'sun', n:3, name:'B\u00fcrkliplatz Boat Pier', desc:'Lake cruise departure \u2014 ~40 min Rundfahrt', time:'11:45 AM (opt.)', lat:47.367, lng:8.5395, icon:'\u26f5' },
     { day:'sun', n:4, name:'Fischerstube Z\u00fcrihorn', desc:'Lakeside terrace \u2014 fresh Lake Z\u00fcrich fish', time:'1:00 PM', lat:47.35302, lng:8.55051, icon:'\ud83c\udf5f' },
     { day:'sun', n:5, name:'Museum Rietberg', desc:'Asian, African & Oceanic art in Rieter Park', time:'2:30 PM', lat:47.3587, lng:8.5304, icon:'\ud83c\udfdb\ufe0f' },
-    { day:'sun', n:6, name:'eCHo Restaurant', desc:'Hotel\u2019s Swiss restaurant \u2014 farewell dinner', time:'5:15 PM', lat:47.38180, lng:8.54150, icon:'\ud83e\uddc0' },
-    { day:'sun', n:7, name:'Z\u00fcrich Airport (ZRH)', desc:'Flight departs 8:25 PM', time:'6:00 PM dep.', lat:47.4582, lng:8.5555, icon:'\ud83d\udee9\ufe0f' }
+    { day:'sun', n:6, name:'eCHo Restaurant', desc:'Hotel\u2019s Swiss restaurant \u2014 farewell dinner', time:'5:15 PM', lat:47.38180, lng:8.54150, icon:'\ud83e\uddc0' }
   ];
 
   var map = L.map('itinerary-map', {
@@ -4658,11 +4655,6 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     }
   });
 
-  var flightLine = L.polyline(
-    [[55.63106, 12.64609], [47.4582, 8.5555]],
-    { color: '#E8C96B', weight: 1.5, opacity: 0.35, dashArray: '4 10' }
-  );
-
   var currentDay = 'all';
   var activeGroup = L.layerGroup().addTo(map);
 
@@ -4673,7 +4665,6 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     if (day === 'all') {
       allMarkers.forEach(function(m) { activeGroup.addLayer(m); });
       Object.keys(routeLines).forEach(function(d) { activeGroup.addLayer(routeLines[d]); });
-      activeGroup.addLayer(flightLine);
       var zurichBounds = L.latLngBounds(
         allMarkers.filter(function(m) { return m._dayTag !== 'denmark'; })
                   .map(function(m) { return m.getLatLng(); })
@@ -4682,7 +4673,6 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     } else {
       layers[day].forEach(function(m) { activeGroup.addLayer(m); });
       if (routeLines[day]) activeGroup.addLayer(routeLines[day]);
-      if (day === 'fri') activeGroup.addLayer(flightLine);
       var bounds = L.latLngBounds(layers[day].map(function(m) { return m.getLatLng(); }));
       map.fitBounds(bounds.pad(0.2));
     }
