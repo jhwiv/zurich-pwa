@@ -3,9 +3,11 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.14
+**Current:** v4.17
 
 | Version | Date | Feature | Shared Feature ID |
+|---------|------|---------|-------------------|
+| v4.17 | 2026-03-30 | Add Monday section with PS Bar & Grill City dinner reservation (confirmed 7–10 PM, party of 2). New nav tab, map stop, menu modal with full dinner menu, dining table entry, time-aware navigation | `MON_PSBARGRILL` |
 |---------|------|---------|-------------------|
 | v4.14 | 2026-03-29 | Google Maps API-verified walk times — all walking durations cross-referenced with Google Maps Directions API (24 routes across Zürich + Copenhagen). 13 corrections applied to index.html and itinerary.js (e.g. Kunsthaus→Old Town 18→10 min, Marriott→Hiltl 8→18 min, Strøget 12→17 min, Union Kitchen 15→21 min) | `WALK_TIMES_GOOGLE` |
 | v4.12 | 2026-03-29 | Add transit walking direction buttons — when a stop mentions an alternative tram, a green "Walk to Tram" button links to walking directions to the tram stop (Sprüngli, Kunsthaus, Hiltl, Museum Rietberg) | `WALK_TO_TRAM_BTN` |

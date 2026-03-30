@@ -310,12 +310,14 @@ img{display:block;max-width:100%}
 }
 /* Visual break between day sections */
 #section-sat .content-section,
-#section-sun .content-section{
+#section-sun .content-section,
+#section-mon .content-section{
   border-top:4px solid var(--navy);
   position:relative;
 }
 #section-sat .content-section::before,
-#section-sun .content-section::before{
+#section-sun .content-section::before,
+#section-mon .content-section::before{
   content:'';
   display:block;
   height:6px;
@@ -2918,6 +2920,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
       <button class="nav-chip" data-target="section-fri">Friday</button>
       <button class="nav-chip" data-target="section-sat">Saturday</button>
       <button class="nav-chip" data-target="section-sun">Sunday</button>
+      <button class="nav-chip" data-target="section-mon">Monday</button>
     </nav>
     <nav class="hdr-nav hdr-row-2" aria-label="Reference sections">
       <button class="nav-chip" data-target="section-essentials">Essentials</button>
@@ -3616,6 +3619,44 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+<!-- ── MONDAY ─────────────────────────────────── -->
+<span class="section-anchor" id="section-mon-anchor"></span>
+<section id="section-mon" aria-label="Monday itinerary">
+  <div class="content-section">
+    <div class="day-header">
+      <div>
+        <div class="day-label">Day 4 · Monday 30 March</div>
+        <h2 class="day-title">Back in<br>Copenhagen</h2>
+        <p class="day-intro">Home base again. One dinner reservation in the city centre tonight.</p>
+      </div>
+    </div>
+    <div class="stops" role="list">
+
+      <article class="stop" role="listitem">
+        <div class="stop-time">7:00 PM <span class="stop-time-badge badge-conf">✓ Confirmed</span></div>
+        <h3 class="stop-title">Dinner: PS Bar &amp; Grill City</h3>
+        <p class="stop-body">New York-inspired grill and bar in the heart of Indre By. Known for juicy steaks from Uruguay, sharing snacks, cocktails, and a lively atmosphere. Industrial city vibe with an open kitchen. Rib-eye and beef tenderloin are the standouts. Party of 2 — James Wilkes.</p>
+        <div class="stop-meta">
+          <span class="meta-chip" data-popup data-popup-title="PS Bar &amp; Grill City — Reservation" data-popup-body="Confirmed reservation for Monday 30 March, 7:00–10:00 PM. Party of 2, name: James Wilkes. Reservation #7M8BUSCG9HSU via SevenRooms. Restaurant area seating." data-popup-tip="Sides are ordered separately — the rib-eye and tenderloin don't come with anything included. Budget DKK 150 per starter, DKK 265–295 per main, plus sides at DKK 55 each.">📋 2 guests · 7:00 PM</span>
+          <span class="meta-chip" data-popup data-popup-title="Location — Pilestræde 12A" data-popup-body="In the heart of Copenhagen's Indre By (Inner City), on Pilestræde — a charming street between Strøget and Kultorvet. 8-minute walk from Nørreport Station." data-popup-tip="Walk down Frederiksborggade from Nørreport, turn right on Pilestræde. The restaurant is on the left side in a courtyard entrance.">📍 Pilestræde 12A, Indre By</span>
+          <span class="meta-chip" data-popup data-popup-title="Getting There" data-popup-body="From Nørreport Station, walk south on Frederiksborggade (2 min), continue onto Købmagergade, then left on Pilestræde. About 8 minutes on foot. Or metro M1/M2 to Kongens Nytorv, then 5 min walk north." data-popup-tip="If coming from Charlotte's in Amagerbro, take M2 from Amagerbro to Nørreport (10 min), then walk 8 min.">🚶 8 min from Nørreport</span>
+        </div>
+        <p class="stop-note">Pilestræde 12A · Reservation #7M8BUSCG9HSU · Mon 11:30 AM–midnight</p>
+        <div class="stop-actions">
+          <a class="btn-primary" href="https://maps.google.com/maps?daddr=55.6799,12.5764&dirflg=w" target="_blank" rel="noopener">🗺 Walking Directions</a>
+          <a class="btn-secondary" href="https://city.psbargrill.dk/en/front-page/" target="_blank" rel="noopener">🌐 Website</a>
+          <button class="btn-menu" onclick="openMenuModal('psbargrill')">📋 Menu</button>
+        </div>
+      </article>
+
+    </div>
+    <div class="tip-block">
+      <div class="tip-orn">✦</div>
+      <div class="tip-txt">Monday evening — dinner at PS Bar &amp; Grill City, 7:00 PM. Pilestræde 12A, 8-minute walk from Nørreport.</div>
+    </div>
+  </div>
+</section>
+
 <!-- ── ESSENTIALS ─────────────────────────────────── -->
 <span class="section-anchor" id="section-essentials-anchor"></span>
 <section id="section-essentials" aria-label="Trip essentials">
@@ -3871,6 +3912,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <tr><td>Sun 10 AM</td><td>Hiltl</td><td>Walk-in — arrive early</td></tr>
           <tr><td>Sun 1 PM</td><td>Fischerstube Zürihorn</td><td>Recommended — +41 44 422 25 20</td></tr>
           <tr><td>Sun 5:15 PM</td><td>eCHo farewell (hotel)</td><td>Book via hotel — mention 8:25 PM flight</td></tr>
+          <tr><td>Mon 7 PM</td><td><strong>PS Bar &amp; Grill City ★</strong></td><td><span class="td-ok">✓ Confirmed · 7:00 PM</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -4480,6 +4522,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         <button class="map-day-btn" data-day="fri">✈️ Friday</button>
         <button class="map-day-btn" data-day="sat">🏔️ Saturday</button>
         <button class="map-day-btn" data-day="sun">☀️ Sunday</button>
+        <button class="map-day-btn" data-day="mon">🍽️ Monday</button>
       </div>
       <div class="map-legend" id="map-legend">
         <div class="map-legend-row">
@@ -4487,6 +4530,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <div class="map-legend-item"><div class="map-legend-dot" style="background:#E8C96B"></div>Friday</div>
           <div class="map-legend-item"><div class="map-legend-dot" style="background:#F97316"></div>Saturday</div>
           <div class="map-legend-item"><div class="map-legend-dot" style="background:#A78BFA"></div>Sunday</div>
+          <div class="map-legend-item"><div class="map-legend-dot" style="background:#34D399"></div>Monday</div>
         </div>
         <div class="map-legend-row">
           <div class="map-legend-item"><div class="map-legend-dot star">★</div>Prior Night Hotel</div>
@@ -4663,7 +4707,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.16 · Updated 29 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.17 · Updated 30 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5075,7 +5119,8 @@ const jumpTargets = {
   'section-denmark':    { label: 'Friday',    target: 'section-fri' },
   'section-fri':        { label: 'Saturday',  target: 'section-sat' },
   'section-sat':        { label: 'Sunday',    target: 'section-sun' },
-  'section-sun':        { label: 'Essentials',target: 'section-essentials' },
+  'section-sun':        { label: 'Monday',    target: 'section-mon' },
+  'section-mon':        { label: 'Essentials',target: 'section-essentials' },
   'section-essentials': { label: 'Transit',   target: 'section-transit' },
   'section-transit':    { label: 'Street View', target: 'section-streetview' },
   'section-streetview':  { label: 'History',  target: 'section-history' },
@@ -5112,6 +5157,7 @@ const sections = [
   { id: 'section-fri',        label: 'Friday' },
   { id: 'section-sat',        label: 'Saturday' },
   { id: 'section-sun',        label: 'Sunday' },
+  { id: 'section-mon',        label: 'Monday' },
   { id: 'section-essentials', label: 'Essentials' },
   { id: 'section-transit',    label: 'Transit' },
   { id: 'section-streetview', label: 'Street View' },
@@ -5361,8 +5407,11 @@ document.querySelectorAll('.nav-chip').forEach(chip => {
     ['2026-03-29T12:00+02:00', 'section-sun', 2],      // Lunch options
     ['2026-03-29T14:30+02:00', 'section-sun', 4],      // Fischerstube / Rietberg
     ['2026-03-29T17:00+02:00', 'section-sun', 6],      // Departure to airport
+    // ── MONDAY: BACK IN COPENHAGEN ──
+    ['2026-03-30T00:00+02:00', 'section-mon', 0],      // PS Bar & Grill
+    ['2026-03-30T19:00+02:00', 'section-mon', 0],      // Dinner time
     // Trip over
-    ['2026-03-29T21:00+02:00', null, 0]
+    ['2026-03-30T22:00+02:00', null, 0]
   ];
 
   var now = new Date();
@@ -5449,7 +5498,8 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     denmark: '#58A6FF',
     fri:     '#E8C96B',
     sat:     '#F97316',
-    sun:     '#A78BFA'
+    sun:     '#A78BFA',
+    mon:     '#34D399'
   };
 
   var stops = [
@@ -5480,7 +5530,9 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     { day:'sun', n:'P', name:'Polybahn Funicular', desc:'90-sec ride to ETH terrace \u2014 best rooftop view', time:'Bonus opt.', lat:47.3744, lng:8.5449, icon:'\ud83d\ude9e', opt:true },
     { day:'sun', n:4, name:'Fischerstube Z\u00fcrihorn', desc:'Lakeside terrace \u2014 fresh Lake Z\u00fcrich fish', time:'1:00 PM', lat:47.35302, lng:8.55051, icon:'\ud83c\udf5f' },
     { day:'sun', n:5, name:'Museum Rietberg', desc:'Asian, African & Oceanic art in Rieter Park', time:'2:30 PM', lat:47.3587, lng:8.5304, icon:'\ud83c\udfdb\ufe0f' },
-    { day:'sun', n:6, name:'eCHo Restaurant', desc:'Hotel\u2019s Swiss restaurant \u2014 farewell dinner', time:'5:15 PM', lat:47.38180, lng:8.54150, icon:'\ud83e\uddc0' }
+    { day:'sun', n:6, name:'eCHo Restaurant', desc:'Hotel\u2019s Swiss restaurant \u2014 farewell dinner', time:'5:15 PM', lat:47.38180, lng:8.54150, icon:'\ud83e\uddc0' },
+    // ── MONDAY ────────────────────────────
+    { day:'mon', n:1, name:'PS Bar & Grill City', desc:'New York-inspired grill \u2014 Pilestr\u00e6de 12A, Indre By', time:'7:00 PM \u2713', lat:55.6799, lng:12.5764, icon:'\ud83e\udd69' }
   ];
 
   var map = L.map('itinerary-map', {
@@ -5712,7 +5764,8 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     '2026-03-26': 'denmark',
     '2026-03-27': 'fri',
     '2026-03-28': 'sat',
-    '2026-03-29': 'sun'
+    '2026-03-29': 'sun',
+    '2026-03-30': 'mon'
   };
 
   // Hotel where you stayed the night before each trip day
@@ -5720,7 +5773,8 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     '2026-03-26': { name: 'Scandic Nørreport', lat: 55.68391, lng: 12.57112 },
     '2026-03-27': { name: 'Scandic Nørreport', lat: 55.68391, lng: 12.57112 },
     '2026-03-28': { name: 'Zürich Marriott',   lat: 47.38180, lng: 8.54150 },
-    '2026-03-29': { name: 'Zürich Marriott',   lat: 47.38180, lng: 8.54150 }
+    '2026-03-29': { name: 'Zürich Marriott',   lat: 47.38180, lng: 8.54150 },
+    '2026-03-30': { name: 'Scandic Nørreport', lat: 55.68391, lng: 12.57112 }
   };
 
   var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -5831,7 +5885,8 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     'denmark': 'Copenhagen',
     'fri':     'Friday',
     'sat':     'Saturday',
-    'sun':     'Sunday'
+    'sun':     'Sunday',
+    'mon':     'Monday'
   };
 
   var DATE_TO_DAY_ALTER = {
@@ -5839,7 +5894,8 @@ if (fabTriggerBtn) fabTriggerBtn.addEventListener('click', toggleFab);
     '2026-03-26': 'denmark',
     '2026-03-27': 'fri',
     '2026-03-28': 'sat',
-    '2026-03-29': 'sun'
+    '2026-03-29': 'sun',
+    '2026-03-30': 'mon'
   };
 
   // Determine if we're inside trip dates
@@ -7095,9 +7151,12 @@ window.getItineraryCity = function() {
   var transitStart = Date.UTC(2026, 2, 27, 16, 0);   // Fri 5 PM CET
   var zrhArrival   = Date.UTC(2026, 2, 27, 18, 40);  // Fri 7:40 PM CET
   var tripEnd      = Date.UTC(2026, 2, 29, 19, 0);   // Sun 8 PM CET
+  var monStart     = Date.UTC(2026, 2, 30, 5, 0);    // Mon 6 AM CET
+  var monEnd       = Date.UTC(2026, 2, 30, 22, 0);   // Mon 11 PM CET
 
   if (now >= cphStart && now < transitStart) return 'copenhagen';
   if (now >= transitStart && now <= tripEnd) return 'zurich'; // transit+Zürich
+  if (now >= monStart && now <= monEnd) return 'copenhagen'; // Monday back in CPH
   return null; // outside trip dates
 };
 
@@ -7425,6 +7484,76 @@ window.getItineraryCity = function() {
   var closeBtn = document.getElementById('menu-modal-close');
 
   var menus = {
+    'psbargrill': {
+      title: 'PS Bar & Grill City',
+      subtitle: 'Pilestræde 12A · Copenhagen · Dinner Menu',
+      footer: 'Prices in DKK · ~7 DKK = $1 USD · Mon 11:30 AM–midnight',
+      sections: [
+        { label: 'Snacks · Starters', items: [
+          ['Hummus','crispy chickpeas, chili romesco (VG)','65'],
+          ['Pimientos Padrons','grilled lemon, sea salt (VG)','60'],
+          ['Grilled Goat\'s Cheese','bitter lettuce, pecan nuts, grapes, croutons','70'],
+          ['Smoked Salmon','smoked cream cheese, white asparagus, peas, buckwheat','90'],
+          ['Seared Tuna','soy/lime, avocado, sesame, coriander','90'],
+          ['Fried Squid','lemon, pepper mayo, piment','80'],
+          ['Prosciutto Toscana','dry cured ham, burrata, pesto','90'],
+          ['Crispy Pork Belly','spicy sauce, sesame, pickled onion, wasabi mayo','75'],
+          ['Fried Chorizo','Pico de Gallo, bell pepper cream','80'],
+          ['Beef Carpaccio','hazelnuts, parmesan, herbs','90'],
+          ['Hot Wings 3/6/9','PS Hot Sauce, blue cheese dip','70/135/190']
+        ]},
+        { label: 'Snack Plates · Min. 2 persons', items: [
+          ['Hummus Plate','crispy chickpeas, chili romesco (VG)','150 pp'],
+          ['Seared Tuna Plate','soy/lime, avocado, sesame, coriander','150 pp'],
+          ['Prosciutto Plate','dry cured ham, burrata, pesto','150 pp'],
+          ['Fried Chorizo Plate','Pico de Gallo, bell pepper cream','150 pp']
+        ]},
+        { label: 'Main Courses', items: [
+          ['Grilled Aubergine 🌿','white beans, tahini, coriander salsa (VG)','145'],
+          ['Baked Halibut','tomato ragout, olives, red onion, basil','235'],
+          ['Grilled Salmon','soy/lime, spring onion, sesame','185'],
+          ['Guinea Fowl','mushroom stuffing, lemon zest, thyme','175'],
+          ['Grilled Rack of Lamb','grilled lemon','285'],
+          ['Beef Tenderloin 220g ★','Uruguay, grain-fed','295'],
+          ['Rib-Eye 275g ★','Uruguay, grain-fed','265'],
+          ['Rib-Eye on Bone 800g','1–2 persons, Australian','695']
+        ]},
+        { label: 'Burgers', items: [
+          ['MATR Burger 🌿','organic root vegetable & legume patty, cheddar, mustard','185'],
+          ['Beef Burger','200g beef patty, cheddar, mustard','195']
+        ]},
+        { label: 'Pizza', items: [
+          ['Margherita 🌿','tomato sauce, mozzarella, basil','155'],
+          ['Potatoes 🌿','mascarpone, mozzarella, rosemary, black pepper','165'],
+          ['Prosciutto Toscana','tomato sauce, mozzarella, pesto, arugula','170'],
+          ['Meatballs & Chorizo','tomato sauce, mozzarella, chili','170'],
+          ['Grilled Rib Eye','tomato sauce, mozzarella, mushrooms, red onion, chili','175']
+        ]},
+        { label: 'Sides · DKK 55 each', items: [
+          ['Green Salad','mustard vinaigrette','55'],
+          ['Caesar Salad','romaine, croutons, parmesan','55'],
+          ['Asparagus','cannellini beans, herbs, lemon','55'],
+          ['Broccoli','Goma dressing, spring onion, chili, sesame','55'],
+          ['Grilled Corn','ancho chili, smoked cheese, lime','55'],
+          ['Fried Potatoes','herb butter, lemon','55'],
+          ['French Fries','','55']
+        ]},
+        { label: 'Desserts', items: [
+          ['Vanilla Panna Cotta','berries, crumble','95'],
+          ['Chocolate Marquise','passionfruit coulis, pecan nuts, vanilla cream','95']
+        ]},
+        { label: 'PS Menu · 3-Course · Min. 2 persons', items: [
+          ['Starter + Rib-Eye + Caesar + Frites + Béarnaise','choose your starter: hummus, tuna, or pork belly','445 pp']
+        ]},
+        { label: 'Signature Cocktails', items: [
+          ['PS Passion','vodka, passionfruit, lime, soda','125 / pitcher 450'],
+          ['PS Rhubarb','gin, Aperol, rhubarb, grape soda','125 / pitcher 450'],
+          ['PS Sangria','Chardonnay, rum, elderflower, apple, orange','95 / pitcher 385'],
+          ['Espresso Martini','vodka, Kahlúa, espresso','135'],
+          ['Mango Madness','Italicus, mango, lemon, egg whites','135']
+        ]}
+      ]
+    },
     'union-kitchen': {
       title: 'The Union Kitchen Frederiksberg',
       subtitle: 'The kitchen recommends 3 dishes per person',
