@@ -1220,6 +1220,330 @@ img{display:block;max-width:100%}
   font-family:'Playfair Display',serif;
   font-size:26px;font-weight:700;color:var(--navy);
 }
+
+/* ── PRE-TRIP PLANNING: SCHENGEN / ETIAS / EES ──── */
+.pretrip-wrap{
+  padding:0 var(--sp24);
+  margin-top:var(--sp24);
+  margin-bottom:var(--sp32);
+}
+
+/* Top banner – gradient hero strip */
+.pretrip-banner{
+  position:relative;
+  background:linear-gradient(135deg,var(--navy) 0%,#2A4170 55%,var(--gold) 100%);
+  border-radius:var(--r12) var(--r12) 0 0;
+  padding:28px 24px 22px;
+  overflow:hidden;
+}
+.pretrip-banner::before{
+  content:'';
+  position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='600' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='.04'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='0'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='500' cy='40' r='180' fill='url(%23g)'/%3E%3Ccircle cx='80' cy='160' r='120' fill='url(%23g)'/%3E%3C/svg%3E") no-repeat center/cover;
+  opacity:.6;
+}
+.pretrip-banner-flag{
+  position:absolute;top:16px;right:18px;
+  display:flex;gap:6px;align-items:center;
+}
+.pretrip-banner-flag span{
+  font-size:20px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.25));
+}
+.pretrip-eyebrow{
+  position:relative;
+  font-family:'DM Mono',monospace;font-size:8.5px;
+  letter-spacing:.3em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);margin-bottom:10px;
+}
+.pretrip-headline{
+  position:relative;
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:700;color:#fff;
+  line-height:1.25;margin-bottom:6px;
+}
+.pretrip-subline{
+  position:relative;
+  font-family:'Crimson Pro',serif;
+  font-size:14px;color:rgba(255,255,255,.8);
+  line-height:1.5;
+  font-style:italic;
+}
+
+/* Status strip beneath banner */
+.pretrip-status-strip{
+  display:flex;
+  border-left:1px solid var(--divider2);
+  border-right:1px solid var(--divider2);
+}
+.pretrip-status-item{
+  flex:1;
+  padding:14px 16px;
+  text-align:center;
+  border-bottom:1px solid var(--divider2);
+}
+.pretrip-status-item + .pretrip-status-item{
+  border-left:1px solid var(--divider2);
+}
+.pretrip-status-dot{
+  display:inline-block;
+  width:8px;height:8px;border-radius:50%;
+  margin-right:5px;
+  vertical-align:middle;
+  position:relative;top:-1px;
+}
+.pretrip-status-dot.green{background:#22c55e;box-shadow:0 0 6px rgba(34,197,94,.4)}
+.pretrip-status-dot.amber{background:#f59e0b;box-shadow:0 0 6px rgba(245,158,11,.4)}
+.pretrip-status-dot.blue{background:#3b82f6;box-shadow:0 0 6px rgba(59,130,246,.4)}
+.pretrip-status-sys{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--navy);font-weight:600;
+}
+.pretrip-status-desc{
+  font-family:'Crimson Pro',serif;font-size:12px;
+  color:var(--steel);margin-top:3px;line-height:1.35;
+}
+
+/* Two-column system cards */
+.pretrip-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  border-left:1px solid var(--divider2);
+  border-right:1px solid var(--divider2);
+}
+.pretrip-card{
+  padding:20px 18px 18px;
+  border-bottom:1px solid var(--divider2);
+}
+.pretrip-card + .pretrip-card{
+  border-left:1px solid var(--divider2);
+}
+.pretrip-card-icon{
+  font-size:28px;
+  margin-bottom:10px;
+  line-height:1;
+}
+.pretrip-card-label{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:6px;
+}
+.pretrip-card-title{
+  font-family:'Playfair Display',serif;
+  font-size:16px;font-weight:700;color:var(--navy);
+  margin-bottom:8px;line-height:1.25;
+}
+.pretrip-card-body{
+  font-family:'Crimson Pro',serif;font-size:13px;
+  color:var(--body);line-height:1.55;
+}
+.pretrip-card-body strong{
+  color:var(--navy);font-weight:600;
+}
+
+/* Key facts mini-grid */
+.pretrip-facts{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-left:1px solid var(--divider2);
+  border-right:1px solid var(--divider2);
+  border-bottom:1px solid var(--divider2);
+}
+.pretrip-fact{
+  padding:14px 16px;
+  text-align:center;
+}
+.pretrip-fact + .pretrip-fact{
+  border-left:1px solid var(--divider2);
+}
+.pretrip-fact-num{
+  font-family:'Playfair Display',serif;
+  font-size:22px;font-weight:700;color:var(--navy);
+  line-height:1;
+}
+.pretrip-fact-unit{
+  font-family:'Crimson Pro',serif;font-size:11.5px;
+  color:var(--steel);margin-top:3px;
+}
+
+/* Timeline infographic */
+.pretrip-timeline{
+  position:relative;
+  padding:24px 18px 18px;
+  border-left:1px solid var(--divider2);
+  border-right:1px solid var(--divider2);
+  border-bottom:1px solid var(--divider2);
+}
+.pretrip-timeline-title{
+  font-family:'DM Mono',monospace;font-size:8.5px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:16px;
+}
+.pretrip-tl-track{
+  position:relative;
+  display:flex;
+  align-items:flex-start;
+  padding-left:0;
+}
+.pretrip-tl-line{
+  position:absolute;
+  top:10px;
+  left:12px;
+  right:12px;
+  height:3px;
+  background:linear-gradient(90deg,var(--green) 0%,var(--green) 35%,var(--gold) 35%,var(--gold) 70%,var(--blue) 70%);
+  border-radius:2px;
+}
+.pretrip-tl-node{
+  flex:1;
+  text-align:center;
+  position:relative;
+  z-index:1;
+}
+.pretrip-tl-dot{
+  display:inline-block;
+  width:14px;height:14px;border-radius:50%;
+  border:3px solid var(--cream);
+  box-shadow:0 0 0 2px var(--navy);
+  margin-bottom:8px;
+}
+.pretrip-tl-dot.green{background:var(--green)}
+.pretrip-tl-dot.amber{background:#f59e0b}
+.pretrip-tl-dot.blue{background:var(--blue)}
+.pretrip-tl-dot.highlight{
+  width:18px;height:18px;
+  box-shadow:0 0 0 2px var(--navy),0 0 10px rgba(200,168,75,.5);
+}
+.pretrip-tl-date{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--steel);
+}
+.pretrip-tl-event{
+  font-family:'Crimson Pro',serif;font-size:11.5px;
+  color:var(--body);margin-top:2px;line-height:1.35;
+}
+.pretrip-tl-you{
+  display:inline-block;
+  background:var(--navy);
+  color:#fff;
+  font-family:'DM Mono',monospace;font-size:7px;
+  letter-spacing:.15em;text-transform:uppercase;
+  padding:2px 7px;border-radius:3px;
+  margin-top:6px;
+}
+
+/* Checklist steps */
+.pretrip-checklist{
+  padding:20px 18px;
+  border-left:1px solid var(--divider2);
+  border-right:1px solid var(--divider2);
+  border-bottom:1px solid var(--divider2);
+}
+.pretrip-cl-title{
+  font-family:'DM Mono',monospace;font-size:8.5px;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:14px;
+}
+.pretrip-cl-step{
+  display:flex;
+  gap:12px;
+  padding:11px 0;
+}
+.pretrip-cl-step + .pretrip-cl-step{
+  border-top:1px solid var(--divider2);
+}
+.pretrip-cl-num{
+  flex-shrink:0;
+  width:26px;height:26px;
+  border-radius:50%;
+  background:var(--navy);
+  color:#fff;
+  font-family:'DM Mono',monospace;font-size:11px;
+  font-weight:600;
+  display:flex;align-items:center;justify-content:center;
+}
+.pretrip-cl-text{
+  font-family:'Crimson Pro',serif;font-size:13.5px;
+  color:var(--body);line-height:1.5;
+}
+.pretrip-cl-text strong{
+  color:var(--navy);font-weight:600;
+}
+.pretrip-cl-text .cl-link{
+  color:var(--blue);text-decoration:underline;
+  text-underline-offset:2px;
+}
+
+/* Alert callout */
+.pretrip-alert{
+  margin:0;
+  padding:16px 18px;
+  background:var(--amber2);
+  border-left:4px solid #f59e0b;
+  border-right:1px solid var(--divider2);
+  border-bottom:1px solid var(--divider2);
+  display:flex;gap:10px;align-items:flex-start;
+}
+.pretrip-alert-icon{
+  font-size:18px;flex-shrink:0;line-height:1.4;
+}
+.pretrip-alert-text{
+  font-family:'Crimson Pro',serif;font-size:13px;
+  color:var(--amber);line-height:1.55;
+  font-weight:500;
+}
+.pretrip-alert-text strong{
+  font-weight:700;
+}
+
+/* Footer bar */
+.pretrip-footer{
+  background:var(--navy);
+  border-radius:0 0 var(--r12) var(--r12);
+  padding:14px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;
+}
+.pretrip-footer-text{
+  font-family:'Crimson Pro',serif;
+  font-size:12.5px;color:rgba(255,255,255,.7);
+  font-style:italic;line-height:1.4;
+}
+.pretrip-footer-text a{
+  color:var(--gold2);text-decoration:underline;
+  text-underline-offset:2px;
+}
+.pretrip-footer-badge{
+  flex-shrink:0;
+  font-family:'DM Mono',monospace;font-size:7.5px;
+  letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold2);
+  border:1px solid rgba(232,201,107,.3);
+  padding:4px 10px;border-radius:3px;
+  white-space:nowrap;
+}
+
+@media(max-width:480px){
+  .pretrip-banner{padding:22px 18px 18px}
+  .pretrip-headline{font-size:19px}
+  .pretrip-cards{grid-template-columns:1fr}
+  .pretrip-card + .pretrip-card{border-left:none}
+  .pretrip-facts{grid-template-columns:1fr}
+  .pretrip-fact + .pretrip-fact{border-left:none;border-top:1px solid var(--divider2)}
+  .pretrip-tl-track{flex-direction:column;gap:14px;padding-left:20px}
+  .pretrip-tl-line{
+    top:0;bottom:0;left:8px;right:auto;
+    width:3px;height:auto;
+    background:linear-gradient(180deg,var(--green) 0%,var(--green) 35%,var(--gold) 35%,var(--gold) 70%,var(--blue) 70%);
+  }
+  .pretrip-tl-node{text-align:left;display:flex;gap:10px;align-items:flex-start}
+  .pretrip-tl-dot{margin-bottom:0;flex-shrink:0;margin-top:2px}
+  .pretrip-status-strip{flex-direction:column}
+  .pretrip-status-item + .pretrip-status-item{border-left:none;border-top:1px solid var(--divider2)}
+  .pretrip-status-item{text-align:left;padding:12px 16px}
+}
+
 .ess-grid{
   padding:var(--sp16) var(--sp24) var(--sp24);
   display:grid;
@@ -3267,6 +3591,169 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
       <div class="essentials-eyebrow">Quick Reference</div>
       <h2 class="essentials-title">Trip Essentials</h2>
     </div>
+
+    <!-- ── PRE-TRIP PLANNING: SCHENGEN ENTRY REQUIREMENTS ── -->
+    <div class="pretrip-wrap">
+
+      <!-- Banner -->
+      <div class="pretrip-banner">
+        <div class="pretrip-banner-flag"><span>🇪🇺</span><span>🇨🇭</span><span>🇩🇰</span></div>
+        <div class="pretrip-eyebrow">Pre-Trip Planning</div>
+        <div class="pretrip-headline">Schengen Entry Requirements</div>
+        <div class="pretrip-subline">Two new EU systems are changing how Americans enter Europe.
+          Know your obligations before CPH → ZRH.</div>
+      </div>
+
+      <!-- Live status strip -->
+      <div class="pretrip-status-strip">
+        <div class="pretrip-status-item">
+          <div><span class="pretrip-status-dot green"></span><span class="pretrip-status-sys">EES</span></div>
+          <div class="pretrip-status-desc">Live since Oct 2025 — enforced 10 Apr 2026</div>
+        </div>
+        <div class="pretrip-status-item">
+          <div><span class="pretrip-status-dot amber"></span><span class="pretrip-status-sys">ETIAS</span></div>
+          <div class="pretrip-status-desc">Launches Q4 2026 — not required for this trip</div>
+        </div>
+        <div class="pretrip-status-item">
+          <div><span class="pretrip-status-dot blue"></span><span class="pretrip-status-sys">90/180</span></div>
+          <div class="pretrip-status-desc">Schengen visa-free stay limit still applies</div>
+        </div>
+      </div>
+
+      <!-- Two system cards -->
+      <div class="pretrip-cards">
+        <div class="pretrip-card">
+          <div class="pretrip-card-icon">📷</div>
+          <div class="pretrip-card-label">Entry / Exit System</div>
+          <div class="pretrip-card-title">EES — Biometric Border Check</div>
+          <div class="pretrip-card-body">
+            Replaces passport stamps with <strong>digital fingerprint + facial scan</strong> at Schengen borders. Automatically tracks your 90/180-day stay. Rolled out since Oct 2025; <strong>fully mandatory by 10 April 2026.</strong><br><br>
+            Your 26 Mar CPH arrival falls within the transition window — expect biometric registration at Copenhagen Airport.
+          </div>
+        </div>
+        <div class="pretrip-card">
+          <div class="pretrip-card-icon">📝</div>
+          <div class="pretrip-card-label">Travel Authorization</div>
+          <div class="pretrip-card-title">ETIAS — Pre-Travel Permit</div>
+          <div class="pretrip-card-body">
+            A mandatory online authorization for visa-exempt nationals (incl. Americans). <strong>€20 fee</strong>, valid 3 years. Must be approved before boarding any flight to Schengen countries.<br><br>
+            Launches <strong>Q4 2026</strong> with a 6-month grace period.
+            <strong>Not required for your March 2026 trip.</strong> Monitor for future travel.
+          </div>
+        </div>
+      </div>
+
+      <!-- Key facts -->
+      <div class="pretrip-facts">
+        <div class="pretrip-fact">
+          <div class="pretrip-fact-num">€20</div>
+          <div class="pretrip-fact-unit">ETIAS fee per person</div>
+        </div>
+        <div class="pretrip-fact">
+          <div class="pretrip-fact-num">3 yr</div>
+          <div class="pretrip-fact-unit">ETIAS validity</div>
+        </div>
+        <div class="pretrip-fact">
+          <div class="pretrip-fact-num">90d</div>
+          <div class="pretrip-fact-unit">Max stay / 180 days</div>
+        </div>
+      </div>
+
+      <!-- Timeline -->
+      <div class="pretrip-timeline">
+        <div class="pretrip-timeline-title">Implementation Timeline</div>
+        <div class="pretrip-tl-track">
+          <div class="pretrip-tl-line"></div>
+          <div class="pretrip-tl-node">
+            <div class="pretrip-tl-dot green"></div><br>
+            <div class="pretrip-tl-date">Oct 2025</div>
+            <div class="pretrip-tl-event">EES phased rollout begins</div>
+          </div>
+          <div class="pretrip-tl-node">
+            <div class="pretrip-tl-dot green highlight"></div><br>
+            <div class="pretrip-tl-date">26–29 Mar 2026</div>
+            <div class="pretrip-tl-event">Your trip: CPH → ZRH</div>
+            <div class="pretrip-tl-you">You are here</div>
+          </div>
+          <div class="pretrip-tl-node">
+            <div class="pretrip-tl-dot amber"></div><br>
+            <div class="pretrip-tl-date">10 Apr 2026</div>
+            <div class="pretrip-tl-event">EES fully mandatory at all borders</div>
+          </div>
+          <div class="pretrip-tl-node">
+            <div class="pretrip-tl-dot blue"></div><br>
+            <div class="pretrip-tl-date">Q4 2026</div>
+            <div class="pretrip-tl-event">ETIAS launches + 6-mo grace period</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Preparation Checklist -->
+      <div class="pretrip-checklist">
+        <div class="pretrip-cl-title">What You Need To Do</div>
+
+        <div class="pretrip-cl-step">
+          <div class="pretrip-cl-num">1</div>
+          <div class="pretrip-cl-text">
+            <strong>Passport validity.</strong> Confirm your U.S. passport is valid for at least <strong>6 months beyond 29 March 2026</strong> (must be valid through Sep 2026+). EES and ETIAS both require a machine-readable passport.
+          </div>
+        </div>
+
+        <div class="pretrip-cl-step">
+          <div class="pretrip-cl-num">2</div>
+          <div class="pretrip-cl-text">
+            <strong>Expect biometrics at CPH.</strong> On arrival 26 Mar, prepare for <strong>fingerprint + facial image capture</strong> at Copenhagen passport control. Processing may take longer than usual during the EES transition. Budget extra time after landing.
+          </div>
+        </div>
+
+        <div class="pretrip-cl-step">
+          <div class="pretrip-cl-num">3</div>
+          <div class="pretrip-cl-text">
+            <strong>No passport stamps.</strong> Your entry/exit is recorded digitally. The system automatically calculates your remaining Schengen days. No stamp = no risk of smudged or missing stamps causing issues.
+          </div>
+        </div>
+
+        <div class="pretrip-cl-step">
+          <div class="pretrip-cl-num">4</div>
+          <div class="pretrip-cl-text">
+            <strong>CPH → ZRH is an intra-Schengen flight.</strong> No additional border check when flying Copenhagen to Zürich — both are inside the Schengen Area. EES biometrics happen only at external border entry (CPH arrival from the U.S.).
+          </div>
+        </div>
+
+        <div class="pretrip-cl-step">
+          <div class="pretrip-cl-num">5</div>
+          <div class="pretrip-cl-text">
+            <strong>ETIAS: no action needed yet.</strong> The system launches Q4 2026. Once live, apply at <a class="cl-link" href="https://travel-europe.europa.eu/etias" target="_blank" rel="noopener">travel-europe.europa.eu/etias</a> — the official EU portal. Takes minutes, costs €20, valid 3 years. Avoid third-party sites charging extra fees.
+          </div>
+        </div>
+
+        <div class="pretrip-cl-step">
+          <div class="pretrip-cl-num">6</div>
+          <div class="pretrip-cl-text">
+            <strong>UK ETA if connecting through London.</strong> If any future itinerary routes through the UK, a separate <strong>£10 UK ETA</strong> is now required for U.S. citizens (launched Jan 2025, valid 2 years).
+          </div>
+        </div>
+      </div>
+
+      <!-- Alert -->
+      <div class="pretrip-alert">
+        <div class="pretrip-alert-icon">⚠️</div>
+        <div class="pretrip-alert-text">
+          <strong>Important for this trip:</strong> Your 26 Mar arrival at CPH is 15 days before EES becomes fully mandatory on 10 Apr 2026. Biometric collection is already underway at many Schengen airports. Do not refuse biometric registration — refusal can result in denied entry.
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="pretrip-footer">
+        <div class="pretrip-footer-text">
+          Sources: <a href="https://home-affairs.ec.europa.eu/policies/schengen/smart-borders/entry-exit-system_en" target="_blank" rel="noopener">EU Commission EES</a> · <a href="https://travel-europe.europa.eu/etias" target="_blank" rel="noopener">Official ETIAS Portal</a> · Updated Mar 2026
+        </div>
+        <div class="pretrip-footer-badge">Schengen Guide</div>
+      </div>
+
+    </div>
+    <!-- ── END PRE-TRIP PLANNING ── -->
+
     <div class="ess-grid">
       <div class="ess-item">
         <div class="ess-label">Hotel</div>
