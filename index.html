@@ -1524,6 +1524,39 @@ img{display:block;max-width:100%}
   white-space:nowrap;
 }
 
+/* Schengen explainer note */
+.pretrip-explainer{
+  margin-top:14px;
+  padding:16px 20px;
+  background:rgba(27,42,74,.04);
+  border:1px solid var(--divider2);
+  border-radius:var(--r9);
+  display:flex;gap:12px;align-items:flex-start;
+}
+.pretrip-explainer-icon{
+  flex-shrink:0;
+  width:32px;height:32px;
+  background:var(--navy);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  color:#fff;
+  line-height:1;
+}
+.pretrip-explainer-label{
+  font-family:'DM Mono',monospace;font-size:8px;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gold-text);margin-bottom:4px;
+}
+.pretrip-explainer-body{
+  font-family:'Crimson Pro',serif;font-size:13px;
+  color:var(--steel);line-height:1.55;
+  font-style:italic;
+}
+.pretrip-explainer-body strong{
+  color:var(--navy);font-style:normal;font-weight:600;
+}
+
 @media(max-width:480px){
   .pretrip-banner{padding:22px 18px 18px}
   .pretrip-headline{font-size:19px}
@@ -3749,6 +3782,17 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           Sources: <a href="https://home-affairs.ec.europa.eu/policies/schengen/smart-borders/entry-exit-system_en" target="_blank" rel="noopener">EU Commission EES</a> · <a href="https://travel-europe.europa.eu/etias" target="_blank" rel="noopener">Official ETIAS Portal</a> · Updated Mar 2026
         </div>
         <div class="pretrip-footer-badge">Schengen Guide</div>
+      </div>
+
+      <!-- Schengen explainer -->
+      <div class="pretrip-explainer">
+        <div class="pretrip-explainer-icon">🇪🇺</div>
+        <div>
+          <div class="pretrip-explainer-label">What is the Schengen Area?</div>
+          <div class="pretrip-explainer-body">
+            Named after <strong>Schengen</strong>, a small village in southeastern Luxembourg where France, Germany, and Luxembourg meet at a tripoint on the Moselle River. On 14 June 1985, five nations signed a treaty aboard a boat moored there, abolishing border checks between them. Today the <strong>Schengen Area</strong> spans 29 European countries operating as a single passport-free zone — the largest open-border area in the world. Once you clear customs at your first point of entry (Copenhagen, in your case), you move freely between member states with no further border controls.
+          </div>
+        </div>
       </div>
 
     </div>
