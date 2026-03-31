@@ -5320,9 +5320,9 @@ function navTo(sectionId, btn) {
       window.scrollBy({ top: actual - hh, behavior: 'instant' });
     }
   }
-  setTimeout(correctScroll, 400);
-  setTimeout(correctScroll, 800);
-  setTimeout(correctScroll, 1200);
+  setTimeout(correctScroll, 600);
+  setTimeout(correctScroll, 1000);
+  setTimeout(correctScroll, 1400);
 
   // After scrolling to Street Views section, auto-scroll to current location's photo
   if (doSvAutoScroll) window._svAutoScroll();
@@ -5652,16 +5652,17 @@ document.querySelectorAll('.nav-chip').forEach(chip => {
         }
       }
     }
-    // else: outside trip → targetIdx stays 0 (beginning)
+    // Outside trip or first stop → banner landing is already correct, skip second scroll
+    if (targetIdx === 0) return;
 
     var target = stops[targetIdx] || stops[0];
-    // Small delay to let the main navTo scroll finish positioning,
+    // Wait for navTo scroll + iOS corrections to fully settle,
     // then scroll to the specific stop within the section
     setTimeout(function() {
       var hdrH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--hdr')) || 80;
       var top = target.getBoundingClientRect().top + window.pageYOffset - hdrH - 16;
       window.scrollTo({ top: top, behavior: 'smooth' });
-    }, 400);
+    }, 1400);
   };
 })();
 
