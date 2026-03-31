@@ -2965,7 +2965,6 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
     </p>
     <div class="hero-dates">26 – 29 March 2026</div>
     <div class="hero-rule"></div>
-    <div class="hero-desc">Father–daughter trip — visiting Charlotte while she's studying in Copenhagen, then on to a Zürich weekend. Culture, mountain air, great food, and easy logistics.</div>
 
     <div class="hero-countdown" id="hero-countdown" aria-label="Trip countdown"></div>
     <div class="hero-wx-strip" id="hero-wx-strip">
@@ -2984,7 +2983,6 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
       <div>
         <div class="day-label">Copenhagen Stopover · Wed 25 – Fri 27 March</div>
         <h2 class="day-title">Denmark</h2>
-        <p class="day-intro">Charlotte is studying in Copenhagen — a chance to visit her before flying on to Zürich Friday evening.</p>
       </div>
       <div class="wx-card" role="button" tabindex="0" aria-label="Copenhagen weather — tap for expanded view" id="wx-dk" data-wx-day="dk" data-wx-date="Thursday, March 26" data-wx-city="Copenhagen, Denmark" data-wx-lat="55.6838" data-wx-lng="12.5718" data-wx-datestr="2026-03-26" data-wx-ext="https://www.accuweather.com/en/dk/copenhagen/123094/weather-forecast/123094" onclick="openWxModal(this)">
         <div class="wx-top"><span class="wx-hi">43°</span><span class="wx-lo">Lo 34°F (6°C / 1°C)</span></div>
@@ -3032,11 +3030,14 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
         </div>
       </article>
 
-      <!-- METRO PAYMENT INFO -->
+      <!-- METRO PAYMENT INFO (collapsed) -->
       <article class="stop" role="listitem" style="border-left:3px solid #3b82f6;padding-left:16px">
         <div class="stop-time">💳 Tickets</div>
-        <h3 class="stop-title">Paying for the Metro · What You Need to Know</h3>
-        <p class="stop-body"><strong>You cannot tap a credit card or phone on the gates.</strong> You must have a valid ticket or pass before boarding. No ticket = DKK 750 fine (~$100) from plain-clothes inspectors.</p>
+        <h3 class="stop-title">Paying for the Metro</h3>
+        <p class="stop-body"><strong>No tap-to-pay.</strong> Buy a ticket or pass before boarding. Fine: DKK 750 (~$100).</p>
+        <details class="metro-expand" style="margin-top:10px">
+          <summary style="cursor:pointer;font-family:'DM Mono',monospace;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--gold-text);font-weight:600;padding:8px 0;user-select:none">Ticket Options &amp; Prices ▼</summary>
+          <div style="margin-top:8px">
         <div class="stop-meta">
           <span class="meta-chip" data-popup data-popup-title="Copenhagen Transit — No Tap to Pay" data-popup-body="Unlike many European cities, Copenhagen&#39;s metro and buses do NOT accept contactless credit card tap. You must buy a ticket from a machine or the DOT Billetter app before boarding." data-popup-tip="Download the DOT Billetter (or Rejseplanen) app before you land. It&#39;s the easiest way to buy tickets. Apple Pay/Google Pay work IN the app, just not at turnstiles.">⚠️ No contactless tap</span>
           <span class="meta-chip" data-popup data-popup-title="Pre-Purchase Required" data-popup-body="All Copenhagen public transit requires a valid ticket before boarding. There are no conductors selling tickets on board. Ticket machines accept cards and coins at all metro stations." data-popup-tip="The DOT Billetter app is your best friend. Buy a single ticket or day pass before you step on. Inspectors are frequent and fines are non-negotiable.">🎫 Buy before boarding</span>
@@ -3081,6 +3082,8 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
           <a class="btn-secondary" href="https://play.google.com/store/apps/details?id=dk.rejsekort.digitalrejsekort" target="_blank" rel="noopener">📱 Rejsekort (Android)</a>
           <a class="btn-secondary" href="https://www.publictransport.dk/tickets" target="_blank" rel="noopener">🎫 Ticket Info</a>
         </div>
+          </div>
+        </details>
       </article>
 
       <!-- HOTEL INFO -->
@@ -4707,7 +4710,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.17 · Updated 30 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.18 · Updated 31 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
