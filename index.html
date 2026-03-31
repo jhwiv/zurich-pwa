@@ -149,6 +149,33 @@ img{display:block;max-width:100%}
 }
 .hdr-section-label{display:none!important}
 
+
+/* ── CONDENSED ITINERARY ───────────────────────── */
+#section-condensed .content-section{padding:var(--sp24)}
+.cond-header{text-align:center;margin-bottom:var(--sp24)}
+.cond-eyebrow{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text);margin-bottom:6px}
+.cond-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--navy);font-weight:700}
+.cond-day{margin-bottom:var(--sp20)}
+.cond-day-label{font-family:'DM Mono',monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-text);font-weight:700;padding:6px 0;border-bottom:2px solid var(--gold);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.cond-day-label .cond-flag{font-size:.85rem}
+.cond-row{display:flex;align-items:baseline;padding:4px 0;font-size:.85rem;line-height:1.4;border-bottom:1px solid var(--divider2)}
+.cond-row:last-child{border-bottom:none}
+.cond-time{flex:0 0 70px;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--steel);letter-spacing:.02em;white-space:nowrap}
+.cond-what{flex:1;color:var(--navy);font-family:'Crimson Pro',serif}
+.cond-what strong{font-weight:700}
+.cond-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.04em;text-transform:uppercase;padding:1px 6px;border-radius:8px;margin-left:6px;vertical-align:middle}
+.cond-badge.conf{background:var(--green2);color:var(--green3)}
+.cond-badge.opt{background:#f0f0f0;color:var(--steel)}
+.cond-badge.meal{background:#FFF7ED;color:#C2410C}
+.cond-divider{text-align:center;padding:var(--sp24) 0 var(--sp12);margin-top:var(--sp12)}
+.cond-divider-label{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--navy);font-weight:700}
+.cond-divider-sub{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--steel);margin-top:4px}
+.cond-meal-row{display:flex;align-items:baseline;padding:5px 0;font-size:.85rem;line-height:1.4;border-bottom:1px solid var(--divider2)}
+.cond-meal-row:last-child{border-bottom:none}
+.cond-meal-day{flex:0 0 50px;font-family:'DM Mono',monospace;font-size:.7rem;color:var(--gold-text);letter-spacing:.02em;font-weight:600}
+.cond-meal-time{flex:0 0 65px;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--steel)}
+.cond-meal-name{flex:1;color:var(--navy);font-family:'Crimson Pro',serif}
+
 /* ── FLIGHT ALERT BAR ───────────────────────────── */
 #flight-bar{
   position:fixed;
@@ -2929,6 +2956,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
       <button class="nav-chip" data-target="section-history">History</button>
       <button class="nav-chip" data-target="section-map">Map</button>
       <button class="nav-chip" data-target="section-airhotel">Air & Hotel</button>
+      <button class="nav-chip" data-target="section-condensed">Condensed</button>
     </nav>
   </div>
   <div class="hdr-section-label" id="hdr-section-label">Overview</div>
@@ -4706,11 +4734,93 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+
+<!-- ── CONDENSED ITINERARY ────────────────────────── -->
+<span class="section-anchor" id="section-condensed-anchor"></span>
+<section id="section-condensed" aria-label="Condensed itinerary">
+  <div class="content-section">
+    <div class="cond-header">
+      <div class="cond-eyebrow">At a Glance</div>
+      <div class="cond-title">Condensed Itinerary</div>
+    </div>
+
+    <!-- COPENHAGEN -->
+    <div class="cond-day">
+      <div class="cond-day-label"><span class="cond-flag">🇩🇰</span> Wed 25 – Fri 27 · Copenhagen</div>
+      <div class="cond-row"><span class="cond-time">Wed PM</span><span class="cond-what">Depart — overnight flight to CPH</span></div>
+      <div class="cond-row"><span class="cond-time">Thu 7am</span><span class="cond-what">Arrive CPH → M2 Metro → Scandic Nørreport</span></div>
+      <div class="cond-row"><span class="cond-time">Thu</span><span class="cond-what">Torvehallerne, Round Tower, Nørreport area</span></div>
+      <div class="cond-row"><span class="cond-time">Thu</span><span class="cond-what">Visit Charlotte — Amagerbro (M2 → Amagerbro)</span></div>
+      <div class="cond-row"><span class="cond-time">Thu 6:15p</span><span class="cond-what"><strong>The Union Kitchen</strong> — dinner with Charlotte<span class="cond-badge conf">✓</span></span></div>
+      <div class="cond-row"><span class="cond-time">Fri PM</span><span class="cond-what">CPH → ZRH — evening flight to Zürich</span></div>
+    </div>
+
+    <!-- FRIDAY -->
+    <div class="cond-day">
+      <div class="cond-day-label"><span class="cond-flag">🇨🇭</span> Fri 27 · Arrival &amp; White Elephant</div>
+      <div class="cond-row"><span class="cond-time">7:40p</span><span class="cond-what">Arrive ZRH → Airport Express + Tram 13 → Marriott</span></div>
+      <div class="cond-row"><span class="cond-time">9:00p</span><span class="cond-what"><strong>White Elephant</strong> — Michelin-listed Thai (hotel)</span></div>
+      <div class="cond-row"><span class="cond-time">10:30p</span><span class="cond-what">Lenox Bar nightcap<span class="cond-badge opt">optional</span></span></div>
+    </div>
+
+    <!-- SATURDAY -->
+    <div class="cond-day">
+      <div class="cond-day-label"><span class="cond-flag">⛰️</span> Sat 28 · Mountain, Art &amp; Old Town</div>
+      <div class="cond-row"><span class="cond-time">12:00p</span><span class="cond-what">Uetliberg Summit — S10 train, Alps panorama</span></div>
+      <div class="cond-row"><span class="cond-time">1:30p</span><span class="cond-what"><strong>Café Sprüngli</strong> — hot chocolate &amp; Luxemburgerli</span></div>
+      <div class="cond-row"><span class="cond-time">2:15p</span><span class="cond-what">Kunsthaus Zürich — Monet, Munch, Giacometti</span></div>
+      <div class="cond-row"><span class="cond-time">3:45p</span><span class="cond-what"><strong>Kunsthaus Café</strong> — light lunch</span></div>
+      <div class="cond-row"><span class="cond-time">4:30p</span><span class="cond-what">Old Town — Augustinergasse, Grossmünster, Fraumünster</span></div>
+      <div class="cond-row"><span class="cond-time">5:45p</span><span class="cond-what">Lindenhof Hill — best Old Town panorama</span></div>
+      <div class="cond-row"><span class="cond-time">6:30p</span><span class="cond-what"><strong>Café Bar Münsterhof</strong> — aperitivo</span></div>
+      <div class="cond-row"><span class="cond-time">7:30p</span><span class="cond-what"><strong>Zeughauskeller</strong> — 15th-c. beer hall<span class="cond-badge conf">✓</span></span></div>
+    </div>
+
+    <!-- SUNDAY -->
+    <div class="cond-day">
+      <div class="cond-day-label"><span class="cond-flag">☀️</span> Sun 29 · Slow Morning &amp; Farewell</div>
+      <div class="cond-row"><span class="cond-time">10:00a</span><span class="cond-what"><strong>Hiltl</strong> — world’s oldest vegetarian, Sunday brunch</span></div>
+      <div class="cond-row"><span class="cond-time">11:15a</span><span class="cond-what">Lake Zürich Promenade — Quaianlagen park</span></div>
+      <div class="cond-row"><span class="cond-time">11:45a</span><span class="cond-what">Boat cruise or Polybahn funicular<span class="cond-badge opt">pick one</span></span></div>
+      <div class="cond-row"><span class="cond-time">1:00p</span><span class="cond-what"><strong>Fischerstube Zürihorn</strong> — lakeside fish lunch</span></div>
+      <div class="cond-row"><span class="cond-time">2:30p</span><span class="cond-what">Museum Rietberg — Asian &amp; African art</span></div>
+      <div class="cond-row"><span class="cond-time">5:15p</span><span class="cond-what"><strong>eCHo</strong> — farewell Swiss dinner (hotel)</span></div>
+      <div class="cond-row"><span class="cond-time">6:00p</span><span class="cond-what">🛫 Depart — Uber to ZRH → 8:25 PM flight</span></div>
+    </div>
+
+    <!-- MONDAY -->
+    <div class="cond-day">
+      <div class="cond-day-label"><span class="cond-flag">🇩🇰</span> Mon 30 · Back in Copenhagen</div>
+      <div class="cond-row"><span class="cond-time">7:00p</span><span class="cond-what"><strong>PS Bar &amp; Grill City</strong> — Pilestræde 12A<span class="cond-badge conf">✓</span></span></div>
+    </div>
+
+    <!-- MEALS SECTION -->
+    <div class="cond-divider">
+      <div class="cond-divider-label">Meals &amp; Reservations</div>
+      <div class="cond-divider-sub">Confirmed · Recommended · Walk-in</div>
+    </div>
+
+    <div class="cond-day" style="margin-top:var(--sp12)">
+      <div class="cond-meal-row"><span class="cond-meal-day">Thu</span><span class="cond-meal-time">6:15p</span><span class="cond-meal-name"><strong>The Union Kitchen</strong> — sharing plates, 4 guests<span class="cond-badge conf">✓ confirmed</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Fri</span><span class="cond-meal-time">9:00p</span><span class="cond-meal-name"><strong>White Elephant</strong> — Thai, hotel on-site<span class="cond-badge meal">recommended</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Sat</span><span class="cond-meal-time">1:30p</span><span class="cond-meal-name"><strong>Café Sprüngli</strong> — hot chocolate &amp; macarons<span class="cond-badge meal">walk-in</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Sat</span><span class="cond-meal-time">3:45p</span><span class="cond-meal-name"><strong>Kunsthaus Café</strong> — soups, salads, light lunch<span class="cond-badge meal">walk-in</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Sat</span><span class="cond-meal-time">6:30p</span><span class="cond-meal-name"><strong>Café Bar Münsterhof</strong> — aperitivo, Spritz<span class="cond-badge meal">walk-in</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Sat</span><span class="cond-meal-time">7:30p</span><span class="cond-meal-name"><strong>Zeughauskeller</strong> — beer hall, Zürcher Geschnetzeltes<span class="cond-badge conf">✓ confirmed</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Sun</span><span class="cond-meal-time">10:00a</span><span class="cond-meal-name"><strong>Hiltl</strong> — vegetarian brunch buffet, CHF 57 pp<span class="cond-badge meal">walk-in</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Sun</span><span class="cond-meal-time">1:00p</span><span class="cond-meal-name"><strong>Fischerstube Zürihorn</strong> — lakeside, Lake Zürich fish<span class="cond-badge meal">recommended</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Sun</span><span class="cond-meal-time">5:15p</span><span class="cond-meal-name"><strong>eCHo</strong> — Swiss farewell dinner, hotel<span class="cond-badge meal">recommended</span></span></div>
+      <div class="cond-meal-row"><span class="cond-meal-day">Mon</span><span class="cond-meal-time">7:00p</span><span class="cond-meal-name"><strong>PS Bar &amp; Grill City</strong> — steaks &amp; cocktails, 2 guests<span class="cond-badge conf">✓ confirmed</span></span></div>
+    </div>
+
+  </div>
+</section>
+
 <!-- ── FOOTER ──────────────────────────────────────── -->
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.18 · Updated 31 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.19 · Updated 31 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5129,7 +5239,8 @@ const jumpTargets = {
   'section-streetview':  { label: 'History',  target: 'section-history' },
   'section-history':    { label: 'Map',       target: 'section-map' },
   'section-map':        { label: 'Air & Hotel', target: 'section-airhotel' },
-  'section-airhotel':   { label: 'Top',       target: 'hero' },
+  'section-airhotel':   { label: 'Condensed', target: 'section-condensed' },
+  'section-condensed':  { label: 'Top',       target: 'hero' },
 };
 let currentFabTarget = 'section-sat';
 
@@ -5167,6 +5278,7 @@ const sections = [
   { id: 'section-history',    label: 'History' },
   { id: 'section-map',        label: 'Map' },
   { id: 'section-airhotel',   label: 'Air & Hotel' },
+  { id: 'section-condensed',  label: 'Condensed' },
 ];
 
 let lastScroll = 0;
