@@ -3036,13 +3036,13 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   <div class="hdr-rows">
     <nav class="hdr-nav hdr-row-1" aria-label="Day sections">
       <button class="nav-chip active" data-target="section-condensed">Condensed</button>
-      <button class="nav-chip" data-target="section-denmark">Thursday</button>
-      <button class="nav-chip" data-target="section-fri">Friday</button>
-      <button class="nav-chip" data-target="section-sat">Saturday</button>
-      <button class="nav-chip" data-target="section-sun">Sunday</button>
+      <button class="nav-chip" data-target="section-denmark" data-location="copenhagen" data-loc-id="loc-copenhagen">Thursday</button>
+      <button class="nav-chip" data-target="section-fri" data-location="zurich" data-loc-id="loc-zurich">Friday</button>
+      <button class="nav-chip" data-target="section-sat" data-location="zurich">Saturday</button>
+      <button class="nav-chip" data-target="section-sun" data-location="zurich">Sunday</button>
     </nav>
     <nav class="hdr-nav hdr-row-2" aria-label="Reference sections">
-      <button class="nav-chip" data-target="section-mon">Monday</button>
+      <button class="nav-chip" data-target="section-mon" data-location="copenhagen" data-loc-id="loc-copenhagen-return">Monday</button>
       <button class="nav-chip" data-target="section-essentials">Essentials</button>
       <button class="nav-chip" data-target="section-transit">Transit</button>
       <button class="nav-chip" data-target="section-streetview">Street Views</button>
@@ -3174,7 +3174,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
-<div class="location-banner" role="img" aria-label="Copenhagen">
+<div class="location-banner" id="loc-copenhagen" role="img" aria-label="Copenhagen">
   <div class="location-banner-img" style="background-image:url('https://images.unsplash.com/photo-1579126219016-fbc7f8670d6a?w=1600&h=400&fit=crop&crop=center&q=80&auto=format')"></div>
   <div class="location-banner-content">
     <div class="location-banner-flag">🇩🇰</div>
@@ -3399,7 +3399,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 </section>
 
 
-<div class="location-banner" role="img" aria-label="Zürich">
+<div class="location-banner" id="loc-zurich" role="img" aria-label="Zürich">
   <div class="location-banner-img" style="background-image:url('https://images.unsplash.com/photo-1643981670720-eef07ebdb179?w=1600&h=400&fit=crop&crop=center&q=80&auto=format')"></div>
   <div class="location-banner-content">
     <div class="location-banner-flag">🇨🇭</div>
@@ -3851,7 +3851,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 </section>
 
 
-<div class="location-banner" role="img" aria-label="Copenhagen">
+<div class="location-banner" id="loc-copenhagen-return" role="img" aria-label="Copenhagen">
   <div class="location-banner-img" style="background-image:url('https://images.unsplash.com/photo-1579126219016-fbc7f8670d6a?w=1600&h=400&fit=crop&crop=center&q=80&auto=format')"></div>
   <div class="location-banner-content">
     <div class="location-banner-flag">🇩🇰</div>
@@ -4976,7 +4976,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.23 · Updated 31 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.24 · Updated 31 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>
@@ -5303,10 +5303,23 @@ function navTo(sectionId, btn) {
   // (runs AFTER the normal section scroll below, with a small delay)
   var doSvAutoScroll = (sectionId === 'section-streetview' && window._svAutoScroll);
 
-  // Find scroll target: prefer anchor (before banner) over section
-  const anchor = document.getElementById(sectionId + '-anchor');
-  const section = anchor || document.getElementById(sectionId);
-  if (!section) return;
+  // ── LOCATION-SNAP LOGIC ──────────────────────────────
+  // If this chip marks a NEW location (has data-loc-id), scroll to the
+  // location-banner graphic instead of the day-banner/section-anchor.
+  // If it's a continuation day within the same location (no data-loc-id),
+  // scroll to the day-banner as normal.
+  var locId = btn && btn.dataset.locId;
+  var scrollTarget = null;
+  if (locId) {
+    scrollTarget = document.getElementById(locId);
+  }
+  if (!scrollTarget) {
+    // Default: prefer section-anchor (just above the day-banner) over section
+    var anchor = document.getElementById(sectionId + '-anchor');
+    scrollTarget = anchor || document.getElementById(sectionId);
+  }
+  if (!scrollTarget) return;
+  var section = scrollTarget; // alias for iOS correction passes below
 
   // Measure actual sticky header height right now
   const hdr = document.getElementById('site-header');
@@ -5318,7 +5331,7 @@ function navTo(sectionId, btn) {
   const fbH = fbVisible ? fb.getBoundingClientRect().height : 0;
 
   const gap = 0;
-  const targetTop = section.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
+  const targetTop = scrollTarget.getBoundingClientRect().top + window.scrollY - hdrH - fbH - gap;
 
   window.scrollTo({ top: Math.max(0, targetTop), behavior: 'smooth' });
 
