@@ -351,6 +351,57 @@ img{display:block;max-width:100%}
   background:linear-gradient(to bottom,rgba(13,25,41,.06),transparent);
 }
 
+
+/* ── TRANSITION BANNERS ────────────────────────── */
+.day-banner{
+  background:var(--navy);
+  padding:20px var(--sp24);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.day-banner::before{
+  content:'';display:block;width:40px;height:2px;
+  background:var(--gold);margin:0 auto 12px;
+}
+.day-banner-eyebrow{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:4px;
+}
+.day-banner-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(16px,4vw,22px);font-weight:700;
+  color:#fff;line-height:1.2;
+}
+
+.location-banner{
+  height:150px;position:relative;overflow:hidden;
+  background:var(--navy);
+}
+.location-banner-img{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  filter:brightness(.65);
+}
+.location-banner-content{
+  position:relative;z-index:1;height:100%;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:0 var(--sp24);
+}
+.location-banner-flag{font-size:1.5rem;margin-bottom:4px}
+.location-banner-city{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,5vw,28px);font-weight:700;
+  color:#fff;letter-spacing:.02em;
+}
+.location-banner-sub{
+  font-family:'DM Mono',monospace;font-size:9px;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(255,255,255,.7);margin-top:4px;
+}
+
 /* ── DAY HEADER ─────────────────────────────────── */
 .day-header{
   padding:var(--sp32) var(--sp24) var(--sp24);
@@ -3085,6 +3136,14 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+<div class="location-banner" role="img" aria-label="Copenhagen">
+  <div class="location-banner-img" style="background-image:url('https://images.unsplash.com/photo-1579126219016-fbc7f8670d6a?w=1600&h=400&fit=crop&crop=center&q=80&auto=format')"></div>
+  <div class="location-banner-content">
+    <div class="location-banner-flag">🇩🇰</div>
+    <div class="location-banner-city">Copenhagen</div>
+    <div class="location-banner-sub">Wed 25 – Fri 27 March</div>
+  </div>
+</div>
 
 <span class="section-anchor" id="section-denmark-anchor"></span>
 <section id="section-denmark" aria-label="Denmark stopover">
@@ -3301,6 +3360,19 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+
+<div class="location-banner" role="img" aria-label="Zürich">
+  <div class="location-banner-img" style="background-image:url('https://images.unsplash.com/photo-1643981670720-eef07ebdb179?w=1600&h=400&fit=crop&crop=center&q=80&auto=format')"></div>
+  <div class="location-banner-content">
+    <div class="location-banner-flag">🇨🇭</div>
+    <div class="location-banner-city">Zürich</div>
+    <div class="location-banner-sub">Arriving Friday evening</div>
+  </div>
+</div>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Day 1</div>
+  <div class="day-banner-title">Friday · 27 March</div>
+</div>
 <!-- ── FRIDAY ────────────────────────────────────── -->
 <span class="section-anchor" id="section-fri-anchor"></span>
 <section id="section-fri" aria-label="Friday itinerary">
@@ -3386,6 +3458,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Day 2</div>
+  <div class="day-banner-title">Saturday · 28 March</div>
+</div>
 <!-- ── SATURDAY ───────────────────────────────────── -->
 <span class="section-anchor" id="section-sat-anchor"></span>
 <section id="section-sat" aria-label="Saturday itinerary">
@@ -3564,6 +3640,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Day 3</div>
+  <div class="day-banner-title">Sunday · 29 March</div>
+</div>
 <!-- ── SUNDAY ─────────────────────────────────────── -->
 <span class="section-anchor" id="section-sun-anchor"></span>
 <section id="section-sun" aria-label="Sunday itinerary">
@@ -3732,6 +3812,19 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   </div>
 </section>
 
+
+<div class="location-banner" role="img" aria-label="Copenhagen">
+  <div class="location-banner-img" style="background-image:url('https://images.unsplash.com/photo-1579126219016-fbc7f8670d6a?w=1600&h=400&fit=crop&crop=center&q=80&auto=format')"></div>
+  <div class="location-banner-content">
+    <div class="location-banner-flag">🇩🇰</div>
+    <div class="location-banner-city">Copenhagen</div>
+    <div class="location-banner-sub">Return · Monday 30 March</div>
+  </div>
+</div>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Day 4</div>
+  <div class="day-banner-title">Monday · 30 March</div>
+</div>
 <!-- ── MONDAY ─────────────────────────────────── -->
 <span class="section-anchor" id="section-mon-anchor"></span>
 <section id="section-mon" aria-label="Monday itinerary">
@@ -4821,7 +4914,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <footer id="site-footer" role="contentinfo">
   <p class="footer-quote">May every street be a new sketch, every meal a conversation, and every view a memory.</p>
   <p class="footer-sub">Bon voyage from Copenhagen · Herzlich Willkommen in Zürich</p>
-  <p class="footer-meta">Zürich · March 2026 · v4.20 · Updated 31 March 2026</p>
+  <p class="footer-meta">Zürich · March 2026 · v4.21 · Updated 31 March 2026</p>
   <div class="footer-actions">
     <a class="footer-btn" href="https://maps.google.com/maps?q=Zürich+Marriott+Hotel" target="_blank" rel="noopener">🏨 Hotel Map</a>
     <a class="footer-btn" href="https://www.accuweather.com/en/ch/zurich/316622/weather-forecast/316622" target="_blank" rel="noopener">🌤 Live Weather</a>

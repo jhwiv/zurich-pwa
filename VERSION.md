@@ -3,10 +3,11 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.20
+**Current:** v4.21
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
+| v4.21 | 2026-03-31 | Day transition banners (navy/gold) between each day section + location photo banners (150px Unsplash strips with flag/city/dates) at Copenhagen→Zürich and Zürich→Copenhagen transitions | `DAY_LOC_BANNERS` |
 | v4.20 | 2026-03-31 | Move Condensed Itinerary tab/section to appear right after hero (before Denmark). Scrollspy, jump targets, and nav chip order updated | `CONDENSED_MOVE` |
 | v4.19 | 2026-03-31 | Add Condensed Itinerary tab — activities by day + meals & reservations with status badges (confirmed/recommended/walk-in) | `CONDENSED_TAB` |
 | v4.18 | 2026-03-31 | Remove hero father-daughter description, collapse metro payment info into expand/collapse element, add PS Bar & Grill phone and full address | `CLEANUP_CPH` |
