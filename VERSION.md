@@ -3,10 +3,13 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.17
+**Current:** v4.20
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
+| v4.20 | 2026-03-31 | Move Condensed Itinerary tab/section to appear right after hero (before Denmark). Scrollspy, jump targets, and nav chip order updated | `CONDENSED_MOVE` |
+| v4.19 | 2026-03-31 | Add Condensed Itinerary tab — activities by day + meals & reservations with status badges (confirmed/recommended/walk-in) | `CONDENSED_TAB` |
+| v4.18 | 2026-03-31 | Remove hero father-daughter description, collapse metro payment info into expand/collapse element, add PS Bar & Grill phone and full address | `CLEANUP_CPH` |
 | v4.17 | 2026-03-30 | Add Monday section with PS Bar & Grill City dinner reservation (confirmed 7–10 PM, party of 2). New nav tab, map stop, menu modal with full dinner menu, dining table entry, time-aware navigation | `MON_PSBARGRILL` |
 |---------|------|---------|-------------------|
 | v4.14 | 2026-03-29 | Google Maps API-verified walk times — all walking durations cross-referenced with Google Maps Directions API (24 routes across Zürich + Copenhagen). 13 corrections applied to index.html and itinerary.js (e.g. Kunsthaus→Old Town 18→10 min, Marriott→Hiltl 8→18 min, Strøget 12→17 min, Union Kitchen 15→21 min) | `WALK_TIMES_GOOGLE` |
