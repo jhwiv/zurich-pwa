@@ -299,6 +299,13 @@ body.hero-visible #flight-chip{
   margin-bottom:4px;
   opacity:0;animation:fadeUp .7s ease .35s forwards;
 }
+.hero-title--trip{
+  font-size:clamp(36px,9vw,80px);
+  line-height:1.05;
+  font-style:italic;
+  font-weight:700;
+  letter-spacing:-.01em;
+}
 .hero-subtitle{
   font-family:'Playfair Display',serif;
   font-style:italic;
@@ -3068,13 +3075,11 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <!-- ── HERO ───────────────────────────────────────────── -->
 <section id="hero" aria-label="Trip landing">
   <div class="hero-overlay"></div>
-  <div class="hero-brand">Denmark – Zürich Weekend</div>
   <button class="hero-hamburger" id="hero-hamburger-btn" aria-label="Open navigation">
     <span></span><span></span><span></span>
   </button>
   <div class="hero-inner">
-    <div class="hero-eyebrow">A Curated Trip · Copenhagen → Zürich</div>
-    <div class="hero-title" aria-label="Zürich">Zürich</div>
+    <div class="hero-title hero-title--trip" aria-label="Denmark – Zürich Weekend">Denmark – Zürich Weekend</div>
     <div class="hero-subtitle">Mountain, art, old town &amp; great food</div>
     <div class="hero-dates">25 – 30 March 2026</div>
     <div class="hero-actions">
