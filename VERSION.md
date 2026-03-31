@@ -3,12 +3,13 @@
 **Site:** [zurich-weekend.com](https://www.zurich-weekend.com)
 **Repo:** [jhwiv/zurich-pwa](https://github.com/jhwiv/zurich-pwa)
 **Deploy:** Cloudflare Pages (auto-deploy from main)
-**Current:** v4.23
+**Current:** v4.24
 
 | Version | Date | Feature | Shared Feature ID |
 |---------|------|---------|-------------------|
-| v4.23 | 2026-03-31 | Full-screen photo hero landing page — Swiss alpine lake background, “Denmark – Zürich Weekend” brand, hamburger nav, Explore/Essentials CTAs. Header auto-hides on hero. Overview tab removed; Condensed is now first tab. Hero section moved outside page-wrap for edge-to-edge layout | `HERO_PHOTO_LANDING` |
-| v4.22 | 2026-03-31 | Rebrand page title to “Denmark – Zürich Weekend” across title, OG tags, manifest, and header label | `REBRAND_DKZRH` |
+| v4.24 | 2026-03-31 | Rename Denmark tab to Thursday. Add navy/gold banners for all reference sections (Essentials, Transit & Dining, Street Views, History, Itinerary Map, Air & Hotel) matching existing day-banner style. Tab clicks now scroll to banner top via anchor-first targeting. Fix time pill visibility for Tuesday departure day (was missing coverage for Mar 31 CPH airport morning) | `REF_BANNERS_TIMEPILL` |
+| v4.23 | 2026-03-31 | Full-screen photo hero landing page — Swiss alpine lake background, "Denmark – Zürich Weekend" brand, hamburger nav, Explore/Essentials CTAs. Header auto-hides on hero. Overview tab removed; Condensed is now first tab. Hero section moved outside page-wrap for edge-to-edge layout | `HERO_PHOTO_LANDING` |
+| v4.22 | 2026-03-31 | Rebrand page title to "Denmark – Zürich Weekend" across title, OG tags, manifest, and header label | `REBRAND_DKZRH` |
 | v4.21 | 2026-03-31 | Day transition banners (navy/gold) between each day section + location photo banners (150px Unsplash strips with flag/city/dates) at Copenhagen→Zürich and Zürich→Copenhagen transitions | `DAY_LOC_BANNERS` |
 | v4.20 | 2026-03-31 | Move Condensed Itinerary tab/section to appear right after hero (before Denmark). Scrollspy, jump targets, and nav chip order updated | `CONDENSED_MOVE` |
 | v4.19 | 2026-03-31 | Add Condensed Itinerary tab — activities by day + meals & reservations with status badges (confirmed/recommended/walk-in) | `CONDENSED_TAB` |

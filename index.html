@@ -3022,7 +3022,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
   <div class="hdr-rows">
     <nav class="hdr-nav hdr-row-1" aria-label="Day sections">
       <button class="nav-chip active" data-target="section-condensed">Condensed</button>
-      <button class="nav-chip" data-target="section-denmark">Denmark</button>
+      <button class="nav-chip" data-target="section-denmark">Thursday</button>
       <button class="nav-chip" data-target="section-fri">Friday</button>
       <button class="nav-chip" data-target="section-sat">Saturday</button>
       <button class="nav-chip" data-target="section-sun">Sunday</button>
@@ -3891,6 +3891,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
 <!-- ── ESSENTIALS ─────────────────────────────────── -->
 <span class="section-anchor" id="section-essentials-anchor"></span>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Quick Reference</div>
+  <div class="day-banner-title">Essentials</div>
+</div>
 <section id="section-essentials" aria-label="Trip essentials">
   <div class="content-section">
     <div class="essentials-header">
@@ -4103,6 +4107,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
 <!-- ── TRANSIT ──────────────────────────────────────── -->
 <span class="section-anchor" id="section-transit-anchor"></span>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Getting Around</div>
+  <div class="day-banner-title">Transit &amp; Dining</div>
+</div>
 <section id="section-transit" aria-label="Transit and survival guide">
   <div class="content-section transit-section">
     <div class="section-header">
@@ -4372,6 +4380,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
 <!-- ── STREET VIEWS ─────────────────────────────────── -->
 <span class="section-anchor" id="section-streetview-anchor"></span>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Explore · 360°</div>
+  <div class="day-banner-title">Street Views</div>
+</div>
 <section id="section-streetview" aria-label="Street View exploration">
   <div class="content-section">
     <div class="day-header" style="grid-template-columns:1fr">
@@ -4638,6 +4650,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
 <!-- ── HISTORY ──────────────────────────────────────── -->
 <span class="section-anchor" id="section-history-anchor"></span>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Background</div>
+  <div class="day-banner-title">History</div>
+</div>
 <section id="section-history" aria-label="Destination history">
   <div class="content-section" style="padding:var(--sp24)">
     <div class="section-header">
@@ -4737,6 +4753,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 </section>
 <!-- ── MAP ──────────────────────────────────────────── -->
 <span class="section-anchor" id="section-map-anchor"></span>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Navigate</div>
+  <div class="day-banner-title">Itinerary Map</div>
+</div>
 <section id="section-map" aria-label="Interactive itinerary map">
   <div class="content-section">
     <div class="day-header" style="grid-template-columns:1fr">
@@ -4868,6 +4888,10 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 
 <!-- ── AIR & HOTEL ─────────────────────────────────── -->
 <span class="section-anchor" id="section-airhotel-anchor"></span>
+<div class="day-banner">
+  <div class="day-banner-eyebrow">Travel Logistics</div>
+  <div class="day-banner-title">Air &amp; Hotel</div>
+</div>
 <section id="section-airhotel" aria-label="Air and hotel information">
   <div class="content-section" style="padding:var(--sp16) var(--sp16) var(--sp24)">
     <div class="section-header" style="margin-bottom:var(--sp12)">
@@ -5267,8 +5291,9 @@ function navTo(sectionId, btn) {
   // (runs AFTER the normal section scroll below, with a small delay)
   var doSvAutoScroll = (sectionId === 'section-streetview' && window._svAutoScroll);
 
-  // Find the real section element
-  const section = document.getElementById(sectionId);
+  // Find scroll target: prefer anchor (before banner) over section
+  const anchor = document.getElementById(sectionId + '-anchor');
+  const section = anchor || document.getElementById(sectionId);
   if (!section) return;
 
   // Measure actual sticky header height right now
@@ -5385,7 +5410,7 @@ document.addEventListener('click', function(e) {
 
 // ── CONTEXTUAL FAB JUMP BUTTON ─────────────────────────
 const jumpTargets = {
-  'section-condensed':  { label: 'Denmark',   target: 'section-denmark' },
+  'section-condensed':  { label: 'Thursday',  target: 'section-denmark' },
   'section-denmark':    { label: 'Friday',    target: 'section-fri' },
   'section-fri':        { label: 'Saturday',  target: 'section-sat' },
   'section-sat':        { label: 'Sunday',    target: 'section-sun' },
@@ -5423,7 +5448,7 @@ const hdrLabel = document.getElementById('hdr-section-label');
 // Section order for scroll spy
 const sections = [
   { id: 'section-condensed',  label: 'Condensed' },
-  { id: 'section-denmark',    label: 'Denmark' },
+  { id: 'section-denmark',    label: 'Thursday' },
   { id: 'section-fri',        label: 'Friday' },
   { id: 'section-sat',        label: 'Saturday' },
   { id: 'section-sun',        label: 'Sunday' },
@@ -7416,17 +7441,19 @@ window.getItineraryCity = function() {
   // Copenhagen: Thu Mar 26 all day through Fri Mar 27 ~5 PM CET (4 PM UTC)
   // In transit: Fri Mar 27 ~5 PM – ~7:40 PM CET
   // Zürich: Fri Mar 27 ~7:40 PM CET onwards through Sun Mar 29
+  // Monday: back in CPH for dinner
+  // Tuesday: CPH until departure flight SK909 at 12:30 PM CET
   var now = Date.now();
   var cphStart     = Date.UTC(2026, 2, 26, 5, 0);   // Thu 6 AM CET
   var transitStart = Date.UTC(2026, 2, 27, 16, 0);   // Fri 5 PM CET
   var zrhArrival   = Date.UTC(2026, 2, 27, 18, 40);  // Fri 7:40 PM CET
   var tripEnd      = Date.UTC(2026, 2, 29, 19, 0);   // Sun 8 PM CET
   var monStart     = Date.UTC(2026, 2, 30, 5, 0);    // Mon 6 AM CET
-  var monEnd       = Date.UTC(2026, 2, 30, 22, 0);   // Mon 11 PM CET
+  var tueEnd       = Date.UTC(2026, 2, 31, 14, 0);   // Tue 4 PM CET (airborne by 12:30 PM + buffer)
 
   if (now >= cphStart && now < transitStart) return 'copenhagen';
   if (now >= transitStart && now <= tripEnd) return 'zurich'; // transit+Zürich
-  if (now >= monStart && now <= monEnd) return 'copenhagen'; // Monday back in CPH
+  if (now >= monStart && now <= tueEnd) return 'copenhagen'; // Mon dinner + Tue departure
   return null; // outside trip dates
 };
 
