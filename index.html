@@ -117,6 +117,10 @@ body.hero-visible #flight-chip{
   pointer-events:none;
   transition:transform .35s ease, opacity .25s ease;
 }
+/* Prevent header flash on initial load — no-transition class removed after first scroll */
+#site-header.no-transition{
+  transition:none !important;
+}
 
 #site-header{
   transition:transform .35s ease, opacity .25s ease, box-shadow .25s ease;
@@ -3009,7 +3013,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 }
 </style>
 </head>
-<body>
+<body class="hero-visible">
 
 <!-- PAGE FADE OVERLAY -->
 <div id="page-fade"></div>
@@ -3018,7 +3022,7 @@ body:has(#chat-panel.open) .fab-wrap{display:none!important}
 <div id="progress-bar" role="progressbar" aria-label="Reading progress"></div>
 
 <!-- ── SITE HEADER ────────────────────────────────── -->
-<header id="site-header" role="banner">
+<header id="site-header" class="on-hero no-transition" role="banner">
   <div class="hdr-rows">
     <nav class="hdr-nav hdr-row-1" aria-label="Day sections">
       <button class="nav-chip active" data-target="section-condensed">Condensed</button>
@@ -5379,7 +5383,8 @@ document.addEventListener('click', function(e) {
   var heroEl = document.getElementById('hero');
   if(!hdr || !heroEl) return;
   
-  hdr.classList.add('on-hero');
+  // on-hero + no-transition already set in HTML to prevent flash on load
+  var firstScroll = true;
   
   function checkHero(){
     var heroBottom = heroEl.getBoundingClientRect().bottom;
@@ -5388,6 +5393,8 @@ document.addEventListener('click', function(e) {
       hdr.classList.add('on-hero');
       document.body.classList.add('hero-visible');
     } else {
+      // Re-enable transitions after first scroll past hero
+      if(firstScroll){ hdr.classList.remove('no-transition'); firstScroll = false; }
       hdr.classList.remove('on-hero');
       document.body.classList.remove('hero-visible');
     }
